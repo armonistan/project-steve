@@ -66,7 +66,7 @@ public class Field {
 		pickups.add(new Apple(0, 0));
 		pickups.add(new Apple(5, 5));
 		pickups.add(new Apple(0, 5));
-		pickups.add(new Apple(0, 5));
+		pickups.add(new Apple(5, 0));
 	}
 	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {

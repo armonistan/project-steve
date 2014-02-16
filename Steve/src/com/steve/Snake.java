@@ -12,6 +12,8 @@ public class Snake {
 	private ArrayList<Sprite> segments;
 	final int TEXTURE_WIDTH = 16;
 	final int TEXTURE_LENGTH = 16;
+	private final int MIN_SEGMENTS = 2;
+	private final int MAX_SEGMENTS = 5;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
@@ -29,8 +31,6 @@ public class Snake {
 		segments = new ArrayList<Sprite>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
 		
 		dirs = new Vector2[4];
 		dirs[0] = new Vector2(1, 0);
@@ -46,31 +46,7 @@ public class Snake {
 	}
 
 	public void render(SpriteBatch batch, float deltaTime){
-		if (Gdx.input.isTouched()) {			
-			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
-			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
-			
-			if(Math.abs(deltaX) > Math.abs(deltaY)) {
-				if(deltaX > 0 && segments.get(0).getRotation() != LEFT) {
-					nextRotation = RIGHT;
-					nextDirection = dirs[0];
-				}
-				else if (segments.get(0).getRotation() != RIGHT){
-					nextRotation = LEFT;
-					nextDirection = dirs[2];
-				}
-			}
-			else {
-				if(deltaY > 0 && segments.get(0).getRotation() != UP) {
-					nextRotation = DOWN;
-					nextDirection = dirs[3];
-				}
-				else if (segments.get(0).getRotation() != DOWN){
-					nextRotation = UP;
-					nextDirection = dirs[1];
-				}
-			}
-		}
+		getTouch();
 		
 		//Move all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {			
@@ -87,8 +63,6 @@ public class Snake {
 					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
 				}
 			}
-			
-			segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
 			
 			if (segments.size() > 2) {
 				Sprite afterHead = segments.get(1);
@@ -120,6 +94,8 @@ public class Snake {
 			else {
 				segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
 			}
+
+			segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
 			
 			timer = 0f;
 		}
@@ -133,9 +109,61 @@ public class Snake {
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 	}
+
+	private void getTouch() {
+		if (Gdx.input.isTouched()) {			
+			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
+			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
+			
+			if(Math.abs(deltaX) > Math.abs(deltaY)) {
+				if(deltaX > 0 && segments.get(0).getRotation() != LEFT) {
+					nextRotation = RIGHT;
+					nextDirection = dirs[0];
+				}
+				else if (segments.get(0).getRotation() != RIGHT){
+					nextRotation = LEFT;
+					nextDirection = dirs[2];
+				}
+			}
+			else {
+				if(deltaY > 0 && segments.get(0).getRotation() != UP) {
+					nextRotation = DOWN;
+					nextDirection = dirs[3];
+				}
+				else if (segments.get(0).getRotation() != DOWN){
+					nextRotation = UP;
+					nextDirection = dirs[1];
+				}
+			}
+		}
+	}
 	
 	public Vector3 getHeadPosition() {
 		return headPosition;
+	}
+	
+	public void addBody() {
+		if (segments.size() < MAX_SEGMENTS) {
+			Sprite newSegment = new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
+			Sprite tail = segments.get(segments.size() - 1);
+			
+			Vector2 delta = dirs[0];
+			
+			if (tail.getRotation() ==  DOWN) {
+				delta = dirs[1];
+			}
+			else if (tail.getRotation() ==  RIGHT) {
+				delta = dirs[2];
+			}
+			else if (tail.getRotation() ==  UP) {
+				delta = dirs[3];
+			}
+			
+			newSegment.setPosition(tail.getX() + delta.x * TEXTURE_WIDTH, tail.getY() + delta.y * TEXTURE_LENGTH);
+			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
+			
+			segments.add(newSegment);
+		}
 	}
 	
 	private void updateAfterHead(Sprite before, Sprite current, Sprite after) {
@@ -150,3 +178,4 @@ public class Snake {
 		current.setRegionHeight(16);
 	}
 }
+
