@@ -12,6 +12,8 @@ public class Snake {
 	private ArrayList<Sprite> segments;
 	final int TEXTURE_WIDTH = 16;
 	final int TEXTURE_LENGTH = 16;
+	final int BIG_TEXTURE_WIDTH = 32;
+	final int BIG_TEXTURE_LENGTH = 32;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;

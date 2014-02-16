@@ -13,6 +13,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
+	public static final int TEXTURE_WIDTH = 16;
+	public static final int TEXTURE_LENGTH = 16;
+	public static final int BIG_TEXTURE_WIDTH = 32;
+	public static final int BIG_TEXTURE_LENGTH = 32;
+	
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;

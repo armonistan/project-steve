@@ -15,56 +15,102 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import java.util.*;
 
 public class Field {
-	int length;
-	int width;
-	int t_length;
-	int t_width;
+	int grassRadius;
+	int desertRadius;
+	int barrenRadius;
+	int totalRadius;
 	TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
+	TileRegion grass, desert, barren;
 	
 	ArrayList<Pickup> pickups;
+	
+	private class TileRegion {
+		int startX, startY, width, length;
+		Random rand;
+		
+		public TileRegion(int startX, int startY, int width, int length) {
+			this.startX = startX;
+			this.startY = startY;
+			this.width = width;
+			this.length = length;
+			rand = new Random();
+		}
+		
+		public int GetRandomX() {
+			return this.rand.nextInt(this.width + 1) + this.startX;
+		}
+		
+		public int GetRandomY() {
+			return this.rand.nextInt(this.length + 1) + this.startY;
+		}
+		
+	}
 	
 	//TODO:Define "circles"
 
 	public Field(OrthographicCamera camera) {
-		length = 500;
-		width = 500;
+		this.grassRadius = 20;
+		this.desertRadius = 10;
+		this.barrenRadius = 150;
 		
-		t_length = 16;
-		t_width = 16;
-		Random rand = new Random();
+		this.totalRadius = 60;
 		
-		int grass_y = 4;
-		int grass_x = 6;
-		int grass_width = 1;
-		int grass_height = 2;
+		this.grass = new TileRegion(6, 4, 1, 2);
+		this.desert = new TileRegion(6, 7, 1, 2);
+		this.barren = new TileRegion(6, 10, 1, 2);
 		
-		//map = new TmxMapLoader().load("data/levels/grass.tmx");
-		tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
-		TextureRegion[][] splitTiles = TextureRegion.split(tiles, t_length, t_width);
-		map = new TiledMap();
-		MapLayers layers = map.getLayers();
-		TiledMapTileLayer layer = new TiledMapTileLayer(length, width, t_length, t_width);
+		this.tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
+		this.map = new TiledMap();
 		
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < length; y++) {
-				int ty = rand.nextInt(grass_height + 1) + grass_y;
-				int tx = rand.nextInt(grass_width + 1) + grass_x;
+		this.RandomizeField();
+		
+		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
+		this.mapRenderer.setView(camera);
+		
+		this.pickups = new ArrayList<Pickup>();
+		this.pickups.add(new Apple(0, 0));
+		this.pickups.add(new Apple(5, 5));
+	}
+	
+	public void RandomizeField() {
+		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		MapLayers layers = this.map.getLayers();
+		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		
+		for (int x = 0; x < this.totalRadius; x++) {
+			for (int y = 0; y < this.totalRadius; y++) {
+				int ty = this.barren.GetRandomY();
+				int tx = this.barren.GetRandomX();
 				Cell cell = new Cell();
 				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
 				layer.setCell(x, y, cell);
 			}
 		}
 		
+		
+		for (int x = this.desertRadius; x < this.totalRadius - this.desertRadius; x++) {
+			for (int y = this.desertRadius; y < this.totalRadius - this.desertRadius; y++) {
+				int ty = this.desert.GetRandomY();
+				int tx = this.desert.GetRandomX();
+				Cell cell = new Cell();
+				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
+				layer.setCell(x, y, cell);
+			}
+		}
+		
+		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
+			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
+				int ty = this.grass.GetRandomY();
+				int tx = this.grass.GetRandomX();
+				Cell cell = new Cell();
+				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
+				layer.setCell(x, y, cell);
+			}
+		}		
+		
 		layers.add(layer);
-		
-		mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
-		mapRenderer.setView(camera);
-		
-		pickups = new ArrayList<Pickup>();
-		pickups.add(new Apple(0, 0));
-		pickups.add(new Apple(5, 5));
 	}
 	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
