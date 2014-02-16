@@ -101,6 +101,12 @@ public class Field {
 		}
 		
 <<<<<<< HEAD
+		pickups = new ArrayList<Pickup>();
+		pickups.add(new Apple(0, 0));
+		pickups.add(new Apple(5, 5));
+		pickups.add(new Apple(0, 5));
+		pickups.add(new Apple(5, 0));
+=======
 		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
 			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
 				int ty = this.grass.GetRandomY();
@@ -112,13 +118,7 @@ public class Field {
 		}		
 		
 		layers.add(layer);
-=======
-		pickups = new ArrayList<Pickup>();
-		pickups.add(new Apple(0, 0));
-		pickups.add(new Apple(5, 5));
-		pickups.add(new Apple(0, 5));
-		pickups.add(new Apple(0, 5));
->>>>>>> 3a30587e3d79b4b44f6d59b48b25f774a28203a8
+>>>>>>> origin/dev
 	}
 	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
