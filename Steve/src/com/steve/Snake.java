@@ -48,24 +48,26 @@ public class Snake {
 			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
 			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
 			
-			if(Math.abs(deltaX) > Math.abs(deltaY))
-				if(deltaX > 0) {
+			if(Math.abs(deltaX) > Math.abs(deltaY)) {
+				if(deltaX > 0 && nextRotation != LEFT) {
 					nextRotation = RIGHT;
 					nextDirection = dirs[0];
 				}
-				else {
+				else if (nextRotation != RIGHT){
 					nextRotation = LEFT;
 					nextDirection = dirs[2];
 				}
-			else
-				if(deltaY > 0) {
+			}
+			else {
+				if(deltaY > 0 && nextRotation != UP) {
 					nextRotation = DOWN;
 					nextDirection = dirs[3];
 				}
-				else {
+				else if (nextRotation != DOWN){
 					nextRotation = UP;
 					nextDirection = dirs[1];
 				}
+			}
 		}
 		
 		if (timer >= TIME_BETWEEN_TURN) {
@@ -85,7 +87,7 @@ public class Snake {
 			
 			if (segments.size() > 2) {
 				Sprite afterHead = segments.get(1);
-				afterHead.setRegion(updateAfterHead(segments.get(0), afterHead, segments.get(2)));
+				updateAfterHead(segments.get(0), afterHead, segments.get(2));
 			}
 			
 			segments.get(0).setRotation(nextRotation);
@@ -104,59 +106,15 @@ public class Snake {
 		return segments.get(0);
 	}
 	
-	private TextureRegion updateAfterHead(Sprite before, Sprite current, Sprite after) {
-
-		float deltaX = after.getX() - current.getX();
-		float deltaY = after.getY() - current.getY();
+	private void updateAfterHead(Sprite before, Sprite current, Sprite after) {
+		int atlasX = 0;
+		int atlasY = 16; //Default
 		
-		float atlasX = 0;
-		float atlasY = 0;
+		//TODO: Determine bends
 		
-		if(deltaX < 0){
-			if(deltaY < 0){
-				atlasX = 48;
-				atlasY = 48;
-			}
-			else if(deltaY==0){
-				atlasX = 16;
-				atlasY = 16;
-			}
-			else{
-				atlasX = 0;
-				atlasY = 32;
-			}
-		}
-		else if(deltaX == 0){
-			if(deltaY < 0){
-				atlasX = 16;
-				atlasY = 16;
-			}
-			else if(deltaY==0){
-				atlasX = 16;
-				atlasY = 16;
-			}
-			else{
-				atlasX = 16;
-				atlasY = 16;
-			}
-		}
-		else{
-			if(deltaY < 0){
-				atlasX = 48;
-				atlasY = 32;
-			}
-			else if(deltaY==0){
-				atlasX = 16;
-				atlasY = 16;
-			}
-			else{
-				atlasX = 16;
-				atlasY = 48;
-			}
-		}
-			
-		
-		return new TextureRegion(SteveDriver.atlas,
-				atlasX, atlasY, this.TEXTURE_WIDTH, this.TEXTURE_LENGTH); 
+		current.setRegionX(atlasX);
+		current.setRegionY(atlasY);
+		current.setRegionWidth(16);
+		current.setRegionHeight(16);
 	}
 }
