@@ -14,6 +14,8 @@ public class Snake {
 	final int TEXTURE_LENGTH = 16;
 	private final int MIN_SEGMENTS = 2;
 	private final int MAX_SEGMENTS = 5;
+	final int BIG_TEXTURE_WIDTH = 32;
+	final int BIG_TEXTURE_LENGTH = 32;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;

@@ -125,8 +125,4 @@ public class Field {
 		}
 		batch.end();
 	}
-	
-	public ArrayList<Pickup> getPickups() {
-		return pickups;
-	}
 }
