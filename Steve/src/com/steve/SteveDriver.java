@@ -59,7 +59,7 @@ public class SteveDriver implements ApplicationListener {
 		camera.update();
 		
 		batch.setProjectionMatrix(camera.combined);
-		map.render(camera);
+		map.render(camera, batch);
 		
 		batch.begin();
 		temp.draw(batch);

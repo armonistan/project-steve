@@ -3,12 +3,16 @@ package com.steve;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.*;
 
 public class Field {
 	int length;
 	int width;
 	TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
+	
+	ArrayList<Pickup> pickups;
 	
 	//TODO:Define "circles"
 
@@ -20,14 +24,22 @@ public class Field {
 		
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
 		//mapRenderer.setView(camera);
-	}
-	
-	public void Update() {
 		
+		pickups = new ArrayList<Pickup>();
+		pickups.add(new Apple(0, 0));
+		pickups.add(new Apple(5, 5));
 	}
 	
-	public void render(OrthographicCamera camera) {
+	public void render(OrthographicCamera camera, SpriteBatch batch) {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
+		
+		batch.begin();
+		for (Pickup p : pickups) {
+			if (p.getActive()) {
+				p.draw(batch);
+			}
+		}
+		batch.end();
 	}
 }
