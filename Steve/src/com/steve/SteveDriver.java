@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
@@ -51,8 +52,10 @@ public class SteveDriver implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		camera.position.x = snake.getHead().getOriginX() + snake.getHead().getX();
-		camera.position.y = snake.getHead().getOriginY() + snake.getHead().getY();
+		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.2f);
+		
+		camera.position.x = test.x;
+		camera.position.y = test.y;
 		camera.update();
 		
 		batch.setProjectionMatrix(camera.combined);

@@ -27,7 +27,7 @@ public class Field {
 	}
 	
 	public void render(OrthographicCamera camera) {
-		//mapRenderer.setView(camera);
+		mapRenderer.setView(camera);
 		mapRenderer.render();
 	}
 }

@@ -12,8 +12,9 @@ public class Snake {
 	private ArrayList<Sprite> segments;
 	final int TEXTURE_WIDTH = 16;
 	final int TEXTURE_LENGTH = 16;
+	private Vector3 headPosition;
 	
-	private final float TIME_BETWEEN_TURN = 0.1f;
+	private final float TIME_BETWEEN_TURN = 0.5f;
 	private float timer = 0;
 	
 	private Vector2 nextDirection;
@@ -41,6 +42,7 @@ public class Snake {
 		
 		nextRotation = RIGHT;
 		segments.get(0).setRotation(nextRotation);
+		headPosition = new Vector3(0, 0, 0);
 	}
 
 	public void render(SpriteBatch batch, float deltaTime){
@@ -85,6 +87,8 @@ public class Snake {
 				}
 			}
 			
+			segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
+			
 			if (segments.size() > 2) {
 				Sprite afterHead = segments.get(1);
 				updateAfterHead(segments.get(0), afterHead, segments.get(2));
@@ -100,10 +104,12 @@ public class Snake {
 		}
 		
 		timer += deltaTime;
+		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
+		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 	}
 	
-	public Sprite getHead() {
-		return segments.get(0);
+	public Vector3 getHeadPosition() {
+		return headPosition;
 	}
 	
 	private void updateAfterHead(Sprite before, Sprite current, Sprite after) {
