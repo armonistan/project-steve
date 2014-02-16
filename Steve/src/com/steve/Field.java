@@ -16,10 +16,10 @@ public class Field {
 		length = 500;
 		width = 500;
 		
-		map = new TmxMapLoader().load("data/levels/test.tmx");
+		map = new TmxMapLoader().load("data/levels/grass.tmx");
 		
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
-		mapRenderer.setView(camera);
+		//mapRenderer.setView(camera);
 	}
 	
 	public void Update() {
@@ -27,7 +27,7 @@ public class Field {
 	}
 	
 	public void render(OrthographicCamera camera) {
-		mapRenderer.setView(camera);
+		//mapRenderer.setView(camera);
 		mapRenderer.render();
 	}
 }
