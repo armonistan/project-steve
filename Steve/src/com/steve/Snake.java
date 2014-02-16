@@ -51,27 +51,28 @@ public class Snake {
 			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
 			
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
-				if(deltaX > 0 && nextRotation != LEFT) {
+				if(deltaX > 0 && segments.get(0).getRotation() != LEFT) {
 					nextRotation = RIGHT;
 					nextDirection = dirs[0];
 				}
-				else if (nextRotation != RIGHT){
+				else if (segments.get(0).getRotation() != RIGHT){
 					nextRotation = LEFT;
 					nextDirection = dirs[2];
 				}
 			}
 			else {
-				if(deltaY > 0 && nextRotation != UP) {
+				if(deltaY > 0 && segments.get(0).getRotation() != UP) {
 					nextRotation = DOWN;
 					nextDirection = dirs[3];
 				}
-				else if (nextRotation != DOWN){
+				else if (segments.get(0).getRotation() != DOWN){
 					nextRotation = UP;
 					nextDirection = dirs[1];
 				}
 			}
 		}
 		
+		//Move all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {
 			//Update the rest of the segments
 			for (int i = segments.size() - 1; i > 0; i--) {
@@ -99,6 +100,7 @@ public class Snake {
 			timer = 0f;
 		}
 		
+		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(batch);
 		}
