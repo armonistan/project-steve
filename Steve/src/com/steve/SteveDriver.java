@@ -13,13 +13,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
+	public static Snake snake;
+	public static Field map;
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	
-	private Snake snake;
-	private Sprite temp;
-	private Field map;
 	
 	@Override
 	public void create() {		
@@ -33,8 +31,6 @@ public class SteveDriver implements ApplicationListener {
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		snake = new Snake();
-		temp = new Sprite(new TextureRegion(atlas, 16, 0, 16, 16));
-		temp.setPosition(16,  16);
 		
 		map = new Field(camera);
 	}
@@ -62,7 +58,6 @@ public class SteveDriver implements ApplicationListener {
 		map.render(camera, batch);
 		
 		batch.begin();
-		temp.draw(batch);
 		snake.render(batch, deltaTime);
 		batch.end();
 	}

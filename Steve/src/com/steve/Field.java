@@ -65,6 +65,8 @@ public class Field {
 		pickups = new ArrayList<Pickup>();
 		pickups.add(new Apple(0, 0));
 		pickups.add(new Apple(5, 5));
+		pickups.add(new Apple(0, 5));
+		pickups.add(new Apple(0, 5));
 	}
 	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -78,5 +80,9 @@ public class Field {
 			}
 		}
 		batch.end();
+	}
+	
+	public ArrayList<Pickup> getPickups() {
+		return pickups;
 	}
 }

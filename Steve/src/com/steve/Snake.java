@@ -73,7 +73,7 @@ public class Snake {
 		}
 		
 		//Move all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {
+		if (timer >= TIME_BETWEEN_TURN) {			
 			//Update the rest of the segments
 			for (int i = segments.size() - 1; i > 0; i--) {
 				Sprite next = segments.get(i - 1);
@@ -97,6 +97,30 @@ public class Snake {
 			
 			segments.get(0).setRotation(nextRotation);
 			segments.get(0).translate(segments.get(0).getWidth() * nextDirection.x, segments.get(0).getHeight() * nextDirection.y);
+
+			//Eat pickups
+			boolean aboutToEat = false;
+			for (Pickup p : SteveDriver.map.getPickups()) {
+				if (p.getActive()) {
+					if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
+						p.consume(this);
+					}
+					else if (segments.get(0).getX() == p.getX() + TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
+							 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + TEXTURE_LENGTH && nextRotation == DOWN ||
+							 segments.get(0).getX() == p.getX() - TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
+							 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - TEXTURE_LENGTH && nextRotation == UP) {
+						aboutToEat = true;
+					}
+				}
+			}
+			
+			if (aboutToEat) {
+				segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 16, 0, 16, 16));
+			}
+			else {
+				segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
+			}
+			
 			timer = 0f;
 		}
 		
