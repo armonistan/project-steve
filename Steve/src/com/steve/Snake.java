@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.*;
 import java.util.*;
 
@@ -136,6 +137,23 @@ public class Snake {
 					nextRotation = UP;
 					nextDirection = dirs[1];
 				}
+			}
+		} else {
+			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != UP) {
+				nextRotation = DOWN;
+				nextDirection = dirs[3];
+			}
+			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)) && segments.get(0).getRotation() != DOWN) {
+				nextRotation = UP;
+				nextDirection = dirs[1];
+			}
+			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && segments.get(0).getRotation() != RIGHT) {
+				nextRotation = LEFT;
+				nextDirection = dirs[2];
+			}
+			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && segments.get(0).getRotation() != LEFT) {
+				nextRotation = RIGHT;
+				nextDirection = dirs[0];
 			}
 		}
 	}

@@ -19,10 +19,13 @@ public class Field {
 	int desertRadius;
 	int barrenRadius;
 	int totalRadius;
+	int blockerChains;
+	int maxBlockerLength;
 	TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
 	TileRegion grass, desert, barren;
+	Random random;
 	
 	ArrayList<Pickup> pickups;
 	
@@ -56,6 +59,10 @@ public class Field {
 		this.barrenRadius = 150;
 		
 		this.totalRadius = 60;
+		this.blockerChains = 50;
+		this.maxBlockerLength = 10;
+		
+		this.random = new Random();
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
 		this.desert = new TileRegion(6, 7, 1, 2);
@@ -78,7 +85,10 @@ public class Field {
 		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		MapLayers layers = this.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		
+		//This is the Background generation	
+		//Barren tiles generated
 		for (int x = 0; x < this.totalRadius; x++) {
 			for (int y = 0; y < this.totalRadius; y++) {
 				int ty = this.barren.GetRandomY();
@@ -89,7 +99,7 @@ public class Field {
 			}
 		}
 		
-		
+		//Desert tiles generated
 		for (int x = this.desertRadius; x < this.totalRadius - this.desertRadius; x++) {
 			for (int y = this.desertRadius; y < this.totalRadius - this.desertRadius; y++) {
 				int ty = this.desert.GetRandomY();
@@ -100,6 +110,7 @@ public class Field {
 			}
 		}
 		
+		//Grass tiles generated
 		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
 			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
 				int ty = this.grass.GetRandomY();
@@ -108,9 +119,49 @@ public class Field {
 				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
 				layer.setCell(x, y, cell);
 			}
-		}		
+		}
+		
+		int randX, randY;
+		for (int i = 0; i < this.blockerChains; i++) {
+			randX = random.nextInt(totalRadius);
+			randY = random.nextInt(totalRadius);
+			
+			Cell cell = new Cell();
+			cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
+			blockers.setCell(randX, randY, cell);
+			
+			int dx = 0;
+			int dy = 0;
+			
+			for (int j = 0; j < this.maxBlockerLength && random.nextFloat() > .5f; j++) {
+				float nextX = random.nextFloat();
+				float nextY = random.nextFloat();
+				
+				if (nextX < .33f) {
+					dx = -1;
+				} else if (nextX > .66f) {
+					dx = 1;
+				} else {
+					dx = 0;
+				}
+				
+				if (nextY < .33f && dx == 0) {
+					dy = -1;
+				} else if (nextY > .66f && dx == 0) {
+					dy = 1;
+				} else {
+					dy = 0;
+				}
+				
+				randX = randX + dx;
+				randY = randY + dy;
+				
+				blockers.setCell(randX, randY, cell);
+			}
+		}
 		
 		layers.add(layer);
+		layers.add(blockers);
 	}
 	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
