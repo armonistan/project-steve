@@ -128,12 +128,11 @@ public class Field {
 			
 			Cell cell = new Cell();
 			cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
-			blockers.setCell(randX, randY, cell);
 			
 			int dx = 0;
 			int dy = 0;
 			
-			for (int j = 0; j < this.maxBlockerLength && random.nextFloat() > .5f; j++) {
+			for (int j = 0; j < this.maxBlockerLength && random.nextFloat() > .4f; j++) {
 				float nextX = random.nextFloat();
 				float nextY = random.nextFloat();
 				
@@ -157,6 +156,9 @@ public class Field {
 				randY = randY + dy;
 				
 				blockers.setCell(randX, randY, cell);
+				blockers.setCell(randX+1, randY+1, cell);
+				blockers.setCell(randX+1, randY, cell);
+				blockers.setCell(randX, randY+1, cell);
 			}
 		}
 		
