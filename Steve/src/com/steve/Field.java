@@ -51,7 +51,58 @@ public class Field {
 		
 	}
 	
-	//TODO:Define "circles"
+	private class CellContainer {
+		private TextureRegion[][] tileMap;
+		
+		public Cell topRight;
+		public Cell topLeft;
+		public Cell bottomRight;
+		public Cell bottomLeft;
+		public Cell innerTopRight;
+		public Cell innerTopLeft;
+		public Cell innerBottomRight;
+		public Cell innerBottomLeft;
+		
+		public Cell leftA;
+		public Cell leftB;
+		
+		public Cell rightA;
+		public Cell rightB;
+		
+		public Cell topA;
+		public Cell topB;
+		
+		public Cell bottomA;
+		public Cell bottomB;
+		
+		public CellContainer(int x, int y, TextureRegion[][] tileMap) {
+			this.tileMap = tileMap;
+			
+			topLeft = new Cell();
+			topLeft.setTile(new StaticTiledMapTile(this.tileMap[y][x]));
+			
+			topRight = new Cell();
+			topRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 2]));
+			
+			bottomLeft = new Cell();
+			bottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
+			
+			bottomRight = new Cell();
+			bottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 2]));
+			
+			innerTopLeft = new Cell();
+			innerTopLeft.setTile(new StaticTiledMapTile(this.tileMap[y][x + 3]));
+			
+			innerTopRight = new Cell();
+			innerTopRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 5]));
+			
+			innerBottomLeft = new Cell();
+			innerBottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
+			
+			innerBottomRight = new Cell();
+			innerBottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 5]));
+		}
+	}
 
 	public Field(OrthographicCamera camera) {
 		this.grassRadius = 20;
@@ -159,6 +210,14 @@ public class Field {
 				blockers.setCell(randX+1, randY+1, cell);
 				blockers.setCell(randX+1, randY, cell);
 				blockers.setCell(randX, randY+1, cell);
+			}
+		}
+		
+		for (int x = 0; x < this.totalRadius; x++) {
+			for (int y = 0; y < this.totalRadius; y++) {
+				if(blockers.getCell(x, y) != null) {
+					
+				}
 			}
 		}
 		
