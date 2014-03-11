@@ -241,4 +241,8 @@ public class Field {
 	public ArrayList<Pickup> getPickups() {
 		return pickups;
 	}
+	
+	public TiledMap getTiles() {
+		return map;
+	}
 }
