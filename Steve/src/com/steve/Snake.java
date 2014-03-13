@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
 import java.util.*;
 
@@ -53,52 +56,9 @@ public class Snake {
 		
 		//Move all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {			
-			//Update the rest of the segments
-			for (int i = segments.size() - 1; i > 0; i--) {
-				Sprite next = segments.get(i - 1);
-				Sprite current = segments.get(i);
-				current.setPosition(next.getX(), next.getY());
-				current.setRotation(next.getRotation());
-				if (i == segments.size() - 1) {
-					current.setRegion(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
-				}
-				else if (i > 1) {
-					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
-				}
-			}
+			updateSegmentsAndEat();
 			
-			if (segments.size() > 2) {
-				Sprite afterHead = segments.get(1);
-				updateAfterHead(segments.get(0), afterHead, segments.get(2));
-			}
-			
-			segments.get(0).setRotation(nextRotation);
-			segments.get(0).translate(segments.get(0).getWidth() * nextDirection.x, segments.get(0).getHeight() * nextDirection.y);
-
-			//Eat pickups
-			boolean aboutToEat = false;
-			for (Pickup p : SteveDriver.map.getPickups()) {
-				if (p.getActive()) {
-					if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
-						p.consume(this);
-					}
-					else if (segments.get(0).getX() == p.getX() + TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
-							 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + TEXTURE_LENGTH && nextRotation == DOWN ||
-							 segments.get(0).getX() == p.getX() - TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
-							 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - TEXTURE_LENGTH && nextRotation == UP) {
-						aboutToEat = true;
-					}
-				}
-			}
-			
-			if (aboutToEat) {
-				segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 16, 0, 16, 16));
-			}
-			else {
-				segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
-			}
-
-			segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
+			checkCollisions();
 			
 			timer = 0f;
 		}
@@ -111,6 +71,70 @@ public class Snake {
 		timer += deltaTime;
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
+	}
+
+	private void checkCollisions() {
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.map.getTiles().getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				//TODO: Clean up
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * TEXTURE_WIDTH, y * TEXTURE_LENGTH, TEXTURE_WIDTH, TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
+					System.out.println("Wat");
+				}
+			}
+		}
+	}
+
+	private void updateSegmentsAndEat() {
+		//Update the rest of the segments
+		for (int i = segments.size() - 1; i > 0; i--) {
+			Sprite next = segments.get(i - 1);
+			Sprite current = segments.get(i);
+			current.setPosition(next.getX(), next.getY());
+			current.setRotation(next.getRotation());
+			if (i == segments.size() - 1) {
+				current.setRegion(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
+			}
+			else if (i > 1) {
+				current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+			}
+		}
+		
+		if (segments.size() > 2) {
+			Sprite afterHead = segments.get(1);
+			updateAfterHead(segments.get(0), afterHead, segments.get(2));
+		}
+		
+		segments.get(0).setRotation(nextRotation);
+		segments.get(0).translate(segments.get(0).getWidth() * nextDirection.x, segments.get(0).getHeight() * nextDirection.y);
+
+		//Eat pickups
+		boolean aboutToEat = false;
+		for (Pickup p : SteveDriver.map.getPickups()) {
+			if (p.getActive()) {
+				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
+					p.consume(this);
+				}
+				else if (segments.get(0).getX() == p.getX() + TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + TEXTURE_LENGTH && nextRotation == DOWN ||
+						 segments.get(0).getX() == p.getX() - TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - TEXTURE_LENGTH && nextRotation == UP) {
+					aboutToEat = true;
+				}
+			}
+		}
+		
+		if (aboutToEat) {
+			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 16, 0, 16, 16));
+		}
+		else {
+			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
+		}
+
+		segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
 	}
 
 	private void getTouch() {
