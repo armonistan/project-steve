@@ -14,14 +14,24 @@ import java.util.*;
 
 public class Snake {
 	private ArrayList<Sprite> segments;
+<<<<<<< HEAD
+	final int TEXTURE_WIDTH = 16;
+	final int TEXTURE_LENGTH = 16;
+	private final int MIN_SEGMENTS = 4;
 	private final int MAX_SEGMENTS = 10;
-	private final int TEXTURE_LENGTH = 16;
+	final int BIG_TEXTURE_WIDTH = 32;
+	final int BIG_TEXTURE_LENGTH = 32;
+=======
+	private final int MIN_SEGMENTS = 2;
+	private final int MAX_SEGMENTS = 5;
+>>>>>>> 3eb75ad2f9fd2499749e762d7d480272f2c005b1
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
 	private final float TIME_TILL_STARVE = 50000f; //arbitary number
 	private float timer = 0;
 	private float hungerTimer = 0;
+	
 	
 	
 	private Vector2 nextDirection;
@@ -55,20 +65,27 @@ public class Snake {
 		
 		//update all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {			
+<<<<<<< HEAD
 			move();
 			animate();
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
+=======
+			updateSegmentsAndEat();
+			
+			checkCollisions();
+			
+>>>>>>> 3eb75ad2f9fd2499749e762d7d480272f2c005b1
+			timer = 0f;
 		}
-		
 		updateStarvation();
 		updateTimers(deltaTime);
 		
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(batch);
-		}		
+		}
 	}
 
 	private void checkCollisions() {
@@ -84,6 +101,55 @@ public class Snake {
 				}
 			}
 		}
+	}
+
+	private void updateSegmentsAndEat() {
+		//Update the rest of the segments
+		for (int i = segments.size() - 1; i > 0; i--) {
+			Sprite next = segments.get(i - 1);
+			Sprite current = segments.get(i);
+			current.setPosition(next.getX(), next.getY());
+			current.setRotation(next.getRotation());
+			if (i == segments.size() - 1) {
+				current.setRegion(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
+			}
+			else if (i > 1) {
+				current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+			}
+		}
+		
+		if (segments.size() > 2) {
+			Sprite afterHead = segments.get(1);
+			updateAfterHead(segments.get(0), afterHead, segments.get(2));
+		}
+		
+		segments.get(0).setRotation(nextRotation);
+		segments.get(0).translate(segments.get(0).getWidth() * nextDirection.x, segments.get(0).getHeight() * nextDirection.y);
+
+		//Eat pickups
+		boolean aboutToEat = false;
+		for (Pickup p : SteveDriver.field.pickups) {
+			if (p.getActive()) {
+				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
+					p.consume(this);
+				}
+				else if (segments.get(0).getX() == p.getX() + SteveDriver.TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + SteveDriver.TEXTURE_LENGTH && nextRotation == DOWN ||
+						 segments.get(0).getX() == p.getX() - SteveDriver.TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - SteveDriver.TEXTURE_LENGTH && nextRotation == UP) {
+					aboutToEat = true;
+				}
+			}
+		}
+		
+		if (aboutToEat) {
+			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 16, 0, 16, 16));
+		}
+		else {
+			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
+		}
+
+		segments.get(segments.size() - 1).setRotation(segments.get(segments.size() - 2).getRotation());
 	}
 
 	private void getTouch() {
