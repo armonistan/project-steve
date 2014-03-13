@@ -29,6 +29,9 @@ public class Field {
 	
 	public static ArrayList<Pickup> pickups;
 	
+	public static ArrayList<Enemy> enemies;
+	public static LinkedList<Enemy> enemiesToRemove;
+	
 	private class TileRegion {
 		int startX, startY, width, length;
 		Random rand;
@@ -51,8 +54,6 @@ public class Field {
 		
 	}
 	
-	//TODO:Define "circles"
-
 	public Field(OrthographicCamera camera) {
 		this.grassRadius = 20;
 		this.desertRadius = 10;
@@ -77,6 +78,9 @@ public class Field {
 		this.pickups = new ArrayList<Pickup>();
 		this.pickups.add(new Apple(0, 0));
 		this.pickups.add(new Apple(5, 5));
+		
+		this.enemies = new ArrayList<Enemy>();
+		this.enemiesToRemove = new LinkedList<Enemy>();
 	}
 	
 	public void RandomizeField() {
@@ -174,6 +178,14 @@ public class Field {
 				p.draw(batch);
 			}
 		}
+		
+		for (Enemy e : enemies) {
+			e.render(batch);
+		}
+		for (Enemy e : enemiesToRemove) {
+			enemies.remove(e);
+		}
+		enemiesToRemove.clear();
 		batch.end();
 	}
 }
