@@ -6,17 +6,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
 import java.util.*;
 
 public class Snake {
 	private ArrayList<Sprite> segments;
-	final int TEXTURE_WIDTH = 16;
-	final int TEXTURE_LENGTH = 16;
 	private final int MIN_SEGMENTS = 4;
 	private final int MAX_SEGMENTS = 10;
-	final int BIG_TEXTURE_WIDTH = 32;
-	final int BIG_TEXTURE_LENGTH = 32;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
@@ -62,14 +61,29 @@ public class Snake {
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
-			timer = 0f;
 		}
+		
 		updateStarvation();
-		updateTimers(deltaTime);
+		updateTimers();
 		
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(batch);
+		}		
+	}
+
+	private void checkCollisions() {
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				//TODO: Clean up
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
+					System.out.println("Wat");
+				}
+			}
 		}
 	}
 
@@ -141,7 +155,7 @@ public class Snake {
 				delta = dirs[3];
 			}
 			
-			newSegment.setPosition(tail.getX() + delta.x * TEXTURE_WIDTH, tail.getY() + delta.y * TEXTURE_LENGTH);
+			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
 			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
 			
 			segments.add(newSegment);

@@ -21,13 +21,16 @@ public class Field {
 	int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
-	TiledMap map;
+	
+	public static TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
 	TileRegion grass, desert, barren;
-	Random random;
 	
-	ArrayList<Pickup> pickups;
+	public static ArrayList<Pickup> pickups;
+	
+	public static ArrayList<Enemy> enemies;
+	public static LinkedList<Enemy> enemiesToRemove;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -51,8 +54,102 @@ public class Field {
 		
 	}
 	
-	//TODO:Define "circles"
-
+	private class CellContainer {
+		private TextureRegion[][] tileMap;
+		
+		public Cell topRight;
+		public Cell topLeft;
+		public Cell bottomRight;
+		public Cell bottomLeft;
+		public Cell innerTopRight;
+		public Cell innerTopLeft;
+		public Cell innerBottomRight;
+		public Cell innerBottomLeft;
+		
+		public Cell leftA;
+		public Cell leftB;
+		
+		public Cell rightA;
+		public Cell rightB;
+		
+		public Cell topA;
+		public Cell topB;
+		
+		public Cell bottomA;
+		public Cell bottomB;
+		
+		Random rand;
+		
+		public CellContainer(int x, int y, TextureRegion[][] tileMap, Random rand) {
+			this.tileMap = tileMap;
+			this.rand = rand;
+			
+			topLeft = new Cell();
+			topLeft.setTile(new StaticTiledMapTile(this.tileMap[y][x]));
+			
+			topRight = new Cell();
+			topRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 2]));
+			
+			bottomLeft = new Cell();
+			bottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
+			
+			bottomRight = new Cell();
+			bottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 2]));
+			
+			innerTopLeft = new Cell();
+			innerTopLeft.setTile(new StaticTiledMapTile(this.tileMap[y][x + 3]));
+			
+			innerTopRight = new Cell();
+			innerTopRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 5]));
+			
+			innerBottomLeft = new Cell();
+			innerBottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
+			
+			innerBottomRight = new Cell();
+			innerBottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 5]));
+			
+			leftA = new Cell();
+			leftA.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x]));
+			
+			leftB = new Cell();
+			leftB.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x + 5]));
+			
+			rightA = new Cell();
+			rightA.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x + 2]));
+			
+			rightB = new Cell();
+			rightB.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x + 3]));
+			
+			topA = new Cell();
+			topA.setTile(new StaticTiledMapTile(this.tileMap[y][x + 1]));
+			
+			topB = new Cell();
+			topB.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 4]));
+			
+			bottomA = new Cell();
+			bottomA.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 1]));
+			
+			bottomB = new Cell();
+			bottomB.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 4]));
+		}
+		
+		public Cell top() {
+			return rand.nextFloat() > .5 ? this.topA : this.topB; 
+		}
+		
+		public Cell bottom() {
+			return rand.nextFloat() > .5 ? this.bottomA : this.bottomB; 
+		}
+		
+		public Cell left() {
+			return rand.nextFloat() > .5 ? this.leftA : this.leftB; 
+		}
+		
+		public Cell right() {
+			return rand.nextFloat() > .5 ? this.rightA : this.rightB; 
+		}
+	}
+	
 	public Field(OrthographicCamera camera) {
 		this.grassRadius = 20;
 		this.desertRadius = 10;
@@ -61,8 +158,6 @@ public class Field {
 		this.totalRadius = 60;
 		this.blockerChains = 50;
 		this.maxBlockerLength = 10;
-		
-		this.random = new Random();
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
 		this.desert = new TileRegion(6, 7, 1, 2);
@@ -82,6 +177,9 @@ public class Field {
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
 		this.pickups.add(new Apple(13, 13));
+		
+		this.enemies = new ArrayList<Enemy>();
+		this.enemiesToRemove = new LinkedList<Enemy>();
 		this.pickups.add(new Apple(16, 16));
 	}
 	
@@ -90,6 +188,7 @@ public class Field {
 		MapLayers layers = this.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		CellContainer grassBlocks = new CellContainer(0, 4, splitTiles, SteveDriver.random);
 		
 		//This is the Background generation	
 		//Barren tiles generated
@@ -126,9 +225,10 @@ public class Field {
 		}
 		
 		int randX, randY;
+		//this code sets up the positions for the blockers on the grid
 		for (int i = 0; i < this.blockerChains; i++) {
-			randX = random.nextInt(totalRadius);
-			randY = random.nextInt(totalRadius);
+			randX = SteveDriver.random.nextInt(totalRadius);
+			randY = SteveDriver.random.nextInt(totalRadius);
 			
 			Cell cell = new Cell();
 			cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
@@ -136,9 +236,9 @@ public class Field {
 			int dx = 0;
 			int dy = 0;
 			
-			for (int j = 0; j < this.maxBlockerLength && random.nextFloat() > .4f; j++) {
-				float nextX = random.nextFloat();
-				float nextY = random.nextFloat();
+			for (int j = 0; j < this.maxBlockerLength && SteveDriver.random.nextFloat() > .4f; j++) {
+				float nextX = SteveDriver.random.nextFloat();
+				float nextY = SteveDriver.random.nextFloat();
 				
 				if (nextX < .33f) {
 					dx = -1;
@@ -159,10 +259,58 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
+				//ensures that there is always a tileable set of blockers
 				blockers.setCell(randX, randY, cell);
 				blockers.setCell(randX+1, randY+1, cell);
 				blockers.setCell(randX+1, randY, cell);
 				blockers.setCell(randX, randY+1, cell);
+			}
+		}
+		boolean left, right, top, bottom;
+		//code to set the blockers to the correct images
+		for (int x = 0; x < this.totalRadius; x++) {
+			for (int y = 0; y < this.totalRadius; y++) {
+				if(blockers.getCell(x, y) != null) {
+					left = (blockers.getCell(x-1, y) == null);
+					right = (blockers.getCell(x + 1, y) == null);
+					top = (blockers.getCell(x, y + 1) == null);
+					bottom = (blockers.getCell(x, y - 1) == null);
+					
+					//set the actual tile image
+					if (left) {
+						if (top) {
+							blockers.setCell(x, y, grassBlocks.topLeft);
+						} else if (bottom) {
+							blockers.setCell(x, y, grassBlocks.bottomLeft);
+						} else {
+							blockers.setCell(x, y, grassBlocks.left());
+						}
+					} else if (right) {
+						if (top) {
+							blockers.setCell(x, y, grassBlocks.topRight);
+						} else if (bottom) {
+							blockers.setCell(x, y, grassBlocks.bottomRight);
+						} else {
+							blockers.setCell(x, y, grassBlocks.right());
+						}
+					} else if (bottom) {
+						if (left) {
+							blockers.setCell(x, y, grassBlocks.bottomLeft);
+						} else if (right) {
+							blockers.setCell(x, y, grassBlocks.bottomRight);
+						} else {
+							blockers.setCell(x, y, grassBlocks.bottomA);
+						}
+					} else if (top) {
+						if (left) {
+							blockers.setCell(x, y, grassBlocks.topLeft);
+						} else if (right) {
+							blockers.setCell(x, y, grassBlocks.topRight);
+						} else {
+							blockers.setCell(x, y, grassBlocks.top());
+						}
+					}
+				}
 			}
 		}
 		
@@ -180,10 +328,14 @@ public class Field {
 				p.draw(batch);
 			}
 		}
+		
+		for (Enemy e : enemies) {
+			e.render(batch);
+		}
+		for (Enemy e : enemiesToRemove) {
+			enemies.remove(e);
+		}
+		enemiesToRemove.clear();
 		batch.end();
-	}
-	
-	public ArrayList<Pickup> getPickups() {
-		return pickups;
 	}
 }

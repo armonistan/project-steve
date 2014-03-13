@@ -1,5 +1,7 @@
 package com.steve;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -13,10 +15,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
+	public static Snake snake;
+	public static Field field;
+	public static Random random;
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
-	public static Snake snake;
-	public static Field map;
 	public static final int BIG_TEXTURE_WIDTH = 32;
 	public static final int BIG_TEXTURE_LENGTH = 32;
 	
@@ -32,12 +35,14 @@ public class SteveDriver implements ApplicationListener {
 		camera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		
+		random = new Random();
+		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		snake = new Snake();
 		
-		map = new Field(camera);
+		field = new Field(camera);
 	}
 
 	@Override
@@ -53,14 +58,14 @@ public class SteveDriver implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.2f);
+		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.01f);
 		
 		camera.position.x = test.x;
 		camera.position.y = test.y;
 		camera.update();
 		
 		batch.setProjectionMatrix(camera.combined);
-		map.render(camera, batch);
+		field.render(camera, batch);
 		
 		batch.begin();
 		snake.render(batch, deltaTime);
