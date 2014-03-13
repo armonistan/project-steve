@@ -149,6 +149,7 @@ public class Field {
 			return rand.nextFloat() > .5 ? this.rightA : this.rightB; 
 		}
 	}
+	
 	public Field(OrthographicCamera camera) {
 		this.grassRadius = 20;
 		this.desertRadius = 10;
@@ -183,7 +184,7 @@ public class Field {
 		MapLayers layers = this.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
-		CellContainer grassBlocks = new CellContainer(0, 4, splitTiles, random);
+		CellContainer grassBlocks = new CellContainer(0, 4, splitTiles, SteveDriver.random);
 		
 		//This is the Background generation	
 		//Barren tiles generated
