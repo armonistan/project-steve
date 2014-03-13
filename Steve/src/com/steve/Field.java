@@ -21,13 +21,13 @@ public class Field {
 	int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
-	TiledMap map;
+	
+	public static TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
 	TileRegion grass, desert, barren;
-	Random random;
 	
-	ArrayList<Pickup> pickups;
+	public static ArrayList<Pickup> pickups;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -61,8 +61,6 @@ public class Field {
 		this.totalRadius = 60;
 		this.blockerChains = 50;
 		this.maxBlockerLength = 10;
-		
-		this.random = new Random();
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
 		this.desert = new TileRegion(6, 7, 1, 2);
@@ -123,8 +121,8 @@ public class Field {
 		
 		int randX, randY;
 		for (int i = 0; i < this.blockerChains; i++) {
-			randX = random.nextInt(totalRadius);
-			randY = random.nextInt(totalRadius);
+			randX = SteveDriver.random.nextInt(totalRadius);
+			randY = SteveDriver.random.nextInt(totalRadius);
 			
 			Cell cell = new Cell();
 			cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
@@ -132,9 +130,9 @@ public class Field {
 			int dx = 0;
 			int dy = 0;
 			
-			for (int j = 0; j < this.maxBlockerLength && random.nextFloat() > .4f; j++) {
-				float nextX = random.nextFloat();
-				float nextY = random.nextFloat();
+			for (int j = 0; j < this.maxBlockerLength && SteveDriver.random.nextFloat() > .4f; j++) {
+				float nextX = SteveDriver.random.nextFloat();
+				float nextY = SteveDriver.random.nextFloat();
 				
 				if (nextX < .33f) {
 					dx = -1;
@@ -177,13 +175,5 @@ public class Field {
 			}
 		}
 		batch.end();
-	}
-	
-	public ArrayList<Pickup> getPickups() {
-		return pickups;
-	}
-	
-	public TiledMap getTiles() {
-		return map;
 	}
 }

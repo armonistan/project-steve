@@ -14,12 +14,8 @@ import java.util.*;
 
 public class Snake {
 	private ArrayList<Sprite> segments;
-	final int TEXTURE_WIDTH = 16;
-	final int TEXTURE_LENGTH = 16;
 	private final int MIN_SEGMENTS = 2;
 	private final int MAX_SEGMENTS = 5;
-	final int BIG_TEXTURE_WIDTH = 32;
-	final int BIG_TEXTURE_LENGTH = 32;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
@@ -74,14 +70,14 @@ public class Snake {
 	}
 
 	private void checkCollisions() {
-		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.map.getTiles().getLayers().get(1);
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
 				//TODO: Clean up
-				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * TEXTURE_WIDTH, y * TEXTURE_LENGTH, TEXTURE_WIDTH, TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
 					System.out.println("Wat");
 				}
 			}
@@ -113,15 +109,15 @@ public class Snake {
 
 		//Eat pickups
 		boolean aboutToEat = false;
-		for (Pickup p : SteveDriver.map.getPickups()) {
+		for (Pickup p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
 				}
-				else if (segments.get(0).getX() == p.getX() + TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
-						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + TEXTURE_LENGTH && nextRotation == DOWN ||
-						 segments.get(0).getX() == p.getX() - TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
-						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - TEXTURE_LENGTH && nextRotation == UP) {
+				else if (segments.get(0).getX() == p.getX() + SteveDriver.TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + SteveDriver.TEXTURE_LENGTH && nextRotation == DOWN ||
+						 segments.get(0).getX() == p.getX() - SteveDriver.TEXTURE_LENGTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - SteveDriver.TEXTURE_LENGTH && nextRotation == UP) {
 					aboutToEat = true;
 				}
 			}
@@ -203,7 +199,7 @@ public class Snake {
 				delta = dirs[3];
 			}
 			
-			newSegment.setPosition(tail.getX() + delta.x * TEXTURE_WIDTH, tail.getY() + delta.y * TEXTURE_LENGTH);
+			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
 			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
 			
 			segments.add(newSegment);
