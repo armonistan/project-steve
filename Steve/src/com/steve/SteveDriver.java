@@ -53,7 +53,7 @@ public class SteveDriver implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.2f);
+		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.01f);
 		
 		camera.position.x = test.x;
 		camera.position.y = test.y;
