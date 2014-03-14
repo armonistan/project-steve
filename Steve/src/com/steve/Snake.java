@@ -60,6 +60,7 @@ public class Snake {
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
+			timer = 0;
 		}
 		
 		updateStarvation();
@@ -268,7 +269,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (Pickup p : SteveDriver.map.getPickups()) {
+		for (Pickup p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
