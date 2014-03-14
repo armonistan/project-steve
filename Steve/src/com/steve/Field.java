@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.*;
 
 public class Field {
@@ -177,10 +179,13 @@ public class Field {
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
 		this.pickups.add(new Apple(13, 13));
+		this.pickups.add(new Apple(16, 16));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.pickups.add(new Apple(16, 16));
+		enemies.add(new Ring(new Vector2(50, 30)));
+		enemies.add(new Ring(new Vector2(20, 30)));
+		enemies.add(new Ring(new Vector2(40, 30)));
 	}
 	
 	public void RandomizeField() {
