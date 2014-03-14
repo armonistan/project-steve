@@ -172,11 +172,15 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(0, 0));
+		this.pickups.add(new Apple(3, 3));
 		this.pickups.add(new Apple(5, 5));
+		this.pickups.add(new Apple(7, 7));
+		this.pickups.add(new Apple(10, 10));
+		this.pickups.add(new Apple(13, 13));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
+		this.pickups.add(new Apple(16, 16));
 	}
 	
 	public void RandomizeField() {
