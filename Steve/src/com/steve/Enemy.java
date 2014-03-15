@@ -34,6 +34,8 @@ public class Enemy {
 	}
 	
 	public void render(SpriteBatch batch) {
+		checkProjectiles();
+		
 		if (moveTimer >= moveTime) {
 			decideMove();
 			
@@ -56,6 +58,19 @@ public class Enemy {
 		update();
 		
 		avatar.draw(batch);
+	}
+	
+	//TODO: Make more robust.
+	private void checkProjectiles() {
+		for (Projectile p : SteveDriver.field.projectiles) {
+			if (p.getFriendly() && p.getAlive()) {
+				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
+					//TODO: Apply damage.
+					
+					p.kill();
+				}
+			}
+		}
 	}
 	
 	protected void update() {

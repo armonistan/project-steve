@@ -34,6 +34,9 @@ public class Field {
 	public static ArrayList<Enemy> enemies;
 	public static LinkedList<Enemy> enemiesToRemove;
 	
+	public static ArrayList<Projectile> projectiles;
+	public static LinkedList<Projectile> projectilesToRemove;
+	
 	private class TileRegion {
 		int startX, startY, width, length;
 		Random rand;
@@ -185,6 +188,10 @@ public class Field {
 		enemies.add(new Snail(new Vector2(50, 30)));
 		enemies.add(new Ring(new Vector2(20, 30)));
 		enemies.add(new Brute(new Vector2(40, 30)));
+		
+		this.projectiles = new ArrayList<Projectile>();
+		this.projectilesToRemove =  new LinkedList<Projectile>();
+		projectiles.add(new SnakeBullet(new Vector2(30 * 16, 30 * 16), new Vector2(-16, 0), 0));
 	}
 	
 	public void RandomizeField() {
@@ -340,6 +347,14 @@ public class Field {
 			enemies.remove(e);
 		}
 		enemiesToRemove.clear();
+		
+		for (Projectile p : projectiles) {
+			p.render(batch);
+		}
+		for (Projectile p : projectilesToRemove) {
+			projectiles.remove(p);
+		}
+		projectilesToRemove.clear();
 		batch.end();
 	}
 }
