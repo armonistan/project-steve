@@ -1,11 +1,23 @@
 package com.steve;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class Ring extends Enemy {
 
 	public Ring(Vector2 position) {
 		super(position, new Vector2(11, 7), new Vector2(1, 2), 1f, 1, 10);
+	}
+	
+	public void update() {
+		for (Sprite s : SteveDriver.snake.getSegments()) {
+			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
+				
+				//TODO: Replace with something better.
+				kill();
+				break;
+			}
+		}
 	}
 
 	protected void decideMove() {

@@ -173,8 +173,8 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(3, 3));
-		this.pickups.add(new Apple(5, 5));
+		this.pickups.add(new Apple(30, 35));
+		this.pickups.add(new Apple(35, 35));
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
 		this.pickups.add(new Apple(13, 13));
@@ -183,8 +183,8 @@ public class Field {
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		enemies.add(new Snail(new Vector2(50, 30)));
-		enemies.add(new Snail(new Vector2(20, 30)));
-		enemies.add(new Snail(new Vector2(40, 30)));
+		enemies.add(new Ring(new Vector2(20, 30)));
+		enemies.add(new Brute(new Vector2(40, 30)));
 	}
 	
 	public void RandomizeField() {

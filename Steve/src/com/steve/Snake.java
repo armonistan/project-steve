@@ -18,7 +18,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 50f; //arbitary number
+	private final float TIME_TILL_STARVE = 10f; //arbitary number
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -80,13 +80,6 @@ public class Snake {
 				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
 					System.out.println("Wat");
 				}
-			}
-		}
-		
-		//TODO: DO NOT LEAVE THIS IN
-		for (Enemy e : SteveDriver.field.enemies) {
-			if (CollisionHelper.isCollide(segments.get(0).getBoundingRectangle(), e.avatar.getBoundingRectangle())) {
-				//e.kill();
 			}
 		}
 	}

@@ -71,7 +71,7 @@ public class Enemy {
 		float test = (float)(Math.atan2(direction.y, direction.x) + Math.PI / 2);
 		
 		//TODO: Make better.
-		avatar.setRotation(test * 180 / (float)Math.PI);
+		avatar.setRotation(test * 180 / (float)Math.PI + 180);
 		
 		avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);
 	}
