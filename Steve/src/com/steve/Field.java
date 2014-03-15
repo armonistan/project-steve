@@ -31,11 +31,11 @@ public class Field {
 	
 	public static ArrayList<Pickup> pickups;
 	
-	public static ArrayList<Enemy> enemies;
-	public static LinkedList<Enemy> enemiesToRemove;
+	public ArrayList<Enemy> enemies;
+	public LinkedList<Enemy> enemiesToRemove;
 	
-	public static ArrayList<Projectile> projectiles;
-	public static LinkedList<Projectile> projectilesToRemove;
+	public ArrayList<Projectile> projectiles;
+	public LinkedList<Projectile> projectilesToRemove;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -188,6 +188,7 @@ public class Field {
 		enemies.add(new Snail(new Vector2(50, 30)));
 		enemies.add(new Ring(new Vector2(20, 30)));
 		enemies.add(new Brute(new Vector2(40, 30)));
+		enemies.add(new Tank(new Vector2(30, 20)));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();

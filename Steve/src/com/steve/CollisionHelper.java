@@ -10,8 +10,6 @@ public class CollisionHelper {
 		return Intersector.overlaps(a, b);
 	}
 	
-	
-	
 	public static boolean isCollide(Vector2 posA, float radiusA, Vector2 posB, float radiusB) {
 		float distance = distance(posA, posB);
 		
@@ -20,5 +18,13 @@ public class CollisionHelper {
 	
 	public static float distance(Vector2 position1, Vector2 position2) {
 		return position1.dst(position2);
+	}
+	
+	public static Vector2 directionVectorFromAngle(float angle) {
+		 return new Vector2((float)Math.cos(angle / 180 * Math.PI), (float)Math.sin(angle / 180 * Math.PI));
+	}
+	
+	public static float angleFromDirectionVector(Vector2 direction) {
+		return (float)(Math.atan2(direction.y, direction.x) / Math.PI) * 180 + 90;
 	}
 }

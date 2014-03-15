@@ -48,6 +48,7 @@ public class Snake {
 
 	public void render(SpriteBatch batch, float deltaTime){
 		getTouch();
+		checkProjectiles();
 		
 		//update all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {			
