@@ -18,17 +18,13 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 50000f; //arbitary number
+	private final float TIME_TILL_STARVE = 50f; //arbitary number
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
 	
 	private Vector2 nextDirection;
 	private Vector2[] dirs;
-	private final int RIGHT = 270;
-	private final int UP = 0;
-	private final int LEFT = 90;
-	private final int DOWN = 180;
 	private int nextRotation;
 	
 	public Snake(Vector2 position){
@@ -44,7 +40,7 @@ public class Snake {
 		
 		nextDirection = dirs[0];
 		
-		nextRotation = RIGHT;
+		nextRotation = SteveDriver.RIGHT;
 		segments.get(0).setRotation(nextRotation);
 		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
@@ -80,7 +76,7 @@ public class Snake {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				//TODO: Clean up
+				//TODO: Clean SteveDriver.UP
 				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
 					System.out.println("Wat");
 				}
@@ -90,7 +86,7 @@ public class Snake {
 		//TODO: DO NOT LEAVE THIS IN
 		for (Enemy e : SteveDriver.field.enemies) {
 			if (CollisionHelper.isCollide(segments.get(0).getBoundingRectangle(), e.avatar.getBoundingRectangle())) {
-				e.kill();
+				//e.kill();
 			}
 		}
 	}
@@ -101,40 +97,40 @@ public class Snake {
 			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
 			
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
-				if(deltaX > 0 && segments.get(0).getRotation() != LEFT) {
-					nextRotation = RIGHT;
+				if(deltaX > 0 && segments.get(0).getRotation() != SteveDriver.LEFT) {
+					nextRotation = SteveDriver.RIGHT;
 					nextDirection = dirs[0];
 				}
-				else if (segments.get(0).getRotation() != RIGHT){
-					nextRotation = LEFT;
+				else if (segments.get(0).getRotation() != SteveDriver.RIGHT){
+					nextRotation = SteveDriver.LEFT;
 					nextDirection = dirs[2];
 				}
 			}
 			else {
-				if(deltaY > 0 && segments.get(0).getRotation() != UP) {
-					nextRotation = DOWN;
+				if(deltaY > 0 && segments.get(0).getRotation() != SteveDriver.UP) {
+					nextRotation = SteveDriver.DOWN;
 					nextDirection = dirs[3];
 				}
-				else if (segments.get(0).getRotation() != DOWN){
-					nextRotation = UP;
+				else if (segments.get(0).getRotation() != SteveDriver.DOWN){
+					nextRotation = SteveDriver.UP;
 					nextDirection = dirs[1];
 				}
 			}
 		} else {
-			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != UP) {
-				nextRotation = DOWN;
+			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != SteveDriver.UP) {
+				nextRotation = SteveDriver.DOWN;
 				nextDirection = dirs[3];
 			}
-			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)) && segments.get(0).getRotation() != DOWN) {
-				nextRotation = UP;
+			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)) && segments.get(0).getRotation() != SteveDriver.DOWN) {
+				nextRotation = SteveDriver.UP;
 				nextDirection = dirs[1];
 			}
-			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && segments.get(0).getRotation() != RIGHT) {
-				nextRotation = LEFT;
+			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && segments.get(0).getRotation() != SteveDriver.RIGHT) {
+				nextRotation = SteveDriver.LEFT;
 				nextDirection = dirs[2];
 			}
-			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && segments.get(0).getRotation() != LEFT) {
-				nextRotation = RIGHT;
+			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && segments.get(0).getRotation() != SteveDriver.LEFT) {
+				nextRotation = SteveDriver.RIGHT;
 				nextDirection = dirs[0];
 			}
 		}
@@ -153,13 +149,13 @@ public class Snake {
 			
 			Vector2 delta = dirs[0];
 			
-			if (tail.getRotation() ==  DOWN) {
+			if (tail.getRotation() ==  SteveDriver.DOWN) {
 				delta = dirs[1];
 			}
-			else if (tail.getRotation() ==  RIGHT) {
+			else if (tail.getRotation() ==  SteveDriver.RIGHT) {
 				delta = dirs[2];
 			}
-			else if (tail.getRotation() ==  UP) {
+			else if (tail.getRotation() ==  SteveDriver.UP) {
 				delta = dirs[3];
 			}
 			
@@ -167,6 +163,16 @@ public class Snake {
 			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
 			
 			segments.add(newSegment);
+		}
+	}
+	
+	public void changeHungerByPercent(float percent) {
+		if (percent >= 0 && percent <= 1) {
+			hungerTimer += (TIME_TILL_STARVE * percent);
+			
+			if (hungerTimer < 0) {
+				hungerTimer = 0;
+			}
 		}
 	}
 
@@ -282,10 +288,10 @@ public class Snake {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
 				}
-				else if (segments.get(0).getX() == p.getX() + SteveDriver.TEXTURE_WIDTH && segments.get(0).getY() == p.getY() && nextRotation == LEFT ||
-						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + SteveDriver.TEXTURE_LENGTH && nextRotation == DOWN ||
-						 segments.get(0).getX() == p.getX() - SteveDriver.TEXTURE_WIDTH && segments.get(0).getY() == p.getY() && nextRotation == RIGHT ||
-						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - SteveDriver.TEXTURE_LENGTH && nextRotation == UP) {
+				else if (segments.get(0).getX() == p.getX() + SteveDriver.TEXTURE_WIDTH && segments.get(0).getY() == p.getY() && nextRotation == SteveDriver.LEFT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() + SteveDriver.TEXTURE_LENGTH && nextRotation == SteveDriver.DOWN ||
+						 segments.get(0).getX() == p.getX() - SteveDriver.TEXTURE_WIDTH && segments.get(0).getY() == p.getY() && nextRotation == SteveDriver.RIGHT ||
+						 segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY() - SteveDriver.TEXTURE_LENGTH && nextRotation == SteveDriver.UP) {
 					aboutToEat = true;
 				}
 			}
@@ -325,9 +331,18 @@ public class Snake {
 
 	private void updateStarvation(){
 		if(hungerTimer > TIME_TILL_STARVE){
+			if (segments.size() <= 2) {
+				//TODO: Make this better.
+				System.out.println("You suck.");
+				System.exit(0);
+			}
 			segments.remove(segments.size() - 1);
 			hungerTimer = 0;
 		}
+	}
+	
+	public ArrayList<Sprite> getSegments() {
+		return segments;
 	}
 	
 	private void updateTimers(float deltaTime){
