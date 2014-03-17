@@ -153,7 +153,7 @@ public class Field {
 	public Field(OrthographicCamera camera) {
 		this.grassRadius = 20;
 		this.desertRadius = 10;
-		this.barrenRadius = 150;
+		this.barrenRadius = 60;
 		
 		this.totalRadius = 60;
 		this.blockerChains = 50;
@@ -183,12 +183,25 @@ public class Field {
 		this.pickups.add(new Apple(16, 16));
 	}
 	
+	private int checkRing(int x, int y) {
+		if (x >= this.grassRadius && x < this.totalRadius - this.grassRadius && y >= this.grassRadius && y < this.totalRadius - this.grassRadius) {
+			return 0;
+		} else if (x >= this.desertRadius && x < this.totalRadius - this.desertRadius && y >= this.desertRadius && y < this.totalRadius - this.desertRadius) {
+			return 1;
+		} else {
+			return 2;
+		}
+	}
+	
 	public void RandomizeField() {
 		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		MapLayers layers = this.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
-		CellContainer grassBlocks = new CellContainer(0, 4, splitTiles, SteveDriver.random);
+		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
+		blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
+		blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
+		blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
 		
 		//This is the Background generation	
 		//Barren tiles generated
@@ -259,6 +272,7 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
+				
 				//ensures that there is always a tileable set of blockers
 				blockers.setCell(randX, randY, cell);
 				blockers.setCell(randX+1, randY+1, cell);
@@ -267,6 +281,7 @@ public class Field {
 			}
 		}
 		boolean left, right, top, bottom;
+		int tileRad = 0;
 		//code to set the blockers to the correct images
 		for (int x = 0; x < this.totalRadius; x++) {
 			for (int y = 0; y < this.totalRadius; y++) {
@@ -275,39 +290,41 @@ public class Field {
 					right = (blockers.getCell(x + 1, y) == null);
 					top = (blockers.getCell(x, y + 1) == null);
 					bottom = (blockers.getCell(x, y - 1) == null);
+					tileRad = this.checkRing(x, y);
 					
+					blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
 					//set the actual tile image
 					if (left) {
 						if (top) {
-							blockers.setCell(x, y, grassBlocks.topLeft);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
 						} else if (bottom) {
-							blockers.setCell(x, y, grassBlocks.bottomLeft);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
 						} else {
-							blockers.setCell(x, y, grassBlocks.left());
+							blockers.setCell(x, y, blockerTiles.get(tileRad).left());
 						}
 					} else if (right) {
 						if (top) {
-							blockers.setCell(x, y, grassBlocks.topRight);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
 						} else if (bottom) {
-							blockers.setCell(x, y, grassBlocks.bottomRight);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
 						} else {
-							blockers.setCell(x, y, grassBlocks.right());
+							blockers.setCell(x, y, blockerTiles.get(tileRad).right());
 						}
 					} else if (bottom) {
 						if (left) {
-							blockers.setCell(x, y, grassBlocks.bottomLeft);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
 						} else if (right) {
-							blockers.setCell(x, y, grassBlocks.bottomRight);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
 						} else {
-							blockers.setCell(x, y, grassBlocks.bottomA);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomA);
 						}
 					} else if (top) {
 						if (left) {
-							blockers.setCell(x, y, grassBlocks.topLeft);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
 						} else if (right) {
-							blockers.setCell(x, y, grassBlocks.topRight);
+							blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
 						} else {
-							blockers.setCell(x, y, grassBlocks.top());
+							blockers.setCell(x, y, blockerTiles.get(tileRad).top());
 						}
 					}
 				}

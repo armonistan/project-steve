@@ -19,7 +19,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 50000f; //arbitary number
+	private final float TIME_TILL_STARVE = 1000f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -48,6 +48,14 @@ public class Snake {
 		nextRotation = RIGHT;
 		segments.get(0).setRotation(nextRotation);
 		headPosition = new Vector3(0, 0, 0);
+	}
+	
+	public float GetHungerTimer() {
+		return this.hungerTimer;
+	}
+	
+	public float GetStarveTime() {
+		return this.TIME_TILL_STARVE;
 	}
 
 	public void render(SpriteBatch batch, float deltaTime){
