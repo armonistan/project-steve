@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.*;
 
 public class Field {
@@ -29,8 +31,11 @@ public class Field {
 	
 	public static ArrayList<Pickup> pickups;
 	
-	public static ArrayList<Enemy> enemies;
-	public static LinkedList<Enemy> enemiesToRemove;
+	public ArrayList<Enemy> enemies;
+	public LinkedList<Enemy> enemiesToRemove;
+	
+	public ArrayList<Projectile> projectiles;
+	public LinkedList<Projectile> projectilesToRemove;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -51,7 +56,6 @@ public class Field {
 		public int GetRandomY() {
 			return this.rand.nextInt(this.length + 1) + this.startY;
 		}
-		
 	}
 	
 	private class CellContainer {
@@ -172,15 +176,23 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(3, 3));
-		this.pickups.add(new Apple(5, 5));
+		this.pickups.add(new Apple(30, 35));
+		this.pickups.add(new Apple(35, 35));
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
 		this.pickups.add(new Apple(13, 13));
+		this.pickups.add(new Apple(16, 16));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.pickups.add(new Apple(16, 16));
+		enemies.add(new Snail(new Vector2(50, 30)));
+		enemies.add(new Ring(new Vector2(20, 30)));
+		enemies.add(new Brute(new Vector2(40, 30)));
+		enemies.add(new Tank(new Vector2(30, 20)));
+		
+		this.projectiles = new ArrayList<Projectile>();
+		this.projectilesToRemove =  new LinkedList<Projectile>();
+		projectiles.add(new SnakeBullet(new Vector2(30 * 16, 30 * 16), new Vector2(-16, 0), 0));
 	}
 	
 	private int checkRing(int x, int y) {
@@ -353,6 +365,14 @@ public class Field {
 			enemies.remove(e);
 		}
 		enemiesToRemove.clear();
+		
+		for (Projectile p : projectiles) {
+			p.render(batch);
+		}
+		for (Projectile p : projectilesToRemove) {
+			projectiles.remove(p);
+		}
+		projectilesToRemove.clear();
 		batch.end();
 	}
 }
