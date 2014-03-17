@@ -18,11 +18,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-<<<<<<< HEAD
-	private final float TIME_TILL_STARVE = 1000f; //unit is seconds
-=======
-	private final float TIME_TILL_STARVE = 10f; //arbitary number
->>>>>>> b2bd1ba047c9c5fe0d31ee33c3c4a8db5ef68629
+	private final float TIME_TILL_STARVE = 10f; //unit is seconnds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -232,12 +228,12 @@ public class Snake {
 		else if(leftUp){
 			atlasX = 0;
 			atlasY = 32;
-			degrees = 0;			
+			degrees = 0;
 		}
 		else if(rightDown){
 			atlasX = 48;
 			atlasY = 32;
-			degrees = 0;			
+			degrees = 0;
 		}
 		else if(leftDown){
 			atlasX = 32;
