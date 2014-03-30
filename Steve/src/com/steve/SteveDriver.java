@@ -31,14 +31,17 @@ public class SteveDriver implements ApplicationListener {
 	
 	
 	private OrthographicCamera camera;
+	private OrthographicCamera guiCamera;
 	private SpriteBatch batch;
+	private GUI gui;
 	
 	@Override
-	public void create() {		
+	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
 		camera = new OrthographicCamera(w, h);
+		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		
 		random = new Random();
@@ -50,6 +53,7 @@ public class SteveDriver implements ApplicationListener {
 		snake = new Snake(new Vector2(30, 30));
 		
 		field = new Field(camera);
+		gui = new GUI();
 	}
 
 	@Override
@@ -71,12 +75,19 @@ public class SteveDriver implements ApplicationListener {
 		camera.position.y = test.y;
 		camera.update();
 		
+		guiCamera.position.x = 0;
+		guiCamera.position.y = 0;
+		guiCamera.update();
+		
 		batch.setProjectionMatrix(camera.combined);
 		field.render(camera, batch);
 		
 		batch.begin();
 		snake.render(batch, deltaTime);
 		batch.end();
+		
+		batch.setProjectionMatrix(guiCamera.combined);
+		gui.render(batch);
 	}
 
 	@Override

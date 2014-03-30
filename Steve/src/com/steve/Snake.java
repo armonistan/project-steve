@@ -18,7 +18,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 20f; //arbitary number
+	private final float TIME_TILL_STARVE = 10f; //arbitary number
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -44,6 +44,14 @@ public class Snake {
 		segments.get(0).setRotation(nextRotation);
 		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
+	}
+	
+	public float GetHungerTimer() {
+		return this.hungerTimer;
+	}
+	
+	public float GetStarveTime() {
+		return this.TIME_TILL_STARVE;
 	}
 
 	public void render(SpriteBatch batch, float deltaTime){
@@ -220,12 +228,12 @@ public class Snake {
 		else if(leftUp){
 			atlasX = 0;
 			atlasY = 32;
-			degrees = 0;			
+			degrees = 0;
 		}
 		else if(rightDown){
 			atlasX = 48;
 			atlasY = 32;
-			degrees = 0;			
+			degrees = 0;
 		}
 		else if(leftDown){
 			atlasX = 32;
