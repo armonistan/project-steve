@@ -18,22 +18,7 @@ public class Brute extends Enemy{
 			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
 		}*/
 		
-		Vector2 directionToSnake = new Vector2(avatar.getX() + avatar.getOriginX(), avatar.getY() + avatar.getOriginY())
-			.sub(new Vector2(SteveDriver.snake.getHeadPosition().x, SteveDriver.snake.getHeadPosition().y));
-		float angleToSnake = (float)Math.atan2(directionToSnake.y, directionToSnake.x) / (float)Math.PI * 180 + 180;
-		
-		if (angleToSnake > 45 && angleToSnake <= 135) {
-			move(new Vector2(0, 1));
-		}
-		else if (angleToSnake > 135 && angleToSnake <= 225) {
-			move(new Vector2(-1, 0));
-		}
-		else if (angleToSnake > 225 && angleToSnake <= 315) {
-			move(new Vector2(0, -1));
-		}
-		else {
-			move(new Vector2(1, 0));
-		}
+		followSteve();
 	}
 	
 	protected void update() {

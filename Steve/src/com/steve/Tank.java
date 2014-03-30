@@ -16,7 +16,6 @@ public class Tank extends Enemy {
 		
 		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_WIDTH, 1 * SteveDriver.TEXTURE_LENGTH,
 				2 * SteveDriver.TEXTURE_WIDTH, 2 * SteveDriver.TEXTURE_LENGTH);
-		face.setPosition(avatar.getX(), avatar.getY());
 	}
 	
 	public void render(SpriteBatch batch) {
