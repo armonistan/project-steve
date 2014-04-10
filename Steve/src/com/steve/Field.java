@@ -284,12 +284,13 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
-				
-				//ensures that there is always a tileable set of blockers
-				blockers.setCell(randX, randY, cell);
-				blockers.setCell(randX+1, randY+1, cell);
-				blockers.setCell(randX+1, randY, cell);
-				blockers.setCell(randX, randY+1, cell);
+				if(this.checkRing(randX, randY) == this.checkRing(randX+1, randY+1)){
+					//ensures that there is always a tileable set of blockers
+					blockers.setCell(randX, randY, cell);
+					blockers.setCell(randX+1, randY+1, cell);
+					blockers.setCell(randX+1, randY, cell);
+					blockers.setCell(randX, randY+1, cell);
+				}
 			}
 		}
 		boolean left, right, top, bottom;
@@ -298,11 +299,11 @@ public class Field {
 		for (int x = 0; x < this.totalRadius; x++) {
 			for (int y = 0; y < this.totalRadius; y++) {
 				if(blockers.getCell(x, y) != null) {
-					left = (blockers.getCell(x-1, y) == null);
-					right = (blockers.getCell(x + 1, y) == null);
-					top = (blockers.getCell(x, y + 1) == null);
-					bottom = (blockers.getCell(x, y - 1) == null);
 					tileRad = this.checkRing(x, y);
+					left = (blockers.getCell(x-1, y) == null) || (tileRad != this.checkRing(x - 1, y));
+					right = (blockers.getCell(x + 1, y) == null) || (tileRad != this.checkRing(x + 1, y));
+					top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
+					bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 					
 					blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
 					//set the actual tile image
