@@ -14,14 +14,15 @@ import java.util.*;
 
 public class Snake {
 	private ArrayList<Sprite> segments;
+	private ArrayList<Weapon> weapons;
 	private final int MAX_SEGMENTS = 10;
+	private final int beltImageOffset = 64;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 10f; //unit is seconnds
+	private final float TIME_TILL_STARVE = 10f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
-	
 	
 	private Vector2 nextDirection;
 	private Vector2[] dirs;
@@ -29,6 +30,7 @@ public class Snake {
 	
 	public Snake(Vector2 position){
 		segments = new ArrayList<Sprite>();
+		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
 		
@@ -70,12 +72,16 @@ public class Snake {
 		}
 		
 		updateStarvation();
+		updateWeapons();
 		updateTimers(deltaTime);
 		
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(batch);
-		}		
+		}
+		for (Sprite w : weapons){
+			w.draw(batch);
+		}
 	}
 
 	private void checkCollisions() {
@@ -264,6 +270,10 @@ public class Snake {
 		//System.out.println(deltaX + "," + deltaY);
 		//System.out.println(atlasX + "|" + atlasY);
 		
+		if(weapons.size() > 0){
+			atlasX += this.beltImageOffset;
+		}
+		
 		segments.get(1).setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
 		segments.get(1).setRotation(degrees);
 	}
@@ -279,7 +289,10 @@ public class Snake {
 				updateBody();
 			}
 			else if (i > 0) {
-				current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				if(weapons.size() >= i)
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				else
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
 			}
 		}
 	}
@@ -353,6 +366,9 @@ public class Snake {
 				System.exit(0);
 			}
 			segments.remove(segments.size() - 1);
+			if(this.segments.size()-2 < weapons.size()){
+				weapons.remove(weapons.size() - 1);
+			}
 			hungerTimer = 0;
 		}
 	}
@@ -366,6 +382,22 @@ public class Snake {
 		hungerTimer += deltaTime;
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
+	}
+	
+	private void updateWeapons(){
+		for(int i = 0; i < weapons.size(); i++){
+			weapons.get(i).update(segments.get(i+1).getX(), segments.get(i+1).getY());
+		}
+	}
+	
+	public void mountUpgrade(int upgradeType){
+		if(this.segments.size() - 2 > this.weapons.size())
+			switch(upgradeType){
+			case 0:
+				weapons.add(new Weapon(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+				break;
+			}
 	}
 }
 
