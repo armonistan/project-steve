@@ -24,6 +24,8 @@ public class Field {
 	int blockerChains;
 	int maxBlockerLength;
 	
+	float pickUpTimer = 0;
+	
 	public static TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
@@ -176,7 +178,7 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(30, 35));
+		this.pickups.add(new GattlingGunPickUp(30, 35));
 		this.pickups.add(new Apple(35, 35));
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
