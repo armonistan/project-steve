@@ -1,0 +1,147 @@
+package com.steve;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+
+public class Enemy {
+	public Sprite avatar;
+	protected Vector2 mapPosition;
+	
+	protected float moveTimer;
+	protected float moveTime;
+	
+	protected float animateTimer;
+	protected float animateTime;
+	protected int currentFrame;
+	protected int numberFrames;
+	protected Vector2 atlasPosition;
+	protected Vector2 atlasBounds;
+	
+	protected float healthPercentage;
+	
+	public Enemy(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
+		mapPosition = position;
+		this.moveTime = moveTime;
+		this.animateTime = animateTime;
+		this.numberFrames = numberFrames;
+		this.atlasPosition = atlasPosition;
+		this.atlasBounds = atlasBounds;
+		
+		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH, (int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		updateAvatar();
+		avatar.setPosition(mapPosition.x * SteveDriver.TEXTURE_WIDTH, mapPosition.y * SteveDriver.TEXTURE_LENGTH);
+		
+		healthPercentage = 100;
+	}
+	
+	public void render(SpriteBatch batch) {
+		checkProjectiles();
+		
+		if (moveTimer >= moveTime) {
+			decideMove();
+			
+			moveTimer = 0;
+		}
+		else {
+			moveTimer += Gdx.graphics.getRawDeltaTime();
+		}
+		
+		if (animateTimer >= animateTime) {
+			currentFrame = (currentFrame + 1) % numberFrames;
+			updateAvatar();
+			
+			animateTimer = 0;
+		}
+		else {
+			animateTimer += Gdx.graphics.getRawDeltaTime();
+		}
+		
+		update();
+		
+		avatar.draw(batch);
+	}
+	
+	//TODO: Make more robust.
+	private void checkProjectiles() {
+		for (Projectile p : SteveDriver.field.projectiles) {
+			if (p.getFriendly() && p.getAlive()) {
+				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
+					this.healthPercentage -= p.getPercentDamage();
+					p.kill();
+				}
+			}
+		}
+	}
+	
+	protected void update() {
+		if(this.healthPercentage <= 0){
+			this.kill();
+		}
+		//TODO: Define basic update behavior
+		//Should override
+	}
+	
+	protected void decideMove() {
+		//Default to nothing
+	}
+	
+	protected void move(Vector2 direction) {
+		float test = (float)(Math.atan2(direction.y, direction.x) + Math.PI / 2);
+		
+		//TODO: Make better.
+		avatar.setRotation(test * 180 / (float)Math.PI + 180);
+		
+		avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);
+	}
+	
+	protected void updateAvatar() {
+		avatar.setRegion(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * currentFrame * (int)atlasBounds.x, (int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+	}
+	
+	public void kill() {
+		SteveDriver.field.enemiesToRemove.add(this);
+	}
+	
+<<<<<<< HEAD
+	protected void moveRandomly() {
+		//TODO: This can be more sophisticated.
+		if (avatar.getRotation() == SteveDriver.UP || avatar.getRotation() == SteveDriver.DOWN) {
+			move(new Vector2(SteveDriver.random.nextBoolean() ? 1 : -1, 0));
+		}
+		else {
+			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
+		}
+	}
+	
+	protected void followSnake() {
+		//TODO: This can be more sophisticated.
+		Vector2 directionToSnake = new Vector2(avatar.getX() + avatar.getOriginX(), avatar.getY() + avatar.getOriginY())
+			.sub(new Vector2(SteveDriver.snake.getHeadPosition().x, SteveDriver.snake.getHeadPosition().y));
+		float angleToSnake = MathUtils.atan2(directionToSnake.y, directionToSnake.x);
+		
+		if (angleToSnake > MathUtils.PI / 4f && angleToSnake <= MathUtils.PI * 3f / 4f) {
+			move(SteveDriver.VUP);
+		}
+		else if (angleToSnake > MathUtils.PI * 3f / 4f && angleToSnake <= MathUtils.PI * 5f / 4f) {
+			move(SteveDriver.VLEFT);
+		}
+		else if (angleToSnake > MathUtils.PI * 5f / 4f && angleToSnake <= MathUtils.PI * 7f / 4f) {
+			move(SteveDriver.VDOWN);
+		}
+		else {
+			move(SteveDriver.VRIGHT);
+		}
+=======
+	public float getXPosition(){
+		return this.avatar.getX();
+	}
+	
+	public float getYPosition(){
+		return this.avatar.getY();
+>>>>>>> origin/dev
+	}
+}

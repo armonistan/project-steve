@@ -54,7 +54,7 @@ public class SteveDriver implements ApplicationListener {
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		//TODO: Make this better.
-		snake = new Snake(new Vector2(10, 10));
+		snake = new Snake(new Vector2(30, 30));
 		
 		field = new Field(camera);
 		gui = new GUI();
