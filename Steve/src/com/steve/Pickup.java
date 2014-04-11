@@ -3,12 +3,11 @@ package com.steve;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Pickup extends Sprite {
+public class PickUp extends Sprite {
 	private boolean active;
 	
-	public Pickup(float x, float y, int atlasX, int atlasY) {
+	public PickUp(float x, float y, int atlasX, int atlasY) {
 		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
-		
 		this.setPosition(x * 16, y * 16);
 		active = true;
 	}

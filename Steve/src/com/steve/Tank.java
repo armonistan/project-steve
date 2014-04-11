@@ -40,6 +40,7 @@ public class Tank extends Enemy {
 	}
 
 	protected void update() {
+		super.update();
 		if (shootTimer >= shootTime) {
 			SteveDriver.field.projectiles.add(new Acorn(new Vector2(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2),
 					CollisionHelper.directionVectorFromAngle(avatar.getRotation() - 270).scl(100)));

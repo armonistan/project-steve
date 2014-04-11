@@ -20,7 +20,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 10f; //unit is seconds
+	private final float TIME_TILL_STARVE = 100000f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -312,7 +312,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (Pickup p : SteveDriver.field.pickups) {
+		for (PickUp p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
@@ -394,8 +394,16 @@ public class Snake {
 		if(this.segments.size() - 2 > this.weapons.size())
 			switch(upgradeType){
 			case 0:
-				weapons.add(new Weapon(this.segments.get(this.weapons.size()+1).getX(), 
+				weapons.add(new GatlingGun(this.segments.get(this.weapons.size()+1).getX(), 
 					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+				break;
+			case 1:
+				weapons.add(new Laser(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*9, 16));
+				break;
+			case 2:
+				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*10, 16));
 				break;
 			}
 	}

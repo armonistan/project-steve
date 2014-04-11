@@ -31,7 +31,7 @@ public class Field {
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	
-	public static ArrayList<Pickup> pickups;
+	public static ArrayList<PickUp> pickups;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
@@ -177,18 +177,20 @@ public class Field {
 		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new GattlingGunPickUp(30, 35));
+		this.pickups = new ArrayList<PickUp>();
+		this.pickups.add(new GatlingGunPickUp(30,35));
+		this.pickups.add(new SpecialistPickUp(29,35));
+		this.pickups.add(new LaserPickUp(28,35));
 		this.pickups.add(new Apple(35, 35));
-		this.pickups.add(new Apple(7, 7));
-		this.pickups.add(new Apple(10, 10));
-		this.pickups.add(new Apple(13, 13));
-		this.pickups.add(new Apple(16, 16));
+		this.pickups.add(new Apple(36, 36));
+		this.pickups.add(new Apple(37, 37));
+		this.pickups.add(new Apple(34, 34));
+		this.pickups.add(new Apple(33, 33));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		enemies.add(new Snail(new Vector2(50, 30)));
-		enemies.add(new Ring(new Vector2(20, 30)));
+		//enemies.add(new Ring(new Vector2(20, 30)));
 		enemies.add(new Brute(new Vector2(40, 30)));
 		enemies.add(new Tank(new Vector2(30, 20)));
 		
@@ -355,7 +357,7 @@ public class Field {
 		mapRenderer.render();
 		
 		batch.begin();
-		for (Pickup p : pickups) {
+		for (PickUp p : pickups) {
 			if (p.getActive()) {
 				p.draw(batch);
 			}
