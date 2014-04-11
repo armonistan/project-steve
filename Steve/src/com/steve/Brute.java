@@ -14,6 +14,7 @@ public class Brute extends Enemy{
 	}
 	
 	protected void update() {
+		super.update();
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
 				SteveDriver.snake.changeHungerByPercent(1f);

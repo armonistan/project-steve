@@ -14,6 +14,7 @@ public class Snail extends Enemy {
 	}
 
 	protected void update() {
+		super.update();
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
 				SteveDriver.snake.changeHungerByPercent(0.25f);

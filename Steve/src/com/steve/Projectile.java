@@ -12,6 +12,7 @@ public class Projectile {
 	private Vector2 direction;
 	private boolean snakeFriendly;
 	private boolean dead;
+	private float projectileTime;
 
 	public Projectile(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float percentDamage, boolean snakeFriendly, Vector2 direction) {
 		this.percentDamage = percentDamage;
@@ -23,10 +24,17 @@ public class Projectile {
 				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
 		avatar.setPosition(position.x, position.y);
 		avatar.setRotation(CollisionHelper.angleFromDirectionVector(direction.x, direction.y));
+	
+		projectileTime = 100;
 	}
 	
 	public void render(SpriteBatch batch) {		
 		avatar.draw(batch);
+		
+		if(this.projectileTime > 0)
+			this.projectileTime--;
+		else
+			kill();
 		
 		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
 	}

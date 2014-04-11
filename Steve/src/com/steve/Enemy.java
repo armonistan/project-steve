@@ -21,6 +21,8 @@ public class Enemy {
 	protected Vector2 atlasPosition;
 	protected Vector2 atlasBounds;
 	
+	protected float healthPercentage;
+	
 	public Enemy(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
 		mapPosition = position;
 		this.moveTime = moveTime;
@@ -32,6 +34,8 @@ public class Enemy {
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH, (int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
 		updateAvatar();
 		avatar.setPosition(mapPosition.x * SteveDriver.TEXTURE_WIDTH, mapPosition.y * SteveDriver.TEXTURE_LENGTH);
+		
+		healthPercentage = 100;
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -66,8 +70,7 @@ public class Enemy {
 		for (Projectile p : SteveDriver.field.projectiles) {
 			if (p.getFriendly() && p.getAlive()) {
 				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
-					//TODO: Apply damage.
-					
+					this.healthPercentage -= p.getPercentDamage();
 					p.kill();
 				}
 			}
@@ -75,6 +78,9 @@ public class Enemy {
 	}
 	
 	protected void update() {
+		if(this.healthPercentage <= 0){
+			this.kill();
+		}
 		//TODO: Define basic update behavior
 		//Should override
 	}
@@ -98,6 +104,14 @@ public class Enemy {
 	
 	public void kill() {
 		SteveDriver.field.enemiesToRemove.add(this);
+	}
+	
+	public float getXPosition(){
+		return this.avatar.getX();
+	}
+	
+	public float getYPosition(){
+		return this.avatar.getY();
 	}
 	
 	protected void moveRandomly() {

@@ -17,10 +17,11 @@ public class Snake {
 	private ArrayList<Weapon> weapons;
 	private final int MAX_SEGMENTS = 10;
 	private final int beltImageOffset = 64;
+	private final int TILE_WIDTH = 16;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 10f; //unit is seconds
+	private final float TIME_TILL_STARVE = 100000f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -55,13 +56,13 @@ public class Snake {
 		checkProjectiles();
 		
 		//update all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {			
+		if (timer >= TIME_BETWEEN_TURN) {
 			move();
-			animate();
+			checkCollisions();
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
-			checkCollisions();
+			animate();
 			timer = 0;
 		}
 		
@@ -282,11 +283,16 @@ public class Snake {
 			else if(i == 1){
 				updateBody();
 			}
-			else if (i > 0) {
-				if(weapons.size() >= i)
+			else {
+				if (i < weapons.size() + 1) {
 					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
-				else
+				}
+				else if (i == weapons.size() + 1 && (next.getRegionX()/TILE_WIDTH > 3)) {
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX() - this.beltImageOffset, next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
+				else {
 					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
 			}
 		}
 	}
@@ -306,7 +312,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (Pickup p : SteveDriver.field.pickups) {
+		for (PickUp p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
@@ -388,8 +394,16 @@ public class Snake {
 		if(this.segments.size() - 2 > this.weapons.size()) {
 			switch(upgradeType){
 			case 0:
-				weapons.add(new Weapon(this.segments.get(this.weapons.size()+1).getX(), 
+				weapons.add(new GatlingGun(this.segments.get(this.weapons.size()+1).getX(), 
 					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+				break;
+			case 1:
+				weapons.add(new Laser(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*9, 16));
+				break;
+			case 2:
+				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*10, 16));
 				break;
 			}
 		}

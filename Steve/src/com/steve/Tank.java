@@ -35,6 +35,7 @@ public class Tank extends Enemy {
 	}
 
 	protected void update() {
+		super.update();
 		if (shootTimer >= shootTime) {
 			//TODO: We want to get rid of new Vector2's when we don't need them.
 			SteveDriver.field.projectiles.add(new Acorn(new Vector2(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2),
