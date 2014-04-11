@@ -25,7 +25,6 @@ public class Snake {
 	private float hungerTimer = 0;
 	
 	private Vector2 nextDirection;
-	private Vector2[] dirs;
 	private float nextRotation;
 	
 	public Snake(Vector2 position){
@@ -34,13 +33,8 @@ public class Snake {
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
 		
-		dirs = new Vector2[4];
-		dirs[0] = new Vector2(1, 0);
-		dirs[1] = new Vector2(0, 1);
-		dirs[2] = new Vector2(-1, 0);
-		dirs[3] = new Vector2(0, -1);
 		
-		nextDirection = dirs[0];
+		nextDirection = SteveDriver.VRIGHT;
 		
 		nextRotation = SteveDriver.RIGHT;
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
@@ -121,39 +115,39 @@ public class Snake {
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
 				if(deltaX > 0 && segments.get(0).getRotation() != SteveDriver.LEFT) {
 					nextRotation = SteveDriver.RIGHT;
-					nextDirection = dirs[0];
+					nextDirection = SteveDriver.VRIGHT;
 				}
 				else if (segments.get(0).getRotation() != SteveDriver.RIGHT){
 					nextRotation = SteveDriver.LEFT;
-					nextDirection = dirs[2];
+					nextDirection = SteveDriver.VLEFT;
 				}
 			}
 			else {
 				if(deltaY > 0 && segments.get(0).getRotation() != SteveDriver.UP) {
 					nextRotation = SteveDriver.DOWN;
-					nextDirection = dirs[3];
+					nextDirection = SteveDriver.VDOWN;
 				}
 				else if (segments.get(0).getRotation() != SteveDriver.DOWN){
 					nextRotation = SteveDriver.UP;
-					nextDirection = dirs[1];
+					nextDirection = SteveDriver.VUP;
 				}
 			}
 		} else {
 			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != SteveDriver.UP) {
 				nextRotation = SteveDriver.DOWN;
-				nextDirection = dirs[3];
+				nextDirection = SteveDriver.VDOWN;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)) && segments.get(0).getRotation() != SteveDriver.DOWN) {
 				nextRotation = SteveDriver.UP;
-				nextDirection = dirs[1];
+				nextDirection = SteveDriver.VUP;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && segments.get(0).getRotation() != SteveDriver.RIGHT) {
 				nextRotation = SteveDriver.LEFT;
-				nextDirection = dirs[2];
+				nextDirection = SteveDriver.VLEFT;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && segments.get(0).getRotation() != SteveDriver.LEFT) {
 				nextRotation = SteveDriver.RIGHT;
-				nextDirection = dirs[0];
+				nextDirection = SteveDriver.VRIGHT;
 			}
 		}
 	}
@@ -169,16 +163,16 @@ public class Snake {
 			Sprite newSegment = new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
 			Sprite tail = segments.get(segments.size() - 1);
 			
-			Vector2 delta = dirs[0];
+			Vector2 delta = SteveDriver.VRIGHT;
 			
 			if (tail.getRotation() ==  SteveDriver.DOWN) {
-				delta = dirs[1];
+				delta = SteveDriver.VUP;
 			}
 			else if (tail.getRotation() ==  SteveDriver.RIGHT) {
-				delta = dirs[2];
+				delta = SteveDriver.VLEFT;
 			}
 			else if (tail.getRotation() ==  SteveDriver.UP) {
-				delta = dirs[3];
+				delta = SteveDriver.VDOWN;
 			}
 			
 			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);

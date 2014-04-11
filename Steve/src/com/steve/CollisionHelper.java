@@ -22,6 +22,6 @@ public class CollisionHelper {
 	}
 	
 	public static float angleFromDirectionVector(float x, float y) {
-		return (float)(Math.atan2(y, x) / Math.PI) * 180 + 90;
+		return MathUtils.atan2(y, x) * MathUtils.radiansToDegrees;
 	}
 }

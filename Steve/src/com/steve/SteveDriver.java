@@ -29,7 +29,10 @@ public class SteveDriver implements ApplicationListener {
 	public static final float UP = 0;
 	public static final float LEFT = MathUtils.PI / 2f * MathUtils.radiansToDegrees;
 	public static final float DOWN = MathUtils.PI * MathUtils.radiansToDegrees;
-	
+	public static final Vector2 VRIGHT = new Vector2(1, 0);
+	public static final Vector2 VUP = new Vector2(0, 1);
+	public static final Vector2 VLEFT = new Vector2(-1, 0);
+	public static final Vector2 VDOWN = new Vector2(0, -1);
 	
 	private OrthographicCamera camera;
 	private OrthographicCamera guiCamera;

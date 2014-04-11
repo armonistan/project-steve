@@ -117,16 +117,16 @@ public class Enemy {
 		float angleToSnake = MathUtils.atan2(directionToSnake.y, directionToSnake.x);
 		
 		if (angleToSnake > MathUtils.PI / 4f && angleToSnake <= MathUtils.PI * 3f / 4f) {
-			move(new Vector2(0, 1));
+			move(SteveDriver.VUP);
 		}
 		else if (angleToSnake > MathUtils.PI * 3f / 4f && angleToSnake <= MathUtils.PI * 5f / 4f) {
-			move(new Vector2(-1, 0));
+			move(SteveDriver.VLEFT);
 		}
 		else if (angleToSnake > MathUtils.PI * 5f / 4f && angleToSnake <= MathUtils.PI * 7f / 4f) {
-			move(new Vector2(0, -1));
+			move(SteveDriver.VDOWN);
 		}
 		else {
-			move(new Vector2(1, 0));
+			move(SteveDriver.VRIGHT);
 		}
 	}
 }
