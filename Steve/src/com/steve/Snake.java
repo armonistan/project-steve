@@ -17,6 +17,7 @@ public class Snake {
 	private ArrayList<Weapon> weapons;
 	private final int MAX_SEGMENTS = 10;
 	private final int beltImageOffset = 64;
+	private final int TILE_WIDTH = 16;
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
@@ -63,11 +64,11 @@ public class Snake {
 		//update all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {
 			move();
+			checkCollisions();
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
-			checkCollisions();
-			animate();
 			rotateTail();
+			animate();
 			timer = 0;
 		}
 		
@@ -288,11 +289,16 @@ public class Snake {
 			else if(i == 1){
 				updateBody();
 			}
-			else if (i > 0) {
-				if(weapons.size() >= i)
+			else {
+				if (i < weapons.size() + 1) {
 					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
-				else
+				}
+				else if (i == weapons.size() + 1 && (next.getRegionX()/TILE_WIDTH > 3)) {
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX() - this.beltImageOffset, next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
+				else {
 					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
 			}
 		}
 	}
@@ -391,13 +397,14 @@ public class Snake {
 	}
 	
 	public void mountUpgrade(int upgradeType){
-		if(this.segments.size() - 2 > this.weapons.size())
+		if(this.segments.size() - 2 > this.weapons.size()) {
 			switch(upgradeType){
 			case 0:
 				weapons.add(new Weapon(this.segments.get(this.weapons.size()+1).getX(), 
 					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
 				break;
 			}
+		}
 	}
 }
 

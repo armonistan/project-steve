@@ -184,6 +184,7 @@ public class Field {
 		
 		this.pickups = new ArrayList<Pickup>();
 		this.pickups.add(new GattlingGunPickUp(30, 35));
+		this.pickups.add(new GattlingGunPickUp(29, 35));
 		this.pickups.add(new Apple(35, 35));
 		this.pickups.add(new Apple(31, 35));
 		this.pickups.add(new Apple(32, 35));
@@ -196,10 +197,10 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		enemies.add(new Snail(new Vector2(50, 30)));
+		//enemies.add(new Snail(new Vector2(50, 30)));
 		enemies.add(new Ring(new Vector2(20, 30)));
-		enemies.add(new Brute(new Vector2(40, 30)));
-		enemies.add(new Tank(new Vector2(30, 20)));
+		//enemies.add(new Brute(new Vector2(40, 30)));
+		//enemies.add(new Tank(new Vector2(30, 20)));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
