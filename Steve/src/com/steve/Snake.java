@@ -61,13 +61,13 @@ public class Snake {
 		checkProjectiles();
 		
 		//update all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {			
+		if (timer >= TIME_BETWEEN_TURN) {
 			move();
-			animate();
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
-			rotateTail();
 			checkCollisions();
+			animate();
+			rotateTail();
 			timer = 0;
 		}
 		

@@ -72,6 +72,8 @@ public class Field {
 		public Cell innerBottomRight;
 		public Cell innerBottomLeft;
 		
+		public Cell middle;
+		
 		public Cell leftA;
 		public Cell leftB;
 		
@@ -113,6 +115,9 @@ public class Field {
 			
 			innerBottomRight = new Cell();
 			innerBottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 5]));
+			
+			middle = new Cell();
+			middle.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x + 1]));
 			
 			leftA = new Cell();
 			leftA.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x]));
@@ -180,6 +185,10 @@ public class Field {
 		this.pickups = new ArrayList<Pickup>();
 		this.pickups.add(new GattlingGunPickUp(30, 35));
 		this.pickups.add(new Apple(35, 35));
+		this.pickups.add(new Apple(31, 35));
+		this.pickups.add(new Apple(32, 35));
+		this.pickups.add(new Apple(33, 35));
+		this.pickups.add(new Apple(34, 35));
 		this.pickups.add(new Apple(7, 7));
 		this.pickups.add(new Apple(10, 10));
 		this.pickups.add(new Apple(13, 13));
@@ -307,7 +316,7 @@ public class Field {
 					top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
 					bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 					
-					blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+					blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
 					//set the actual tile image
 					if (left) {
 						if (top) {
