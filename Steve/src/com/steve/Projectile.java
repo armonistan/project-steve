@@ -22,7 +22,7 @@ public class Projectile {
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
 				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
 		avatar.setPosition(position.x, position.y);
-		avatar.setRotation(CollisionHelper.angleFromDirectionVector(direction));
+		avatar.setRotation(CollisionHelper.angleFromDirectionVector(direction.x, direction.y));
 	}
 	
 	public void render(SpriteBatch batch) {		

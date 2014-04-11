@@ -26,7 +26,7 @@ public class Snake {
 	
 	private Vector2 nextDirection;
 	private Vector2[] dirs;
-	private int nextRotation;
+	private float nextRotation;
 	
 	public Snake(Vector2 position){
 		segments = new ArrayList<Sprite>();
@@ -43,7 +43,7 @@ public class Snake {
 		nextDirection = dirs[0];
 		
 		nextRotation = SteveDriver.RIGHT;
-		segments.get(0).setRotation(nextRotation);
+		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
 		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 	}
@@ -337,15 +337,15 @@ public class Snake {
 		float deltaY = next.getY() - tail.getY();
 		
 		if(deltaX > 0){
-			tail.setRotation(270);
+			tail.setRotation(SteveDriver.RIGHT);
 		}
 		else if(deltaX < 0)
-			tail.setRotation(90);
+			tail.setRotation(SteveDriver.LEFT);
 		else if(deltaY > 0){
-			tail.setRotation(0);
+			tail.setRotation(SteveDriver.UP);
 		}
 		else if(deltaY < 0){
-			tail.setRotation(180);
+			tail.setRotation(SteveDriver.DOWN);
 		}
 	}
 	
@@ -391,13 +391,14 @@ public class Snake {
 	}
 	
 	public void mountUpgrade(int upgradeType){
-		if(this.segments.size() - 2 > this.weapons.size())
+		if(this.segments.size() - 2 > this.weapons.size()) {
 			switch(upgradeType){
 			case 0:
 				weapons.add(new Weapon(this.segments.get(this.weapons.size()+1).getX(), 
 					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
 				break;
 			}
+		}
 	}
 }
 

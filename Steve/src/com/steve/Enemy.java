@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy {
@@ -97,5 +98,35 @@ public class Enemy {
 	
 	public void kill() {
 		SteveDriver.field.enemiesToRemove.add(this);
+	}
+	
+	protected void moveRandomly() {
+		//TODO: This can be more sophisticated.
+		if (avatar.getRotation() == SteveDriver.UP || avatar.getRotation() == SteveDriver.DOWN) {
+			move(new Vector2(SteveDriver.random.nextBoolean() ? 1 : -1, 0));
+		}
+		else {
+			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
+		}
+	}
+	
+	protected void followSnake() {
+		//TODO: This can be more sophisticated.
+		Vector2 directionToSnake = new Vector2(avatar.getX() + avatar.getOriginX(), avatar.getY() + avatar.getOriginY())
+			.sub(new Vector2(SteveDriver.snake.getHeadPosition().x, SteveDriver.snake.getHeadPosition().y));
+		float angleToSnake = MathUtils.atan2(directionToSnake.y, directionToSnake.x);
+		
+		if (angleToSnake > MathUtils.PI / 4f && angleToSnake <= MathUtils.PI * 3f / 4f) {
+			move(new Vector2(0, 1));
+		}
+		else if (angleToSnake > MathUtils.PI * 3f / 4f && angleToSnake <= MathUtils.PI * 5f / 4f) {
+			move(new Vector2(-1, 0));
+		}
+		else if (angleToSnake > MathUtils.PI * 5f / 4f && angleToSnake <= MathUtils.PI * 7f / 4f) {
+			move(new Vector2(0, -1));
+		}
+		else {
+			move(new Vector2(1, 0));
+		}
 	}
 }

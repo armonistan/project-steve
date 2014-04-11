@@ -10,13 +10,7 @@ public class Snail extends Enemy {
 	}
 	
 	protected void decideMove() {
-		//TODO: This can be more sophisticated.
-		if (avatar.getRotation() == SteveDriver.UP || avatar.getRotation() == SteveDriver.DOWN) {
-			move(new Vector2(SteveDriver.random.nextBoolean() ? 1 : -1, 0));
-		}
-		else {
-			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
-		}
+		super.moveRandomly();
 	}
 
 	protected void update() {

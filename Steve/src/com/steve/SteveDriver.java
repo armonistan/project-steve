@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -24,10 +25,10 @@ public class SteveDriver implements ApplicationListener {
 	public static final int BIG_TEXTURE_WIDTH = 32;
 	public static final int BIG_TEXTURE_LENGTH = 32;
 
-	public static final int RIGHT = 270;
-	public static final int UP = 0;
-	public static final int LEFT = 90;
-	public static final int DOWN = 180;
+	public static final float RIGHT = MathUtils.PI * 3f / 2f * MathUtils.radiansToDegrees;
+	public static final float UP = 0;
+	public static final float LEFT = MathUtils.PI / 2f * MathUtils.radiansToDegrees;
+	public static final float DOWN = MathUtils.PI * MathUtils.radiansToDegrees;
 	
 	
 	private OrthographicCamera camera;
@@ -50,7 +51,7 @@ public class SteveDriver implements ApplicationListener {
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		//TODO: Make this better.
-		snake = new Snake(new Vector2(30, 30));
+		snake = new Snake(new Vector2(10, 10));
 		
 		field = new Field(camera);
 		gui = new GUI();
