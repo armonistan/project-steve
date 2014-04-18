@@ -28,7 +28,7 @@ public class Snake {
 	private Vector2 nextDirection;
 	private float nextRotation;
 	
-	public Snake(Vector2 position){
+	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
@@ -39,7 +39,7 @@ public class Snake {
 		
 		nextRotation = SteveDriver.RIGHT;
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
-		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
+		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 	}
 	

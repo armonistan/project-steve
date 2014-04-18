@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Brute extends Enemy{
 
-	public Brute(Vector2 position) {
-		super(position, new Vector2(11, 3), new Vector2(2, 2), 1f, 0.2f, 5);
+	public Brute(float x, float y) {
+		super(x, y, new Vector2(11, 3), new Vector2(2, 2), 1f, 0.2f, 5);
 	}
 
 	protected void decideMove() {

@@ -11,8 +11,8 @@ public class Tank extends Enemy {
 	private float shootTimer;
 	private Sprite face;
 
-	public Tank(Vector2 position) {
-		super(position, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3);
+	public Tank(float x, float y) {
+		super(x, y, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3);
 		shootTime = 0.5f;
 		
 		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_WIDTH, 1 * SteveDriver.TEXTURE_LENGTH,
@@ -38,8 +38,8 @@ public class Tank extends Enemy {
 		super.update();
 		if (shootTimer >= shootTime) {
 			//TODO: We want to get rid of new Vector2's when we don't need them.
-			SteveDriver.field.projectiles.add(new Acorn(new Vector2(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2),
-					new Vector2(MathUtils.cosDeg(avatar.getRotation()), MathUtils.sinDeg(avatar.getRotation())).scl(100)));
+			SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
+					MathUtils.cosDeg(avatar.getRotation()) * 100, MathUtils.sinDeg(avatar.getRotation()) * 100));
 			
 			shootTimer = 0;
 		}

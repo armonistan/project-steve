@@ -23,8 +23,8 @@ public class Enemy {
 	
 	protected float healthPercentage;
 	
-	public Enemy(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
-		mapPosition = position;
+	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
+		mapPosition = new Vector2(x, y);
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;
@@ -89,13 +89,10 @@ public class Enemy {
 		//Default to nothing
 	}
 	
-	protected void move(Vector2 direction) {
-		float test = (float)(Math.atan2(direction.y, direction.x) + Math.PI / 2);
+	protected void move(float dx, float dy) {
+		avatar.setRotation(MathUtils.atan2(dy, dx) * MathUtils.radiansToDegrees - 90);
 		
-		//TODO: Make better.
-		avatar.setRotation(test * 180 / (float)Math.PI + 180);
-		
-		avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);
+		avatar.setPosition(avatar.getX() + dx * SteveDriver.TEXTURE_WIDTH, avatar.getY() + dy * SteveDriver.TEXTURE_LENGTH);
 	}
 	
 	protected void updateAvatar() {
@@ -117,30 +114,30 @@ public class Enemy {
 	protected void moveRandomly() {
 		//TODO: This can be more sophisticated.
 		if (avatar.getRotation() == SteveDriver.UP || avatar.getRotation() == SteveDriver.DOWN) {
-			move(new Vector2(SteveDriver.random.nextBoolean() ? 1 : -1, 0));
+			move(SteveDriver.random.nextBoolean() ? 1 : -1, 0);
 		}
 		else {
-			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
+			move(0, SteveDriver.random.nextBoolean() ? 1 : -1);
 		}
 	}
 	
 	protected void followSnake() {
 		//TODO: This can be more sophisticated.
-		Vector2 directionToSnake = new Vector2(avatar.getX() + avatar.getOriginX(), avatar.getY() + avatar.getOriginY())
-			.sub(new Vector2(SteveDriver.snake.getHeadPosition().x, SteveDriver.snake.getHeadPosition().y));
-		float angleToSnake = MathUtils.atan2(directionToSnake.y, directionToSnake.x);
+		float directionToSnakeX = avatar.getX() + avatar.getOriginX() - SteveDriver.snake.getHeadPosition().x;
+		float directionToSnakeY = avatar.getY() + avatar.getOriginY() - SteveDriver.snake.getHeadPosition().y;
+		float angleToSnake = MathUtils.atan2(directionToSnakeY, directionToSnakeX);
 		
 		if (angleToSnake > MathUtils.PI / 4f && angleToSnake <= MathUtils.PI * 3f / 4f) {
-			move(SteveDriver.VUP);
+			move(SteveDriver.VUP.x, SteveDriver.VUP.y);
 		}
 		else if (angleToSnake > MathUtils.PI * 3f / 4f && angleToSnake <= MathUtils.PI * 5f / 4f) {
-			move(SteveDriver.VLEFT);
+			move(SteveDriver.VLEFT.x, SteveDriver.VLEFT.y);
 		}
 		else if (angleToSnake > MathUtils.PI * 5f / 4f && angleToSnake <= MathUtils.PI * 7f / 4f) {
-			move(SteveDriver.VDOWN);
+			move(SteveDriver.VDOWN.x, SteveDriver.VDOWN.y);
 		}
 		else {
-			move(SteveDriver.VRIGHT);
+			move(SteveDriver.VRIGHT.x, SteveDriver.VRIGHT.y);
 		}
 	}
 }

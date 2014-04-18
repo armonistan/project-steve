@@ -18,7 +18,7 @@ public class Laser extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.projectiles.add(new SnakeBullet(new Vector2(this.getX(), this.getY()), new Vector2(600*MathUtils.cosDeg(degrees), 200*MathUtils.sinDeg(degrees)), 0));
+				SteveDriver.field.projectiles.add(new SnakeBullet(this.getX(), this.getY(), 600*MathUtils.cosDeg(degrees), 200*MathUtils.sinDeg(degrees), 0));
 				shootCounter = 0;
 	}
 }

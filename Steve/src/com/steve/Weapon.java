@@ -36,13 +36,13 @@ public class Weapon extends Sprite{
 	
 	protected void targetEnemy(){
 		
-		float minDistance = 100000;
+		float minDistance = Float.POSITIVE_INFINITY;
 		
 		for(Enemy e : SteveDriver.field.enemies){
 			float enemyX = e.getXPosition();
 			float enemyY = e.getYPosition();
 			
-			float distance = new Vector2(this.getX(), this.getY()).dst(enemyX, enemyY);
+			float distance = CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY);
 			
 			if(minDistance > distance){
 				minDistance = distance;

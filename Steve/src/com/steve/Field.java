@@ -194,14 +194,13 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		enemies.add(new Snail(new Vector2(50, 30)));
-		enemies.add(new Ring(new Vector2(20, 30)));
-		enemies.add(new Brute(new Vector2(40, 30)));
-		enemies.add(new Tank(new Vector2(30, 20)));
+		enemies.add(new Snail(50, 30));
+		enemies.add(new Ring(20, 30));
+		enemies.add(new Brute(40, 30));
+		enemies.add(new Tank(30, 20));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
-		projectiles.add(new SnakeBullet(new Vector2(30 * 16, 30 * 16), new Vector2(-16, 0), 0));
 	}
 	
 	private int checkRing(int x, int y) {

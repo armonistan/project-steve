@@ -18,7 +18,7 @@ public class GatlingGun extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.projectiles.add(new SnakeBullet(new Vector2(this.getX(), this.getY()), new Vector2(100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees)), 0));
+				SteveDriver.field.projectiles.add(new SnakeBullet(this.getX(), this.getY(), 100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees), 0));
 				shootCounter = 0;
 	}
 }
