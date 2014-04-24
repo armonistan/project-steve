@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class PickUp extends Sprite {
 	private boolean active;
@@ -18,5 +19,9 @@ public class PickUp extends Sprite {
 	
 	public void consume(Snake snake) {
 		active = false;
+	}
+	
+	public Rectangle getRectangle(){
+		return this.getBoundingRectangle();
 	}
 }

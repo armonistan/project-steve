@@ -1,5 +1,6 @@
 package com.steve;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,5 +21,13 @@ public class GatlingGun extends Weapon{
 				
 				SteveDriver.field.projectiles.add(new SnakeBullet(new Vector2(this.getX(), this.getY()), new Vector2(100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees)), 0));
 				shootCounter = 0;
+	}
+	
+	@Override
+	public void upgrade(){
+		super.upgrade();
+		this.shootSpeed = 5;
+		this.setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		//TODO more stuff to upgrade
 	}
 }

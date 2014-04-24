@@ -9,26 +9,12 @@ public class Ring extends Enemy {
 		super(position, new Vector2(11, 7), new Vector2(1, 2), 1f, 1, 10);
 	}
 	
-	public void update() {
-		for (Sprite s : SteveDriver.snake.getSegments()) {
-			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
-				
-				//TODO: Replace with something better.
-				kill();
-				break;
-			}
-		}
-	}
-
-	protected void decideMove() {
-		if (SteveDriver.random.nextBoolean()) {
-			move(new Vector2(SteveDriver.random.nextBoolean() ? 1 : -1, 0));
-		}
-		else {
-			move(new Vector2(0, SteveDriver.random.nextBoolean() ? 1 : -1));
-		}
+	@Override
+	protected Vector2 decideMove() {
+		return super.randomMove();
 	}
 	
+	@Override
 	public void kill() {
 		//TODO: Make this better.
 		SteveDriver.field.pickups.add(new Apple(avatar.getX() / 16, avatar.getY() / 16));
