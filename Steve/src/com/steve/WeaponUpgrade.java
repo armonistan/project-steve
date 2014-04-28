@@ -1,6 +1,6 @@
 package com.steve;
 
-public class WeaponUpgrade extends PickUp {
+public class WeaponUpgrade extends Pickup {
 	WeaponUpgrade(float xPos, float yPos){
 		super(xPos, yPos, 9 * 16, 3 * 16);
 	}

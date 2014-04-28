@@ -1,6 +1,6 @@
 package com.steve;
 
-public class LaserPickUp extends PickUp {
+public class LaserPickUp extends Pickup {
 	LaserPickUp(float xPos, float yPos){
 		super(xPos, yPos, 9 * 16, 0);
 	}

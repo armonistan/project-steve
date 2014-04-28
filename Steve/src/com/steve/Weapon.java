@@ -98,7 +98,7 @@ public class Weapon extends Sprite{
 	}
 	
 	protected boolean isInRange(){
-		float distance = new Vector2(this.getX(),this.getY()).dst(target.getXPosition(), target.getYPosition()); 
-		return distance <= range;
+		float distance = CollisionHelper.distanceSquared(this.getX(),this.getY(), target.getXPosition(), target.getYPosition()); 
+		return distance <= range * range;
 	}
 }

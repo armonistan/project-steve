@@ -350,7 +350,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (PickUp p : SteveDriver.field.pickups) {
+		for (Pickup p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);

@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-public class PickUp extends Sprite {
+public class Pickup extends Sprite {
 	private boolean active;
 	
-	public PickUp(float x, float y, int atlasX, int atlasY) {
+	public Pickup(float x, float y, int atlasX, int atlasY) {
 		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
 		this.setPosition(x * 16, y * 16);
 		active = true;

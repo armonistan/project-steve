@@ -1,6 +1,6 @@
 package com.steve;
 
-public class SpecialistPickUp extends PickUp {
+public class SpecialistPickUp extends Pickup {
 	SpecialistPickUp(float xPos, float yPos){
 		super(xPos, yPos, 10 * 16, 0);
 	}

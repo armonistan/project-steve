@@ -33,7 +33,7 @@ public class Field {
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	
-	public static ArrayList<PickUp> pickups;
+	public static ArrayList<Pickup> pickups;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
@@ -186,7 +186,7 @@ public class Field {
 		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new ArrayList<PickUp>();
+		this.pickups = new ArrayList<Pickup>();
 		this.pickups.add(new GatlingGunPickUp(30,35));
 		this.pickups.add(new SpecialistPickUp(29,35));
 		this.pickups.add(new LaserPickUp(28,35));
@@ -374,7 +374,7 @@ public class Field {
 		this.generator.update();
 		
 		batch.begin();
-		for (PickUp p : pickups) {
+		for (Pickup p : pickups) {
 			if (p.getActive()) {
 				p.draw(batch);
 			}

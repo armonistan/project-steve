@@ -59,21 +59,21 @@ public class Generator {
 	}
 	
 	public void generateSlug(float xPos, float yPos){
-		Snail s = new Snail(new Vector2(xPos, yPos));
+		Snail s = new Snail(xPos, yPos);
 		if(isOccupied(s.getRectangle()) && isPlayerSafe(xPos,yPos) 
 				&& SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID)
 			SteveDriver.field.enemies.add(s);
 	}
 	
 	public void genrateBrute(float xPos, float yPos){
-		Brute b = new Brute(new Vector2(xPos, yPos));
+		Brute b = new Brute(xPos, yPos);
 		if(isOccupied(b.getRectangle()) && isPlayerSafe(xPos,yPos)
 				&& SteveDriver.field.checkRing((int)xPos, (int)yPos) == DESERT_ID)
 			SteveDriver.field.enemies.add(b);
 	}
 	
 	public void generateTank(float xPos, float yPos){
-		Tank t = new Tank(new Vector2(xPos, yPos));
+		Tank t = new Tank(xPos, yPos);
 		if(isOccupied(t.getRectangle()) && isPlayerSafe(xPos,yPos) 
 				&& SteveDriver.field.checkRing((int)xPos, (int)yPos) == DESERT_ID)
 			SteveDriver.field.enemies.add(t);	

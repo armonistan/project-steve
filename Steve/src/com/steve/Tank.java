@@ -38,8 +38,6 @@ public class Tank extends Enemy {
 	protected void update(){
 		super.shoot();
 		super.update();
-			SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-					MathUtils.cosDeg(avatar.getRotation()) * 100, MathUtils.sinDeg(avatar.getRotation()) * 100));
 	}
 	
 	protected Vector2 decideMove() {
