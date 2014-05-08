@@ -3,6 +3,7 @@ package com.steve;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,6 +44,8 @@ public class GUI {
 	public void render(SpriteBatch batch) {
 		currentHealth = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
+		font.setColor(Color.BLACK);
+		
 		batch.begin();
 		guiTextures.get(0).draw(batch);
 		guiTextures.get(5).draw(batch);
@@ -62,6 +65,8 @@ public class GUI {
 			guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
 			guiTextures.get(healthColor).draw(batch);
 		}
+		
+		font.draw(batch, SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y);
 		
 		batch.end();
 	}

@@ -21,6 +21,8 @@ public class Tank extends Enemy {
 		
 		shotCap = 10;
 		hasShotCounter = 11;
+		
+		moneyAmount = 10;
 	}
 	
 	public void render(SpriteBatch batch) {

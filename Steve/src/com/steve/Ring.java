@@ -7,6 +7,8 @@ public class Ring extends Enemy {
 
 	public Ring(float x, float y) {
 		super(x, y, new Vector2(11, 7), new Vector2(1, 2), 1f, 1, 10);
+		
+		moneyAmount = 20;
 	}
 	
 	@Override

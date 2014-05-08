@@ -30,6 +30,7 @@ public class Enemy {
 	int stepsTaken = 0;
 	int directionID = 0;
 	int sightDistance = 100;
+	int moneyAmount = 0;
 	
 	protected float shootTime;
 	protected float shootTimer;
@@ -132,6 +133,7 @@ public class Enemy {
 	
 	public void kill() {
 		SteveDriver.field.enemiesToRemove.add(this);
+		SteveDriver.snake.addMoney(moneyAmount);
 	}
 	
 	public float getXPosition(){
