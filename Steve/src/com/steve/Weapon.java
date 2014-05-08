@@ -11,11 +11,21 @@ public class Weapon extends Sprite{
 	Enemy target;
 	int shootSpeed = 100;
 	int shootCounter = 0;
+	float range;
+	float damage;//TODO use it?
+	int atlasX;
+	int atlasY;
+	boolean isAimed;
+	boolean isUpgraded;
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
-	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
-		
+	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		this.atlasX = atlasX;
+		this.atlasY = atlasY;
+		range = 300;//override range if need be
 		this.setPosition(x, y);
+		isAimed = false;
+		isUpgraded = false;
 	}
 	
 	public void update(float x, float y){
@@ -26,9 +36,9 @@ public class Weapon extends Sprite{
 	protected void weaponBehavior(){
 		//base behavior
 		targetEnemy();
-		if(target != null){
+		if(target != null && SteveDriver.field.enemies.size() > 0){
 			turn();
-			if(shootCounter > shootSpeed)
+			if(shootCounter > shootSpeed && isInRange() && isAimed)
 				shoot();
 		}
 		shootCounter += 1;
@@ -36,13 +46,13 @@ public class Weapon extends Sprite{
 	
 	protected void targetEnemy(){
 		
-		float minDistance = 100000;
+		float minDistance = Float.POSITIVE_INFINITY;
 		
 		for(Enemy e : SteveDriver.field.enemies){
 			float enemyX = e.getXPosition();
 			float enemyY = e.getYPosition();
 			
-			float distance = new Vector2(this.getX(), this.getY()).dst(enemyX, enemyY);
+			float distance = CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY);
 			
 			if(minDistance > distance){
 				minDistance = distance;
@@ -58,10 +68,37 @@ public class Weapon extends Sprite{
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 		degrees += 90;
 		
-		this.setRotation(degrees);
+		float deltaPositiveDegrees = (degrees - this.getRotation() + 360)%360;
+		float deltaNegativeDegrees = (this.getRotation() - degrees + 360)%360;
+		
+		if(deltaPositiveDegrees < deltaNegativeDegrees){
+			if(deltaPositiveDegrees < 3)
+				this.isAimed = true;
+			else{
+				this.isAimed = false;
+				this.setRotation(((this.getRotation() +361)%360));
+			}
+		}
+		else{
+			if(deltaNegativeDegrees < 3)
+				this.isAimed = true;
+			else{
+				this.isAimed = false;
+				this.setRotation(((this.getRotation() +359)%360));
+			}
+		}
 	}
 	
 	protected void shoot(){
-		
+		//override
+	}
+	
+	public void upgrade(){
+		isUpgraded = true;
+	}
+	
+	protected boolean isInRange(){
+		float distance = CollisionHelper.distanceSquared(this.getX(),this.getY(), target.getXPosition(), target.getYPosition()); 
+		return distance <= range * range;
 	}
 }

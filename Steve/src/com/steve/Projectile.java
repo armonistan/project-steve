@@ -14,16 +14,17 @@ public class Projectile {
 	private boolean dead;
 	private float projectileTime;
 
-	public Projectile(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float percentDamage, boolean snakeFriendly, Vector2 direction) {
+	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
+			float percentDamage, boolean snakeFriendly, float dx, float dy) {
 		this.percentDamage = percentDamage;
 		this.snakeFriendly = snakeFriendly;
-		this.direction = direction;
+		this.direction = new Vector2(dx, dy);
 		dead = false;
 		
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
 				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
-		avatar.setPosition(position.x, position.y);
-		avatar.setRotation(CollisionHelper.angleFromDirectionVector(direction.x, direction.y));
+		avatar.setPosition(x, y);
+		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
 	
 		projectileTime = 100;
 	}

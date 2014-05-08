@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.*;
@@ -31,13 +33,15 @@ public class Field {
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	
-	public static ArrayList<PickUp> pickups;
+	public static ArrayList<Pickup> pickups;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
 	
 	public ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
+	
+	private Generator generator;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -182,29 +186,35 @@ public class Field {
 		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new ArrayList<PickUp>();
+		this.pickups = new ArrayList<Pickup>();
 		this.pickups.add(new GatlingGunPickUp(30,35));
 		this.pickups.add(new SpecialistPickUp(29,35));
 		this.pickups.add(new LaserPickUp(28,35));
+		this.pickups.add(new Apple(33, 33));
+		this.pickups.add(new Apple(34, 34));
 		this.pickups.add(new Apple(35, 35));
 		this.pickups.add(new Apple(36, 36));
 		this.pickups.add(new Apple(37, 37));
-		this.pickups.add(new Apple(34, 34));
-		this.pickups.add(new Apple(33, 33));
+		
+		this.pickups.add(new Apple(38, 38));
+		this.pickups.add(new Apple(39, 39));
+		this.pickups.add(new Apple(40, 40));
+		this.pickups.add(new Apple(41, 41));
+		this.pickups.add(new WeaponUpgrade(42, 42));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		enemies.add(new Snail(new Vector2(50, 30)));
-		enemies.add(new Ring(new Vector2(20, 30)));
-		enemies.add(new Brute(new Vector2(40, 30)));
-		enemies.add(new Tank(new Vector2(30, 20)));
+		enemies.add(new Snail(50, 30));
+		enemies.add(new Ring(20, 30));
+		enemies.add(new Brute(40, 30));
+		enemies.add(new Tank(30, 20));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
-		projectiles.add(new SnakeBullet(new Vector2(30 * 16, 30 * 16), new Vector2(-16, 0), 0));
+		this.generator = new Generator();
 	}
 	
-	private int checkRing(int x, int y) {
+	public int checkRing(int x, int y) {
 		if (x >= this.grassRadius && x < this.totalRadius - this.grassRadius && y >= this.grassRadius && y < this.totalRadius - this.grassRadius) {
 			return 0;
 		} else if (x >= this.desertRadius && x < this.totalRadius - this.desertRadius && y >= this.desertRadius && y < this.totalRadius - this.desertRadius) {
@@ -361,8 +371,10 @@ public class Field {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 		
+		this.generator.update();
+		
 		batch.begin();
-		for (PickUp p : pickups) {
+		for (Pickup p : pickups) {
 			if (p.getActive()) {
 				p.draw(batch);
 			}
@@ -384,5 +396,23 @@ public class Field {
 		}
 		projectilesToRemove.clear();
 		batch.end();
+	}
+	
+	public boolean isOccupied(Rectangle newObject){
+		for(Enemy e : enemies){
+			if(CollisionHelper.isCollide(newObject, e.getRectangle())){
+				return false;
+			}
+		}
+		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
+			if(CollisionHelper.isCollide(newObject, s.getBoundingRectangle())){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int getFieldRadius(){
+		return this.totalRadius;
 	}
 }

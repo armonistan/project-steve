@@ -26,7 +26,7 @@ public class Snake {
 	private Vector2 nextDirection;
 	private float nextRotation;
 	
-	public Snake(Vector2 position){
+	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
@@ -37,7 +37,7 @@ public class Snake {
 		
 		nextRotation = SteveDriver.RIGHT;
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
-		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
+		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 	}
 	
@@ -159,12 +159,49 @@ public class Snake {
 		hungerTimer = 0;
 		
 		if (segments.size() < MAX_SEGMENTS) {
+			if(segments.size() == 4){
+				hungerTimer = 0;
+			}
+			
 			Sprite newSegment = new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
-			Sprite tail = segments.get(segments.size() - 1);
+			Sprite secondToLast = segments.get(segments.size() - 2);
+			Sprite tail = segments.get(segments.size()-1);
 			
 			Vector2 delta = SteveDriver.VRIGHT;
 			
-			if (tail.getRotation() ==  SteveDriver.DOWN) {
+			if(secondToLast.getRegionX() == 16 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VLEFT;
+			}
+			else if(secondToLast.getRegionX() == 0 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 48 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VLEFT;
+			}
+			else if(secondToLast.getRegionX() == 32 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 0 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VDOWN;
+			}
+			else if(secondToLast.getRegionX() == 16 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VDOWN;				
+			}
+			else if(secondToLast.getRegionX() == 32 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 48 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VUP;
+			}
+			else if (tail.getRotation() ==  SteveDriver.DOWN) {
 				delta = SteveDriver.VUP;
 			}
 			else if (tail.getRotation() ==  SteveDriver.RIGHT) {
@@ -174,9 +211,8 @@ public class Snake {
 				delta = SteveDriver.VDOWN;
 			}
 			
-			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
-			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
-			
+			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, 
+					tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
 			segments.add(newSegment);
 		}
 	}
@@ -219,7 +255,7 @@ public class Snake {
 		boolean downRight = (deltaHeadX > 0) && (deltaNextY < 0);
 		boolean downLeft = (deltaHeadX < 0) && (deltaNextY < 0);
 		
-		if(rightUp){
+		if(rightUp){			
 			atlasX = 16;
 			atlasY = 48;
 			degrees = 0;
@@ -293,6 +329,8 @@ public class Snake {
 				}
 			}
 		}
+		
+		int i = 0;
 	}
 
 	private void move(){
@@ -310,7 +348,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (PickUp p : SteveDriver.field.pickups) {
+		for (Pickup p : SteveDriver.field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);
@@ -375,6 +413,10 @@ public class Snake {
 		return segments;
 	}
 	
+	public ArrayList<Weapon> getWeapons(){
+		return weapons;
+	}
+	
 	private void updateTimers(float deltaTime){
 		timer += deltaTime;
 		hungerTimer += deltaTime;
@@ -405,6 +447,28 @@ public class Snake {
 				break;
 			}
 		}
+	}
+	
+	public ArrayList<Sprite> getSnakeSprites(){
+		return this.segments;
+	}
+	
+	public boolean hasWeaponSpace(){
+		return this.weapons.size() < this.segments.size()-1;
+	}
+	
+	public int getUpgradableWeapon(){
+		int weaponIndex = -1;
+		int indexCounter = 0;
+		for(Weapon w: weapons){
+			if(!w.isUpgraded){
+				weaponIndex = indexCounter;
+				break;
+			}
+			indexCounter++;
+		}
+		
+		return weaponIndex;
 	}
 }
 

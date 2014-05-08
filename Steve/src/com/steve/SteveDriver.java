@@ -34,6 +34,11 @@ public class SteveDriver implements ApplicationListener {
 	public static final Vector2 VLEFT = new Vector2(-1, 0);
 	public static final Vector2 VDOWN = new Vector2(0, -1);
 	
+	public static final int RIGHT_ID = 0;
+	public static final int UP_ID = 1;
+	public static final int LEFT_ID = 2;
+	public static final int DOWN_ID = 3;
+	
 	private OrthographicCamera camera;
 	private OrthographicCamera guiCamera;
 	private SpriteBatch batch;
@@ -54,7 +59,7 @@ public class SteveDriver implements ApplicationListener {
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		//TODO: Make this better.
-		snake = new Snake(new Vector2(30, 30));
+		snake = new Snake(30, 30);
 		
 		field = new Field(camera);
 		gui = new GUI();

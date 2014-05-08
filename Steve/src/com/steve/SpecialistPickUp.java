@@ -1,8 +1,8 @@
 package com.steve;
 
-public class SpecialistPickUp extends PickUp {
-	SpecialistPickUp(int xPos, int yPos){
-		super(xPos, yPos, 10 * 16, 3 * 16);
+public class SpecialistPickUp extends Pickup {
+	SpecialistPickUp(float xPos, float yPos){
+		super(xPos, yPos, 10 * 16, 0);
 	}
 	
 	public void consume(Snake snake) {
