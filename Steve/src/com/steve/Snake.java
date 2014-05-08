@@ -16,8 +16,10 @@ public class Snake {
 	private ArrayList<Sprite> segments;
 	private ArrayList<Weapon> weapons;
 	private final int MAX_SEGMENTS = 10;
+	
 	private final int beltImageOffset = 64;
 	private final int TILE_WIDTH = 16;
+	
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
@@ -28,19 +30,39 @@ public class Snake {
 	private Vector2 nextDirection;
 	private float nextRotation;
 	
+	private int money;
+	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
 		
-		
 		nextDirection = SteveDriver.VRIGHT;
-		
 		nextRotation = SteveDriver.RIGHT;
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
+		
+		money = 0;
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+	
+	public void addMoney(int amount) {
+		money += amount;
+	}
+	
+	public boolean spendMoney(int amount) {
+		if (money >= amount) {
+			money -= amount;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public float GetHungerTimer() {

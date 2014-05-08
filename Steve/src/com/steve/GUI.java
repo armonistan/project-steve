@@ -3,6 +3,7 @@ package com.steve;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,11 +19,15 @@ public class GUI {
 	private int healthColor = 2;
 	private float currentHealth;
 	
+	BitmapFont font;
+	
 	private enum guiText {
 		LEFTEND, RED, YELLOW, GREEN, DEAD, RIGHTEND;
 	}
 	
 	public GUI() {
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+		
 		guiTextures = new ArrayList();
 		for (int i = 0; i < 6; i++) {
 			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 96)));
