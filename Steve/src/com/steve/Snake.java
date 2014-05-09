@@ -41,8 +41,9 @@ public class Snake {
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
-		
-		money = 0;
+
+		//TODO: Make this better
+		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
 	}
 	
 	public int getMoney() {
@@ -51,6 +52,10 @@ public class Snake {
 	
 	public void addMoney(int amount) {
 		money += amount;
+		
+		//TODO: Make this only save when needed.
+		Gdx.app.getPreferences("main").putInteger("money", money);
+		Gdx.app.getPreferences("main").flush();
 	}
 	
 	public boolean spendMoney(int amount) {
@@ -106,9 +111,13 @@ public class Snake {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				//TODO: Clean SteveDriver.UP
 				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
-					System.out.println("Wat");
+					//TODO: Add logic for helmet
+					if (!Gdx.app.getPreferences("uh").contains("helmet") || !Gdx.app.getPreferences("uh").getBoolean("helmet")) {
+						System.out.println("No helmet");
+					}
+					
+					kill();
 				}
 			}
 		}
@@ -419,16 +428,21 @@ public class Snake {
 	private void updateStarvation(){
 		if(hungerTimer > TIME_TILL_STARVE){
 			if (segments.size() <= 2) {
-				//TODO: Make this better.
-				System.out.println("You suck.");
-				System.exit(0);
+				kill();
 			}
+			
 			segments.remove(segments.size() - 1);
 			if(this.segments.size()-2 < weapons.size()){
 				weapons.remove(weapons.size() - 1);
 			}
 			hungerTimer = 0;
 		}
+	}
+
+	private void kill() {
+		//TODO: Make this better.
+		System.out.println("You suck.");
+		System.exit(0);
 	}
 	
 	public ArrayList<Sprite> getSegments() {
