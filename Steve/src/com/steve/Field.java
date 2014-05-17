@@ -207,7 +207,8 @@ public class Field {
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
 		enemies.add(new Brute(40, 30));
-		enemies.add(new Tank(30, 20));
+		//enemies.add(new Tank(30, 20));
+		enemies.add(new Turret(30,30));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();

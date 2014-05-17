@@ -2,6 +2,7 @@ package com.steve;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -18,22 +19,50 @@ public class Generator {
 	private final int BARREN_ID = 2;
 	
 	private Random r;
-	//temp
-	private int tempCounter;
-	private int tempCounter2;
+	
+	final float enemyGenerationTime = 5; 
+	float enemyGenerationCounter; 
+	
+	final float appleGenerationTime = 5; 
+	float appleGenerationCounter; 
+	
+	final float pickUpGenerationTime = 5; 
+	float pickUpGenerationCounter; 
+	
+	final float upgradeGenerationTime = 5; 
+	float upgradeGenerationCounter; 
 	
 	public Generator(){
-		tempCounter = 0;
+		enemyGenerationCounter = 0; 
+		appleGenerationCounter = 0; 
+		pickUpGenerationCounter = 0; 
+		upgradeGenerationCounter = 0; 
+		
 		r = new Random();
 	}
 
 	public void update(){
-		int temper = 2;//r.nextInt(3);
-		int temper2 = r.nextInt(2);
-		int xPos = r.nextInt(SteveDriver.field.getFieldRadius());
-		int yPos = r.nextInt(SteveDriver.field.getFieldRadius());
-		if(tempCounter%50==0)
-			switch(temper){
+		if(this.enemyGenerationCounter > this.enemyGenerationTime){
+			generateEnemy();
+			this.enemyGenerationCounter = 0;
+		}
+		else
+			enemyGenerationCounter += Gdx.graphics.getRawDeltaTime();
+		
+		appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
+		pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
+		upgradeGenerationCounter += Gdx.graphics.getRawDeltaTime();
+	}
+	
+	private void generateEnemy(){
+		float xPos = r.nextInt(20);
+		float yPos = r.nextInt(20);
+		int enemyRange = (SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID) ?  0 :
+			(SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID) ?  2 : 3;
+		
+		int enemyType = r.nextInt(enemyRange+2)+enemyRange;
+		//r.next
+		switch(enemyType){
 			case 0:
 				this.generateSlug(xPos, yPos);
 				break;
@@ -43,25 +72,28 @@ public class Generator {
 			case 2:
 				this.generateTank(xPos, yPos);
 				break;
-			}
-		if(tempCounter2%1000==0)
-			switch(temper2){
-			case 0:
-				if(SteveDriver.snake.hasWeaponSpace())
-					this.generateUpgrade(xPos, yPos, temper);
-				break;
-			case 1:
-				this.generateApple(xPos, yPos);
-				break;
-			}
-		tempCounter++;
-		tempCounter2++;
+		}
+	}
+	
+	private void generateBasePickUp(){
+		int xPos = 0;
+		int yPos = 0;
+		int temper = 0;
+		switch(temper){
+		case 0:
+			if(SteveDriver.snake.hasWeaponSpace())
+				this.generateUpgrade(xPos, yPos, temper);
+			break;
+		case 1:
+			this.generateApple(xPos, yPos);
+			break;
+		}
 	}
 	
 	public void generateSlug(float xPos, float yPos){
 		Snail s = new Snail(xPos, yPos);
 		if(isOccupied(s.getRectangle()) && isPlayerSafe(xPos,yPos) 
-				&& SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID)
+				&& )
 			SteveDriver.field.enemies.add(s);
 	}
 	
