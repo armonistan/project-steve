@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class Generator {
 	
@@ -49,53 +50,138 @@ public class Generator {
 		else
 			enemyGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
-		appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
-		pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
-		upgradeGenerationCounter += Gdx.graphics.getRawDeltaTime();
+		if(this.pickUpGenerationCounter > this.pickUpGenerationTime){
+			generatePickUp();
+			this.pickUpGenerationCounter = 0;
+		}
+		else
+			pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
+		
+		if(this.appleGenerationCounter > this.appleGenerationTime){
+			generateApple();
+			this.appleGenerationCounter = 0;
+		}
+		else
+			appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
 	}
 	
 	private void generateEnemy(){
-		float xPos = r.nextInt(20);
-		float yPos = r.nextInt(20);
-		int enemyRange = (SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID) ?  0 :
-			(SteveDriver.field.checkRing((int)xPos, (int)yPos) == GRASS_ID) ?  2 : 3;
+		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 		
-		int enemyType = r.nextInt(enemyRange+2)+enemyRange;
-		//r.next
+		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.5)) + r.nextInt((int)(Gdx.graphics.getWidth())));
+		float xPosLeft = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float xPosRight = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
+				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
+				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.5)) + r.nextInt((int)(Gdx.graphics.getHeight())));
+		
+		int choiceX = (r.nextInt(1)%2==0) ? 0 : 
+				(r.nextInt(1)%2==0) ? -1 : 1;
+		int choiceY = (choiceX == 0) ? (r.nextInt(1)%2==0) ? 1: -1: 0;
+		
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/16 : 
+			(choiceX < 0) ? xPosLeft/32 : xPosRight/16);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/16 : 
+			(choiceY < 0) ? yPosBot/16 : yPosTop/16);
+	
+		int locationID = SteveDriver.field.checkRing((int)xPos, (int)yPos);
+		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(2) :
+			(locationID == DESERT_ID) ?  r.nextInt(2) + 2 : r.nextInt(2) + 4;
+	
 		switch(enemyType){
 			case 0:
-				this.generateSlug(xPos, yPos);
+				this.generateSlug(1, 1);
 				break;
 			case 1:
-				this.genrateBrute(xPos, yPos);
+				this.genrateBrute(1, 1);
 				break;
 			case 2:
-				this.generateTank(xPos, yPos);
+				this.generateTank(1, 1);
 				break;
 		}
 	}
 	
-	private void generateBasePickUp(){
-		int xPos = 0;
-		int yPos = 0;
-		int temper = 0;
-		switch(temper){
-		case 0:
-			if(SteveDriver.snake.hasWeaponSpace())
-				this.generateUpgrade(xPos, yPos, temper);
+	private void generatePickUp(){
+		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
+		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.5)) + r.nextInt((int)(Gdx.graphics.getWidth())));
+		float xPosLeft = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float xPosRight = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
+				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
+				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.5)) + r.nextInt((int)(Gdx.graphics.getHeight())));
+		
+		int choiceX = (r.nextInt(1)%2==0) ? 0 : 
+				(r.nextInt(1)%2==0) ? -1 : 1;
+		int choiceY = (choiceX == 0) ? (r.nextInt(1)%2==0) ? 1: -1: 0;
+		
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/16 : 
+			(choiceX < 0) ? xPosLeft/32 : xPosRight/16);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/16 : 
+			(choiceY < 0) ? yPosBot/16 : yPosTop/16);
+	
+		int locationID = SteveDriver.field.checkRing((int)xPos, (int)yPos);
+
+		//review code. pick up generation may not be satisfactory. aka grass is nothing, chance for weapon in desert...
+		int pickUpType = (locationID == GRASS_ID) ?  0 :
+			(locationID == DESERT_ID) ?  r.nextInt(2) : r.nextInt(2)+1;
+
+		switch(pickUpType){
+			case 1:
+				if(SteveDriver.snake.hasWeaponSpace())
+					this.generateUpgrade(xPos, yPos, r.nextInt(3));
 			break;
-		case 1:
-			this.generateApple(xPos, yPos);
+			
+			case 2:
+				if(SteveDriver.snake.hasWeaponToUpgrade())
+					this.generateWeaponUpgrade(xPos, yPos);
 			break;
 		}
 	}
+	
+	private void generateApple(){
+		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
+		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.5)) + r.nextInt((int)(Gdx.graphics.getWidth())));
+		float xPosLeft = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float xPosRight = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
+				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
+		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
+				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
+				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
+		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.5)) + r.nextInt((int)(Gdx.graphics.getHeight())));
+		
+		int choiceX = (r.nextInt(1)%2==0) ? 0 : 
+				(r.nextInt(1)%2==0) ? -1 : 1;
+		int choiceY = (choiceX == 0) ? (r.nextInt(1)%2==0) ? 1: -1: 0;
+		
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/16 : 
+				(choiceX < 0) ? xPosLeft/32 : xPosRight/16);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/16 : 
+			(choiceY < 0) ? yPosBot/16 : yPosTop/16);
+		
+		Apple a = new Apple(xPos, yPos);
+		
+		if(isOccupied(a.getRectangle())){
+			SteveDriver.field.pickups.add(a);
+		}
+	}
+	
 	
 	public void generateSlug(float xPos, float yPos){
 		Snail s = new Snail(xPos, yPos);
-		if(isOccupied(s.getRectangle()) && isPlayerSafe(xPos,yPos) 
-				&& )
+		if(isOccupied(s.getRectangle()) && isPlayerSafe(xPos,yPos))
 			SteveDriver.field.enemies.add(s);
 	}
+	
 	
 	public void genrateBrute(float xPos, float yPos){
 		Brute b = new Brute(xPos, yPos);
@@ -104,12 +190,14 @@ public class Generator {
 			SteveDriver.field.enemies.add(b);
 	}
 	
+	
 	public void generateTank(float xPos, float yPos){
 		Tank t = new Tank(xPos, yPos);
 		if(isOccupied(t.getRectangle()) && isPlayerSafe(xPos,yPos) 
 				&& SteveDriver.field.checkRing((int)xPos, (int)yPos) == DESERT_ID)
-			SteveDriver.field.enemies.add(t);	
+			SteveDriver.field.enemies.add(t);
 	}
+	
 	
 	public void generateApple(float xPos, float yPos){
 		Apple a = new Apple(xPos, yPos);
@@ -134,6 +222,13 @@ public class Generator {
 				if(isOccupied(s.getRectangle()))
 					SteveDriver.field.pickups.add(s);				
 				break;
+		}
+	}
+	
+	public void generateWeaponUpgrade(float xPos, float yPos){
+		WeaponUpgrade wU = new WeaponUpgrade(xPos, yPos);
+		if(isOccupied(wU.getRectangle())){
+			SteveDriver.field.pickups.add(wU);
 		}
 	}
 	

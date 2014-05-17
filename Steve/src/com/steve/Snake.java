@@ -492,5 +492,15 @@ public class Snake {
 		
 		return weaponIndex;
 	}
+	
+	public boolean hasWeaponToUpgrade(){
+		for(Weapon w: weapons){
+			if(!w.isUpgraded){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
 
