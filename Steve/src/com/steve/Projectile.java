@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile {
@@ -37,7 +40,23 @@ public class Projectile {
 		else
 			kill();
 		
+		checkCollisions();
+		
 		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
+	}
+	
+	private void checkCollisions() {
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), avatar.getBoundingRectangle())) {
+					kill();
+				}
+			}
+		}
 	}
 	
 	public Sprite getAvatar() {
