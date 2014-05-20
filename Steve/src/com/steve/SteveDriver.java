@@ -110,4 +110,8 @@ public class SteveDriver implements ApplicationListener {
 	@Override
 	public void resume() {
 	}
+	
+	private void resetField() {
+		snake = new Snake(30, 30);
+	}
 }
