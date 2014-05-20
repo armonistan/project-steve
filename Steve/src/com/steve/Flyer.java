@@ -7,9 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Flyer extends Enemy{
-	private float shootTime;
-	private float shootTimer;
-	
 	private Sprite propeller;
 	private float spinTime;
 	private float spinTimer;
@@ -18,8 +15,8 @@ public class Flyer extends Enemy{
 	private Vector2 propellerAtlasPosition;
 	private Vector2 propellerAtlasBounds;
 
-	public Flyer(Vector2 position) {
-		super(position, new Vector2(11, 5), new Vector2(2, 2), 1f, 0.5f, 2);
+	public Flyer(float x, float y) {
+		super(x, y, new Vector2(11, 5), new Vector2(2, 2), 1f, 0.5f, 2);
 		shootTime = 1f;
 		
 		propellerAtlasPosition = new Vector2(15, 5);
@@ -49,19 +46,8 @@ public class Flyer extends Enemy{
 	}
 	
 	public void update() {
-		if (shootTimer >= shootTime) {
-			SteveDriver.field.projectiles.add(new Pinecone(new Vector2(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2),
-					CollisionHelper.directionVectorFromAngle(avatar.getRotation() - 270).scl(100)));
-			
-			shootTimer = 0;
-		}
-		else {
-			shootTimer += Gdx.graphics.getRawDeltaTime();
-		}
-	}
-
-	public void decideMove() {
-		followSteve();
+		super.shoot();
+		super.update();
 	}
 	
 	protected void updatePropeller() {
@@ -70,5 +56,10 @@ public class Flyer extends Enemy{
 				(int)propellerAtlasPosition.y * SteveDriver.TEXTURE_LENGTH,
 				(int)propellerAtlasBounds.x* SteveDriver.TEXTURE_WIDTH,
 				(int)propellerAtlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+	}
+	
+	@Override
+	protected Vector2 decideMove() {		
+		return super.pursuitMoveWithSight();
 	}
 }

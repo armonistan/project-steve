@@ -163,22 +163,7 @@ public class Enemy {
 			switch(directionID){
 				case SteveDriver.RIGHT_ID:
 					this.avatar.setRotation(SteveDriver.RIGHT);
-					return SteveDriver.VRIGHT;
-		
-		if (angleToSnake > 45 && angleToSnake <= 135) {
-			move(new Vector2(0, 1));
-		}
-		else if (angleToSnake > 135 && angleToSnake <= 225) {
-			move(new Vector2(-1, 0));
-		}
-		else if (angleToSnake > 225 && angleToSnake <= 315) {
-			move(new Vector2(0, -1));
-		}
-		else {
-			move(new Vector2(1, 0));
-		}
-	}
-	
+					return SteveDriver.VRIGHT;	
 				
 				case SteveDriver.UP_ID:
 					this.avatar.setRotation(SteveDriver.UP);
