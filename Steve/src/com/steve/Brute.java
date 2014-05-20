@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Brute extends Enemy{
 	public Brute(float x, float y) {
-		super(x, y, new Vector2(11, 3), new Vector2(2, 2), 1f, 0.2f, 5);
+		super(x, y, new Vector2(11, 3), new Vector2(2, 2), 1f, 0.2f, 5, 75);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 30;

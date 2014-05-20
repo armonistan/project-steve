@@ -38,7 +38,7 @@ public class Enemy {
 	protected int hasShotCounter;
 	protected int shotCap;
 	
-	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
+	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames, float deathDamage) {
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;
@@ -52,7 +52,7 @@ public class Enemy {
 		avatar.setPosition(mapPosition.x * SteveDriver.TEXTURE_WIDTH, mapPosition.y * SteveDriver.TEXTURE_LENGTH);
 		
 		healthPercentage = 100;
-		deathDamage = 1;
+		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 	}
 	
 	public void render(SpriteBatch batch) {

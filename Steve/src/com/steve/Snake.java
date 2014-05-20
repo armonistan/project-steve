@@ -30,6 +30,8 @@ public class Snake {
 	
 	private int money;
 	
+	private int snakeTier;
+	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
@@ -44,6 +46,7 @@ public class Snake {
 
 		//TODO: Make this better
 		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
+		snakeTier = 1;
 	}
 	
 	public int getMoney() {
@@ -249,8 +252,8 @@ public class Snake {
 	}
 	
 	public void changeHungerByPercent(float percent) {
-		if (percent >= 0 && percent <= 1) {
-			hungerTimer += (TIME_TILL_STARVE * percent);
+		if (percent >= 0 && percent <= 100) {
+			hungerTimer += (TIME_TILL_STARVE * percent/100);
 			
 			if (hungerTimer < 0) {
 				hungerTimer = 0;
@@ -515,6 +518,10 @@ public class Snake {
 		}
 		
 		return false;
+	}
+	
+	public int getSnakeTier(){
+		return snakeTier;
 	}
 }
 
