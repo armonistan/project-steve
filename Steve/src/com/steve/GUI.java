@@ -20,7 +20,8 @@ public class GUI {
 	private int healthColor = 2;
 	private float currentHealth;
 	
-	public static BitmapFont font;
+	private BitmapFont font;
+	//private boxSprite
 	
 	private enum guiText {
 		LEFTEND, RED, YELLOW, GREEN, DEAD, RIGHTEND;
@@ -44,8 +45,6 @@ public class GUI {
 	public void render() {
 		currentHealth = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
-		font.setColor(Color.BLACK);
-		
 		SteveDriver.batch.begin();
 		guiTextures.get(0).draw(SteveDriver.batch);
 		guiTextures.get(5).draw(SteveDriver.batch);
@@ -66,8 +65,17 @@ public class GUI {
 			guiTextures.get(healthColor).draw(SteveDriver.batch);
 		}
 		
-		font.draw(SteveDriver.batch, SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y);
+		drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);
 		
 		SteveDriver.batch.end();
+	}
+	
+	public void drawText(String message, float x, float y, Color cualColorTienes) {
+		font.setColor(cualColorTienes);
+		font.draw(SteveDriver.batch, message, x, y);
+	}
+	
+	public void drawBox(float x, float y, int length, int width) {
+		
 	}
 }
