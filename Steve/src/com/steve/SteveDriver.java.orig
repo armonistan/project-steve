@@ -47,6 +47,7 @@ public class SteveDriver implements ApplicationListener {
 	public static SpriteBatch batch;
 	public static GUI gui;
 	
+<<<<<<< HEAD
 	public static STAGE_TYPE stage;
 	public static boolean paused; //TODO: Make this meaningful.
 	
@@ -55,6 +56,14 @@ public class SteveDriver implements ApplicationListener {
 		GAME,
 		STORE
 	}
+=======
+	private static int stage;
+	private static final int MENU = 0;
+	private static final int GAME = 1;
+	private static final int STORE = 2;
+	
+	BitmapFont menuFont;
+>>>>>>> origin/dev
 	
 	@Override
 	public void create() {
@@ -64,6 +73,8 @@ public class SteveDriver implements ApplicationListener {
 		camera = new OrthographicCamera(w, h);
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
+		menuFont = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+		menuFont.setColor(Color.BLACK);
 		random = new Random();
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
@@ -98,25 +109,22 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
-			gui.drawText("This is the menu. Hit 2 to continue the game, yeah.", -300, 70, Color.BLACK);
-			gui.drawText("Hit 3 to start a new game.", -200, 0, Color.BLACK);
+			menuFont.draw(batch, "This is the menu. Hit 2 to continue the game, yeah.", -300, 70);
+			menuFont.draw(batch, "Hit 3 to start a new game.", -200, 0);
 			batch.end();
-			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
 				Gdx.app.getPreferences("main").putInteger("money", 0);
 				Gdx.app.getPreferences("main").flush();
-				snake.spendMoney(snake.getMoney());
-				
-				resetField();
-				
-				stage = STAGE_TYPE.GAME;
+				stage = GAME;
 			}
-			
 			if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+<<<<<<< HEAD
+				stage = STAGE_TYPE.GAME;
+=======
 				if (snake.getMoney() != 0){
-					stage = STAGE_TYPE.STORE;
+					stage = STORE;
 				} else {
-					stage = STAGE_TYPE.GAME;
+					stage = GAME;
 				}
 			}
 			break;
@@ -128,11 +136,11 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
-			gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+			menuFont.draw(batch, "This is the store. Hit 3 to get back into the game, yeah.", -330, 0);
 			batch.end();
-			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-				stage = STAGE_TYPE.GAME;
+				stage = GAME;
+>>>>>>> origin/dev
 			}
 			break;
 		case GAME:
@@ -163,6 +171,9 @@ public class SteveDriver implements ApplicationListener {
 			if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
 				stage = STAGE_TYPE.MENU;
 			}
+			break;
+		case STORE:
+			
 			break;
 		}
 	}
