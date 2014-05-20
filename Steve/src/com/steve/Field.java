@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.*;
@@ -23,6 +25,8 @@ public class Field {
 	int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
+	
+	float pickUpTimer = 0;
 	
 	public static TiledMap map;
 	OrthogonalTiledMapRenderer mapRenderer;
@@ -36,6 +40,8 @@ public class Field {
 	
 	public ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
+	
+	private Generator generator;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -69,6 +75,8 @@ public class Field {
 		public Cell innerTopLeft;
 		public Cell innerBottomRight;
 		public Cell innerBottomLeft;
+		
+		public Cell middle;
 		
 		public Cell leftA;
 		public Cell leftB;
@@ -111,6 +119,9 @@ public class Field {
 			
 			innerBottomRight = new Cell();
 			innerBottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 5]));
+			
+			middle = new Cell();
+			middle.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x + 1]));
 			
 			leftA = new Cell();
 			leftA.setTile(new StaticTiledMapTile(this.tileMap[y + 1][x]));
@@ -159,7 +170,7 @@ public class Field {
 		this.desertRadius = 10;
 		this.barrenRadius = 60;
 		
-		this.totalRadius = 60;
+		this.totalRadius = 600;
 		this.blockerChains = 50;
 		this.maxBlockerLength = 10;
 		
@@ -176,12 +187,20 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(30, 35));
+		this.pickups.add(new GatlingGunPickUp(30,35));
+		this.pickups.add(new SpecialistPickUp(29,35));
+		this.pickups.add(new LaserPickUp(28,35));
+		this.pickups.add(new Apple(33, 33));
+		this.pickups.add(new Apple(34, 34));
 		this.pickups.add(new Apple(35, 35));
-		this.pickups.add(new Apple(7, 7));
-		this.pickups.add(new Apple(10, 10));
-		this.pickups.add(new Apple(13, 13));
-		this.pickups.add(new Apple(16, 16));
+		this.pickups.add(new Apple(36, 36));
+		this.pickups.add(new Apple(37, 37));
+		
+		this.pickups.add(new Apple(38, 38));
+		this.pickups.add(new Apple(39, 39));
+		this.pickups.add(new Apple(40, 40));
+		this.pickups.add(new Apple(41, 41));
+		this.pickups.add(new WeaponUpgrade(42, 42));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
@@ -190,13 +209,18 @@ public class Field {
 		//enemies.add(new Brute(new Vector2(40, 30)));
 		//enemies.add(new Tank(new Vector2(30, 20)));
 		enemies.add(new Flyer(new Vector2(30, 40)));
+		enemies.add(new Snail(50, 30));
+		enemies.add(new Ring(20, 30));
+		enemies.add(new Brute(40, 30));
+		//enemies.add(new Tank(30, 20));
+		enemies.add(new Turret(30,30));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
-		projectiles.add(new SnakeBullet(new Vector2(30 * 16, 30 * 16), new Vector2(-16, 0), 0));
+		this.generator = new Generator();
 	}
 	
-	private int checkRing(int x, int y) {
+	public int checkRing(int x, int y) {
 		if (x >= this.grassRadius && x < this.totalRadius - this.grassRadius && y >= this.grassRadius && y < this.totalRadius - this.grassRadius) {
 			return 0;
 		} else if (x >= this.desertRadius && x < this.totalRadius - this.desertRadius && y >= this.desertRadius && y < this.totalRadius - this.desertRadius) {
@@ -285,12 +309,13 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
-				
-				//ensures that there is always a tileable set of blockers
-				blockers.setCell(randX, randY, cell);
-				blockers.setCell(randX+1, randY+1, cell);
-				blockers.setCell(randX+1, randY, cell);
-				blockers.setCell(randX, randY+1, cell);
+				if(this.checkRing(randX, randY) == this.checkRing(randX+1, randY+1)){
+					//ensures that there is always a tileable set of blockers
+					blockers.setCell(randX, randY, cell);
+					blockers.setCell(randX+1, randY+1, cell);
+					blockers.setCell(randX+1, randY, cell);
+					blockers.setCell(randX, randY+1, cell);
+				}
 			}
 		}
 		boolean left, right, top, bottom;
@@ -299,13 +324,13 @@ public class Field {
 		for (int x = 0; x < this.totalRadius; x++) {
 			for (int y = 0; y < this.totalRadius; y++) {
 				if(blockers.getCell(x, y) != null) {
-					left = (blockers.getCell(x-1, y) == null);
-					right = (blockers.getCell(x + 1, y) == null);
-					top = (blockers.getCell(x, y + 1) == null);
-					bottom = (blockers.getCell(x, y - 1) == null);
 					tileRad = this.checkRing(x, y);
+					left = (blockers.getCell(x-1, y) == null) || (tileRad != this.checkRing(x - 1, y));
+					right = (blockers.getCell(x + 1, y) == null) || (tileRad != this.checkRing(x + 1, y));
+					top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
+					bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 					
-					blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+					blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
 					//set the actual tile image
 					if (left) {
 						if (top) {
@@ -352,6 +377,8 @@ public class Field {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 		
+		this.generator.update();
+		
 		batch.begin();
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
@@ -375,5 +402,23 @@ public class Field {
 		}
 		projectilesToRemove.clear();
 		batch.end();
+	}
+	
+	public boolean isOccupied(Rectangle newObject){
+		for(Enemy e : enemies){
+			if(CollisionHelper.isCollide(newObject, e.getRectangle())){
+				return false;
+			}
+		}
+		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
+			if(CollisionHelper.isCollide(newObject, s.getBoundingRectangle())){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int getFieldRadius(){
+		return this.totalRadius;
 	}
 }

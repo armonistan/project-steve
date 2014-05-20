@@ -3,6 +3,8 @@ package com.steve;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,11 +20,15 @@ public class GUI {
 	private int healthColor = 2;
 	private float currentHealth;
 	
+	BitmapFont font;
+	
 	private enum guiText {
 		LEFTEND, RED, YELLOW, GREEN, DEAD, RIGHTEND;
 	}
 	
 	public GUI() {
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+		
 		guiTextures = new ArrayList();
 		for (int i = 0; i < 6; i++) {
 			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 96)));
@@ -37,6 +43,8 @@ public class GUI {
 	
 	public void render(SpriteBatch batch) {
 		currentHealth = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
+		
+		font.setColor(Color.BLACK);
 		
 		batch.begin();
 		guiTextures.get(0).draw(batch);
@@ -57,6 +65,8 @@ public class GUI {
 			guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
 			guiTextures.get(healthColor).draw(batch);
 		}
+		
+		font.draw(batch, SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y);
 		
 		batch.end();
 	}

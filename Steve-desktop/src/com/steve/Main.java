@@ -10,7 +10,6 @@ public class Main {
 		cfg.useGL20 = false;
 		cfg.width = 680;
 		cfg.height = 520;
-		
 		new LwjglApplication(new SteveDriver(), cfg);
 	}
 }

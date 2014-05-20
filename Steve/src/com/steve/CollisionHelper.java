@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,21 +11,17 @@ public class CollisionHelper {
 		return Intersector.overlaps(a, b);
 	}
 	
-	public static boolean isCollide(Vector2 posA, float radiusA, Vector2 posB, float radiusB) {
-		float distance = distance(posA, posB);
+	public static boolean isCollide(float x1, float y1, float radius1, float x2, float y2, float radius2) {
+		float distance = distanceSquared(x1, y1, x2, y2);
 		
-		return distance <= (radiusA + radiusB);
+		return distance <= (radius2 + radius2) * (radius2 + radius2);
 	}
 	
-	public static float distance(Vector2 position1, Vector2 position2) {
-		return position1.dst(position2);
+	public static float distanceSquared(float x1, float y1, float x2, float y2) {
+		return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	}
 	
-	public static Vector2 directionVectorFromAngle(float angle) {
-		 return new Vector2((float)Math.cos(angle / 180 * Math.PI), (float)Math.sin(angle / 180 * Math.PI));
-	}
-	
-	public static float angleFromDirectionVector(Vector2 direction) {
-		return (float)(Math.atan2(direction.y, direction.x) / Math.PI) * 180 + 90;
+	public static float angleFromDirectionVector(float x, float y) {
+		return MathUtils.atan2(y, x) * MathUtils.radiansToDegrees;
 	}
 }

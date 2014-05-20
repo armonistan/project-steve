@@ -1,12 +1,10 @@
 package com.steve;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
@@ -14,36 +12,60 @@ import java.util.*;
 
 public class Snake {
 	private ArrayList<Sprite> segments;
+	private ArrayList<Weapon> weapons;
 	private final int MAX_SEGMENTS = 10;
+	
+	private final int beltImageOffset = 64;
+	private final int TILE_WIDTH = 16;
+	
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 10f; //arbitary number
+	private final float TIME_TILL_STARVE = 100000f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
-	
 	private Vector2 nextDirection;
-	private Vector2[] dirs;
-	private int nextRotation;
+	private float nextRotation;
 	
-	public Snake(Vector2 position){
+	private int money;
+	
+	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
+		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
 		
-		dirs = new Vector2[4];
-		dirs[0] = new Vector2(1, 0);
-		dirs[1] = new Vector2(0, 1);
-		dirs[2] = new Vector2(-1, 0);
-		dirs[3] = new Vector2(0, -1);
-		
-		nextDirection = dirs[0];
-		
+		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
-		segments.get(0).setRotation(nextRotation);
-		headPosition = new Vector3(position.x * SteveDriver.TEXTURE_WIDTH, position.y * SteveDriver.TEXTURE_LENGTH, 0);
+		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
+		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
+
+		//TODO: Make this better
+		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+	
+	public void addMoney(int amount) {
+		money += amount;
+		
+		//TODO: Make this only save when needed.
+		Gdx.app.getPreferences("main").putInteger("money", money);
+		Gdx.app.getPreferences("main").flush();
+	}
+	
+	public boolean spendMoney(int amount) {
+		if (money >= amount) {
+			money -= amount;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public float GetHungerTimer() {
@@ -59,23 +81,27 @@ public class Snake {
 		checkProjectiles();
 		
 		//update all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {			
+		if (timer >= TIME_BETWEEN_TURN) {
 			move();
-			animate();
+			checkCollisions();
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
-			checkCollisions();
+			animate();
 			timer = 0;
 		}
 		
 		updateStarvation();
+		updateWeapons();
 		updateTimers(deltaTime);
 		
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(batch);
-		}		
+		}
+		for (Sprite w : weapons){
+			w.draw(batch);
+		}
 	}
 
 	private void checkCollisions() {
@@ -85,9 +111,13 @@ public class Snake {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				//TODO: Clean SteveDriver.UP
 				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
-					System.out.println("Wat");
+					//TODO: Add logic for helmet
+					if (!Gdx.app.getPreferences("uh").contains("helmet") || !Gdx.app.getPreferences("uh").getBoolean("helmet")) {
+						System.out.println("No helmet");
+					}
+					
+					kill();
 				}
 			}
 		}
@@ -115,39 +145,39 @@ public class Snake {
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
 				if(deltaX > 0 && segments.get(0).getRotation() != SteveDriver.LEFT) {
 					nextRotation = SteveDriver.RIGHT;
-					nextDirection = dirs[0];
+					nextDirection = SteveDriver.VRIGHT;
 				}
 				else if (segments.get(0).getRotation() != SteveDriver.RIGHT){
 					nextRotation = SteveDriver.LEFT;
-					nextDirection = dirs[2];
+					nextDirection = SteveDriver.VLEFT;
 				}
 			}
 			else {
 				if(deltaY > 0 && segments.get(0).getRotation() != SteveDriver.UP) {
 					nextRotation = SteveDriver.DOWN;
-					nextDirection = dirs[3];
+					nextDirection = SteveDriver.VDOWN;
 				}
 				else if (segments.get(0).getRotation() != SteveDriver.DOWN){
 					nextRotation = SteveDriver.UP;
-					nextDirection = dirs[1];
+					nextDirection = SteveDriver.VUP;
 				}
 			}
 		} else {
 			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != SteveDriver.UP) {
 				nextRotation = SteveDriver.DOWN;
-				nextDirection = dirs[3];
+				nextDirection = SteveDriver.VDOWN;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)) && segments.get(0).getRotation() != SteveDriver.DOWN) {
 				nextRotation = SteveDriver.UP;
-				nextDirection = dirs[1];
+				nextDirection = SteveDriver.VUP;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && segments.get(0).getRotation() != SteveDriver.RIGHT) {
 				nextRotation = SteveDriver.LEFT;
-				nextDirection = dirs[2];
+				nextDirection = SteveDriver.VLEFT;
 			}
 			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && segments.get(0).getRotation() != SteveDriver.LEFT) {
 				nextRotation = SteveDriver.RIGHT;
-				nextDirection = dirs[0];
+				nextDirection = SteveDriver.VRIGHT;
 			}
 		}
 	}
@@ -160,24 +190,60 @@ public class Snake {
 		hungerTimer = 0;
 		
 		if (segments.size() < MAX_SEGMENTS) {
+			if(segments.size() == 4){
+				hungerTimer = 0;
+			}
+			
 			Sprite newSegment = new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
-			Sprite tail = segments.get(segments.size() - 1);
+			Sprite secondToLast = segments.get(segments.size() - 2);
+			Sprite tail = segments.get(segments.size()-1);
 			
-			Vector2 delta = dirs[0];
+			Vector2 delta = SteveDriver.VRIGHT;
 			
-			if (tail.getRotation() ==  SteveDriver.DOWN) {
-				delta = dirs[1];
+			if(secondToLast.getRegionX() == 16 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VLEFT;
+			}
+			else if(secondToLast.getRegionX() == 0 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 48 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VLEFT;
+			}
+			else if(secondToLast.getRegionX() == 32 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 0 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VDOWN;
+			}
+			else if(secondToLast.getRegionX() == 16 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VDOWN;				
+			}
+			else if(secondToLast.getRegionX() == 32 && 
+					secondToLast.getRegionY() == 32){
+				delta = SteveDriver.VRIGHT;
+			}
+			else if(secondToLast.getRegionX() == 48 && 
+					secondToLast.getRegionY() == 48){
+				delta = SteveDriver.VUP;
+			}
+			else if (tail.getRotation() ==  SteveDriver.DOWN) {
+				delta = SteveDriver.VUP;
 			}
 			else if (tail.getRotation() ==  SteveDriver.RIGHT) {
-				delta = dirs[2];
+				delta = SteveDriver.VLEFT;
 			}
 			else if (tail.getRotation() ==  SteveDriver.UP) {
-				delta = dirs[3];
+				delta = SteveDriver.VDOWN;
 			}
 			
-			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
-			tail.setRegion(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16));
-			
+			newSegment.setPosition(tail.getX() + delta.x * SteveDriver.TEXTURE_WIDTH, 
+					tail.getY() + delta.y * SteveDriver.TEXTURE_LENGTH);
 			segments.add(newSegment);
 		}
 	}
@@ -220,7 +286,7 @@ public class Snake {
 		boolean downRight = (deltaHeadX > 0) && (deltaNextY < 0);
 		boolean downLeft = (deltaHeadX < 0) && (deltaNextY < 0);
 		
-		if(rightUp){
+		if(rightUp){			
 			atlasX = 16;
 			atlasY = 48;
 			degrees = 0;
@@ -264,6 +330,10 @@ public class Snake {
 		//System.out.println(deltaX + "," + deltaY);
 		//System.out.println(atlasX + "|" + atlasY);
 		
+		if(weapons.size() > 0){
+			atlasX += this.beltImageOffset;
+		}
+		
 		segments.get(1).setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
 		segments.get(1).setRotation(degrees);
 	}
@@ -278,10 +348,20 @@ public class Snake {
 			else if(i == 1){
 				updateBody();
 			}
-			else if (i > 0) {
-				current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+			else {
+				if (i < weapons.size() + 1) {
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
+				else if (i == weapons.size() + 1 && (next.getRegionX()/TILE_WIDTH > 3)) {
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX() - this.beltImageOffset, next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
+				else {
+					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+				}
 			}
 		}
+		
+		int i = 0;
 	}
 
 	private void move(){
@@ -324,15 +404,15 @@ public class Snake {
 		float deltaY = next.getY() - tail.getY();
 		
 		if(deltaX > 0){
-			tail.setRotation(270);
+			tail.setRotation(SteveDriver.RIGHT);
 		}
 		else if(deltaX < 0)
-			tail.setRotation(90);
+			tail.setRotation(SteveDriver.LEFT);
 		else if(deltaY > 0){
-			tail.setRotation(0);
+			tail.setRotation(SteveDriver.UP);
 		}
 		else if(deltaY < 0){
-			tail.setRotation(180);
+			tail.setRotation(SteveDriver.DOWN);
 		}
 	}
 	
@@ -348,17 +428,29 @@ public class Snake {
 	private void updateStarvation(){
 		if(hungerTimer > TIME_TILL_STARVE){
 			if (segments.size() <= 2) {
-				//TODO: Make this better.
-				System.out.println("You suck.");
-				System.exit(0);
+				kill();
 			}
+			
 			segments.remove(segments.size() - 1);
+			if(this.segments.size()-2 < weapons.size()){
+				weapons.remove(weapons.size() - 1);
+			}
 			hungerTimer = 0;
 		}
+	}
+
+	private void kill() {
+		//TODO: Make this better.
+		System.out.println("You suck.");
+		System.exit(0);
 	}
 	
 	public ArrayList<Sprite> getSegments() {
 		return segments;
+	}
+	
+	public ArrayList<Weapon> getWeapons(){
+		return weapons;
 	}
 	
 	private void updateTimers(float deltaTime){
@@ -366,6 +458,63 @@ public class Snake {
 		hungerTimer += deltaTime;
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
+	}
+	
+	private void updateWeapons(){
+		for(int i = 0; i < weapons.size(); i++){
+			weapons.get(i).update(segments.get(i+1).getX(), segments.get(i+1).getY());
+		}
+	}
+	
+	public void mountUpgrade(int upgradeType){
+		if(this.segments.size() - 2 > this.weapons.size()) {
+			switch(upgradeType){
+			case 0:
+				weapons.add(new GatlingGun(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+				break;
+			case 1:
+				weapons.add(new Laser(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*9, 16));
+				break;
+			case 2:
+				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY(), 16*10, 16));
+				break;
+			}
+		}
+	}
+	
+	public ArrayList<Sprite> getSnakeSprites(){
+		return this.segments;
+	}
+	
+	public boolean hasWeaponSpace(){
+		return this.weapons.size() < this.segments.size()-1;
+	}
+	
+	public int getUpgradableWeapon(){
+		int weaponIndex = -1;
+		int indexCounter = 0;
+		for(Weapon w: weapons){
+			if(!w.isUpgraded){
+				weaponIndex = indexCounter;
+				break;
+			}
+			indexCounter++;
+		}
+		
+		return weaponIndex;
+	}
+	
+	public boolean hasWeaponToUpgrade(){
+		for(Weapon w: weapons){
+			if(!w.isUpgraded){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
 

@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile {
@@ -12,23 +15,48 @@ public class Projectile {
 	private Vector2 direction;
 	private boolean snakeFriendly;
 	private boolean dead;
+	private float projectileTime;
 
-	public Projectile(Vector2 position, Vector2 atlasPosition, Vector2 atlasBounds, float percentDamage, boolean snakeFriendly, Vector2 direction) {
+	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
+			float percentDamage, boolean snakeFriendly, float dx, float dy) {
 		this.percentDamage = percentDamage;
 		this.snakeFriendly = snakeFriendly;
-		this.direction = direction;
+		this.direction = new Vector2(dx, dy);
 		dead = false;
 		
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
 				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
-		avatar.setPosition(position.x, position.y);
-		avatar.setRotation(CollisionHelper.angleFromDirectionVector(direction));
+		avatar.setPosition(x, y);
+		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
+	
+		projectileTime = 100;
 	}
 	
 	public void render(SpriteBatch batch) {		
 		avatar.draw(batch);
 		
+		if(this.projectileTime > 0)
+			this.projectileTime--;
+		else
+			kill();
+		
+		checkCollisions();
+		
 		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
+	}
+	
+	private void checkCollisions() {
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), avatar.getBoundingRectangle())) {
+					kill();
+				}
+			}
+		}
 	}
 	
 	public Sprite getAvatar() {
