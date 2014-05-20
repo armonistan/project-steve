@@ -24,13 +24,13 @@ public class Tank extends Enemy {
 		moneyAmount = 10;
 	}
 	
-	public void render(SpriteBatch batch) {
-		super.render(batch);
+	public void render() {
+		super.render();
 		
 		if (hasShotCounter < shotCap) {
 			face.setPosition(avatar.getX(), avatar.getY());
 			face.setRotation(avatar.getRotation());
-			face.draw(batch);
+			face.draw(SteveDriver.batch);
 			hasShotCounter++;
 		}
 	}

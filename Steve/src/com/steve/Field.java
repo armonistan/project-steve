@@ -373,21 +373,21 @@ public class Field {
 		layers.add(blockers);
 	}
 	
-	public void render(OrthographicCamera camera, SpriteBatch batch) {
-		mapRenderer.setView(camera);
+	public void render() {
+		mapRenderer.setView(SteveDriver.camera);
 		mapRenderer.render();
 		
 		this.generator.update();
 		
-		batch.begin();
+		SteveDriver.batch.begin();
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
-				p.draw(batch);
+				p.draw(SteveDriver.batch);
 			}
 		}
 		
 		for (Enemy e : enemies) {
-			e.render(batch);
+			e.render();
 		}
 		for (Enemy e : enemiesToRemove) {
 			enemies.remove(e);
@@ -395,13 +395,13 @@ public class Field {
 		enemiesToRemove.clear();
 		
 		for (Projectile p : projectiles) {
-			p.render(batch);
+			p.render();
 		}
 		for (Projectile p : projectilesToRemove) {
 			projectiles.remove(p);
 		}
 		projectilesToRemove.clear();
-		batch.end();
+		SteveDriver.batch.end();
 	}
 	
 	public boolean isOccupied(Rectangle newObject){

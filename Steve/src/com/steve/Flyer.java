@@ -27,8 +27,8 @@ public class Flyer extends Enemy{
 		numPropellerFrames = 3;
 	}
 	
-	public void render(SpriteBatch batch) {
-		super.render(batch);
+	public void render() {
+		super.render();
 		
 		if (spinTimer >= spinTime) {
 			propellerFrame = (propellerFrame + 1) % numPropellerFrames;
@@ -42,7 +42,7 @@ public class Flyer extends Enemy{
 		
 		propeller.setPosition(avatar.getX(), avatar.getY());
 		propeller.setRotation(avatar.getRotation());
-		propeller.draw(batch);
+		propeller.draw(SteveDriver.batch);
 	}
 	
 	public void update() {

@@ -35,8 +35,8 @@ public class Projectile {
 		projectileTime = 100;
 	}
 	
-	public void render(SpriteBatch batch) {		
-		avatar.draw(batch);
+	public void render() {		
+		avatar.draw(SteveDriver.batch);
 		
 		if(this.projectileTime > 0)
 			this.projectileTime--;

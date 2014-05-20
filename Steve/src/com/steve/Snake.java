@@ -79,7 +79,7 @@ public class Snake {
 		return this.TIME_TILL_STARVE;
 	}
 
-	public void render(SpriteBatch batch, float deltaTime){
+	public void render(float deltaTime){
 		getTouch();
 		checkProjectiles();
 		
@@ -107,10 +107,10 @@ public class Snake {
 		
 		//Draw everything.
 		for (Sprite s : segments) {
-			s.draw(batch);
+			s.draw(SteveDriver.batch);
 		}
 		for (Sprite w : weapons){
-			w.draw(batch);
+			w.draw(SteveDriver.batch);
 		}
 	}
 

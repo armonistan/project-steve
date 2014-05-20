@@ -40,14 +40,19 @@ public class SteveDriver implements ApplicationListener {
 	public static final int LEFT_ID = 2;
 	public static final int DOWN_ID = 3;
 	
-	private static OrthographicCamera camera;
-	private static OrthographicCamera guiCamera;
-	private static SpriteBatch batch;
-	private static GUI gui;
+	public static OrthographicCamera camera;
+	public static OrthographicCamera guiCamera;
+	public static SpriteBatch batch;
+	public static GUI gui;
 	
-	private static int stage;
-	private static final int MENU = 0;
-	private static final int GAME = 1;
+	public static STAGE_TYPE stage;
+	public static boolean paused; //TODO: Make this meaningful.
+	
+	public static enum STAGE_TYPE {
+		MENU,
+		GAME,
+		STORE
+	}
 	
 	@Override
 	public void create() {
@@ -66,6 +71,8 @@ public class SteveDriver implements ApplicationListener {
 		//TODO: Make this better.
 		resetField();
 		gui = new GUI();
+		
+		stage = STAGE_TYPE.GAME;
 	}
 
 	@Override
@@ -84,7 +91,7 @@ public class SteveDriver implements ApplicationListener {
 		switch (stage) {
 		case MENU:
 			if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-				stage = GAME;
+				stage = STAGE_TYPE.GAME;
 			}
 			break;
 		case GAME:
@@ -98,14 +105,14 @@ public class SteveDriver implements ApplicationListener {
 			guiCamera.update();
 			
 			batch.setProjectionMatrix(camera.combined);
-			field.render(camera, batch);
+			field.render();
 			
 			batch.begin();
-			snake.render(batch, deltaTime);
+			snake.render(deltaTime);
 			batch.end();
 			
 			batch.setProjectionMatrix(guiCamera.combined);
-			gui.render(batch);
+			gui.render();
 			
 			//TODO: Temp
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
@@ -113,8 +120,11 @@ public class SteveDriver implements ApplicationListener {
 			}
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-				stage = MENU;
+				stage = STAGE_TYPE.MENU;
 			}
+			break;
+		case STORE:
+			
 			break;
 		}
 	}

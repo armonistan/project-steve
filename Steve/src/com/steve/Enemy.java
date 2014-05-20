@@ -55,11 +55,11 @@ public class Enemy {
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 	}
 	
-	public void render(SpriteBatch batch) {
+	public void render() {
 		
 		update();
 		
-		avatar.draw(batch);
+		avatar.draw(SteveDriver.batch);
 	}
 	
 	//TODO: Make more robust.
