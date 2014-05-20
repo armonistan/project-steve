@@ -83,7 +83,11 @@ public class Snake {
 		//update all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {
 			move();
-			checkCollisions();
+			
+			if (checkCollisions()) {
+				
+			}
+			
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
@@ -91,7 +95,10 @@ public class Snake {
 			timer = 0;
 		}
 		
-		updateStarvation();
+		if (updateStarvation()) {
+			return;
+		}
+		
 		updateWeapons();
 		updateTimers(deltaTime);
 		
@@ -104,7 +111,7 @@ public class Snake {
 		}
 	}
 
-	private void checkCollisions() {
+	private boolean checkCollisions() {
 		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
@@ -118,9 +125,12 @@ public class Snake {
 					}
 					
 					kill();
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 	
 	private void checkProjectiles() {
@@ -425,10 +435,11 @@ public class Snake {
 		}
 	}
 
-	private void updateStarvation(){
+	private boolean updateStarvation(){
 		if(hungerTimer > TIME_TILL_STARVE){
 			if (segments.size() <= 2) {
 				kill();
+				return true;
 			}
 			
 			segments.remove(segments.size() - 1);
@@ -437,12 +448,15 @@ public class Snake {
 			}
 			hungerTimer = 0;
 		}
+		
+		return false;
 	}
 
 	private void kill() {
 		//TODO: Make this better.
 		System.out.println("You suck.");
-		System.exit(0);
+		//System.exit(0);
+		SteveDriver.resetField();
 	}
 	
 	public ArrayList<Sprite> getSegments() {

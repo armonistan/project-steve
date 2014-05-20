@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,10 +40,14 @@ public class SteveDriver implements ApplicationListener {
 	public static final int LEFT_ID = 2;
 	public static final int DOWN_ID = 3;
 	
-	private OrthographicCamera camera;
-	private OrthographicCamera guiCamera;
-	private SpriteBatch batch;
-	private GUI gui;
+	private static OrthographicCamera camera;
+	private static OrthographicCamera guiCamera;
+	private static SpriteBatch batch;
+	private static GUI gui;
+	
+	private static int stage;
+	private static final int MENU = 0;
+	private static final int GAME = 1;
 	
 	@Override
 	public void create() {
@@ -59,9 +64,7 @@ public class SteveDriver implements ApplicationListener {
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		//TODO: Make this better.
-		snake = new Snake(30, 30);
-		
-		field = new Field(camera);
+		resetField();
 		gui = new GUI();
 	}
 
@@ -78,25 +81,42 @@ public class SteveDriver implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.01f);
-		
-		camera.position.x = test.x;
-		camera.position.y = test.y;
-		camera.update();
-		
-		guiCamera.position.x = 0;
-		guiCamera.position.y = 0;
-		guiCamera.update();
-		
-		batch.setProjectionMatrix(camera.combined);
-		field.render(camera, batch);
-		
-		batch.begin();
-		snake.render(batch, deltaTime);
-		batch.end();
-		
-		batch.setProjectionMatrix(guiCamera.combined);
-		gui.render(batch);
+		switch (stage) {
+		case MENU:
+			if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+				stage = GAME;
+			}
+			break;
+		case GAME:
+			Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.01f);
+			camera.position.x = test.x;
+			camera.position.y = test.y;
+			camera.update();
+			
+			guiCamera.position.x = 0;
+			guiCamera.position.y = 0;
+			guiCamera.update();
+			
+			batch.setProjectionMatrix(camera.combined);
+			field.render(camera, batch);
+			
+			batch.begin();
+			snake.render(batch, deltaTime);
+			batch.end();
+			
+			batch.setProjectionMatrix(guiCamera.combined);
+			gui.render(batch);
+			
+			//TODO: Temp
+			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+				resetField();
+			}
+			
+			if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+				stage = MENU;
+			}
+			break;
+		}
 	}
 
 	@Override
@@ -111,7 +131,8 @@ public class SteveDriver implements ApplicationListener {
 	public void resume() {
 	}
 	
-	private void resetField() {
+	public static void resetField() {
 		snake = new Snake(30, 30);
+		field = new Field(camera);
 	}
 }
