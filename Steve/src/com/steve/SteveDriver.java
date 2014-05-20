@@ -5,10 +5,12 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -48,6 +50,9 @@ public class SteveDriver implements ApplicationListener {
 	private static int stage;
 	private static final int MENU = 0;
 	private static final int GAME = 1;
+	private static final int STORE = 2;
+	
+	BitmapFont menuFont;
 	
 	@Override
 	public void create() {
@@ -57,7 +62,8 @@ public class SteveDriver implements ApplicationListener {
 		camera = new OrthographicCamera(w, h);
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
-		
+		menuFont = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+		menuFont.setColor(Color.BLACK);
 		random = new Random();
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
@@ -83,7 +89,40 @@ public class SteveDriver implements ApplicationListener {
 		
 		switch (stage) {
 		case MENU:
+			guiCamera.position.x = 0;
+			guiCamera.position.y = 0;
+			guiCamera.update();
+			
+			batch.setProjectionMatrix(guiCamera.combined);
+			
+			batch.begin();
+			menuFont.draw(batch, "This is the menu. Hit 2 to continue the game, yeah.", -300, 70);
+			menuFont.draw(batch, "Hit 3 to start a new game.", -200, 0);
+			batch.end();
+			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
+				Gdx.app.getPreferences("main").putInteger("money", 0);
+				Gdx.app.getPreferences("main").flush();
+				stage = GAME;
+			}
 			if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+				if (snake.getMoney() != 0){
+					stage = STORE;
+				} else {
+					stage = GAME;
+				}
+			}
+			break;
+		case STORE:
+			guiCamera.position.x = 0;
+			guiCamera.position.y = 0;
+			guiCamera.update();
+			
+			batch.setProjectionMatrix(guiCamera.combined);
+			
+			batch.begin();
+			menuFont.draw(batch, "This is the store. Hit 3 to get back into the game, yeah.", -330, 0);
+			batch.end();
+			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
 				stage = GAME;
 			}
 			break;
