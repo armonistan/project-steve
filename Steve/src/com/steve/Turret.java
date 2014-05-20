@@ -15,7 +15,7 @@ public class Turret extends Enemy{
 	boolean isUpgraded;
 
 	public Turret(float x, float y) {
-		super(x, y, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3);
+		super(x, y, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3, 80);
 		range = 300;//override range if need be
 		this.avatar.setPosition(x, y);
 		isAimed = false;

@@ -11,7 +11,7 @@ public class Tank extends Enemy {
 	private Sprite face;
 
 	public Tank(float x, float y) {
-		super(x, y, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3);
+		super(x, y, new Vector2(15, 1), new Vector2(2, 2), 0.5f, 0.5f, 3, 75);
 		shootTime = 0.5f;
 		sightDistance = 600;
 		
