@@ -17,7 +17,6 @@ public class Tank extends Enemy {
 		
 		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_WIDTH, 1 * SteveDriver.TEXTURE_LENGTH,
 				2 * SteveDriver.TEXTURE_WIDTH, 2 * SteveDriver.TEXTURE_LENGTH);
-		face.setPosition(avatar.getX(), avatar.getY());
 		
 		shotCap = 10;
 		hasShotCounter = 11;
@@ -38,7 +37,7 @@ public class Tank extends Enemy {
 	
 	@Override
 	protected void update(){
-		super.shoot();
+		super.shoot(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2, 0, 0));
 		super.update();
 	}
 	

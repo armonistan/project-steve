@@ -204,6 +204,11 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
+		//enemies.add(new Snail(new Vector2(50, 30)));
+		//enemies.add(new Ring(new Vector2(20, 30)));
+		//enemies.add(new Brute(new Vector2(40, 30)));
+		//enemies.add(new Tank(new Vector2(30, 20)));
+		enemies.add(new Flyer(30, 40));
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
 		enemies.add(new Brute(40, 30));

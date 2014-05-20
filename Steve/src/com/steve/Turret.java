@@ -59,8 +59,9 @@ public class Turret extends Enemy{
 	protected void behavior(){
 		if(isInRange()){
 			turn();
-			if(shootCounter > shootSpeed && isAimed)
-				shoot();
+			if(shootCounter > shootSpeed && isAimed) {
+				specialShoot();
+			}
 		}
 		else
 			this.avatar.setRotation(((this.avatar.getRotation() +359)%360));
@@ -72,17 +73,16 @@ public class Turret extends Enemy{
 		return distance <= range * range;
 	}
 	
-	@Override
-	protected void shoot(){
+	protected void specialShoot(){
 		//different angle
-				float deltaY = this.avatar.getX() - SteveDriver.snake.getHeadPosition().x;
-				float deltaX = this.avatar.getY() - SteveDriver.snake.getHeadPosition().y;
-				
-				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
-				degrees += 180;
-				
-				SteveDriver.field.projectiles.add(new Acorn(this.avatar.getX(), this.avatar.getY(), 100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees)));
-				shootCounter = 0;
+		float deltaY = this.avatar.getX() - SteveDriver.snake.getHeadPosition().x;
+		float deltaX = this.avatar.getY() - SteveDriver.snake.getHeadPosition().y;
+		
+		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
+		degrees += 180;
+		
+		SteveDriver.field.projectiles.add(new Acorn(this.avatar.getX(), this.avatar.getY(), 100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees)));
+		shootCounter = 0;
 	}
 	
 	
