@@ -98,8 +98,9 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
-			gui.drawText("This is the menu. Hit 2 to continue the game, yeah.", -300, 70, Color.BLACK);
-			gui.drawText("Hit 3 to start a new game.", -200, 0, Color.BLACK);
+			gui.drawBox(50, 50, 4, 4);
+			//gui.drawText("This is the menu. Hit 2 to continue the game, yeah.", -300, 70, Color.BLACK);
+			//gui.drawText("Hit 3 to start a new game.", -200, 0, Color.BLACK);
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
@@ -150,6 +151,7 @@ public class SteveDriver implements ApplicationListener {
 			
 			batch.begin();
 			snake.render(deltaTime);
+			gui.drawBox(50, 50, 4, 4);
 			batch.end();
 			
 			batch.setProjectionMatrix(guiCamera.combined);
