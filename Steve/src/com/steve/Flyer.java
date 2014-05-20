@@ -16,7 +16,7 @@ public class Flyer extends Enemy{
 	private Vector2 propellerAtlasBounds;
 
 	public Flyer(float x, float y) {
-		super(x, y, new Vector2(11, 5), new Vector2(2, 2), 1f, 0.5f, 2);
+		super(x, y, new Vector2(11, 5), new Vector2(2, 2), 1f, 0.5f, 2, 75);
 		shootTime = 1f;
 		
 		propellerAtlasPosition = new Vector2(15, 5);
