@@ -244,7 +244,7 @@ public class Enemy {
 	}
 	
 	
-	protected void shoot(){
+	protected void shoot(Projectile proj){
 		float deltaX;
 		float deltaY;
 		float distance;
@@ -253,34 +253,38 @@ public class Enemy {
 			for(Sprite s: SteveDriver.snake.getSegments()){
 				deltaY = this.avatar.getY() - s.getY();
 				deltaX = this.avatar.getX() - s.getX();
-				distance = (float)Math.sqrt((double)((deltaX * deltaX) + (deltaY * deltaY)));
+				distance = CollisionHelper.distanceSquared(deltaX, deltaY, deltaX, deltaY);
 			
-				if(distance < sightDistance){
+				if(distance < sightDistance * sightDistance){
 					if(this.avatar.getRotation() == SteveDriver.RIGHT 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.RIGHT_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								100, 0));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(1, 0);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.UP
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.UP_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								0,100));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(0,  1);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.LEFT
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.LEFT_ID){
-							SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-									-100,0));
+							SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(-1, 0);	
+							
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.DOWN 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.DOWN_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								0,-100));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(0, -1);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}

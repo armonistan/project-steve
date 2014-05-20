@@ -46,7 +46,7 @@ public class Flyer extends Enemy{
 	}
 	
 	public void update() {
-		super.shoot();
+		super.shoot(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
 		super.update();
 	}
 	

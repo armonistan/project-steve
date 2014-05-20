@@ -16,6 +16,8 @@ public class Projectile {
 	private boolean snakeFriendly;
 	private boolean dead;
 	private float projectileTime;
+	
+	protected float speed;
 
 	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
 			float percentDamage, boolean snakeFriendly, float dx, float dy) {
@@ -78,5 +80,10 @@ public class Projectile {
 	
 	public float getPercentDamage() {
 		return percentDamage;
+	}
+	
+	public void setDirection(float dx, float dy) {
+		direction.x = dx * speed;
+		direction.y = dy * speed;
 	}
 }
