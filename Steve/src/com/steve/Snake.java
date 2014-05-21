@@ -88,7 +88,7 @@ public class Snake {
 			move();
 			
 			if (checkCollisions()) {
-				
+				return;
 			}
 			
 			boolean aboutToEat = checkEat();
