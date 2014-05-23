@@ -63,7 +63,6 @@ public class SteveDriver implements ApplicationListener {
 		MENU,
 		GAME,
 		STORE,
-		RESPAWNING,
 		PAUSED
 	}
 	
@@ -124,10 +123,6 @@ public class SteveDriver implements ApplicationListener {
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
 				stage = STAGE_TYPE.GAME;
 			}
-			break;
-		case RESPAWNING:
-			resetField();
-			stage = STAGE_TYPE.GAME;
 			break;
 		case GAME:
 			game.render(deltaTime);

@@ -36,7 +36,6 @@ public class Store {
 	Button[][] upgradeButtons;
 	Button confirmButton;
 	TextButton startButton;
-	Button respawnButton;
 	
 	int[] upgradeTiers;
 	int[] upgradePrices;
@@ -92,7 +91,6 @@ public class Store {
 		
 		confirmButton = new Button(250, 160, 4, 4, new ConfirmUpgrade(this));
 		startButton = new TextButton(250, 100, 10, 4, new StartNewRound(), "Start!");
-		respawnButton = new Button(250, 100, 4, 4, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING));
 		
 		upgradeButtons = new Button[7][7];
 		for (int i = 0; i < 7; i++) {
@@ -120,8 +118,6 @@ public class Store {
 		
 		startButton.update();
 		startButton.render();
-		respawnButton.update();
-		respawnButton.render();
 		
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
