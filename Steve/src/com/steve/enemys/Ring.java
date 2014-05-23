@@ -1,7 +1,10 @@
-package com.steve;
+package com.steve.enemys;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.base.Enemy;
+import com.steve.pickups.Apple;
 
 public class Ring extends Enemy {
 

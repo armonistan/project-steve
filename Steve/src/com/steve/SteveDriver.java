@@ -128,6 +128,7 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
+			gui.drawBox(-342, 6, 4, 43);
 			gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
 			batch.end();
 			

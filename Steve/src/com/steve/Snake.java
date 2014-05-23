@@ -8,6 +8,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
+import com.steve.base.Pickup;
+import com.steve.base.Projectile;
+import com.steve.base.Weapon;
+import com.steve.weapons.GatlingGun;
+import com.steve.weapons.Laser;
+import com.steve.weapons.Specialist;
+
 import java.util.*;
 
 public class Snake {
@@ -88,7 +95,7 @@ public class Snake {
 			move();
 			
 			if (checkCollisions()) {
-				
+				return;
 			}
 			
 			boolean aboutToEat = checkEat();
@@ -514,7 +521,7 @@ public class Snake {
 		int weaponIndex = -1;
 		int indexCounter = 0;
 		for(Weapon w: weapons){
-			if(!w.isUpgraded){
+			if(!w.isUpgraded()){
 				weaponIndex = indexCounter;
 				break;
 			}
@@ -526,7 +533,7 @@ public class Snake {
 	
 	public boolean hasWeaponToUpgrade(){
 		for(Weapon w: weapons){
-			if(!w.isUpgraded){
+			if(!w.isUpgraded()){
 				return true;
 			}
 		}

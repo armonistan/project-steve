@@ -1,7 +1,10 @@
-package com.steve;
+package com.steve.pickups;
+
+import com.steve.Snake;
+import com.steve.base.Pickup;
 
 public class SpecialistPickUp extends Pickup {
-	SpecialistPickUp(float xPos, float yPos){
+	public SpecialistPickUp(float xPos, float yPos){
 		super(xPos, yPos, 10 * 16, 0);
 	}
 	

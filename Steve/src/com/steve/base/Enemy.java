@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.CollisionHelper;
+import com.steve.SteveDriver;
 
 public class Enemy {
 	public Sprite avatar;
@@ -29,8 +31,8 @@ public class Enemy {
 	int numStepsInDirection = 0;
 	int stepsTaken = 0;
 	int directionID = 0;
-	int sightDistance = 100;
-	int moneyAmount = 0;
+	protected int sightDistance = 100;
+	protected int moneyAmount = 0;
 	
 	protected float shootTime;
 	protected float shootTimer;
