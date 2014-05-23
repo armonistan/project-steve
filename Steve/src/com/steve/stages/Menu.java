@@ -4,12 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
-import com.steve.ChangeStage;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.commands.ChangeStage;
+import com.steve.commands.ExitGame;
+import com.steve.commands.StartNewGame;
+import com.steve.TextButton;
 
 public class Menu {
-	Button newGame = new Button(-300, 70, 10, 4, new ChangeStage(STAGE_TYPE.GAME));
+	TextButton newGame = new TextButton(0, 100, 10, 4, new StartNewGame(), "New Game");
+	TextButton continueGame = new TextButton(0, 0, 14, 4, new ChangeStage(STAGE_TYPE.STORE), "Continue Game");
+	TextButton exitGame = new TextButton(0, -100, 10, 4, new ExitGame(), "Exit Game");
 	
 	public void render() {
 		SteveDriver.guiCamera.position.x = 0;
@@ -21,8 +26,14 @@ public class Menu {
 		SteveDriver.batch.begin();
 		newGame.update();
 		newGame.render();
-		SteveDriver.guiHelper.drawText("This is the menu. Hit 2 to continue the game, yeah.", -300, 70, Color.BLACK);
-		SteveDriver.guiHelper.drawText("Hit 3 to start a new game.", -200, 0, Color.BLACK);
+		
+		exitGame.update();
+		exitGame.render();
+		
+		if (Gdx.app.getPreferences("main").contains("money")) {
+			continueGame.update();
+			continueGame.render();
+		}
 		SteveDriver.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {

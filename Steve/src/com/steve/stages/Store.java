@@ -4,9 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
-import com.steve.BuyUpgrade;
-import com.steve.ConfirmUpgrade;
 import com.steve.SteveDriver;
+import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.TextButton;
+import com.steve.commands.BuyUpgrade;
+import com.steve.commands.ChangeStage;
+import com.steve.commands.ConfirmUpgrade;
+import com.steve.commands.StartNewRound;
 
 public class Store {
 	
@@ -31,6 +35,7 @@ public class Store {
 	
 	Button[][] upgradeButtons;
 	Button confirmButton;
+	TextButton startButton;
 	
 	int[] upgradeTiers;
 	int[] upgradePrices;
@@ -85,6 +90,7 @@ public class Store {
 		mechaPriceMod = 12.5f;
 		
 		confirmButton = new Button(250, 160, 4, 4, new ConfirmUpgrade(this));
+		startButton = new TextButton(250, 100, 10, 4, new StartNewRound(), "Start!");
 		
 		upgradeButtons = new Button[7][7];
 		for (int i = 0; i < 7; i++) {
@@ -109,6 +115,10 @@ public class Store {
 		SteveDriver.guiHelper.drawText("$" + SteveDriver.snake.getMoney(), 220, 224, Color.BLACK);
 		confirmButton.update();
 		confirmButton.render();
+		
+		startButton.update();
+		startButton.render();
+		
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
 				if (upgradeTiers[i] < j+1) {

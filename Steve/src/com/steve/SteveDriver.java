@@ -87,7 +87,7 @@ public class SteveDriver implements ApplicationListener {
 		resetField();
 		gui = new GUI();
 		
-		stage = STAGE_TYPE.GAME;
+		stage = STAGE_TYPE.MENU;
 		menu = new Menu();
 		game = new Game();
 	}
