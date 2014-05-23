@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
-import com.steve.ChangeStage;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.TextButton;
