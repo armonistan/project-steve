@@ -21,16 +21,18 @@ import com.steve.helpers.GUIHelper;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Menu;
-import com.steve.stages.Store;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
+<<<<<<< HEAD
 	public static Store store;
+=======
 	public static GUIHelper guiHelper;
 	
+>>>>>>> a33bed312ced5276ee5b9e69f608c6ecb7b80d3f
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
 	public static final int BIG_TEXTURE_WIDTH = 32;
@@ -56,14 +58,14 @@ public class SteveDriver implements ApplicationListener {
 	public static GUI gui;
 	
 	public static STAGE_TYPE stage;
+	public static boolean paused; //TODO: Make this meaningful.
 	public static Menu menu;
 	public static Game game;
 	
 	public static enum STAGE_TYPE {
 		MENU,
 		GAME,
-		STORE,
-		PAUSED
+		STORE
 	}
 	
 	@Override
@@ -117,11 +119,14 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
+<<<<<<< HEAD
 			store.render();
 			//gui.drawBox(-342, 6, 4, 43);
+			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+=======
 			guiHelper.drawBox(-342, 6, 4, 43);
 			guiHelper.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
-			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+>>>>>>> a33bed312ced5276ee5b9e69f608c6ecb7b80d3f
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
@@ -130,9 +135,6 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case GAME:
 			game.render(deltaTime);
-			break;
-		case PAUSED:
-			game.renderPaused();
 			break;
 		}
 	}
@@ -143,16 +145,10 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void pause() {
-		if (stage == STAGE_TYPE.GAME) {
-			stage = STAGE_TYPE.PAUSED;
-		}
 	}
 
 	@Override
 	public void resume() {
-		if (stage == STAGE_TYPE.PAUSED) {
-			stage = STAGE_TYPE.GAME;
-		}
 	}
 	
 	public static void resetField() {

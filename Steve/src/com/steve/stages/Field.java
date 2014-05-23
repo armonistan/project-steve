@@ -186,7 +186,7 @@ public class Field {
 		this.desertRadius = 10;
 		this.barrenRadius = 60;
 		
-		this.totalRadius = 600;
+		this.totalRadius = 60;
 		this.blockerChains = 50;
 		this.maxBlockerLength = 10;
 		
@@ -441,6 +441,9 @@ public class Field {
 				return false;
 			}
 		}
+		
+		
+		
 		return true;
 	}
 	

@@ -2,9 +2,11 @@ package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.steve.Button;
-import com.steve.BuyUpgrade;
+<<<<<<< HEAD:Steve/src/com/steve/Store.java
+import com.steve.Store.UpgradeType;
+=======
 import com.steve.SteveDriver;
+>>>>>>> a33bed312ced5276ee5b9e69f608c6ecb7b80d3f:Steve/src/com/steve/stages/Store.java
 
 public class Store {
 	
