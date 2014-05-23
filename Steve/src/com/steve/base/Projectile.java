@@ -37,9 +37,7 @@ public class Projectile {
 		projectileTime = 100;
 	}
 	
-	public void render() {		
-		avatar.draw(SteveDriver.batch);
-		
+	public void update() {
 		if(this.projectileTime > 0)
 			this.projectileTime--;
 		else
@@ -48,6 +46,10 @@ public class Projectile {
 		checkCollisions();
 		
 		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
+	}
+	
+	public void draw() {
+		avatar.draw(SteveDriver.batch);
 	}
 	
 	private void checkCollisions() {

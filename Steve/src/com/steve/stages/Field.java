@@ -389,11 +389,29 @@ public class Field {
 		layers.add(blockers);
 	}
 	
-	public void render() {
+	public void update() {
+		this.generator.update();
+		
+		for (Enemy e : enemies) {
+			e.update();
+		}
+		for (Enemy e : enemiesToRemove) {
+			enemies.remove(e);
+		}
+		enemiesToRemove.clear();
+		
+		for (Projectile p : projectiles) {
+			p.update();
+		}
+		for (Projectile p : projectilesToRemove) {
+			projectiles.remove(p);
+		}
+		projectilesToRemove.clear();
+	}
+	
+	public void draw() {
 		mapRenderer.setView(SteveDriver.camera);
 		mapRenderer.render();
-		
-		this.generator.update();
 		
 		SteveDriver.batch.begin();
 		for (Pickup p : pickups) {
@@ -403,20 +421,12 @@ public class Field {
 		}
 		
 		for (Enemy e : enemies) {
-			e.render();
+			e.draw();
 		}
-		for (Enemy e : enemiesToRemove) {
-			enemies.remove(e);
-		}
-		enemiesToRemove.clear();
 		
 		for (Projectile p : projectiles) {
-			p.render();
+			p.draw();
 		}
-		for (Projectile p : projectilesToRemove) {
-			projectiles.remove(p);
-		}
-		projectilesToRemove.clear();
 		SteveDriver.batch.end();
 	}
 	

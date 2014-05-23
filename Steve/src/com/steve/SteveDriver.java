@@ -54,14 +54,14 @@ public class SteveDriver implements ApplicationListener {
 	public static GUI gui;
 	
 	public static STAGE_TYPE stage;
-	public static boolean paused; //TODO: Make this meaningful.
 	public static Menu menu;
 	public static Game game;
 	
 	public static enum STAGE_TYPE {
 		MENU,
 		GAME,
-		STORE
+		STORE,
+		PAUSED
 	}
 	
 	@Override
@@ -124,6 +124,9 @@ public class SteveDriver implements ApplicationListener {
 		case GAME:
 			game.render(deltaTime);
 			break;
+		case PAUSED:
+			game.renderPaused();
+			break;
 		}
 	}
 
@@ -133,10 +136,16 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		if (stage == STAGE_TYPE.GAME) {
+			stage = STAGE_TYPE.PAUSED;
+		}
 	}
 
 	@Override
 	public void resume() {
+		if (stage == STAGE_TYPE.PAUSED) {
+			stage = STAGE_TYPE.GAME;
+		}
 	}
 	
 	public static void resetField() {
