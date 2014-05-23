@@ -111,8 +111,10 @@ public class Store {
 		confirmButton.render();
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
-				upgradeButtons[i][j].update();
-				upgradeButtons[i][j].render();
+				if (upgradeTiers[i] < j+1) {
+					upgradeButtons[i][j].update();
+					upgradeButtons[i][j].render();
+				}
 			}
 		}
 	}

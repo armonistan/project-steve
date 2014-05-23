@@ -69,7 +69,6 @@ public class Snake {
 		
 		//TODO: Make this only save when needed.
 		Gdx.app.getPreferences("main").putInteger("money", money);
-		Gdx.app.getPreferences("main").flush();
 	}
 	
 	public boolean spendMoney(int amount) {
@@ -471,8 +470,8 @@ public class Snake {
 	private void kill() {
 		//TODO: Make this better.
 		System.out.println("You suck.");
-		//System.exit(0);
-		SteveDriver.resetField();
+		Gdx.app.getPreferences("main").flush();
+		SteveDriver.stage = SteveDriver.STAGE_TYPE.STORE;
 	}
 	
 	public ArrayList<Sprite> getSegments() {
