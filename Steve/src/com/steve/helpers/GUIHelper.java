@@ -93,6 +93,6 @@ public class GUIHelper {
 	}
 
 	public boolean isTouchInRectangle(float x, float y, float rectX, float rectY, float width, float length) {
-		return x > rectX && x < rectX + width && y > rectY && y < rectY + length;
+		return x > rectX && x < rectX + length && y > rectY && y < rectY + width;
 	}
 }

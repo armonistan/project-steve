@@ -8,18 +8,20 @@ public class BuyUpgrade implements ICommand {
 	private Store store;
 	private UpgradeType upgrade;
 	private int upgradeTier;
+	private int price;
 	
 	public BuyUpgrade() {
 		
 	}
 	
-	public BuyUpgrade(Store s, UpgradeType upgradeType, int upgradeTier) {
+	public BuyUpgrade(Store s, UpgradeType upgradeType, int upgradeTier, int price) {
 		store = s;
 		upgrade = upgradeType;
 		this.upgradeTier = upgradeTier;
+		this.price = price;
 	}
 	
 	public void execute() {
-		store.queueUpgradePurchase(upgrade, upgradeTier);
+		store.queueUpgradePurchase(upgrade, upgradeTier, price);
 	}
 }

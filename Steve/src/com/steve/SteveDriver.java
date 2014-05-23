@@ -118,10 +118,6 @@ public class SteveDriver implements ApplicationListener {
 			
 			batch.begin();
 			store.render();
-			//gui.drawBox(-342, 6, 4, 43);
-			guiHelper.drawBox(-342, 6, 4, 43);
-			guiHelper.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
-			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
