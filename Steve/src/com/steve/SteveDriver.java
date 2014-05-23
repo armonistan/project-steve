@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.helpers.GUIHelper;
 import com.steve.stages.Field;
+import com.steve.stages.Game;
 import com.steve.stages.Menu;
 
 public class SteveDriver implements ApplicationListener {
@@ -55,6 +56,7 @@ public class SteveDriver implements ApplicationListener {
 	public static STAGE_TYPE stage;
 	public static boolean paused; //TODO: Make this meaningful.
 	public static Menu menu;
+	public static Game game;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -83,6 +85,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		stage = STAGE_TYPE.GAME;
 		menu = new Menu();
+		game = new Game();
 	}
 
 	@Override
@@ -119,33 +122,7 @@ public class SteveDriver implements ApplicationListener {
 			}
 			break;
 		case GAME:
-			Vector3 test = camera.position.lerp(snake.getHeadPosition(), 0.01f);
-			camera.position.x = test.x;
-			camera.position.y = test.y;
-			camera.update();
-			
-			guiCamera.position.x = 0;
-			guiCamera.position.y = 0;
-			guiCamera.update();
-			
-			batch.setProjectionMatrix(camera.combined);
-			field.render();
-			
-			batch.begin();
-			snake.render(deltaTime);
-			batch.end();
-			
-			batch.setProjectionMatrix(guiCamera.combined);
-			gui.render();
-			
-			//TODO: Temp
-			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-				resetField();
-			}
-			
-			if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-				stage = STAGE_TYPE.MENU;
-			}
+			game.render(deltaTime);
 			break;
 		}
 	}
