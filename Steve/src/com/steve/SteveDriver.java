@@ -17,12 +17,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.steve.helpers.GUIHelper;
+import com.steve.stages.Field;
+import com.steve.stages.Menu;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
+	public static GUIHelper guiHelper;
+	
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
 	public static final int BIG_TEXTURE_WIDTH = 32;
@@ -70,6 +75,8 @@ public class SteveDriver implements ApplicationListener {
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		guiHelper = new GUIHelper();
+		
 		//TODO: Make this better.
 		resetField();
 		gui = new GUI();
@@ -103,8 +110,8 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
-			gui.drawBox(-342, 6, 4, 43);
-			gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+			guiHelper.drawBox(-342, 6, 4, 43);
+			guiHelper.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {

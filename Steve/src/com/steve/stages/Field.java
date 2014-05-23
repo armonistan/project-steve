@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.stages;
 
 import java.util.Random;
 
@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
@@ -23,6 +24,8 @@ import com.steve.enemies.Flyer;
 import com.steve.enemies.Ring;
 import com.steve.enemies.Snail;
 import com.steve.enemies.Turret;
+import com.steve.helpers.CollisionHelper;
+import com.steve.helpers.Generator;
 import com.steve.pickups.Apple;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;

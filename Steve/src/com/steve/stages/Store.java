@@ -1,7 +1,8 @@
-package com.steve;
+package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.steve.SteveDriver;
 
 public class Store {
 	

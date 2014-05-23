@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.steve.CollisionHelper;
 import com.steve.SteveDriver;
+import com.steve.helpers.CollisionHelper;
 
 public class Enemy {
 	public Sprite avatar;
