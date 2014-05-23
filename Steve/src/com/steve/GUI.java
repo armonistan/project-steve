@@ -146,4 +146,8 @@ public class GUI {
 			}
 		}
 	}
+	
+	public boolean isTouchInRectangle(float x, float y, float rectX, float rectY, float length, float width) {
+		return x > rectX && x < rectX + width && y > rectY && y < rectY + length;
+	}
 }

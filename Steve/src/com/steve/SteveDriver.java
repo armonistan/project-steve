@@ -49,6 +49,7 @@ public class SteveDriver implements ApplicationListener {
 	
 	public static STAGE_TYPE stage;
 	public static boolean paused; //TODO: Make this meaningful.
+	public static Menu menu;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -74,6 +75,7 @@ public class SteveDriver implements ApplicationListener {
 		gui = new GUI();
 		
 		stage = STAGE_TYPE.GAME;
+		menu = new Menu();
 	}
 
 	@Override
@@ -91,34 +93,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		switch (stage) {
 		case MENU:
-			guiCamera.position.x = 0;
-			guiCamera.position.y = 0;
-			guiCamera.update();
-			
-			batch.setProjectionMatrix(guiCamera.combined);
-			
-			batch.begin();
-			gui.drawText("This is the menu. Hit 2 to continue the game, yeah.", -300, 70, Color.BLACK);
-			gui.drawText("Hit 3 to start a new game.", -200, 0, Color.BLACK);
-			batch.end();
-			
-			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-				Gdx.app.getPreferences("main").putInteger("money", 0);
-				Gdx.app.getPreferences("main").flush();
-				snake.spendMoney(snake.getMoney());
-				
-				resetField();
-				
-				stage = STAGE_TYPE.GAME;
-			}
-			
-			if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-				if (snake.getMoney() != 0){
-					stage = STAGE_TYPE.STORE;
-				} else {
-					stage = STAGE_TYPE.GAME;
-				}
-			}
+			menu.render();
 			break;
 		case STORE:
 			guiCamera.position.x = 0;
