@@ -29,7 +29,7 @@ public class Button {
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - 340, Gdx.input.getY() - 260, positionX, positionY, pxWidth, pxHeight)) {
+			if (SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - Gdx.graphics.getWidth() / 2, -1 * Gdx.input.getY() - Gdx.graphics.getHeight() / 2, positionX, positionY, pxWidth, pxHeight)) {
 				buttonAction.execute();
 			}
 		}
