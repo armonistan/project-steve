@@ -1,6 +1,7 @@
 package com.steve;
 
-import com.steve.Store.UpgradeType;
+import com.steve.stages.Store;
+import com.steve.stages.Store.UpgradeType;
 
 public class BuyUpgrade implements ICommand {
 	

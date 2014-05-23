@@ -21,6 +21,7 @@ import com.steve.helpers.GUIHelper;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Menu;
+import com.steve.stages.Store;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;

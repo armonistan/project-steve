@@ -2,7 +2,8 @@ package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.steve.Store.UpgradeType;
+import com.steve.Button;
+import com.steve.BuyUpgrade;
 import com.steve.SteveDriver;
 
 public class Store {

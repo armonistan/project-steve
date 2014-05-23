@@ -24,12 +24,12 @@ public class Button {
 	}
 	
 	public void render() {
-		SteveDriver.gui.drawBox(positionX, positionY, width, height);
+		SteveDriver.guiHelper.drawBox(positionX, positionY, width, height);
 	}
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (SteveDriver.gui.isTouchInRectangle(Gdx.input.getX() - 340, Gdx.input.getY() - 260, positionX, positionY, pxWidth, pxHeight)) {
+			if (SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - 340, Gdx.input.getY() - 260, positionX, positionY, pxWidth, pxHeight)) {
 				buttonAction.execute();
 			}
 		}
