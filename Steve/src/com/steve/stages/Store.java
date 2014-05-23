@@ -2,8 +2,11 @@ package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
 import com.steve.BuyUpgrade;
+import com.steve.ChangeStage;
+import com.steve.ConfirmUpgrade;
 import com.steve.SteveDriver;
 
 public class Store {
@@ -28,12 +31,20 @@ public class Store {
 	}
 	
 	Button[][] upgradeButtons;
+	Button confirmButton;
+	Button respawnButton;
 	
 	int[] upgradeTiers;
 	int[] upgradePrices;
 	
 	float cyberPriceMod;
 	float mechaPriceMod;
+	
+	UpgradeType upgradeToPurchase;
+	int upgradeToPurchaseTier;
+	int upgradeToPurchasePrice;
+	
+	String purchaseDescription;
 	
 	Preferences prefs;
 	Preferences mainPrefs;
@@ -50,6 +61,8 @@ public class Store {
 		 */
 		prefs = Gdx.app.getPreferences("store");
 		mainPrefs = Gdx.app.getPreferences("main");
+		
+		purchaseDescription = "";
 		
 		upgradeTiers = new int[7];
 		upgradePrices = new int[7];
@@ -73,29 +86,67 @@ public class Store {
 		cyberPriceMod = 5.0f;
 		mechaPriceMod = 12.5f;
 		
+		confirmButton = new Button(250, 160, 4, 4, new ConfirmUpgrade(this));
+		respawnButton = new Button(250, 100, 4, 4, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING));
+		
 		upgradeButtons = new Button[7][7];
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
-				upgradeButtons[i][j] = new Button(60 * i - 200, 60 * j - 200, 4, 4, new BuyUpgrade(this, UpgradeType.SNAKE, 1));
+				int price = upgradePrices[i] * (j+1);
+				if (j > 1 && j < 4) {
+					price *= cyberPriceMod;
+				} else if (j > 3 && j < 6) {
+					price *= mechaPriceMod;
+				} else if (j == 6) {
+					price *= 25;
+				}
+				upgradeButtons[i][j] = new Button(60 * i - 200, 60 * j - 200, 4, 4, 
+						new BuyUpgrade(this, UpgradeType.values()[i], j, price));
 			}
 		}
 	}
 	
 	public void render() {
+		SteveDriver.guiHelper.drawBox(-342, 230, 43, 4);
+		SteveDriver.guiHelper.drawText(purchaseDescription, -330, 224, Color.BLACK);
+		SteveDriver.guiHelper.drawText("$" + SteveDriver.snake.getMoney(), 220, 224, Color.BLACK);
+		confirmButton.update();
+		confirmButton.render();
+		
+		respawnButton.update();
+		respawnButton.render();
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
-				upgradeButtons[i][j].update();
-				upgradeButtons[i][j].render();
+				if (upgradeTiers[i] < j+1) {
+					upgradeButtons[i][j].update();
+					upgradeButtons[i][j].render();
+				}
 			}
 		}
 	}
 	
-	public void queueUpgradePurchase(UpgradeType upgrade, int upgradeTier) {
-		SteveDriver.stage = SteveDriver.STAGE_TYPE.GAME;
+	public void queueUpgradePurchase(UpgradeType upgrade, int upgradeTier, int price) {
+		purchaseDescription = upgrade.toString() + " " + upgradeTier + " " + price;
+		upgradeToPurchase = upgrade;
+		upgradeToPurchaseTier = upgradeTier;
+		upgradeToPurchasePrice = price;
 	}
 	
-	public void purchaseUpgrade(UpgradeType upgrade, int upgradeTier) {
-
+	public void purchaseUpgrade() {
+		if (upgradeToPurchase != null){
+			if (upgradeToPurchaseTier == this.upgradeTiers[upgradeToPurchase.index]){
+				if (SteveDriver.snake.spendMoney(upgradeToPurchasePrice)) {
+					upgradeTiers[upgradeToPurchase.index] = upgradeToPurchaseTier + 1;
+					saveStoreProgress();
+					upgradeToPurchase = null;
+				} else {
+					purchaseDescription = "You don't have enough money!";
+				}
+			} else {
+				if (upgradeToPurchaseTier > this.upgradeTiers[upgradeToPurchase.index])
+					purchaseDescription = "You are not high enough tier!";
+			}
+		}
 	}
 	
 	public void resetStore() {

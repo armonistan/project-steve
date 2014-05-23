@@ -47,8 +47,8 @@ public class GUIHelper {
 		font.draw(SteveDriver.batch, message, x, y);
 	}
 	
-	public void drawBox(float x, float y, int length, int width) {
-		for (int row = 0; row < length; row++) {
+	public void drawBox(float x, float y, int width, int height) {
+		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 				Sprite temp;
 				
@@ -63,7 +63,7 @@ public class GUIHelper {
 						temp = topBox;
 					}
 				}
-				else if (row == length - 1) {
+				else if (row == height - 1) {
 					if (col == 0) {
 						temp = bottomLeftBox;
 					}
@@ -92,7 +92,7 @@ public class GUIHelper {
 		}
 	}
 
-	public boolean isTouchInRectangle(float x, float y, float rectX, float rectY, float length, float width) {
-		return x > rectX && x < rectX + width && y > rectY && y < rectY + length;
+	public boolean isTouchInRectangle(float x, float y, float rectX, float rectY, float width, float height) {
+		return x > rectX && x < rectX + width && y > rectY && y < rectY + height;
 	}
 }
