@@ -24,7 +24,7 @@ public class Button {
 	}
 	
 	public void render() {
-		SteveDriver.guiHelper.drawBox(positionX - SteveDriver.TEXTURE_WIDTH, positionY - SteveDriver.TEXTURE_LENGTH, width, height);
+		SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height);
 	}
 	
 	public void update() {
