@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.steve.CollisionHelper;
 import com.steve.SteveDriver;
+import com.steve.helpers.CollisionHelper;
 
 public class Enemy {
 	public Sprite avatar;
@@ -121,7 +123,44 @@ public class Enemy {
 		if (moveTimer >= moveTime){
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
-			//avatar.setRotation(test * 180 / (float)Math.PI + 180);
+
+			if(this.passedBarrierCheck()){
+				//we good
+			}
+			else{
+				for(int i = 0; i < 100; i++){
+					avatar.setPosition(avatar.getX() - direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() - direction.y * SteveDriver.TEXTURE_LENGTH);
+					int j = SteveDriver.random.nextInt(4);
+					float rotation = 0;
+					
+					switch(j){
+						case 0:
+							direction = SteveDriver.VDOWN;
+							rotation = SteveDriver.DOWN;
+						break;
+						case 1:
+							direction = SteveDriver.VLEFT;
+							rotation = SteveDriver.LEFT;
+						break;
+						case 2:
+							direction = SteveDriver.VRIGHT;
+							rotation = SteveDriver.RIGHT;
+						break;
+						case 3:
+							direction = SteveDriver.VUP;
+							rotation = SteveDriver.UP;
+						break;
+					}
+					
+					avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
+
+					if(this.passedBarrierCheck()){
+						avatar.setRotation(rotation);
+						break;
+					}
+				}
+			}
+			
 			moveTimer = 0;
 		}
 		else {
@@ -245,6 +284,21 @@ public class Enemy {
 		return this.randomMove();
 	}
 	
+	protected boolean passedBarrierCheck(){
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), this.avatar.getBoundingRectangle())) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
 	
 	protected void shoot(Projectile proj){
 		float deltaX;

@@ -8,8 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.steve.CollisionHelper;
 import com.steve.SteveDriver;
+import com.steve.helpers.CollisionHelper;
 
 public class Projectile {
 	private Sprite avatar;

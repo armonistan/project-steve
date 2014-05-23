@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.helpers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Intersector;

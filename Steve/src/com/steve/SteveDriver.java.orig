@@ -27,9 +27,12 @@ public class SteveDriver implements ApplicationListener {
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
+<<<<<<< HEAD
 	public static Store store;
+=======
 	public static GUIHelper guiHelper;
 	
+>>>>>>> a33bed312ced5276ee5b9e69f608c6ecb7b80d3f
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
 	public static final int BIG_TEXTURE_WIDTH = 32;
@@ -116,11 +119,14 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
+<<<<<<< HEAD
 			store.render();
 			//gui.drawBox(-342, 6, 4, 43);
+			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+=======
 			guiHelper.drawBox(-342, 6, 4, 43);
 			guiHelper.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
-			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+>>>>>>> a33bed312ced5276ee5b9e69f608c6ecb7b80d3f
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {

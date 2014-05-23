@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.*;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
 import com.steve.base.Weapon;
+import com.steve.helpers.CollisionHelper;
 import com.steve.weapons.GatlingGun;
 import com.steve.weapons.Laser;
 import com.steve.weapons.Specialist;
