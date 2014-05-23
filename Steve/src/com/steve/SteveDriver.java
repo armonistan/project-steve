@@ -150,9 +150,6 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void resume() {
-		if (stage == STAGE_TYPE.PAUSED) {
-			stage = STAGE_TYPE.GAME;
-		}
 	}
 	
 	public static void resetField() {
