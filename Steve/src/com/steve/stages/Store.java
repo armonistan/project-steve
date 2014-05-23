@@ -2,13 +2,32 @@ package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.steve.Button;
+import com.steve.BuyUpgrade;
 import com.steve.SteveDriver;
 
 public class Store {
 	
 	public enum UpgradeType {
-		SNAKE, TTL, HELMET, LENGTH, WEAPONS, ARMOR, EFFICIENCY;
+		SNAKE (0), 
+		TTL (1), 
+		HELMET (2), 
+		LENGTH (3), 
+		WEAPONS (4), 
+		ARMOR (5), 
+		EFFICIENCY (6);
+		
+		private final int index;
+		private UpgradeType(int index) {
+			this.index = index;
+		}
+		
+		public int index() {
+			return this.index;
+		}
 	}
+	
+	Button[][] upgradeButtons;
 	
 	int[] upgradeTiers;
 	int[] upgradePrices;
@@ -53,6 +72,30 @@ public class Store {
 		
 		cyberPriceMod = 5.0f;
 		mechaPriceMod = 12.5f;
+		
+		upgradeButtons = new Button[7][7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				upgradeButtons[i][j] = new Button(60 * i - 200, 60 * j - 200, 4, 4, new BuyUpgrade(this, UpgradeType.SNAKE, 1));
+			}
+		}
+	}
+	
+	public void render() {
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				upgradeButtons[i][j].update();
+				upgradeButtons[i][j].render();
+			}
+		}
+	}
+	
+	public void queueUpgradePurchase(UpgradeType upgrade, int upgradeTier) {
+		SteveDriver.stage = SteveDriver.STAGE_TYPE.GAME;
+	}
+	
+	public void purchaseUpgrade(UpgradeType upgrade, int upgradeTier) {
+
 	}
 	
 	public void resetStore() {

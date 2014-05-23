@@ -21,12 +21,14 @@ import com.steve.helpers.GUIHelper;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Menu;
+import com.steve.stages.Store;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
+	public static Store store;
 	public static GUIHelper guiHelper;
 	
 	public static final int TEXTURE_WIDTH = 16;
@@ -54,14 +56,14 @@ public class SteveDriver implements ApplicationListener {
 	public static GUI gui;
 	
 	public static STAGE_TYPE stage;
-	public static boolean paused; //TODO: Make this meaningful.
 	public static Menu menu;
 	public static Game game;
 	
 	public static enum STAGE_TYPE {
 		MENU,
 		GAME,
-		STORE
+		STORE,
+		PAUSED
 	}
 	
 	@Override
@@ -73,6 +75,8 @@ public class SteveDriver implements ApplicationListener {
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		random = new Random();
+		store = new Store();
+		store.setStoreProgress();
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -113,8 +117,11 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
+			store.render();
+			//gui.drawBox(-342, 6, 4, 43);
 			guiHelper.drawBox(-342, 6, 4, 43);
 			guiHelper.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
@@ -123,6 +130,9 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case GAME:
 			game.render(deltaTime);
+			break;
+		case PAUSED:
+			game.renderPaused();
 			break;
 		}
 	}
@@ -133,6 +143,9 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		if (stage == STAGE_TYPE.GAME) {
+			stage = STAGE_TYPE.PAUSED;
+		}
 	}
 
 	@Override

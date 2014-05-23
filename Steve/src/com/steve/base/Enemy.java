@@ -59,10 +59,7 @@ public class Enemy {
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 	}
 	
-	public void render() {
-		
-		update();
-		
+	public void draw() {
 		avatar.draw(SteveDriver.batch);
 	}
 	
@@ -78,7 +75,7 @@ public class Enemy {
 		}
 	}
 	
-	protected void update() {
+	public void update() {
 		checkCollideWithSnake();
 		checkProjectiles();
 		checkIsDead();
