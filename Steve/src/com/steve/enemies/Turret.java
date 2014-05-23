@@ -1,4 +1,4 @@
-package com.steve.enemys;
+package com.steve.enemies;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
