@@ -9,7 +9,7 @@ import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 
 public class Menu {
-	Button newGame = new Button(-300, 70, 4, 10, new ChangeStage(STAGE_TYPE.GAME));
+	Button newGame = new Button(-300, 70, 10, 4, new ChangeStage(STAGE_TYPE.GAME));
 	
 	public void render() {
 		SteveDriver.guiCamera.position.x = 0;

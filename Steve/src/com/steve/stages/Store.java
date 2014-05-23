@@ -104,7 +104,7 @@ public class Store {
 	}
 	
 	public void render() {
-		SteveDriver.guiHelper.drawBox(-342, 230, 4, 43);
+		SteveDriver.guiHelper.drawBox(-342, 230, 43, 4);
 		SteveDriver.guiHelper.drawText(purchaseDescription, -330, 224, Color.BLACK);
 		SteveDriver.guiHelper.drawText("$" + SteveDriver.snake.getMoney(), 220, 224, Color.BLACK);
 		confirmButton.update();
