@@ -1,7 +1,11 @@
-package com.steve;
+package com.steve.enemies;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.base.Enemy;
+import com.steve.helpers.CollisionHelper;
+import com.steve.projectiles.Acorn;
 
 public class Turret extends Enemy{
 	

@@ -1,7 +1,10 @@
-package com.steve;
+package com.steve.pickups;
+
+import com.steve.Snake;
+import com.steve.base.Pickup;
 
 public class WeaponUpgrade extends Pickup {
-	WeaponUpgrade(float xPos, float yPos){
+	public WeaponUpgrade(float xPos, float yPos){
 		super(xPos, yPos, 9 * 16, 3 * 16);
 	}
 	

@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.helpers;
 
 import java.util.Random;
 
@@ -7,6 +7,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.steve.SteveDriver;
+import com.steve.enemies.Brute;
+import com.steve.enemies.Flyer;
+import com.steve.enemies.Snail;
+import com.steve.enemies.Tank;
+import com.steve.pickups.Apple;
+import com.steve.pickups.GatlingGunPickUp;
+import com.steve.pickups.LaserPickUp;
+import com.steve.pickups.SpecialistPickUp;
+import com.steve.pickups.WeaponUpgrade;
 
 public class Generator {
 	private final int GATLING_GUN_ID = 0;

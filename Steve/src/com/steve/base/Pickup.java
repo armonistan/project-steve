@@ -1,8 +1,10 @@
-package com.steve;
+package com.steve.base;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.steve.Snake;
+import com.steve.SteveDriver;
 
 public class Pickup extends Sprite {
 	private boolean active;

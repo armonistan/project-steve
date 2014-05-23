@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.helpers.CollisionHelper;
 
 public class Projectile {
 	private Sprite avatar;

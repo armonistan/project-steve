@@ -1,10 +1,13 @@
-package com.steve;
+package com.steve.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.base.Enemy;
+import com.steve.projectiles.Pinecone;
 
 public class Flyer extends Enemy{
 	private Sprite propeller;
