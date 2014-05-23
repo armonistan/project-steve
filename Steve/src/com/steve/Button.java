@@ -29,7 +29,9 @@ public class Button {
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - 340, -1 * (Gdx.input.getY() - 260 - pxHeight), positionX, positionY, pxWidth, pxHeight)) {
+			int xOnScreen = Gdx.input.getX() - Gdx.graphics.getWidth()/2;
+			int yOnScreen = -1 * (Gdx.input.getY() - Gdx.graphics.getHeight()/2 - pxHeight);
+			if (SteveDriver.guiHelper.isTouchInRectangle(xOnScreen, yOnScreen, positionX, positionY, pxWidth, pxHeight)) {
 				buttonAction.execute();
 			}
 		}
