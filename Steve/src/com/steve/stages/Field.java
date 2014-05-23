@@ -224,12 +224,12 @@ public class Field {
 		//enemies.add(new Ring(new Vector2(20, 30)));
 		//enemies.add(new Brute(new Vector2(40, 30)));
 		//enemies.add(new Tank(new Vector2(30, 20)));
-		enemies.add(new Flyer(30, 40));
+		//enemies.add(new Flyer(30, 40));
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
 		enemies.add(new Brute(40, 30));
 		//enemies.add(new Tank(30, 20));
-		enemies.add(new Turret(30,30));
+		enemies.add(new Turret(30,40));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -389,11 +389,29 @@ public class Field {
 		layers.add(blockers);
 	}
 	
-	public void render() {
+	public void update() {
+		this.generator.update();
+		
+		for (Enemy e : enemies) {
+			e.update();
+		}
+		for (Enemy e : enemiesToRemove) {
+			enemies.remove(e);
+		}
+		enemiesToRemove.clear();
+		
+		for (Projectile p : projectiles) {
+			p.update();
+		}
+		for (Projectile p : projectilesToRemove) {
+			projectiles.remove(p);
+		}
+		projectilesToRemove.clear();
+	}
+	
+	public void draw() {
 		mapRenderer.setView(SteveDriver.camera);
 		mapRenderer.render();
-		
-		this.generator.update();
 		
 		SteveDriver.batch.begin();
 		for (Pickup p : pickups) {
@@ -403,20 +421,12 @@ public class Field {
 		}
 		
 		for (Enemy e : enemies) {
-			e.render();
+			e.draw();
 		}
-		for (Enemy e : enemiesToRemove) {
-			enemies.remove(e);
-		}
-		enemiesToRemove.clear();
 		
 		for (Projectile p : projectiles) {
-			p.render();
+			p.draw();
 		}
-		for (Projectile p : projectilesToRemove) {
-			projectiles.remove(p);
-		}
-		projectilesToRemove.clear();
 		SteveDriver.batch.end();
 	}
 	
@@ -432,7 +442,17 @@ public class Field {
 			}
 		}
 		
-		
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+			
+				if (cell != null && 
+						CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), newObject)) {
+					return false;
+				}
+			}
+		}
 		
 		return true;
 	}

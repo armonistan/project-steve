@@ -37,8 +37,9 @@ public class Snake {
 	private float nextRotation;
 	
 	private int money;
-	
 	private int snakeTier;
+	
+	private int helmetTier;
 	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
@@ -51,10 +52,12 @@ public class Snake {
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
+		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_WIDTH);
 
 		//TODO: Make this better
 		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
 		snakeTier = 1;
+		helmetTier = 0;
 	}
 	
 	public int getMoney() {
@@ -87,7 +90,7 @@ public class Snake {
 		return this.TIME_TILL_STARVE;
 	}
 
-	public void render(float deltaTime){
+	public void update(float deltaTime){
 		getTouch();
 		checkProjectiles();
 		
@@ -112,7 +115,9 @@ public class Snake {
 		
 		updateWeapons();
 		updateTimers(deltaTime);
-		
+	}
+	
+	public void draw() {
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(SteveDriver.batch);

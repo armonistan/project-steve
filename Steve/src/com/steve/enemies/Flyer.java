@@ -30,8 +30,8 @@ public class Flyer extends Enemy{
 		numPropellerFrames = 3;
 	}
 	
-	public void render() {
-		super.render();
+	public void draw() {
+		super.draw();
 		
 		if (spinTimer >= spinTime) {
 			propellerFrame = (propellerFrame + 1) % numPropellerFrames;

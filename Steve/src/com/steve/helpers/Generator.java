@@ -12,6 +12,7 @@ import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
 import com.steve.enemies.Snail;
 import com.steve.enemies.Tank;
+import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
@@ -113,6 +114,9 @@ public class Generator {
 			case 3:
 				this.generateFlyer(xPos, yPos);
 				break;
+			case 4:
+				this.generateTurret(xPos, yPos);
+				break;
 		}
 	}
 	
@@ -208,6 +212,12 @@ public class Generator {
 		Flyer f = new Flyer(xPos, yPos);
 		if(isOccupied(f.getRectangle()))
 			SteveDriver.field.enemies.add(f);
+	}
+	
+	public void generateTurret(float xPos, float yPos){
+		Turret t = new Turret(xPos, yPos);
+		if(isOccupied(t.getRectangle()))
+			SteveDriver.field.enemies.add(t);
 	}
 	
 	public void generateApple(float xPos, float yPos){

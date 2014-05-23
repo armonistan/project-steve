@@ -27,8 +27,8 @@ public class Tank extends Enemy {
 		moneyAmount = 10;
 	}
 	
-	public void render() {
-		super.render();
+	public void draw() {
+		super.draw();
 		
 		if (hasShotCounter < shotCap) {
 			face.setPosition(avatar.getX(), avatar.getY());
@@ -39,7 +39,7 @@ public class Tank extends Enemy {
 	}
 	
 	@Override
-	protected void update(){
+	public void update(){
 		super.shoot(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2, 0, 0));
 		super.update();
 	}
