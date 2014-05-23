@@ -23,6 +23,7 @@ public class SteveDriver implements ApplicationListener {
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
+	public static Store store;
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
 	public static final int BIG_TEXTURE_WIDTH = 32;
@@ -66,6 +67,8 @@ public class SteveDriver implements ApplicationListener {
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		random = new Random();
+		store = new Store();
+		store.setStoreProgress();
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -103,8 +106,9 @@ public class SteveDriver implements ApplicationListener {
 			batch.setProjectionMatrix(guiCamera.combined);
 			
 			batch.begin();
-			gui.drawBox(-342, 6, 4, 43);
-			gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
+			store.render();
+			//gui.drawBox(-342, 6, 4, 43);
+			//gui.drawText("This is the store. Hit 3 to get back into the game, yeah.", -330, 0, Color.BLACK);
 			batch.end();
 			
 			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
