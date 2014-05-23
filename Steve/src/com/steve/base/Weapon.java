@@ -1,20 +1,22 @@
-package com.steve;
+package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.CollisionHelper;
+import com.steve.SteveDriver;
 
 public class Weapon extends Sprite{
 	
-	Enemy target;
-	int shootSpeed = 100;
-	int shootCounter = 0;
-	float range;
+	protected Enemy target;
+	protected int shootSpeed = 100;
+	protected int shootCounter = 0;
+	protected float range;
 	float damage;//TODO use it?
-	int atlasX;
-	int atlasY;
+	protected int atlasX;
+	protected int atlasY;
 	boolean isAimed;
 	boolean isUpgraded;
 	
@@ -100,5 +102,13 @@ public class Weapon extends Sprite{
 	protected boolean isInRange(){
 		float distance = CollisionHelper.distanceSquared(this.getX(),this.getY(), target.getXPosition(), target.getYPosition()); 
 		return distance <= range * range;
+	}
+	
+	public boolean isUpgraded() {
+		return isUpgraded;
+	}
+
+	public void setUpgraded(boolean isUpgraded) {
+		this.isUpgraded = isUpgraded;
 	}
 }

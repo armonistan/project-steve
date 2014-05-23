@@ -1,6 +1,8 @@
-package com.steve;
+package com.steve.pickups;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.steve.Snake;
+import com.steve.base.Pickup;
 
 public class Apple extends Pickup {
 	public Apple(float x, float y) {
