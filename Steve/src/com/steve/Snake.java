@@ -21,7 +21,7 @@ import java.util.*;
 public class Snake {
 	private ArrayList<Sprite> segments;
 	private ArrayList<Weapon> weapons;
-	private final int MAX_SEGMENTS = 10;
+	private int maxSegments = 10;
 	
 	private final int beltImageOffset = 64;
 	private final int TILE_WIDTH = 16;
@@ -29,7 +29,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 10f; //unit is seconds
+	private float timeTillStarve = 10f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -86,7 +86,7 @@ public class Snake {
 	}
 	
 	public float GetStarveTime() {
-		return this.TIME_TILL_STARVE;
+		return this.timeTillStarve;
 	}
 
 	public void update(float deltaTime){
@@ -214,7 +214,7 @@ public class Snake {
 	public void addBody() {
 		hungerTimer = 0;
 		
-		if (segments.size() < MAX_SEGMENTS) {
+		if (segments.size() < maxSegments) {
 			if(segments.size() == 4){
 				hungerTimer = 0;
 			}
@@ -275,7 +275,7 @@ public class Snake {
 	
 	public void changeHungerByPercent(float percent) {
 		if (percent >= 0 && percent <= 100) {
-			hungerTimer += (TIME_TILL_STARVE * percent/100);
+			hungerTimer += (timeTillStarve * percent/100);
 			
 			if (hungerTimer < 0) {
 				hungerTimer = 0;
@@ -451,7 +451,7 @@ public class Snake {
 	}
 
 	private boolean updateStarvation(){
-		if(hungerTimer > TIME_TILL_STARVE){
+		if(hungerTimer > timeTillStarve){
 			if (segments.size() <= 2) {
 				kill();
 				return true;

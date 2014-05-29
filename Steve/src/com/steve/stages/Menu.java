@@ -39,7 +39,7 @@ public class Menu {
 			if (SteveDriver.snake.getMoney() != 0){
 				SteveDriver.stage = STAGE_TYPE.STORE;
 			} else {
-				SteveDriver.stage = STAGE_TYPE.GAME;
+				SteveDriver.stage = STAGE_TYPE.RESPAWNING;
 			}
 		}
 	}
