@@ -13,6 +13,8 @@ public class Button {
 	int pxHeight;
 	ICommand buttonAction;
 	
+	boolean clicked;
+	
 	public Button(float posX, float posY, int width, int height, ICommand action) {
 		positionX = posX;
 		positionY = posY;
@@ -21,6 +23,8 @@ public class Button {
 		pxWidth = width * SteveDriver.TEXTURE_WIDTH;
 		pxHeight = height * SteveDriver.TEXTURE_LENGTH;
 		buttonAction = action;
+		
+		clicked = false;
 	}
 	
 	public void render() {
@@ -29,9 +33,13 @@ public class Button {
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - Gdx.graphics.getWidth() / 2, -1 * (Gdx.input.getY() - Gdx.graphics.getHeight() / 2 - pxHeight), positionX, positionY, pxWidth, pxHeight)) {
+			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - Gdx.graphics.getWidth() / 2, -1 * (Gdx.input.getY() - Gdx.graphics.getHeight() / 2 - pxHeight), positionX, positionY, pxWidth, pxHeight)) {
 				buttonAction.execute();
+				clicked = true;
 			}
+		}
+		else {
+			clicked = false;
 		}
 	}
 }

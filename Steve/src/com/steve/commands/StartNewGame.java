@@ -11,7 +11,6 @@ public class StartNewGame extends StartNewRound {
 	public void execute() {
 		Gdx.app.getPreferences("main").putInteger("money", 0);
 		Gdx.app.getPreferences("main").flush();
-		int test = Gdx.app.getPreferences("main").getInteger("money");
 		SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 		SteveDriver.store.resetStore();
 		super.execute();
