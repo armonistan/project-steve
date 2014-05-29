@@ -19,10 +19,13 @@ import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
+import com.steve.enemies.AntiSpiral;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
+import com.steve.enemies.HomaHawk;
 import com.steve.enemies.Ring;
 import com.steve.enemies.Snail;
+import com.steve.enemies.Spiral;
 import com.steve.enemies.Turret;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
@@ -241,7 +244,7 @@ public class Field {
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
-		enemies.add(new Brute(40, 30));
+		enemies.add(new HomaHawk(40, 30));
 		enemies.add(new Turret(30,40));
 		
 		this.projectiles = new ArrayList<Projectile>();
