@@ -10,6 +10,12 @@ public class Game {
 	private boolean pPressed = false;
 	
 	public void render(float deltaTime) {
+		//TODO: TEMP
+		if (SteveDriver.snake.getMoney() == 0) {
+			SteveDriver.tutorial.startTutorial();
+			SteveDriver.stage = STAGE_TYPE.PAUSED;
+		}
+		
 		Vector3 test = SteveDriver.camera.position.lerp(SteveDriver.snake.getHeadPosition(), 0.01f);
 		SteveDriver.camera.position.x = test.x;
 		SteveDriver.camera.position.y = test.y;

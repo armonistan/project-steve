@@ -54,6 +54,7 @@ public class SteveDriver implements ApplicationListener {
 	public static OrthographicCamera guiCamera;
 	public static SpriteBatch batch;
 	public static GUI gui;
+	public static Tutorial tutorial;
 	
 	public static STAGE_TYPE stage;
 	public static Menu menu;
@@ -90,6 +91,7 @@ public class SteveDriver implements ApplicationListener {
 		stage = STAGE_TYPE.MENU;
 		menu = new Menu();
 		game = new Game();
+		tutorial = new Tutorial();
 	}
 
 	@Override
@@ -130,6 +132,10 @@ public class SteveDriver implements ApplicationListener {
 		case PAUSED:
 			game.renderPaused();
 			break;
+		}
+
+		if (tutorial.isActive()) {
+			tutorial.render();
 		}
 	}
 

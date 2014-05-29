@@ -44,7 +44,19 @@ public class GUIHelper {
 	
 	public void drawText(String message, float x, float y, Color cualColorTienes) {
 		font.setColor(cualColorTienes);
-		font.draw(SteveDriver.batch, message, x, y);
+		int lineNumber = 0;
+		
+		for (int i = message.length(); i > 0; ) {
+			int tempStartIndex = message.lastIndexOf("\n", i - 1);
+			tempStartIndex = (tempStartIndex < 0) ? 0 : tempStartIndex;
+			
+			font.draw(SteveDriver.batch, message.substring(tempStartIndex, i), x, y + lineNumber * font.getLineHeight());
+			
+			i -= (i - tempStartIndex);
+			lineNumber++;
+		}
+		
+		//font.draw(SteveDriver.batch, message, x, y);
 	}
 	
 	public void drawBox(float x, float y, int width, int height) {
