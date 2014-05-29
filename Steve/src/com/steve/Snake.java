@@ -8,6 +8,14 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
+import com.steve.base.Pickup;
+import com.steve.base.Projectile;
+import com.steve.base.Weapon;
+import com.steve.helpers.CollisionHelper;
+import com.steve.weapons.GatlingGun;
+import com.steve.weapons.Laser;
+import com.steve.weapons.Specialist;
+
 import java.util.*;
 
 public class Snake {
@@ -21,7 +29,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private final float TIME_TILL_STARVE = 100000f; //unit is seconds
+	private final float TIME_TILL_STARVE = 10f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -29,6 +37,9 @@ public class Snake {
 	private float nextRotation;
 	
 	private int money;
+	private int snakeTier;
+	
+	private int helmetTier;
 	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
@@ -41,9 +52,12 @@ public class Snake {
 		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
+		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_WIDTH);
 
 		//TODO: Make this better
 		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
+		snakeTier = 1;
+		helmetTier = 0;
 	}
 	
 	public int getMoney() {
@@ -55,7 +69,6 @@ public class Snake {
 		
 		//TODO: Make this only save when needed.
 		Gdx.app.getPreferences("main").putInteger("money", money);
-		Gdx.app.getPreferences("main").flush();
 	}
 	
 	public boolean spendMoney(int amount) {
@@ -76,14 +89,18 @@ public class Snake {
 		return this.TIME_TILL_STARVE;
 	}
 
-	public void render(SpriteBatch batch, float deltaTime){
+	public void update(float deltaTime){
 		getTouch();
 		checkProjectiles();
 		
 		//update all the segments.
 		if (timer >= TIME_BETWEEN_TURN) {
 			move();
-			checkCollisions();
+			
+			if (checkCollisions()) {
+				return;
+			}
+			
 			boolean aboutToEat = checkEat();
 			animateMouth(aboutToEat);
 			rotateTail();
@@ -91,20 +108,25 @@ public class Snake {
 			timer = 0;
 		}
 		
-		updateStarvation();
+		if (updateStarvation()) {
+			return;
+		}
+		
 		updateWeapons();
 		updateTimers(deltaTime);
-		
+	}
+	
+	public void draw() {
 		//Draw everything.
 		for (Sprite s : segments) {
-			s.draw(batch);
+			s.draw(SteveDriver.batch);
 		}
 		for (Sprite w : weapons){
-			w.draw(batch);
+			w.draw(SteveDriver.batch);
 		}
 	}
 
-	private void checkCollisions() {
+	private boolean checkCollisions() {
 		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
@@ -118,9 +140,12 @@ public class Snake {
 					}
 					
 					kill();
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 	
 	private void checkProjectiles() {
@@ -249,8 +274,8 @@ public class Snake {
 	}
 	
 	public void changeHungerByPercent(float percent) {
-		if (percent >= 0 && percent <= 1) {
-			hungerTimer += (TIME_TILL_STARVE * percent);
+		if (percent >= 0 && percent <= 100) {
+			hungerTimer += (TIME_TILL_STARVE * percent/100);
 			
 			if (hungerTimer < 0) {
 				hungerTimer = 0;
@@ -425,10 +450,11 @@ public class Snake {
 		}
 	}
 
-	private void updateStarvation(){
+	private boolean updateStarvation(){
 		if(hungerTimer > TIME_TILL_STARVE){
 			if (segments.size() <= 2) {
 				kill();
+				return true;
 			}
 			
 			segments.remove(segments.size() - 1);
@@ -437,12 +463,15 @@ public class Snake {
 			}
 			hungerTimer = 0;
 		}
+		
+		return false;
 	}
 
 	private void kill() {
 		//TODO: Make this better.
 		System.out.println("You suck.");
-		System.exit(0);
+		Gdx.app.getPreferences("main").flush();
+		SteveDriver.stage = SteveDriver.STAGE_TYPE.STORE;
 	}
 	
 	public ArrayList<Sprite> getSegments() {
@@ -497,7 +526,7 @@ public class Snake {
 		int weaponIndex = -1;
 		int indexCounter = 0;
 		for(Weapon w: weapons){
-			if(!w.isUpgraded){
+			if(!w.isUpgraded()){
 				weaponIndex = indexCounter;
 				break;
 			}
@@ -505,6 +534,20 @@ public class Snake {
 		}
 		
 		return weaponIndex;
+	}
+	
+	public boolean hasWeaponToUpgrade(){
+		for(Weapon w: weapons){
+			if(!w.isUpgraded()){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public int getSnakeTier(){
+		return snakeTier;
 	}
 }
 

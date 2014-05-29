@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,15 +18,11 @@ public class GUI {
 	private int healthColor = 2;
 	private float currentHealth;
 	
-	BitmapFont font;
-	
 	private enum guiText {
 		LEFTEND, RED, YELLOW, GREEN, DEAD, RIGHTEND;
 	}
 	
 	public GUI() {
-		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
-		
 		guiTextures = new ArrayList();
 		for (int i = 0; i < 6; i++) {
 			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 96)));
@@ -41,17 +35,15 @@ public class GUI {
 		guiTextures.get(0).setPosition(rightEndPosition.x, rightEndPosition.y);
 	}
 	
-	public void render(SpriteBatch batch) {
+	public void render() {
 		currentHealth = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
-		font.setColor(Color.BLACK);
-		
-		batch.begin();
-		guiTextures.get(0).draw(batch);
-		guiTextures.get(5).draw(batch);
+		SteveDriver.batch.begin();
+		guiTextures.get(0).draw(SteveDriver.batch);
+		guiTextures.get(5).draw(SteveDriver.batch);
 		for (int i = 0; i < healthWidth; i++) {
 			guiTextures.get(1).setPosition(48 * (i - 2), height/2 -100);
-			guiTextures.get(1).draw(batch);
+			guiTextures.get(1).draw(SteveDriver.batch);
 		}
 		
 		for (int i = 0; i < (int) (healthWidth * currentHealth) + 1; i++) {
@@ -63,11 +55,11 @@ public class GUI {
 				healthColor = 4;
 			}
 			guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
-			guiTextures.get(healthColor).draw(batch);
+			guiTextures.get(healthColor).draw(SteveDriver.batch);
 		}
 		
-		font.draw(batch, SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y);
+		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);
 		
-		batch.end();
+		SteveDriver.batch.end();
 	}
 }

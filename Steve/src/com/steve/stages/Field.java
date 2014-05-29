@@ -1,4 +1,4 @@
-package com.steve;
+package com.steve.stages;
 
 import java.util.Random;
 
@@ -15,6 +15,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.base.Enemy;
+import com.steve.base.Pickup;
+import com.steve.base.Projectile;
+import com.steve.enemies.Brute;
+import com.steve.enemies.Flyer;
+import com.steve.enemies.Ring;
+import com.steve.enemies.Snail;
+import com.steve.enemies.Turret;
+import com.steve.helpers.CollisionHelper;
+import com.steve.helpers.Generator;
+import com.steve.pickups.Apple;
+import com.steve.pickups.GatlingGunPickUp;
+import com.steve.pickups.LaserPickUp;
+import com.steve.pickups.SpecialistPickUp;
+import com.steve.pickups.WeaponUpgrade;
 
 import java.util.*;
 
@@ -62,7 +78,26 @@ public class Field {
 		public int GetRandomY() {
 			return this.rand.nextInt(this.length + 1) + this.startY;
 		}
-	}
+		
+		public int getCornerX(boolean isLeft){
+			return (isLeft) ? this.startX+2 : this.startX+4;
+		}
+		
+		public int getSideX(int position){
+			return (position == 1) ? this.startX+2 : 
+				(position == 2) ? this.startX+3 :
+					this.startX+4;
+		}
+
+		public int getCornerY(boolean isBot){
+			return (isBot) ? this.startY+5 : this.startY+3;
+		}
+		
+		public int getSideY(int position){
+			return (position == 1) ? this.startY+3 : 
+				(position == 2) ? this.startY+4 :
+					this.startY+5;}
+		}
 	
 	private class CellContainer {
 		private TextureRegion[][] tileMap;
@@ -204,10 +239,16 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
+		//enemies.add(new Snail(new Vector2(50, 30)));
+		//enemies.add(new Ring(new Vector2(20, 30)));
+		//enemies.add(new Brute(new Vector2(40, 30)));
+		//enemies.add(new Tank(new Vector2(30, 20)));
+		//enemies.add(new Flyer(30, 40));
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
 		enemies.add(new Brute(40, 30));
-		enemies.add(new Tank(30, 20));
+		//enemies.add(new Tank(30, 20));
+		enemies.add(new Turret(30,40));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -222,6 +263,88 @@ public class Field {
 		} else {
 			return 2;
 		}
+	}
+	
+	private void placeTile(int x, int y, TextureRegion[][] splitTiles, TiledMapTileLayer layer, int tier){
+		int xType = (tier == 1) ? 
+						(x == this.desertRadius) ? 1 :
+							(x == this.totalRadius - this.desertRadius - 1) ? 2 
+									: 3 
+							:(x == this.grassRadius) ? 1 :
+						(x == this.totalRadius - this.grassRadius - 1) ? 2 
+							: 3
+					;
+		int yType = (tier == 1) ? 
+				(y == this.desertRadius) ? 1 :
+					(y == this.totalRadius - this.desertRadius - 1) ? 2 : 3 :
+				(y == this.grassRadius) ? 1 :
+						(y == this.totalRadius - this.grassRadius - 1) ? 2 : 3
+				;
+		int tx = 0;
+		int ty = 0;
+		
+		switch(xType){
+			case 1:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getCornerX(true) : this.grass.getCornerX(true);
+						ty = (tier == 1) ? this.desert.getCornerY(true) : this.grass.getCornerY(true);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getCornerX(true) : this.grass.getCornerX(true);
+						ty = (tier == 1) ? this.desert.getCornerY(false) : this.grass.getCornerY(false);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.getSideX(1) : this.grass.getSideX(1);
+						ty = (tier == 1) ? this.desert.getSideY(2) : this.grass.getSideY(2);
+					break;
+				}
+			break;
+			
+			case 2:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getCornerX(false) : this.grass.getCornerX(false);
+						ty = (tier == 1) ? this.desert.getCornerY(true) : this.grass.getCornerY(true);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getCornerX(false) : this.grass.getCornerX(false);
+						ty = (tier == 1) ? this.desert.getCornerY(false) : this.grass.getCornerY(false);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.getSideX(3) : this.grass.getSideX(3);
+						ty = (tier == 1) ? this.desert.getSideY(2) : this.grass.getSideY(2);
+					break;
+				}
+			break;
+			
+			case 3:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getSideX(2) : this.grass.getSideX(2);
+						ty = (tier == 1) ? this.desert.getSideY(3) : this.grass.getSideY(3);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getSideX(2) : this.grass.getSideX(2);
+						ty = (tier == 1) ? this.desert.getSideY(1) : this.grass.getSideY(1);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.GetRandomX() : this.grass.GetRandomX();
+						ty = (tier == 1) ? this.desert.GetRandomY() : this.grass.GetRandomY();
+					break;
+				}
+			break;
+		}
+		
+		Cell cell = new Cell();
+		cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
+		layer.setCell(x, y, cell);
 	}
 	
 	public void RandomizeField() {
@@ -249,22 +372,14 @@ public class Field {
 		//Desert tiles generated
 		for (int x = this.desertRadius; x < this.totalRadius - this.desertRadius; x++) {
 			for (int y = this.desertRadius; y < this.totalRadius - this.desertRadius; y++) {
-				int ty = this.desert.GetRandomY();
-				int tx = this.desert.GetRandomX();
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
-				layer.setCell(x, y, cell);
+				this.placeTile(x, y, splitTiles, layer, 1);
 			}
 		}
 		
 		//Grass tiles generated
 		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
 			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
-				int ty = this.grass.GetRandomY();
-				int tx = this.grass.GetRandomX();
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
-				layer.setCell(x, y, cell);
+				this.placeTile(x, y, splitTiles, layer, 0);
 			}
 		}
 		
@@ -367,21 +482,11 @@ public class Field {
 		layers.add(blockers);
 	}
 	
-	public void render(OrthographicCamera camera, SpriteBatch batch) {
-		mapRenderer.setView(camera);
-		mapRenderer.render();
-		
+	public void update() {
 		this.generator.update();
 		
-		batch.begin();
-		for (Pickup p : pickups) {
-			if (p.getActive()) {
-				p.draw(batch);
-			}
-		}
-		
 		for (Enemy e : enemies) {
-			e.render(batch);
+			e.update();
 		}
 		for (Enemy e : enemiesToRemove) {
 			enemies.remove(e);
@@ -389,13 +494,33 @@ public class Field {
 		enemiesToRemove.clear();
 		
 		for (Projectile p : projectiles) {
-			p.render(batch);
+			p.update();
 		}
 		for (Projectile p : projectilesToRemove) {
 			projectiles.remove(p);
 		}
 		projectilesToRemove.clear();
-		batch.end();
+	}
+	
+	public void draw() {
+		mapRenderer.setView(SteveDriver.camera);
+		mapRenderer.render();
+		
+		SteveDriver.batch.begin();
+		for (Pickup p : pickups) {
+			if (p.getActive()) {
+				p.draw(SteveDriver.batch);
+			}
+		}
+		
+		for (Enemy e : enemies) {
+			e.draw();
+		}
+		
+		for (Projectile p : projectiles) {
+			p.draw();
+		}
+		SteveDriver.batch.end();
 	}
 	
 	public boolean isOccupied(Rectangle newObject){
@@ -409,6 +534,19 @@ public class Field {
 				return false;
 			}
 		}
+		
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+			
+				if (cell != null && 
+						CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), newObject)) {
+					return false;
+				}
+			}
+		}
+		
 		return true;
 	}
 	

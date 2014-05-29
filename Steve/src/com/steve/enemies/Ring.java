@@ -1,12 +1,15 @@
-package com.steve;
+package com.steve.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.base.Enemy;
+import com.steve.pickups.Apple;
 
 public class Ring extends Enemy {
 
 	public Ring(float x, float y) {
-		super(x, y, new Vector2(11, 7), new Vector2(1, 2), 1f, 1, 10);
+		super(x, y, new Vector2(11, 7), new Vector2(1, 2), 1f, 1, 10, 0);
 		
 		moneyAmount = 20;
 	}

@@ -1,12 +1,16 @@
-package com.steve;
+package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver;
+import com.steve.helpers.CollisionHelper;
 
 public class Enemy {
 	public Sprite avatar;
@@ -29,8 +33,8 @@ public class Enemy {
 	int numStepsInDirection = 0;
 	int stepsTaken = 0;
 	int directionID = 0;
-	int sightDistance = 100;
-	int moneyAmount = 0;
+	protected int sightDistance = 100;
+	protected int moneyAmount = 0;
 	
 	protected float shootTime;
 	protected float shootTimer;
@@ -38,7 +42,7 @@ public class Enemy {
 	protected int hasShotCounter;
 	protected int shotCap;
 	
-	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames) {
+	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames, float deathDamage) {
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;
@@ -52,14 +56,11 @@ public class Enemy {
 		avatar.setPosition(mapPosition.x * SteveDriver.TEXTURE_WIDTH, mapPosition.y * SteveDriver.TEXTURE_LENGTH);
 		
 		healthPercentage = 100;
-		deathDamage = 1;
+		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 	}
 	
-	public void render(SpriteBatch batch) {
-		
-		update();
-		
-		avatar.draw(batch);
+	public void draw() {
+		avatar.draw(SteveDriver.batch);
 	}
 	
 	//TODO: Make more robust.
@@ -74,7 +75,7 @@ public class Enemy {
 		}
 	}
 	
-	protected void update() {
+	public void update() {
 		checkCollideWithSnake();
 		checkProjectiles();
 		checkIsDead();
@@ -119,7 +120,44 @@ public class Enemy {
 		if (moveTimer >= moveTime){
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
-			//avatar.setRotation(test * 180 / (float)Math.PI + 180);
+
+			if(this.passedBarrierCheck()){
+				//we good
+			}
+			else{
+				for(int i = 0; i < 100; i++){
+					avatar.setPosition(avatar.getX() - direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() - direction.y * SteveDriver.TEXTURE_LENGTH);
+					int j = SteveDriver.random.nextInt(4);
+					float rotation = 0;
+					
+					switch(j){
+						case 0:
+							direction = SteveDriver.VDOWN;
+							rotation = SteveDriver.DOWN;
+						break;
+						case 1:
+							direction = SteveDriver.VLEFT;
+							rotation = SteveDriver.LEFT;
+						break;
+						case 2:
+							direction = SteveDriver.VRIGHT;
+							rotation = SteveDriver.RIGHT;
+						break;
+						case 3:
+							direction = SteveDriver.VUP;
+							rotation = SteveDriver.UP;
+						break;
+					}
+					
+					avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
+
+					if(this.passedBarrierCheck()){
+						avatar.setRotation(rotation);
+						break;
+					}
+				}
+			}
+			
 			moveTimer = 0;
 		}
 		else {
@@ -163,7 +201,7 @@ public class Enemy {
 			switch(directionID){
 				case SteveDriver.RIGHT_ID:
 					this.avatar.setRotation(SteveDriver.RIGHT);
-					return SteveDriver.VRIGHT;
+					return SteveDriver.VRIGHT;	
 				
 				case SteveDriver.UP_ID:
 					this.avatar.setRotation(SteveDriver.UP);
@@ -243,8 +281,23 @@ public class Enemy {
 		return this.randomMove();
 	}
 	
+	protected boolean passedBarrierCheck(){
+		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		
+		for (int x = 0; x < layer.getWidth(); x++) {
+			for (int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				
+				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), this.avatar.getBoundingRectangle())) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
 	
-	protected void shoot(){
+	protected void shoot(Projectile proj){
 		float deltaX;
 		float deltaY;
 		float distance;
@@ -253,34 +306,38 @@ public class Enemy {
 			for(Sprite s: SteveDriver.snake.getSegments()){
 				deltaY = this.avatar.getY() - s.getY();
 				deltaX = this.avatar.getX() - s.getX();
-				distance = (float)Math.sqrt((double)((deltaX * deltaX) + (deltaY * deltaY)));
+				distance = CollisionHelper.distanceSquared(deltaX, deltaY, deltaX, deltaY);
 			
-				if(distance < sightDistance){
+				if(distance < sightDistance * sightDistance){
 					if(this.avatar.getRotation() == SteveDriver.RIGHT 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.RIGHT_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								100, 0));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(1, 0);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.UP
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.UP_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								0,100));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(0,  1);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.LEFT
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.LEFT_ID){
-							SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-									-100,0));
+							SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(-1, 0);	
+							
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
 					else if(this.avatar.getRotation() == SteveDriver.DOWN 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.DOWN_ID){
-						SteveDriver.field.projectiles.add(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2,
-								0,-100));
+						SteveDriver.field.projectiles.add(proj);
+						proj.setDirection(0, -1);
+						
 						shootTimer = 0;
 						hasShotCounter = 0;
 					}
