@@ -78,7 +78,26 @@ public class Field {
 		public int GetRandomY() {
 			return this.rand.nextInt(this.length + 1) + this.startY;
 		}
-	}
+		
+		public int getCornerX(boolean isLeft){
+			return (isLeft) ? this.startX+2 : this.startX+4;
+		}
+		
+		public int getSideX(int position){
+			return (position == 1) ? this.startX+2 : 
+				(position == 2) ? this.startX+3 :
+					this.startX+4;
+		}
+
+		public int getCornerY(boolean isBot){
+			return (isBot) ? this.startY+5 : this.startY+3;
+		}
+		
+		public int getSideY(int position){
+			return (position == 1) ? this.startY+3 : 
+				(position == 2) ? this.startY+4 :
+					this.startY+5;}
+		}
 	
 	private class CellContainer {
 		private TextureRegion[][] tileMap;
@@ -246,6 +265,88 @@ public class Field {
 		}
 	}
 	
+	private void placeTile(int x, int y, TextureRegion[][] splitTiles, TiledMapTileLayer layer, int tier){
+		int xType = (tier == 1) ? 
+						(x == this.desertRadius) ? 1 :
+							(x == this.totalRadius - this.desertRadius - 1) ? 2 
+									: 3 
+							:(x == this.grassRadius) ? 1 :
+						(x == this.totalRadius - this.grassRadius - 1) ? 2 
+							: 3
+					;
+		int yType = (tier == 1) ? 
+				(y == this.desertRadius) ? 1 :
+					(y == this.totalRadius - this.desertRadius - 1) ? 2 : 3 :
+				(y == this.grassRadius) ? 1 :
+						(y == this.totalRadius - this.grassRadius - 1) ? 2 : 3
+				;
+		int tx = 0;
+		int ty = 0;
+		
+		switch(xType){
+			case 1:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getCornerX(true) : this.grass.getCornerX(true);
+						ty = (tier == 1) ? this.desert.getCornerY(true) : this.grass.getCornerY(true);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getCornerX(true) : this.grass.getCornerX(true);
+						ty = (tier == 1) ? this.desert.getCornerY(false) : this.grass.getCornerY(false);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.getSideX(1) : this.grass.getSideX(1);
+						ty = (tier == 1) ? this.desert.getSideY(2) : this.grass.getSideY(2);
+					break;
+				}
+			break;
+			
+			case 2:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getCornerX(false) : this.grass.getCornerX(false);
+						ty = (tier == 1) ? this.desert.getCornerY(true) : this.grass.getCornerY(true);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getCornerX(false) : this.grass.getCornerX(false);
+						ty = (tier == 1) ? this.desert.getCornerY(false) : this.grass.getCornerY(false);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.getSideX(3) : this.grass.getSideX(3);
+						ty = (tier == 1) ? this.desert.getSideY(2) : this.grass.getSideY(2);
+					break;
+				}
+			break;
+			
+			case 3:
+				switch(yType){
+					case 1:
+						tx = (tier == 1) ? this.desert.getSideX(2) : this.grass.getSideX(2);
+						ty = (tier == 1) ? this.desert.getSideY(3) : this.grass.getSideY(3);
+					break;
+					
+					case 2:
+						tx = (tier == 1) ? this.desert.getSideX(2) : this.grass.getSideX(2);
+						ty = (tier == 1) ? this.desert.getSideY(1) : this.grass.getSideY(1);
+					break;
+					
+					case 3:
+						tx = (tier == 1) ? this.desert.GetRandomX() : this.grass.GetRandomX();
+						ty = (tier == 1) ? this.desert.GetRandomY() : this.grass.GetRandomY();
+					break;
+				}
+			break;
+		}
+		
+		Cell cell = new Cell();
+		cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
+		layer.setCell(x, y, cell);
+	}
+	
 	public void RandomizeField() {
 		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		MapLayers layers = this.map.getLayers();
@@ -271,22 +372,14 @@ public class Field {
 		//Desert tiles generated
 		for (int x = this.desertRadius; x < this.totalRadius - this.desertRadius; x++) {
 			for (int y = this.desertRadius; y < this.totalRadius - this.desertRadius; y++) {
-				int ty = this.desert.GetRandomY();
-				int tx = this.desert.GetRandomX();
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
-				layer.setCell(x, y, cell);
+				this.placeTile(x, y, splitTiles, layer, 1);
 			}
 		}
 		
 		//Grass tiles generated
 		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
 			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
-				int ty = this.grass.GetRandomY();
-				int tx = this.grass.GetRandomX();
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
-				layer.setCell(x, y, cell);
+				this.placeTile(x, y, splitTiles, layer, 0);
 			}
 		}
 		

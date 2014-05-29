@@ -1,5 +1,7 @@
-package com.steve;
+package com.steve.commands;
 
+import com.steve.ICommand;
+import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 
 public class ChangeStage implements ICommand {

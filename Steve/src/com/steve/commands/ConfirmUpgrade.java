@@ -1,5 +1,6 @@
-package com.steve;
+package com.steve.commands;
 
+import com.steve.ICommand;
 import com.steve.stages.Store;
 
 public class ConfirmUpgrade implements ICommand {
