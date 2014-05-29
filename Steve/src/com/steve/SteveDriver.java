@@ -85,7 +85,6 @@ public class SteveDriver implements ApplicationListener {
 		guiHelper = new GUIHelper();
 		
 		//TODO: Make this better.
-		resetField();
 		gui = new GUI();
 		
 		stage = STAGE_TYPE.MENU;
@@ -145,7 +144,7 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void pause() {
-		if (stage == STAGE_TYPE.GAME) {
+		if (stage == STAGE_TYPE.GAME && !tutorial.isActive()) {
 			stage = STAGE_TYPE.PAUSED;
 		}
 	}
@@ -157,5 +156,10 @@ public class SteveDriver implements ApplicationListener {
 	public static void resetField() {
 		snake = new Snake(30, 30);
 		field = new Field(camera);
+		
+		//TODO: TEMP
+		if (SteveDriver.snake.getMoney() == 0 && !SteveDriver.tutorial.isActive()) {
+			SteveDriver.tutorial.startTutorial();
+		}
 	}
 }

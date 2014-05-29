@@ -222,37 +222,19 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new GatlingGunPickUp(30,35));
-		this.pickups.add(new SpecialistPickUp(29,35));
-		this.pickups.add(new LaserPickUp(28,35));
-		this.pickups.add(new Apple(33, 33));
-		this.pickups.add(new Apple(34, 34));
-		this.pickups.add(new Apple(35, 35));
-		this.pickups.add(new Apple(36, 36));
-		this.pickups.add(new Apple(37, 37));
-		
-		this.pickups.add(new Apple(38, 38));
-		this.pickups.add(new Apple(39, 39));
-		this.pickups.add(new Apple(40, 40));
-		this.pickups.add(new Apple(41, 41));
-		this.pickups.add(new WeaponUpgrade(42, 42));
+		this.pickups.add(new Apple(30, 40));
+		this.pickups.add(new GatlingGunPickUp(30, 20));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		//enemies.add(new Snail(new Vector2(50, 30)));
-		//enemies.add(new Ring(new Vector2(20, 30)));
-		//enemies.add(new Brute(new Vector2(40, 30)));
-		//enemies.add(new Tank(new Vector2(30, 20)));
-		//enemies.add(new Flyer(30, 40));
-		enemies.add(new Snail(50, 30));
-		enemies.add(new Ring(20, 30));
-		enemies.add(new Brute(40, 30));
-		//enemies.add(new Tank(30, 20));
-		enemies.add(new Turret(30,40));
+		this.enemies.add(new Snail(40, 30));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
 		this.generator = new Generator();
+		
+		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
+		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
 	}
 	
 	public int checkRing(int x, int y) {

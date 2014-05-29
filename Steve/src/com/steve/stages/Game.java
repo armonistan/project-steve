@@ -9,14 +9,9 @@ import com.steve.SteveDriver.STAGE_TYPE;
 public class Game {
 	private boolean pPressed = false;
 	
-	public void render(float deltaTime) {
-		//TODO: TEMP
-		if (SteveDriver.snake.getMoney() == 0) {
-			SteveDriver.tutorial.startTutorial();
-			SteveDriver.stage = STAGE_TYPE.PAUSED;
-		}
-		
-		Vector3 test = SteveDriver.camera.position.lerp(SteveDriver.snake.getHeadPosition(), 0.01f);
+	public void render(float deltaTime) {		
+		Vector3 test = SteveDriver.camera.position.lerp((SteveDriver.tutorial.isActive()) ? SteveDriver.tutorial.getFocus() :
+			SteveDriver.snake.getHeadPosition(), (SteveDriver.tutorial.isActive()) ? 0.1f : 0.01f);
 		SteveDriver.camera.position.x = test.x;
 		SteveDriver.camera.position.y = test.y;
 		SteveDriver.camera.update();
@@ -26,11 +21,17 @@ public class Game {
 		SteveDriver.guiCamera.update();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
-		SteveDriver.field.update();
+		if (!SteveDriver.tutorial.isActive()) {
+			SteveDriver.field.update();
+		}
+		
 		SteveDriver.field.draw();
 		
 		SteveDriver.batch.begin();
-		SteveDriver.snake.update(deltaTime);
+		if (!SteveDriver.tutorial.isActive()) {
+			SteveDriver.snake.update(deltaTime);
+		}
+		
 		SteveDriver.snake.draw();
 		SteveDriver.batch.end();
 		
