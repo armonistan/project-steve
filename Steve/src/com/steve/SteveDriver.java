@@ -63,6 +63,7 @@ public class SteveDriver implements ApplicationListener {
 		MENU,
 		GAME,
 		STORE,
+		RESPAWNING,
 		PAUSED
 	}
 	
@@ -108,6 +109,10 @@ public class SteveDriver implements ApplicationListener {
 		switch (stage) {
 		case MENU:
 			menu.render();
+			break;
+		case RESPAWNING:
+			resetField();
+			stage = STAGE_TYPE.GAME;
 			break;
 		case STORE:
 			guiCamera.position.x = 0;

@@ -150,7 +150,7 @@ public class Field {
 			innerTopRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 5]));
 			
 			innerBottomLeft = new Cell();
-			innerBottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
+			innerBottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 3]));
 			
 			innerBottomRight = new Cell();
 			innerBottomRight.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x + 5]));
@@ -239,15 +239,9 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		//enemies.add(new Snail(new Vector2(50, 30)));
-		//enemies.add(new Ring(new Vector2(20, 30)));
-		//enemies.add(new Brute(new Vector2(40, 30)));
-		//enemies.add(new Tank(new Vector2(30, 20)));
-		//enemies.add(new Flyer(30, 40));
 		enemies.add(new Snail(50, 30));
 		enemies.add(new Ring(20, 30));
 		enemies.add(new Brute(40, 30));
-		//enemies.add(new Tank(30, 20));
 		enemies.add(new Turret(30,40));
 		
 		this.projectiles = new ArrayList<Projectile>();
@@ -385,7 +379,7 @@ public class Field {
 		
 		int randX, randY;
 		//this code sets up the positions for the blockers on the grid
-		for (int i = 0; i < this.blockerChains; i++) {
+		for (int i = 0; i < this.blockerChains; ) {
 			randX = SteveDriver.random.nextInt(totalRadius);
 			randY = SteveDriver.random.nextInt(totalRadius);
 			
@@ -418,8 +412,9 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
-				if(this.checkRing(randX, randY) == this.checkRing(randX+1, randY+1)){
+				if(this.checkRing(randX, randY) == this.checkRing(randX+2, randY+2) && this.checkRing(randX, randY) == this.checkRing(randX-1, randY-1)){
 					//ensures that there is always a tileable set of blockers
+					i++;
 					blockers.setCell(randX, randY, cell);
 					blockers.setCell(randX+1, randY+1, cell);
 					blockers.setCell(randX+1, randY, cell);
@@ -472,6 +467,20 @@ public class Field {
 							blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
 						} else {
 							blockers.setCell(x, y, blockerTiles.get(tileRad).top());
+						}
+					} else {
+						boolean topLeft = (blockers.getCell(x-1, y + 1) == null) || (tileRad != this.checkRing(x - 1, y + 1));
+						boolean topRight = (blockers.getCell(x + 1, y + 1) == null) || (tileRad != this.checkRing(x + 1, y + 1));
+						boolean bottomLeft = (blockers.getCell(x - 1, y - 1) == null) || (tileRad != this.checkRing(x - 1, y - 1));
+						boolean bottomRight = (blockers.getCell(x + 1, y - 1) == null) || (tileRad != this.checkRing(x + 1, y - 1));
+						if (topLeft) {
+							blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomRight);
+						} else if (topRight) {
+							blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomLeft);
+						} else if (bottomLeft) {
+							blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopRight);
+						} else if (bottomRight) {
+							blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopLeft);
 						}
 					}
 				}

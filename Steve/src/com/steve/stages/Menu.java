@@ -41,6 +41,8 @@ public class Menu {
 			Gdx.app.getPreferences("main").flush();
 			SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 			
+			SteveDriver.store.resetStore();
+			
 			SteveDriver.resetField();
 			
 			SteveDriver.stage = STAGE_TYPE.GAME;
