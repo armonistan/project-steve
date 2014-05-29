@@ -87,6 +87,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		//TODO: Make this better.
 		gui = new GUI();
+		snake = new Snake(30, 30);
 		
 		stage = STAGE_TYPE.MENU;
 		menu = new Menu();
