@@ -11,7 +11,7 @@ public class StartNewGame extends StartNewRound {
 	public void execute() {
 		Gdx.app.getPreferences("main").putInteger("money", 0);
 		Gdx.app.getPreferences("main").flush();
-		
+		SteveDriver.store.resetStore();
 		super.execute();
 	}
 
