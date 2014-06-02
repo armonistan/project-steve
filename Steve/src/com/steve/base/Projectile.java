@@ -24,7 +24,7 @@ public class Projectile {
 	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
 			float percentDamage, boolean snakeFriendly, float dx, float dy) {
 		this.percentDamage = (snakeFriendly) ? percentDamage : 
-			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : percentDamage - (percentDamage*SteveDriver.snake.getSnakeTier()/10);
+			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
 		this.snakeFriendly = snakeFriendly;
 		this.direction = new Vector2(dx, dy);
 		dead = false;
