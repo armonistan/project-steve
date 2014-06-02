@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
+import com.steve.enemies.AntiSpiral;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
 import com.steve.enemies.Snail;
@@ -109,12 +110,15 @@ public class Generator {
 				this.generateTank(xPos, yPos);
 				break;
 			case 2:
-				this.genrateBrute(xPos, yPos);
+				this.generateBrute(xPos, yPos);
 				break;
 			case 3:
-				this.generateFlyer(xPos, yPos);
+				this.generateAntiSpiral(xPos, yPos);
 				break;
 			case 4:
+				this.generateFlyer(xPos, yPos);
+				break;
+			case 5:
 				this.generateTurret(xPos, yPos);
 				break;
 		}
@@ -196,10 +200,16 @@ public class Generator {
 			SteveDriver.field.enemies.add(s);
 	}
 	
-	public void genrateBrute(float xPos, float yPos){
+	public void generateBrute(float xPos, float yPos){
 		Brute b = new Brute(xPos, yPos);
 		if(isOccupied(b.getRectangle()))
 			SteveDriver.field.enemies.add(b);
+	}
+	
+	public void generateAntiSpiral(float xPos, float yPos){
+		AntiSpiral s = new AntiSpiral(xPos, yPos);
+		if(isOccupied(s.getRectangle()))
+			SteveDriver.field.enemies.add(s);
 	}
 	
 	public void generateTank(float xPos, float yPos){
