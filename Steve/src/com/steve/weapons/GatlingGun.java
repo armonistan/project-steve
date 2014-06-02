@@ -8,8 +8,8 @@ import com.steve.base.Weapon;
 import com.steve.projectiles.SnakeBullet;
 
 public class GatlingGun extends Weapon{
-	public GatlingGun(float x, float y, int atlasX, int atlasY){
-		super(x,y,atlasX,atlasY);
+	public GatlingGun(float x, float y){
+		super(x,y, 16*8, 16);
 		shootSpeed = 25;
 	}
 	
@@ -22,7 +22,7 @@ public class GatlingGun extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.projectiles.add(new SnakeBullet(this.getX(), this.getY(), 100*MathUtils.cosDeg(degrees), 100*MathUtils.sinDeg(degrees), 0));
+				SteveDriver.field.projectiles.add(new SnakeBullet(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
 				shootCounter = 0;
 	}
 	

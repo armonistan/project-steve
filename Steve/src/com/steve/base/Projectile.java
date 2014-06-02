@@ -14,7 +14,7 @@ import com.steve.helpers.CollisionHelper;
 public class Projectile {
 	private Sprite avatar;
 	private float percentDamage;
-	private Vector2 direction;
+	protected Vector2 direction;
 	private boolean snakeFriendly;
 	private boolean dead;
 	private float projectileTime;

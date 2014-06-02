@@ -6,10 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
 import com.steve.projectiles.SnakeBullet;
+import com.steve.projectiles.SnakeLaser;
 
 public class Laser extends Weapon{
-	public Laser(float x, float y, int atlasX, int atlasY){
-		super(x,y,atlasX,atlasY);
+	public Laser(float x, float y){
+		super(x,y, 16*9, 16);
 		shootSpeed = 100;
 		range = 500;
 	}
@@ -23,7 +24,7 @@ public class Laser extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.projectiles.add(new SnakeBullet(this.getX(), this.getY(), 600*MathUtils.cosDeg(degrees), 200*MathUtils.sinDeg(degrees), 0));
+				SteveDriver.field.projectiles.add(new SnakeLaser(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
 				shootCounter = 0;
 	}
 	

@@ -517,15 +517,15 @@ public class Snake {
 			switch(upgradeType){
 			case 0:
 				weapons.add(new GatlingGun(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			case 1:
 				weapons.add(new Laser(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*9, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			case 2:
 				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*10, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			}
 		}
