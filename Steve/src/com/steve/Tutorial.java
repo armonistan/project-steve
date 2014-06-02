@@ -91,7 +91,8 @@ public class Tutorial {
 			
 			for (Pickup p : SteveDriver.field.pickups) {
 				if (p.getClass() == Apple.class) {
-					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(), 30 * SteveDriver.TEXTURE_WIDTH, 30 * SteveDriver.TEXTURE_LENGTH);
+					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
 						
 					if (tempDist < closestAppleDistance) {
 						closestAppleDistance = tempDist;
@@ -121,7 +122,7 @@ public class Tutorial {
 					Cell temp = blockerLayer.getCell(x, y);
 					
 					if (temp != null) {
-						float tempDist = CollisionHelper.distanceSquared(x, y, 30, 30);
+						float tempDist = CollisionHelper.distanceSquared(x, y, SteveDriver.field.totalRadius / 2, SteveDriver.field.totalRadius / 2);
 						
 						if (tempDist < closestDistance) {
 							closestDistance = tempDist;
@@ -155,7 +156,8 @@ public class Tutorial {
 			
 			for (Pickup p : SteveDriver.field.pickups) {
 				if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
-					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(), 30 * SteveDriver.TEXTURE_WIDTH, 30 * SteveDriver.TEXTURE_LENGTH);
+					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
 						
 					if (tempDist < closestWeaponDistance) {
 						closestWeaponDistance = tempDist;

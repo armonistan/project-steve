@@ -160,10 +160,12 @@ public class SteveDriver implements ApplicationListener {
 	}
 	
 	public static void resetField() {
-		snake = new Snake(30, 30);
-		field = new Field(camera);
+		int scale = 10;
 		
-		for (int i = 0; i < 20; i++) {
+		snake = new Snake(30 * scale, 30 * scale);
+		field = new Field(camera, scale);
+		
+		for (int i = 0; i < 10; i++) {
 			field.generator.generateApple(false);
 			field.generator.generatePickUp(false);
 		}
