@@ -107,4 +107,12 @@ public class GUIHelper {
 	public boolean isTouchInRectangle(float x, float y, float rectX, float rectY, float width, float height) {
 		return x > rectX && x < rectX + width && y > rectY && y < rectY + height;
 	}
+	
+	public int screenToCoordinateSpaceX(int inputX) {
+		return inputX - Gdx.graphics.getWidth() / 2;
+	}
+	
+	public int screenToCoordinateSpaceY(int inputY, int height) {
+		return -1 * (inputY - Gdx.graphics.getHeight() / 2 - height);
+	}
 }

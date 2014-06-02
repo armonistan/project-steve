@@ -33,7 +33,10 @@ public class Button {
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(Gdx.input.getX() - Gdx.graphics.getWidth() / 2, -1 * (Gdx.input.getY() - Gdx.graphics.getHeight() / 2 - pxHeight), positionX, positionY, pxWidth, pxHeight)) {
+			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(
+					SteveDriver.guiHelper.screenToCoordinateSpaceX(Gdx.input.getX()), 
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY(), pxHeight), 
+					positionX, positionY, pxWidth, pxHeight)) {
 				buttonAction.execute();
 				clicked = true;
 			}
