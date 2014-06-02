@@ -163,6 +163,11 @@ public class SteveDriver implements ApplicationListener {
 		snake = new Snake(30, 30);
 		field = new Field(camera);
 		
+		for (int i = 0; i < 20; i++) {
+			field.generator.generateApple(false);
+			field.generator.generatePickUp(false);
+		}
+		
 		//TODO: TEMP
 		if (SteveDriver.snake.getMoney() == 0 && !SteveDriver.tutorial.isActive()) {
 			SteveDriver.tutorial.startTutorial();

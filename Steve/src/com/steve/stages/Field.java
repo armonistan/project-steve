@@ -38,10 +38,10 @@ import com.steve.pickups.WeaponUpgrade;
 import java.util.*;
 
 public class Field {
-	int grassRadius;
-	int desertRadius;
-	int barrenRadius;
-	int totalRadius;
+	public int grassRadius;
+	public int desertRadius;
+	public int barrenRadius;
+	public int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
 	
@@ -60,7 +60,7 @@ public class Field {
 	public ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
 	
-	private Generator generator;
+	public Generator generator;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -225,8 +225,6 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(30, 40));
-		this.pickups.add(new GatlingGunPickUp(30, 20));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();

@@ -10,9 +10,14 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.steve.base.Pickup;
 import com.steve.commands.ChangeTutorialStage;
 import com.steve.commands.EndTutorial;
 import com.steve.helpers.CollisionHelper;
+import com.steve.pickups.Apple;
+import com.steve.pickups.GatlingGunPickUp;
+import com.steve.pickups.LaserPickUp;
+import com.steve.pickups.SpecialistPickUp;
 
 public class Tutorial {
 	public enum TUTORIAL_STAGE_TYPE {
@@ -80,6 +85,24 @@ public class Tutorial {
 			noGray.x = -32;
 			noGray.width = 32;
 			noGray.height = 32;
+			
+			Vector3 tempApple = new Vector3();
+			float closestAppleDistance = Float.POSITIVE_INFINITY;
+			
+			for (Pickup p : SteveDriver.field.pickups) {
+				if (p.getClass() == Apple.class) {
+					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(), 30 * SteveDriver.TEXTURE_WIDTH, 30 * SteveDriver.TEXTURE_LENGTH);
+						
+					if (tempDist < closestAppleDistance) {
+						closestAppleDistance = tempDist;
+						tempApple.x = p.getX();
+						tempApple.y = p.getY();
+					}
+				}
+			}
+			
+			focus = tempApple;
+			
 			break;
 		case blockers:
 			description = "Don't run into these rocks!";
@@ -126,6 +149,24 @@ public class Tutorial {
 			noGray.x = -32;
 			noGray.width = 32;
 			noGray.height = 32;
+			
+			Vector3 tempWeapon = new Vector3();
+			float closestWeaponDistance = Float.POSITIVE_INFINITY;
+			
+			for (Pickup p : SteveDriver.field.pickups) {
+				if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
+					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(), 30 * SteveDriver.TEXTURE_WIDTH, 30 * SteveDriver.TEXTURE_LENGTH);
+						
+					if (tempDist < closestWeaponDistance) {
+						closestWeaponDistance = tempDist;
+						tempWeapon.x = p.getX();
+						tempWeapon.y = p.getY();
+					}
+				}
+			}
+			
+			focus = tempWeapon;
+			
 			break;
 		case goodFuckingLuck:
 			description = "Kill all the stuff!\nKeep moving away from the middle.";
