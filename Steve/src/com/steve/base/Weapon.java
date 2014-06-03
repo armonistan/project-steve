@@ -18,7 +18,7 @@ public class Weapon extends Sprite{
 	protected int atlasX;
 	protected int atlasY;
 	boolean isAimed;
-	boolean isUpgraded;
+	protected boolean isUpgraded;
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
 	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));

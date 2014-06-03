@@ -38,10 +38,10 @@ import com.steve.pickups.WeaponUpgrade;
 import java.util.*;
 
 public class Field {
-	int grassRadius;
-	int desertRadius;
-	int barrenRadius;
-	int totalRadius;
+	public int grassRadius;
+	public int desertRadius;
+	public int barrenRadius;
+	public int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
 	
@@ -52,7 +52,7 @@ public class Field {
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	
-	public static ArrayList<Pickup> pickups;
+	public static LinkedList<Pickup> pickups;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
@@ -60,7 +60,7 @@ public class Field {
 	public ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
 	
-	private Generator generator;
+	public Generator generator;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -203,13 +203,13 @@ public class Field {
 		}
 	}
 	
-	public Field(OrthographicCamera camera) {
-		this.grassRadius = 20;
-		this.desertRadius = 10;
-		this.barrenRadius = 60;
+	public Field(OrthographicCamera camera, int scale) {
+		this.grassRadius = 20 * scale;
+		this.desertRadius = 10 * scale;
+		this.barrenRadius = 60 * scale;
 		
-		this.totalRadius = 60;
-		this.blockerChains = 50;
+		this.totalRadius = 60 * scale;
+		this.blockerChains = 100 * scale * scale;
 		this.maxBlockerLength = 10;
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
@@ -224,9 +224,7 @@ public class Field {
 		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new ArrayList<Pickup>();
-		this.pickups.add(new Apple(30, 40));
-		this.pickups.add(new GatlingGunPickUp(30, 20));
+		this.pickups = new LinkedList<Pickup>();
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();

@@ -10,24 +10,21 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GUI {
 	
-	private float width, height;
+	private float height;
 	private ArrayList<Sprite> guiTextures;
 	private Vector2 leftEndPosition;
 	private Vector2 rightEndPosition;
 	private int healthWidth = 4;
 	private int healthColor = 2;
-	private float currentHealth;
+	private float currentHealthPercent;
 	
-	private enum guiText {
-		LEFTEND, RED, YELLOW, GREEN, DEAD, RIGHTEND;
-	}
+	private float spriteWidth = 48;
 	
 	public GUI() {
-		guiTextures = new ArrayList();
+		guiTextures = new ArrayList<Sprite>();
 		for (int i = 0; i < 6; i++) {
-			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 96)));
+			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 64)));
 		}
-		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		leftEndPosition = new Vector2(48 * -3, height/2 -100);
 		rightEndPosition = new Vector2(48 * 2, height/2 -100);
@@ -36,7 +33,7 @@ public class GUI {
 	}
 	
 	public void render() {
-		currentHealth = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
+		currentHealthPercent = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
 		SteveDriver.batch.begin();
 		guiTextures.get(0).draw(SteveDriver.batch);
@@ -46,16 +43,25 @@ public class GUI {
 			guiTextures.get(1).draw(SteveDriver.batch);
 		}
 		
-		for (int i = 0; i < (int) (healthWidth * currentHealth) + 1; i++) {
-			if (currentHealth > .5) {
+		for (int i = 0; i < (int) (healthWidth * currentHealthPercent) + 1; i++) {
+			if (currentHealthPercent > .5) {
 				healthColor = 2;
-			} else if (currentHealth < .5 && currentHealth > .25) {
+			} else if (currentHealthPercent < .5 && currentHealthPercent > .25) {
 				healthColor = 3;
-			} else if (currentHealth < .25) {
+			} else if (currentHealthPercent < .25) {
 				healthColor = 4;
 			}
-			guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
-			guiTextures.get(healthColor).draw(SteveDriver.batch);
+			
+			
+			if (i == (int) (healthWidth * currentHealthPercent)) {
+				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
+				Sprite endHP = new Sprite(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*healthColor), 352, spriteSubSectionWidth, 64)));
+				endHP.setPosition(48 * (i - 2), height/2 -100);
+				endHP.draw(SteveDriver.batch);
+			} else {
+				guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
+				guiTextures.get(healthColor).draw(SteveDriver.batch);
+			}
 		}
 		
 		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);

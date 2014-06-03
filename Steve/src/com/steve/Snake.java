@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
@@ -36,10 +37,13 @@ public class Snake {
 	private Vector2 nextDirection;
 	private float nextRotation;
 	
+	private Preferences storePrefs = Gdx.app.getPreferences("store");
+	
 	private int money;
 	private int snakeTier;
 	
 	private int helmetTier;
+	private int helmetHits;
 	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
@@ -49,15 +53,29 @@ public class Snake {
 		
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
-		segments.get(0).setRotation(nextRotation * MathUtils.radiansToDegrees);
+		segments.get(0).setRotation(0);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_WIDTH);
 
 		//TODO: Make this better
 		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
+		timeTillStarve = storePrefs.contains("timeToLiveTier") ? timeTillStarve + timeTillStarve*storePrefs.getInteger("timeToLiveTier") : timeTillStarve;
+		
+		for (int i = 0; i < storePrefs.getInteger("lengthTier"); i++) {
+			this.addBody();
+			animate();
+		}
+		
+		for (int i = 0; i < storePrefs.getInteger("weaponsTier"); i++) {
+			this.mountUpgrade(0);
+		}
+		
 		snakeTier = 1;
-		helmetTier = 0;
+		//will be used to save which tier of helmet it is
+		helmetTier = storePrefs.contains("helmetTier") ? storePrefs.getInteger("helmetTier") : 0;
+		//need to add logic for the different helmet tiers. for instance, drill helmet won't break.
+		helmetHits = helmetTier;
 	}
 	
 	public int getMoney() {
@@ -134,9 +152,8 @@ public class Snake {
 				Cell cell = layer.getCell(x, y);
 				
 				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
-					//TODO: Add logic for helmet
-					if (!Gdx.app.getPreferences("uh").contains("helmet") || !Gdx.app.getPreferences("uh").getBoolean("helmet")) {
-						System.out.println("No helmet");
+					if (helmetHits > 0) {
+						helmetHits -= 1;
 					}
 					
 					kill();
@@ -484,7 +501,7 @@ public class Snake {
 	
 	private void updateTimers(float deltaTime){
 		timer += deltaTime;
-		hungerTimer += deltaTime;
+		hungerTimer += deltaTime/(storePrefs.getInteger("efficiencyTier") + 1);
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 	}
@@ -500,15 +517,15 @@ public class Snake {
 			switch(upgradeType){
 			case 0:
 				weapons.add(new GatlingGun(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*8, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			case 1:
 				weapons.add(new Laser(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*9, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			case 2:
 				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY(), 16*10, 16));
+					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			}
 		}
@@ -548,6 +565,10 @@ public class Snake {
 	
 	public int getSnakeTier(){
 		return snakeTier;
+	}
+	
+	public int getSnakeArmor() {
+		return storePrefs.getInteger("armorTier") + 1;
 	}
 }
 

@@ -137,8 +137,8 @@ public class Store {
 	}
 	
 	public void purchaseUpgrade() {
-		if (upgradeToPurchase != null){
-			if (upgradeToPurchaseTier == this.upgradeTiers[upgradeToPurchase.index]){
+		if (upgradeToPurchase != null) {
+			if (upgradeToPurchaseTier == this.upgradeTiers[upgradeToPurchase.index] && upgradeToPurchaseTier <= this.upgradeTiers[0]) {
 				if (SteveDriver.snake.spendMoney(upgradeToPurchasePrice)) {
 					upgradeTiers[upgradeToPurchase.index] = upgradeToPurchaseTier + 1;
 					saveStoreProgress();
