@@ -7,7 +7,7 @@ import com.steve.base.Enemy;
 
 public class AntiSpiral extends Enemy{
 	public AntiSpiral(float x, float y) {
-		super(x, y, new Vector2(15, 3), new Vector2(2, 2), 1f, 0.4f, 3, 75);
+		super(x, y, new Vector2(15, 3), new Vector2(2, 2), 1.2f, 0.4f, 3, 75);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 30;
@@ -15,7 +15,6 @@ public class AntiSpiral extends Enemy{
 
 	@Override
 	protected Vector2 decideMove() {
-		//todo give real behavior
 		return super.pursuitMoveWithSight();
 	}
 }

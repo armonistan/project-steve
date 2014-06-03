@@ -230,8 +230,14 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.enemies.add(new Snail(40, 30));
+<<<<<<< HEAD
+		enemies.add(new Snail(50, 30));
+		enemies.add(new Ring(20, 30));
 		enemies.add(new HomaHawk(40, 30));
+		enemies.add(new Turret(30,40));
+=======
+		this.enemies.add(new Snail(40, 30));
+>>>>>>> f627e2c2aae92c5d05fbc55a132c0056b43073c1
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -239,11 +245,6 @@ public class Field {
 		
 		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
-	}
-	
-	public void destroyBlocker(int xPos, int yPos){
-		TiledMapTileLayer blockers = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
-		blockers.setCell(xPos, yPos, null);
 	}
 	
 	public int checkRing(int x, int y) {
