@@ -162,7 +162,7 @@ public class Store {
 	public void render() {
 		renderButtons();
 		
-		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", panelX + panelWidth/2, panelY + 25, Color.BLACK);
+		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", 0, -100, Color.BLACK);
 		
 		switch (tabIndex) {
 			case 0:
