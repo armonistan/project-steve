@@ -109,7 +109,7 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		return inputX - Gdx.graphics.getWidth() / 2;
+		return inputX - (Gdx.graphics.getWidth() / 2);
 	}
 	
 	public int screenToCoordinateSpaceY(int inputY, int height) {
