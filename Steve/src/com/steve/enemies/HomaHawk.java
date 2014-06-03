@@ -13,18 +13,18 @@ import com.steve.projectiles.Tree;
 
 public class HomaHawk extends Enemy{
 	public HomaHawk(float x, float y) {
-		super(x, y, new Vector2(11, 10), new Vector2(3, 3), .5f, 0.4f, 4, 75);
+		super(x, y, new Vector2(11, 10), new Vector2(3, 3), .2f, 0.4f, 4, 75);
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		ignoresBlockers = true;
 		moneyAmount = 30;
-		shootTime = 0.9f;
+		shootTime = 1.6f;
 	}
 	
 	public void update(){
 		this.checkInField();
 		super.update();
-		super.airShoot(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH, 0f, 0f));
+		super.airShoot(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2, 0f, 0f));
 	}
 
 	@Override

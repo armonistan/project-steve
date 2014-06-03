@@ -13,7 +13,9 @@ import com.steve.SteveDriver;
 import com.steve.enemies.AntiSpiral;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
+import com.steve.enemies.HomaHawk;
 import com.steve.enemies.Snail;
+import com.steve.enemies.Spiral;
 import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
@@ -102,7 +104,7 @@ public class Generator {
 	
 		int locationID = SteveDriver.field.checkRing((int)xPos, (int)yPos);
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(2) :
-			(locationID == DESERT_ID) ?  r.nextInt(2) + 2 : r.nextInt(2) + 4;
+			(locationID == DESERT_ID) ?  r.nextInt(3) + 1 : r.nextInt(2) + 4;
 	
 		switch(enemyType){
 			case 0:
@@ -122,6 +124,12 @@ public class Generator {
 				break;
 			case 5:
 				this.generateTurret(xPos, yPos);
+				break;
+			case 6:
+				this.generateSpiral(xPos, yPos);
+				break;
+			case 7:
+				this.generateHomaHawk(xPos, yPos);
 				break;
 		}
 	}
@@ -240,6 +248,18 @@ public class Generator {
 	
 	public void generateAntiSpiral(float xPos, float yPos){
 		AntiSpiral s = new AntiSpiral(xPos, yPos);
+		if(isOccupied(s.getRectangle()))
+			SteveDriver.field.enemies.add(s);
+	}
+	
+	public void generateSpiral(float xPos, float yPos){
+		Spiral s = new Spiral(xPos, yPos);
+		if(isOccupied(s.getRectangle()))
+			SteveDriver.field.enemies.add(s);
+	}
+	
+	public void generateHomaHawk(float xPos, float yPos){
+		HomaHawk s = new HomaHawk(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
 	}

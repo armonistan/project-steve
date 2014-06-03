@@ -18,10 +18,6 @@ public class Spiral extends Enemy{
 		moneyAmount = 30;
 	}
 	
-	public void update() {
-		super.update();
-	}
-
 	@Override
 	public void update(){
 		decideMoveSpeed();
