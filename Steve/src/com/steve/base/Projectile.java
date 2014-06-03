@@ -42,14 +42,16 @@ public class Projectile {
 			this.projectileTime--;
 		else
 			kill();
-		
+		move();
 		checkCollisions();
-		
-		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
 	}
 	
 	public void draw() {
 		avatar.draw(SteveDriver.batch);
+	}
+	
+	private void move(){
+		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
 	}
 	
 	private void checkCollisions() {

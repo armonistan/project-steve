@@ -38,10 +38,10 @@ import com.steve.pickups.WeaponUpgrade;
 import java.util.*;
 
 public class Field {
-	public int grassRadius;
-	public int desertRadius;
-	public int barrenRadius;
-	public int totalRadius;
+	int grassRadius;
+	int desertRadius;
+	int barrenRadius;
+	int totalRadius;
 	int blockerChains;
 	int maxBlockerLength;
 	
@@ -52,7 +52,7 @@ public class Field {
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	
-	public static LinkedList<Pickup> pickups;
+	public static ArrayList<Pickup> pickups;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
@@ -60,7 +60,7 @@ public class Field {
 	public ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
 	
-	public Generator generator;
+	private Generator generator;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -203,13 +203,13 @@ public class Field {
 		}
 	}
 	
-	public Field(OrthographicCamera camera, int scale) {
-		this.grassRadius = 20 * scale;
-		this.desertRadius = 10 * scale;
-		this.barrenRadius = 60 * scale;
+	public Field(OrthographicCamera camera) {
+		this.grassRadius = 20;
+		this.desertRadius = 10;
+		this.barrenRadius = 60;
 		
-		this.totalRadius = 60 * scale;
-		this.blockerChains = 100 * scale * scale;
+		this.totalRadius = 60;
+		this.blockerChains = 50;
 		this.maxBlockerLength = 10;
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
@@ -224,12 +224,20 @@ public class Field {
 		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new LinkedList<Pickup>();
+		this.pickups = new ArrayList<Pickup>();
+		this.pickups.add(new Apple(30, 40));
+		this.pickups.add(new GatlingGunPickUp(30, 20));
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.enemies.add(new Snail(40, 30));
+<<<<<<< HEAD
+		enemies.add(new Snail(50, 30));
+		enemies.add(new Ring(20, 30));
 		enemies.add(new HomaHawk(40, 30));
+		enemies.add(new Turret(30,40));
+=======
+		this.enemies.add(new Snail(40, 30));
+>>>>>>> f627e2c2aae92c5d05fbc55a132c0056b43073c1
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -237,11 +245,6 @@ public class Field {
 		
 		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
-	}
-	
-	public void destroyBlocker(int xPos, int yPos){
-		TiledMapTileLayer blockers = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
-		blockers.setCell(xPos, yPos, null);
 	}
 	
 	public int checkRing(int x, int y) {
