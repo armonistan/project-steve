@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.steve.helpers.ConstantHelper;
 import com.steve.helpers.GUIHelper;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
@@ -28,8 +29,9 @@ public class SteveDriver implements ApplicationListener {
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
-	public static Store store;
 	public static GUIHelper guiHelper;
+	public static ConstantHelper constants;
+	public static Store store;
 	
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
@@ -77,8 +79,10 @@ public class SteveDriver implements ApplicationListener {
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		random = new Random();
-		store = new Store();
-		store.setStoreProgress();
+		
+		constants = new ConstantHelper();
+		constants.addToConstants("screenWidth", Gdx.graphics.getWidth());
+		constants.addToConstants("screenHeight", Gdx.graphics.getHeight());
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -93,6 +97,8 @@ public class SteveDriver implements ApplicationListener {
 		menu = new Menu();
 		game = new Game();
 		tutorial = new Tutorial();
+		store = new Store();
+		store.setStoreProgress();
 	}
 
 	@Override

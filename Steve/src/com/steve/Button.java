@@ -37,8 +37,10 @@ public class Button {
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(Gdx.input.getX()), 
 					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY(), pxHeight), 
 					positionX, positionY, pxWidth, pxHeight)) {
-				buttonAction.execute();
-				clicked = true;
+				if (buttonAction != null) {
+					buttonAction.execute();
+					clicked = true;
+				}
 			}
 		}
 		else {

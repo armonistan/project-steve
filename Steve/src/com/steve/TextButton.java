@@ -15,4 +15,8 @@ public class TextButton extends Button {
 		super.render();
 		SteveDriver.guiHelper.drawText(text, positionX + 15, positionY - 20, Color.BLACK);
 	}
+	
+	public void setText(String t) {
+		text = t;
+	}
 }
