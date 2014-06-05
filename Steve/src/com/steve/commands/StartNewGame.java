@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.steve.ICommand;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.stages.Store;
 
 public class StartNewGame extends StartNewRound {
 
@@ -13,6 +14,7 @@ public class StartNewGame extends StartNewRound {
 		Gdx.app.getPreferences("main").flush();
 		SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 		SteveDriver.store.resetStore();
+		SteveDriver.store = new Store();
 		super.execute();
 	}
 

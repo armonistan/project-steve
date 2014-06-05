@@ -12,6 +12,6 @@ public class Apple extends Pickup {
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.addBody();
-		snake.addMoney(2500000); //TODO: Temp
+		snake.addMoney(2500); //TODO: Temp
 	}
 }
