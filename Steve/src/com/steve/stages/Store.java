@@ -20,6 +20,7 @@ import com.steve.commands.SwitchStoreTab;
 public class Store {
 	
 	public Preferences prefs;
+	public Preferences mainPrefs;
 	
 	private int tabIndex;
 	private String description;
@@ -41,6 +42,7 @@ public class Store {
 	
 	private ArrayList<Upgrade> upgrades;
 	private Map<Integer, ArrayList<Button>> upgradeButtons;
+	private int[] currentTier;
 	
 	public class Upgrade {
 		
@@ -50,28 +52,39 @@ public class Store {
 		String description;
 		float value;
 		float price;
+		int category;
+		int tier;
 		boolean activated;
+		boolean available;
 		
-		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int xPos, int yPos) {
+		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int category, int xPos, int yPos) {
 			activated = false;
+			available = true;
 			key = prefsKey;
 			name = displayName;
 			this.constantName = constantName;
 			this.price = price;
+			this.category = category;
+			this.tier = tier;
+			this.value = value;
 			description = upgradeDescription;
 			
 			Button b = new Button(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos, 4 * 16),
 						4, 4, new QueueUpgrade(this));
 			
-			upgradeButtons.get(tier).add(b);
+			upgradeButtons.get(category).add(b);
 
 			if (prefs.contains(key)) {
 				if (prefs.getBoolean(key)) {
 					activated = true;
+					currentTier[category] = tier;
 					activateUpgrade();
 				}
 			} else {
+				if (currentTier[category] > tier) {
+					setUnavailable();
+				}
 				prefs.putBoolean(key, activated);
 			}
 			
@@ -94,16 +107,29 @@ public class Store {
 		}
 		
 		public void activateUpgrade() {
-			activated = true;			
+			activated = true;
+			currentTier[category] = tier + 1;
+			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
 			prefs.putBoolean(key, activated);
+		}
+		
+		public void setUnavailable() {
+			available = false;
+		}
+		
+		public void setPrice(float price) {
+			this.price = price;
 		}
 	}
 	
 	public Store() {
 		prefs = Gdx.app.getPreferences("store");
+		mainPrefs = Gdx.app.getPreferences("main");
 		upgrades = new ArrayList<Upgrade>();
 		upgradeButtons = new HashMap<Integer, ArrayList<Button>>();
+		currentTier = new int[6];
+		
 		for (int i = 0; i < 6; i++) {
 			upgradeButtons.put(i, new ArrayList<Button>());
 		}
@@ -118,7 +144,7 @@ public class Store {
 		panelX = screenWidth / 4;
 		panelY = 0;
 		panelWidth = 3 * screenWidth / 4;
-		panelHeight = 3 * screenWidth / 4;
+		panelHeight = 3 * screenHeight / 4;
 		
 		infoBox = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth/4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4, screenHeight / 64),
@@ -157,49 +183,71 @@ public class Store {
 				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 5), "Special");
 		
 		initializeUpgrades();
+		setStoreProgress();
 	}
 	
-	public void render() {
+	public void render() {		
 		renderButtons();
 		
-		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", 0, -100, Color.BLACK);
+		SteveDriver.guiHelper.drawTextCentered("$" + SteveDriver.snake.getMoney(), 
+				SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16, 15),
+				Color.BLACK);
 		
 		switch (tabIndex) {
 			case 0:
 				if (!isUpgradeSelected) {
 					description = "Ascend to a higher tier.";
 				}
-				SteveDriver.guiHelper.drawText("Snake Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			case 1:
 				if (!isUpgradeSelected) {
 					description = "All things hunger related";
 				}
-				SteveDriver.guiHelper.drawText("Efficiency Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Survivability Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			case 2:
 				if (!isUpgradeSelected) {
 					description = "Make the snake longer";
 				}
-				SteveDriver.guiHelper.drawText("Length Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			case 3:
 				if (!isUpgradeSelected) {
 					description = "Buff up the guns you use.";
 				}
-				SteveDriver.guiHelper.drawText("Weapon Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			case 4:
 				if (!isUpgradeSelected) {
 					description = "Mo' money mo' prolems";
 				}
-				SteveDriver.guiHelper.drawText("Cash Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Cash Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			case 5:
 				if (!isUpgradeSelected) {
 					description = "These are secrets. SECRET.";
 				}
-				SteveDriver.guiHelper.drawText("Special Upgrades", 0, 0, Color.BLACK);
+				SteveDriver.guiHelper.drawTextCentered("Special Upgrades", 
+						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						Color.BLACK);
 				break;
 			default:
 				break;
@@ -237,21 +285,63 @@ public class Store {
 	public void queueUpgradePurchase(Upgrade u) {
 		this.isUpgradeSelected = true;
 		selectedUpgrade = u;
-		description = u.getDescription() + " $" + u.getPrice();
+		description = u.getDescription();
+		if (u.activated) {
+			description += "\nPurchased!";
+		} else if (!u.available){
+			description += "\nLocked!";
+		} else {
+			description += "\n$" + u.getPrice() * SteveDriver.constants.get("priceModifier");
+		}
 	}
 	
 	public void purchaseUpgrade() {
 		if (selectedUpgrade != null) {
-			
+			if (selectedUpgrade.available && !selectedUpgrade.activated && currentTier[selectedUpgrade.category] == selectedUpgrade.tier) {
+				if (SteveDriver.snake.spendMoney((int) (selectedUpgrade.price * SteveDriver.constants.get("priceModifier")))) {
+					selectedUpgrade.activateUpgrade();
+					SteveDriver.snake.addMoney(0);
+					for (Upgrade u : this.upgrades) {
+						if (u.category == selectedUpgrade.category && u.tier == selectedUpgrade.tier) {
+							u.setUnavailable();
+						}
+					}
+					prefs.flush();
+					mainPrefs.flush();
+				} else {
+					description = "Not enough cash!";
+					selectedUpgrade = null;
+					return;
+				}
+			} else if (selectedUpgrade.activated) {
+				description = "Upgrade activated!";
+				selectedUpgrade = null;
+				return;
+			} else if (!selectedUpgrade.available) {
+				description = "Upgrade not available!";
+				selectedUpgrade = null;
+				return;
+			} else if (currentTier[selectedUpgrade.category] != selectedUpgrade.tier) {
+				description = "Too high tier!";
+				selectedUpgrade = null;
+				return;
+			}
 		}
 	}
 	
 	public void resetStore() {
 		prefs.clear();
+		prefs.flush();
 	}
 	
 	public void setStoreProgress() {
-		
+		for (int i = 0; i < 6; i++) {
+			for (Upgrade u : this.upgrades) {
+				if (u.category == i && u.tier < currentTier[i] && !u.activated) {
+					u.setUnavailable();
+				}
+			}
+		}
 	}
 	
 	public void setStoreTab(int i) {
@@ -265,15 +355,27 @@ public class Store {
 	}
 	
 	private void initializeUpgrades() {
+		Upgrade steve = new Upgrade("Regular Steve", 
+				"steve",
+				"snakeTier0",
+				"Steve the cute, normal snake.",
+				1.0f, 
+				0f, 
+				0, 0, 
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (3 * panelHeight / 4));
+		steve.activateUpgrade();
+		upgrades.add(steve);
+		
 		upgrades.add(new Upgrade("Cyborg Steve", 
 				"cyborg",
 				"snakeTier1",
 				"Turn Steve into a Cyborg",
 				1.0f, 
 				10000f, 
-				0, 
-				panelX + (panelWidth / 2), 
-				panelY + (3 * panelHeight / 4)));
+				1, 0, 
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (2 * panelHeight / 4)));
 		
 		upgrades.add(new Upgrade("Robo Steve", 
 				"robot",
@@ -281,28 +383,258 @@ public class Store {
 				"Turn Steve into a Robot",
 				1.0f, 
 				100000f, 
-				0, 
-				panelX + (panelWidth / 2), 
-				panelY + (panelHeight / 4)));
+				2, 0, 
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (panelHeight / 4)));
 		
 		upgrades.add(new Upgrade("Increase HP", 
 				"hitpoints",
 				"effTier1A",
 				"Give Steve 25% more hitpoints",
-				1.25f, 
-				2500f, 
-				1, 
-				panelX + (panelWidth / 3), 
-				panelY + (3 * panelHeight / 4)));
+				.25f,
+				2500f,
+				0, 1,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
 		
 		upgrades.add(new Upgrade("Decrease Hunger", 
 				"hungerRate",
 				"effTier1B",
 				"Hunger eats your HP 10% slower",
-				.90f, 
+				.1f, 
 				2500f,
-				1,
-				panelX + (2 * panelWidth / 3), 
-				panelY + (3 * panelHeight / 4)));
+				0, 1,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Increase HP", 
+				"hitpoints",
+				"effTier2A",
+				"Give Steve 25% more hitpoints",
+				.25f,
+				25000f,
+				1, 1,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Decrease Hunger", 
+				"hungerRate",
+				"effTier2B",
+				"Hunger eats your HP 10% slower",
+				.1f, 
+				25000f,
+				1, 1,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Increase HP", 
+				"hitpoints",
+				"effTier3A",
+				"Give Steve 25% more hitpoints",
+				.25f,
+				250000f,
+				2, 1,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Decrease Hunger", 
+				"hungerRate",
+				"effTier3B",
+				"Hunger eats your HP 10% slower",
+				.1f, 
+				250000f,
+				2, 1,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Increase start length", 
+				"startLength",
+				"survTier1A",
+				"Give Steve 2 more segments when the round starts",
+				2f,
+				2500f,
+				0, 2,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Max Length Increase", 
+				"maxLength",
+				"survTier1B",
+				"Increase the maximum possible length of Steve by 2.",
+				2f, 
+				2500f,
+				0, 2,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Increase start length", 
+				"startLength",
+				"survTier2A",
+				"Give Steve 2 more segments when the round starts",
+				2f,
+				25000f,
+				1, 2,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Max Length Increase", 
+				"maxLength",
+				"survTier2B",
+				"Increase the maximum possible length of Steve by 2.",
+				2f, 
+				25000f,
+				1, 2,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Increase start length", 
+				"startLength",
+				"survTier3A",
+				"Give Steve 2 more segments when the round starts",
+				2f,
+				250000f,
+				2, 2,
+				panelX - 32 + (panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Max Length Increase", 
+				"maxLength",
+				"survTier3B",
+				"Increase the maximum possible length of Steve by 2.",
+				2f, 
+				250000f,
+				2, 2,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Main Gun", 
+				"mainGun",
+				"wepTier1",
+				"Steve gains a main cannon on his first segment.",
+				1f,
+				2500f,
+				0, 3,
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Fire Rate Increase", 
+				"fireRate",
+				"wepTier2A",
+				"Steve gains a 30% fire rate bonus for his main gun,\nand a 15% boost for all other guns.",
+				.15f,
+				25000f,
+				1, 3,
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Fire Rate Increase", 
+				"fireRate",
+				"wepTier3A",
+				"Steve gains a 30% fire rate bonus for his main gun,\nand a 15% boost for all other guns.",
+				.15f,
+				250000f,
+				2, 3,
+				panelX - 32 + (panelWidth / 2), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Turret Range Increase", 
+				"fireRange",
+				"wepTier2B",
+				"Steve gains a 20% range bonus for his main gun,\nand a 10% boost for all other guns.",
+				.1f,
+				25000f,
+				1, 3,
+				panelX - 32 + (1 * panelWidth / 4), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Turret Range Increase", 
+				"fireRange",
+				"wepTier3B",
+				"Steve gains a 20% range bonus for his main gun,\nand a 10% boost for all other guns.",
+				.1f,
+				250000f,
+				2, 3,
+				panelX - 32 + (1 * panelWidth / 4), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Damage Increase", 
+				"fireDamage",
+				"wepTier2C",
+				"Steve gains a 40% damage bonus for his main gun,\nand a 20% boost for all other guns.",
+				.2f,
+				25000f,
+				1, 3,
+				panelX - 32 + (3 * panelWidth / 4), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Damage Increase", 
+				"fireDamage",
+				"wepTier3C",
+				"Steve gains a 40% damage bonus for his main gun,\nand a 20% boost for all other guns.",
+				.2f,
+				250000f,
+				2, 3,
+				panelX - 32 + (3 * panelWidth / 4), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Plentiful Money", 
+				"goldModifier",
+				"goldTier1A",
+				"Sources of gold are worth 15% more.",
+				.15f,
+				2500f,
+				0, 4,
+				panelX - 32 + (1 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Plentiful Money", 
+				"goldModifier",
+				"goldTier2A",
+				"Sources of gold are worth 15% more.",
+				.15f,
+				25000f,
+				1, 4,
+				panelX - 32 + (1 * panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Plentiful Money", 
+				"goldModifier",
+				"goldTier3A",
+				"Sources of gold are worth 15% more.",
+				.15f,
+				250000f,
+				2, 4,
+				panelX - 32 + (1 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Cheapskate", 
+				"priceModifier",
+				"goldTier1B",
+				"Upgrades are 10% cheaper.",
+				-.1f,
+				2500f,
+				0, 4,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Cheapskate", 
+				"priceModifier",
+				"goldTier2B",
+				"Upgrades are 10% cheaper.",
+				-.1f,
+				25000f,
+				1, 4,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Cheapskate", 
+				"priceModifier",
+				"goldTier3A",
+				"Upgrades are 10% cheaper.",
+				-.1f,
+				250000f,
+				2, 4,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
 	}
 }

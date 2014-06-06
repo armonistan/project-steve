@@ -46,17 +46,28 @@ public class GUIHelper {
 		font.setColor(cualColorTienes);
 		int lineNumber = 0;
 		
-		for (int i = message.length(); i > 0; ) {
-			int tempStartIndex = message.lastIndexOf("\n", i - 1);
-			tempStartIndex = (tempStartIndex < 0) ? 0 : tempStartIndex;
+		for (int i = 0; i < message.length() - 1; ) {
+			int tempEndIndex = message.indexOf("\n", i);
+			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
+			font.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x, y - lineNumber * font.getLineHeight());
 			
-			font.draw(SteveDriver.batch, message.substring(tempStartIndex, i), x, y + lineNumber * font.getLineHeight());
-			
-			i -= (i - tempStartIndex);
+			i = tempEndIndex + 1;
 			lineNumber++;
 		}
+	}
+	
+	public void drawTextCentered(String message, float x, float y, Color c) {
+		font.setColor(c);
+		int lineNumber = 0;
 		
-		//font.draw(SteveDriver.batch, message, x, y);
+		for (int i = 0; i < message.length() - 1; ) {
+			int tempEndIndex = message.indexOf("\n", i);
+			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
+			font.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (font.getBounds(message.substring(i, tempEndIndex)).width/2), y - lineNumber * font.getLineHeight());
+			
+			i = tempEndIndex + 1;
+			lineNumber++;
+		}
 	}
 	
 	public void drawBox(float x, float y, int width, int height) {

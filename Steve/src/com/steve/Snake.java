@@ -60,16 +60,18 @@ public class Snake {
 
 		//TODO: Make this better
 		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
-		timeTillStarve = storePrefs.contains("timeToLiveTier") ? timeTillStarve + timeTillStarve*storePrefs.getInteger("timeToLiveTier") : timeTillStarve;
 		
-		for (int i = 0; i < storePrefs.getInteger("lengthTier"); i++) {
+		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
 			animate();
 		}
 		
-		for (int i = 0; i < storePrefs.getInteger("weaponsTier"); i++) {
+		if (SteveDriver.constants.get("mainGun") == 1.0f) {
+			this.addBody();
 			this.mountUpgrade(0);
 		}
+		
+		timeTillStarve *= SteveDriver.constants.get("hitpoints");
 		
 		snakeTier = 1;
 		//will be used to save which tier of helmet it is
@@ -83,7 +85,7 @@ public class Snake {
 	}
 	
 	public void addMoney(int amount) {
-		money += amount;
+		money += amount * SteveDriver.constants.get("goldModifier");
 		
 		//TODO: Make this only save when needed.
 		Gdx.app.getPreferences("main").putInteger("money", money);
@@ -501,7 +503,7 @@ public class Snake {
 	
 	private void updateTimers(float deltaTime){
 		timer += deltaTime;
-		hungerTimer += deltaTime/(storePrefs.getInteger("efficiencyTier") + 1);
+		hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 	}
