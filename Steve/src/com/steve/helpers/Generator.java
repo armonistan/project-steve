@@ -35,16 +35,16 @@ public class Generator {
 	
 	private Random r;
 	
-	final float enemyGenerationTime = 1; 
+	final float enemyGenerationTime = 5; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 1; 
+	final float appleGenerationTime = 2; 
 	float appleGenerationCounter; 
 	
-	final float pickUpGenerationTime = 1; 
+	final float pickUpGenerationTime = 10; 
 	float pickUpGenerationCounter; 
 	
-	final float upgradeGenerationTime = 1; 
+	final float upgradeGenerationTime = 20; 
 	float upgradeGenerationCounter; 
 	
 	public Generator(){

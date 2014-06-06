@@ -23,7 +23,7 @@ public class Pickup extends Sprite {
 		active = false;
 	}
 	
-	public Rectangle getRectangle(){
+	public Rectangle getRectangle() {
 		return this.getBoundingRectangle();
 	}
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -53,6 +54,7 @@ public class Field {
 	TileRegion grass, desert, barren;
 	
 	public static LinkedList<Pickup> pickups;
+	public static LinkedList<Pickup> pickupsToRemove;
 	
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
@@ -225,6 +227,7 @@ public class Field {
 		this.mapRenderer.setView(camera);
 		
 		this.pickups = new LinkedList<Pickup>();
+		this.pickupsToRemove = new LinkedList<Pickup>();
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
@@ -487,34 +490,60 @@ public class Field {
 	}
 	
 	public void update() {
-		this.generator.update();
+		/*this.generator.update();
 		
 		for (Enemy e : enemies) {
 			e.update();
 		}
-		for (Enemy e : enemiesToRemove) {
-			enemies.remove(e);
+		while (enemiesToRemove.size() > 0) {
+			enemies.remove(enemiesToRemove.remove());
 		}
-		enemiesToRemove.clear();
 		
 		for (Projectile p : projectiles) {
 			p.update();
 		}
-		for (Projectile p : projectilesToRemove) {
-			projectiles.remove(p);
-		}
-		projectilesToRemove.clear();
+		while (projectilesToRemove.size() > 0) {
+			projectiles.remove(projectilesToRemove.remove());
+		}*/
 	}
 	
 	public void draw() {
-		mapRenderer.setView(SteveDriver.camera);
-		mapRenderer.render();
+		//mapRenderer.setView(SteveDriver.camera);
+		//mapRenderer.render();
+		
+		TiledMapTileLayer background = (TiledMapTileLayer)map.getLayers().get(0);
+		TiledMapTileLayer blockers = (TiledMapTileLayer)map.getLayers().get(1);
+		
+		SteveDriver.batch.begin();
+		for (int x = 0; x < totalRadius; x++) {
+			for (int y = 0; y < totalRadius; y++) {
+				if ((x + 1) * 16 >= SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2 &&
+					x * 16 < SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2 &&
+					(y + 1) * 16 >= SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2&
+					y * 16 < SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2) {
+					SteveDriver.batch.draw(background.getCell(x, y).getTile().getTextureRegion(),
+							x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+					
+					if (blockers.getCell(x, y) != null) {
+						SteveDriver.batch.draw(blockers.getCell(x, y).getTile().getTextureRegion(),
+								x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+					}
+				}
+			}
+		}
+		SteveDriver.batch.end();
 		
 		SteveDriver.batch.begin();
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
 				p.draw(SteveDriver.batch);
 			}
+			else {
+				pickupsToRemove.add(p);
+			}
+		}
+		while(pickupsToRemove.size() > 0) {
+			pickups.remove(pickupsToRemove.remove());
 		}
 		
 		for (Enemy e : enemies) {
