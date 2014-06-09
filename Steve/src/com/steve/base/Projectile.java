@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.helpers.CollisionHelper;
+import java.math.*;
 
 public class Projectile {
 	protected Sprite avatar;
@@ -54,20 +55,31 @@ public class Projectile {
 	}	
 	
 	public void update() {
-		if(this.projectileTime > 0)
+		if(this.projectileTime > 0) {
 			this.projectileTime--;
-		else
+		}
+		else {
 			kill();
-		move();
-		checkCollisions();
+			return;
+		}
+		
+		if (getAlive()) {
+			move();
+			checkCollisions();
+		}
 	}
 	
 	public void draw() {
 		avatar.draw(SteveDriver.batch);
+		
+		if (!getAlive()) {
+			//System.out.println("Drawn when dead.");
+		}
 	}
 	
-	private void move(){
-		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getRawDeltaTime(), avatar.getY() + direction.y * Gdx.graphics.getRawDeltaTime());
+	private void move(){		
+		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getDeltaTime(),
+				avatar.getY() + direction.y * Gdx.graphics.getDeltaTime());
 	}
 	
 	private void checkCollisions() {
@@ -106,7 +118,9 @@ public class Projectile {
 	}
 	
 	public void setDirection(float dx, float dy) {
-		direction.x = dx * speed;
-		direction.y = dy * speed;
+		direction.x = dx;
+		direction.y = dy;
+		direction.nor();
+		direction.scl(speed);
 	}
 }

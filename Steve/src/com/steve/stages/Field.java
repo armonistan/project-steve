@@ -60,7 +60,7 @@ public class Field {
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
 	
-	public ArrayList<Projectile> projectiles;
+	protected ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
 	
 	public Generator generator;
@@ -233,6 +233,7 @@ public class Field {
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
 
+		enemies.add(new Tank(totalRadius/2, totalRadius/2-10));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -420,6 +421,7 @@ public class Field {
 				}
 			}
 		}
+		
 		boolean left, right, top, bottom;
 		int tileRad = 0;
 		//code to set the blockers to the correct images
@@ -585,5 +587,15 @@ public class Field {
 	
 	public int getFieldRadius(){
 		return this.totalRadius;
+	}
+	
+	public void addProjectile(Projectile p) {
+		if (!projectiles.contains(p)) {
+			projectiles.add(p);
+		}
+	}
+	
+	public ArrayList<Projectile> getProjectiles() {
+		return projectiles;
 	}
 }
