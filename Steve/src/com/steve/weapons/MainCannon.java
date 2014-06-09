@@ -6,13 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
 import com.steve.projectiles.SnakeBullet;
+import com.steve.projectiles.SnakeMainProjectile;
 import com.steve.projectiles.SnakeRocket;
 
-public class Specialist extends Weapon{
-	public Specialist(float x, float y){
-		super(x,y, 16*10, 16);
-		shootSpeed = 200 - (int)(200*(SteveDriver.constants.get("fireRate")-1));
+public class MainCannon extends Weapon{
+	public MainCannon(float x, float y){
+		super(x,y, 16*8, 16*5);
+		shootSpeed = 75 - (int)(75*(SteveDriver.constants.get("fireRate")-1));
 		range = 700*SteveDriver.constants.get("fireRange");
+		this.isUpgraded = true;
 	}
 	
 	@Override
@@ -24,15 +26,9 @@ public class Specialist extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.projectiles.add(new SnakeRocket(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
+				SteveDriver.field.projectiles.add(new SnakeMainProjectile(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
 				shootCounter = 0;
 	}
 	
-	@Override
-	public void upgrade(){
-		super.upgrade();
-		this.shootSpeed = 100;
-		this.setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		//TODO more stuff to upgrade
-	}
+
 }

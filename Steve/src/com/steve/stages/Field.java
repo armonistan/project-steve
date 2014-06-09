@@ -231,8 +231,7 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.enemies.add(new Snail(40, 30));
-		enemies.add(new HomaHawk(40, 30));
+
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -490,7 +489,7 @@ public class Field {
 	}
 	
 	public void update() {
-		/*this.generator.update();
+		this.generator.update();
 		
 		for (Enemy e : enemies) {
 			e.update();
@@ -504,7 +503,7 @@ public class Field {
 		}
 		while (projectilesToRemove.size() > 0) {
 			projectiles.remove(projectilesToRemove.remove());
-		}*/
+		}
 	}
 	
 	public void draw() {

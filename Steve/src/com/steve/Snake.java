@@ -15,6 +15,7 @@ import com.steve.base.Weapon;
 import com.steve.helpers.CollisionHelper;
 import com.steve.weapons.GatlingGun;
 import com.steve.weapons.Laser;
+import com.steve.weapons.MainCannon;
 import com.steve.weapons.Specialist;
 
 import java.util.*;
@@ -30,7 +31,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private float timeTillStarve = 10f; //unit is seconds
+	private float timeTillStarve = 1000f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -68,7 +69,7 @@ public class Snake {
 		
 		if (SteveDriver.constants.get("mainGun") == 1.0f) {
 			this.addBody();
-			this.mountUpgrade(0);
+			this.mountUpgrade(3);
 		}
 		
 		timeTillStarve *= SteveDriver.constants.get("hitpoints");
@@ -529,6 +530,9 @@ public class Snake {
 				weapons.add(new Specialist(this.segments.get(this.weapons.size()+1).getX(), 
 					this.segments.get(this.weapons.size()+1).getY()));
 				break;
+			case 3:
+				weapons.add(new MainCannon(this.segments.get(this.weapons.size()+1).getX(), 
+					this.segments.get(this.weapons.size()+1).getY()));
 			}
 		}
 	}
@@ -571,6 +575,17 @@ public class Snake {
 	
 	public int getSnakeArmor() {
 		return storePrefs.getInteger("armorTier") + 1;
+	}
+	
+	public int getRotationIndex(){
+		if(this.segments.get(0).getRotation() == SteveDriver.RIGHT)
+			return SteveDriver.RIGHT_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.UP)
+			return SteveDriver.UP_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.LEFT)
+			return SteveDriver.LEFT_ID;
+		else
+			return SteveDriver.DOWN_ID;
 	}
 }
 

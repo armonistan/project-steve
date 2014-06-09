@@ -35,7 +35,7 @@ public class Generator {
 	
 	private Random r;
 	
-	final float enemyGenerationTime = 5; 
+	final float enemyGenerationTime = 2; 
 	float enemyGenerationCounter; 
 	
 	final float appleGenerationTime = 2; 
@@ -82,20 +82,39 @@ public class Generator {
 	private void generateEnemy(){
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 		
-		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.5)) + r.nextInt((int)(Gdx.graphics.getWidth())));
-		float xPosLeft = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
+		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.25)) + r.nextInt((int)(Gdx.graphics.getWidth()*.5)));
+		float xPosRight = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
 				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosRight = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
+		float xPosLeft = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
 				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
 		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
 				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
 		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
 				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.5)) + r.nextInt((int)(Gdx.graphics.getHeight())));
+		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.25)) + r.nextInt((int)(Gdx.graphics.getHeight()*.5)));
 		
-		int choiceX = (r.nextInt(2)==0) ? 0 : 
-				(r.nextInt(2)==0) ? -1 : 1;
-		int choiceY = (choiceX == 0) ? (r.nextInt(2)==0) ? 1: -1: 0;
+		//x
+		//top/bot: 0 left: -1 right: 1
+		int choiceX = 0;
+		//y
+		//right/left: 0 top = 1 bot = -1
+		int choiceY = 0;
+		if(SteveDriver.snake.getRotationIndex() == SteveDriver.RIGHT_ID){
+			choiceX = 1;
+			choiceY = 0;
+		}
+		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.UP_ID){
+			choiceX = 0;
+			choiceY = 1;
+		}
+		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.LEFT_ID){
+			choiceX = -1;
+			choiceY = 0;
+		}
+		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.DOWN_ID){
+			choiceX = 0;
+			choiceY = -1;
+		}
 		
 		int xPos = (int)((choiceX == 0) ? xPosTopBot/16 : 
 			(choiceX < 0) ? xPosLeft/16 : xPosRight/16);
@@ -106,6 +125,10 @@ public class Generator {
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(2) :
 			(locationID == DESERT_ID) ?  r.nextInt(3) + 1 : r.nextInt(2) + 4;
 	
+		System.out.println("generate: " + enemyType);
+		System.out.println("Enemy: " + (xPos) + " ," + (yPos));
+		System.out.println("Snake: " + (SteveDriver.snake.getHeadPosition().x/16) + ", " + (SteveDriver.snake.getHeadPosition().y/16));
+		
 		switch(enemyType){
 			case 0:
 				this.generateSlug(xPos, yPos);

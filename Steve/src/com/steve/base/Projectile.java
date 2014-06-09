@@ -12,7 +12,7 @@ import com.steve.SteveDriver;
 import com.steve.helpers.CollisionHelper;
 
 public class Projectile {
-	private Sprite avatar;
+	protected Sprite avatar;
 	private float percentDamage;
 	protected Vector2 direction;
 	private boolean snakeFriendly;
@@ -36,6 +36,22 @@ public class Projectile {
 	
 		projectileTime = 100;
 	}
+	
+	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
+			float percentDamage, boolean snakeFriendly, float dx, float dy, float projectileTime) {
+		this.percentDamage = (snakeFriendly) ? percentDamage : 
+			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
+		this.snakeFriendly = snakeFriendly;
+		this.direction = new Vector2(dx, dy);
+		dead = false;
+		
+		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
+				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		avatar.setPosition(x, y);
+		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
+	
+		this.projectileTime = projectileTime;
+	}	
 	
 	public void update() {
 		if(this.projectileTime > 0)

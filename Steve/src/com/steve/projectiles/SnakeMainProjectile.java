@@ -4,12 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Projectile;
 
-public class SnakeRocket extends Projectile {
+public class SnakeMainProjectile extends Projectile {
 	private final static float SPEED = 50;
 	private final static float MAX_SPEED = 250;
 	
-	public SnakeRocket(float x, float y, float dx, float dy, int level) {
-		super(x, y, level == 0 ? new Vector2(12, 0) : new Vector2(14, 0), new Vector2(1, 1), 100*SteveDriver.constants.get("fireDamage"), true,
+	public SnakeMainProjectile(float x, float y, float dx, float dy, int level) {
+		super(x, y, new Vector2(19, 0), new Vector2(1, 1), 100*SteveDriver.constants.get("fireDamage"), true,
 				dx * SPEED, dy * SPEED, 100*SteveDriver.constants.get("fireRange"));
 	}
 	

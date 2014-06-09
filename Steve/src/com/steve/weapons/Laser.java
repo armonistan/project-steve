@@ -11,8 +11,8 @@ import com.steve.projectiles.SnakeLaser;
 public class Laser extends Weapon{
 	public Laser(float x, float y){
 		super(x,y, 16*9, 16);
-		shootSpeed = 100;
-		range = 500;
+		shootSpeed = 100 - (int)(100*(SteveDriver.constants.get("fireRate")-1));
+		range = 1000*SteveDriver.constants.get("fireRange");
 	}
 	
 	@Override
