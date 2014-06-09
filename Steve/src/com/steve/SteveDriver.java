@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +24,7 @@ import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Menu;
 import com.steve.stages.Store;
+import com.steve.stages.Summary;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
@@ -32,6 +34,9 @@ public class SteveDriver implements ApplicationListener {
 	public static GUIHelper guiHelper;
 	public static ConstantHelper constants;
 	public static Store store;
+	public static Summary summary;
+	public static Preferences prefs;
+	public static Preferences storePrefs;
 	
 	public static final int TEXTURE_WIDTH = 16;
 	public static final int TEXTURE_LENGTH = 16;
@@ -67,6 +72,7 @@ public class SteveDriver implements ApplicationListener {
 		GAME,
 		STORE,
 		RESPAWNING,
+		SUMMARY,
 		PAUSED
 	}
 	
@@ -79,6 +85,9 @@ public class SteveDriver implements ApplicationListener {
 		guiCamera = new OrthographicCamera(w, h);
 		batch = new SpriteBatch();
 		random = new Random();
+		
+		prefs = Gdx.app.getPreferences("main");
+		storePrefs = Gdx.app.getPreferences("store");
 		
 		constants = new ConstantHelper();
 		constants.addToConstants("screenWidth", Gdx.graphics.getWidth());
@@ -99,6 +108,8 @@ public class SteveDriver implements ApplicationListener {
 		tutorial = new Tutorial();
 		store = new Store();
 		store.setStoreProgress();
+		
+		summary = new Summary();
 	}
 
 	@Override
@@ -120,7 +131,13 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case RESPAWNING:
 			resetField();
+			summary.resetSummary();
 			stage = STAGE_TYPE.GAME;
+			break;
+		case SUMMARY:
+			batch.begin();
+			summary.render();
+			batch.end();
 			break;
 		case STORE:
 			guiCamera.position.x = 0;
