@@ -27,6 +27,7 @@ import com.steve.enemies.HomaHawk;
 import com.steve.enemies.Ring;
 import com.steve.enemies.Snail;
 import com.steve.enemies.Spiral;
+import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
@@ -59,7 +60,7 @@ public class Field {
 	public ArrayList<Enemy> enemies;
 	public LinkedList<Enemy> enemiesToRemove;
 	
-	public ArrayList<Projectile> projectiles;
+	protected ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
 	
 	public Generator generator;
@@ -231,8 +232,9 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		this.enemies.add(new Snail(40, 30));
-		enemies.add(new HomaHawk(40, 30));
+		//this.enemies.add(new Snail(40, 30));
+		//enemies.add(new HomaHawk(40, 30));
+		enemies.add(new Tank(totalRadius/2, totalRadius/2-10));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -420,6 +422,7 @@ public class Field {
 				}
 			}
 		}
+		
 		boolean left, right, top, bottom;
 		int tileRad = 0;
 		//code to set the blockers to the correct images
@@ -490,7 +493,7 @@ public class Field {
 	}
 	
 	public void update() {
-		/*this.generator.update();
+		this.generator.update();
 		
 		for (Enemy e : enemies) {
 			e.update();
@@ -504,7 +507,7 @@ public class Field {
 		}
 		while (projectilesToRemove.size() > 0) {
 			projectiles.remove(projectilesToRemove.remove());
-		}*/
+		}
 	}
 	
 	public void draw() {
@@ -585,5 +588,15 @@ public class Field {
 	
 	public int getFieldRadius(){
 		return this.totalRadius;
+	}
+	
+	public void addProjectile(Projectile p) {
+		if (!projectiles.contains(p)) {
+			projectiles.add(p);
+		}
+	}
+	
+	public ArrayList<Projectile> getProjectiles() {
+		return projectiles;
 	}
 }

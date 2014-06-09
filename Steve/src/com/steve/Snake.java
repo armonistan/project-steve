@@ -169,7 +169,7 @@ public class Snake {
 	
 	private void checkProjectiles() {
 		for (Sprite s : segments) {
-			for (Projectile p : SteveDriver.field.projectiles) {
+			for (Projectile p : SteveDriver.field.getProjectiles()) {
 				if (!p.getFriendly() && p.getAlive()) {
 					if (CollisionHelper.isCollide(s.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
 						changeHungerByPercent(p.getPercentDamage());
