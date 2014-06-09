@@ -17,11 +17,7 @@ import com.steve.commands.ConfirmUpgrade;
 import com.steve.commands.StartNewRound;
 import com.steve.commands.SwitchStoreTab;
 
-public class Store {
-	
-	public Preferences prefs;
-	public Preferences mainPrefs;
-	
+public class Store {	
 	private int tabIndex;
 	private String description;
 	private TextButton infoBox;
@@ -75,8 +71,8 @@ public class Store {
 			
 			upgradeButtons.get(category).add(b);
 
-			if (prefs.contains(key)) {
-				if (prefs.getBoolean(key)) {
+			if (SteveDriver.storePrefs.contains(key)) {
+				if (SteveDriver.storePrefs.getBoolean(key)) {
 					activated = true;
 					currentTier[category] = tier;
 					activateUpgrade();
@@ -85,7 +81,7 @@ public class Store {
 				if (currentTier[category] > tier) {
 					setUnavailable();
 				}
-				prefs.putBoolean(key, activated);
+				SteveDriver.storePrefs.putBoolean(key, activated);
 			}
 			
 		}
@@ -111,7 +107,7 @@ public class Store {
 			currentTier[category] = tier + 1;
 			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
-			prefs.putBoolean(key, activated);
+			SteveDriver.storePrefs.putBoolean(key, activated);
 		}
 		
 		public void setUnavailable() {
@@ -124,8 +120,6 @@ public class Store {
 	}
 	
 	public Store() {
-		prefs = Gdx.app.getPreferences("store");
-		mainPrefs = Gdx.app.getPreferences("main");
 		upgrades = new ArrayList<Upgrade>();
 		upgradeButtons = new HashMap<Integer, ArrayList<Button>>();
 		currentTier = new int[6];
@@ -186,7 +180,10 @@ public class Store {
 		setStoreProgress();
 	}
 	
-	public void render() {		
+	public void render() {
+		if (selectedUpgrade != null) {
+			setDescription();
+		}
 		renderButtons();
 		
 		SteveDriver.guiHelper.drawTextCentered("$" + SteveDriver.snake.getMoney(), 
@@ -285,13 +282,17 @@ public class Store {
 	public void queueUpgradePurchase(Upgrade u) {
 		this.isUpgradeSelected = true;
 		selectedUpgrade = u;
-		description = u.getDescription();
-		if (u.activated) {
+		setDescription();
+	}
+	
+	public void setDescription() {
+		description = selectedUpgrade.getDescription();
+		if (selectedUpgrade.activated) {
 			description += "\nPurchased!";
-		} else if (!u.available){
+		} else if (!selectedUpgrade.available){
 			description += "\nLocked!";
 		} else {
-			description += "\n$" + u.getPrice() * SteveDriver.constants.get("priceModifier");
+			description += "\n$" + selectedUpgrade.getPrice() * SteveDriver.constants.get("priceModifier");
 		}
 	}
 	
@@ -306,8 +307,8 @@ public class Store {
 							u.setUnavailable();
 						}
 					}
-					prefs.flush();
-					mainPrefs.flush();
+					SteveDriver.prefs.flush();
+					SteveDriver.storePrefs.flush();
 				} else {
 					description = "Not enough cash!";
 					selectedUpgrade = null;
@@ -330,8 +331,8 @@ public class Store {
 	}
 	
 	public void resetStore() {
-		prefs.clear();
-		prefs.flush();
+		SteveDriver.storePrefs.clear();
+		SteveDriver.storePrefs.flush();
 	}
 	
 	public void setStoreProgress() {
@@ -351,7 +352,7 @@ public class Store {
 	}
 	
 	public void saveStoreProgress() {
-		prefs.flush();
+		SteveDriver.storePrefs.flush();
 	}
 	
 	private void initializeUpgrades() {
@@ -629,7 +630,7 @@ public class Store {
 		
 		upgrades.add(new Upgrade("Cheapskate", 
 				"priceModifier",
-				"goldTier3A",
+				"goldTier3B",
 				"Upgrades are 10% cheaper.",
 				-.1f,
 				250000f,

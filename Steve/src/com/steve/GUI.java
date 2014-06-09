@@ -64,7 +64,7 @@ public class GUI {
 			}
 		}
 		
-		SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);
+		//SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);
 		
 		SteveDriver.batch.end();
 	}

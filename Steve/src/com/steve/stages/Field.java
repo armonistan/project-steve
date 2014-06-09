@@ -27,6 +27,7 @@ import com.steve.enemies.HomaHawk;
 import com.steve.enemies.Ring;
 import com.steve.enemies.Snail;
 import com.steve.enemies.Spiral;
+import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;

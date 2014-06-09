@@ -2,6 +2,7 @@ package com.steve.pickups;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.steve.Snake;
+import com.steve.SteveDriver;
 import com.steve.base.Pickup;
 
 public class Apple extends Pickup {
@@ -13,5 +14,6 @@ public class Apple extends Pickup {
 		super.consume(snake);
 		snake.addBody();
 		snake.addMoney(2500); //TODO: Temp
+		SteveDriver.summary.appleScore += 2500;
 	}
 }

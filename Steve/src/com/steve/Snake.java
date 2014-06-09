@@ -37,8 +37,6 @@ public class Snake {
 	private Vector2 nextDirection;
 	private float nextRotation;
 	
-	private Preferences storePrefs = Gdx.app.getPreferences("store");
-	
 	private int money;
 	private int snakeTier;
 	
@@ -59,7 +57,7 @@ public class Snake {
 		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_WIDTH);
 
 		//TODO: Make this better
-		money = ((Gdx.app.getPreferences("main").contains("money")) ? Gdx.app.getPreferences("main").getInteger("money") : 0);
+		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
 		
 		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
@@ -75,7 +73,7 @@ public class Snake {
 		
 		snakeTier = 1;
 		//will be used to save which tier of helmet it is
-		helmetTier = storePrefs.contains("helmetTier") ? storePrefs.getInteger("helmetTier") : 0;
+		helmetTier = SteveDriver.storePrefs.contains("helmetTier") ? SteveDriver.storePrefs.getInteger("helmetTier") : 0;
 		//need to add logic for the different helmet tiers. for instance, drill helmet won't break.
 		helmetHits = helmetTier;
 	}
@@ -88,7 +86,7 @@ public class Snake {
 		money += amount * SteveDriver.constants.get("goldModifier");
 		
 		//TODO: Make this only save when needed.
-		Gdx.app.getPreferences("main").putInteger("money", money);
+		SteveDriver.prefs.putInteger("money", money);
 	}
 	
 	public boolean spendMoney(int amount) {
@@ -489,8 +487,8 @@ public class Snake {
 	private void kill() {
 		//TODO: Make this better.
 		System.out.println("You suck.");
-		Gdx.app.getPreferences("main").flush();
-		SteveDriver.stage = SteveDriver.STAGE_TYPE.STORE;
+		SteveDriver.prefs.flush();
+		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
 	}
 	
 	public ArrayList<Sprite> getSegments() {
@@ -570,7 +568,7 @@ public class Snake {
 	}
 	
 	public int getSnakeArmor() {
-		return storePrefs.getInteger("armorTier") + 1;
+		return SteveDriver.storePrefs.getInteger("armorTier") + 1;
 	}
 }
 
