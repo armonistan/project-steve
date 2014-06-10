@@ -14,6 +14,7 @@ import com.steve.enemies.AntiSpiral;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
 import com.steve.enemies.HomaHawk;
+import com.steve.enemies.Rhino;
 import com.steve.enemies.Snail;
 import com.steve.enemies.Spiral;
 import com.steve.enemies.Tank;
@@ -38,7 +39,7 @@ public class Generator {
 	final float enemyGenerationTime = 5; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 2; 
+	final float appleGenerationTime = 3; 
 	float appleGenerationCounter; 
 	
 	final float pickUpGenerationTime = 10; 
@@ -103,8 +104,8 @@ public class Generator {
 			(choiceY < 0) ? yPosBot/16 : yPosTop/16);
 	
 		int locationID = SteveDriver.field.checkRing((int)xPos, (int)yPos);
-		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(2) :
-			(locationID == DESERT_ID) ?  r.nextInt(3) + 1 : r.nextInt(2) + 4;
+		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
+			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(3) + 5;
 	
 		switch(enemyType){
 			case 0:
@@ -130,6 +131,9 @@ public class Generator {
 				break;
 			case 7:
 				this.generateHomaHawk(xPos, yPos);
+				break;
+			case 8:
+				this.generateRhino(xPos, yPos);
 				break;
 		}
 	}
@@ -286,6 +290,14 @@ public class Generator {
 		Apple a = new Apple(xPos, yPos);
 		if(isOccupied(a.getRectangle()))
 			SteveDriver.field.pickups.add(a);	
+	}
+	
+	public void generateRhino(float xPos, float yPos) {
+		Rhino r = new Rhino(xPos, yPos);
+		
+		if (isOccupied(r.getRectangle())) {
+			SteveDriver.field.enemies.add(r);
+		}
 	}
 	
 	public void generateUpgrade(float xPos, float yPos, int upgradeType){
