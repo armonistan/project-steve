@@ -194,7 +194,7 @@ public class Store {
 		switch (tabIndex) {
 			case 0:
 				if (!isUpgradeSelected) {
-					description = "Ascend to a higher tier.";
+					description = "Ascend to a higher existence.";
 				}
 				SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
 						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
@@ -203,16 +203,16 @@ public class Store {
 				break;
 			case 1:
 				if (!isUpgradeSelected) {
-					description = "All things hunger related";
+					description = "When the field gets tough, Steve gets \ntougher.";
 				}
-				SteveDriver.guiHelper.drawTextCentered("Survivability Upgrades", 
+				SteveDriver.guiHelper.drawTextCentered("Durability Upgrades", 
 						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
 						Color.BLACK);
 				break;
 			case 2:
 				if (!isUpgradeSelected) {
-					description = "Make the snake longer";
+					description = "Feeling inadequate? Small? You've\ncome to the right place.";
 				}
 				SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
 						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
@@ -221,7 +221,7 @@ public class Store {
 				break;
 			case 3:
 				if (!isUpgradeSelected) {
-					description = "Buff up the guns you use.";
+					description = "Go from boom to BOOM.";
 				}
 				SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
 						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),

@@ -68,6 +68,7 @@ public class Game {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+			SteveDriver.tutorial.endTutorial();
 			SteveDriver.stage = STAGE_TYPE.MENU;
 		}
 		

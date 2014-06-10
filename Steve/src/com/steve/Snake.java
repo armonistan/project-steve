@@ -31,7 +31,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private float timeTillStarve = 1000f; //unit is seconds
+	private float timeTillStarve = 20f; //unit is seconds
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -48,7 +48,7 @@ public class Snake {
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 16, 16, 16)));
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16)));
 		
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;

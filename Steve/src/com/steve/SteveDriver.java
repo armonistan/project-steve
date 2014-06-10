@@ -188,9 +188,24 @@ public class SteveDriver implements ApplicationListener {
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
 		
-		for (int i = 0; i < 10; i++) {
-			field.generator.generateApple(false);
-			field.generator.generatePickUp(false);
+		for (int i = 0; i < 100; i++) {
+			if(field.generator.generateAppleTutorial())
+				break;
+		}
+		
+		for (int i = 0; i < 100; i++) {
+			if(field.generator.generatePickUpTutorial(1))
+				break;
+		}
+/*To Do: add to tutorial about weapon upgrades		
+		for (int i = 0; i < 100; i++) {
+			if(field.generator.generatePickUpTutorial(2))
+				break;
+		}
+*/	
+		for (int i = 0; i < 100; i++) {
+			if(field.generator.generateEnemyTutorial())
+				break;
 		}
 		
 		//TODO: TEMP
