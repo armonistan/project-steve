@@ -6,8 +6,7 @@ import com.steve.base.Projectile;
 public class Pinecone extends Projectile {
 
 	public Pinecone(float x, float y) {
-		super(x, y, 16, 0, 1, 1, 0.0f, false,
-				0, 0);
+		super(x, y, 16, 0, 1, 1, 0.0f, false);
 		
 		speed = 300;
 	}

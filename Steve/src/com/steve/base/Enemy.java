@@ -417,7 +417,6 @@ public class Enemy {
 		
 		return true;
 	}
-
 	
 	protected void shoot(Projectile proj){
 		float deltaX;

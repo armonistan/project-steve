@@ -18,14 +18,17 @@ public class Laser extends Weapon{
 	@Override
 	protected void shoot(){
 		//different angle
-				float deltaY = this.getX() - target.getXPosition();
-				float deltaX = this.getY() - target.getYPosition();
+		float deltaY = this.getX() - target.getXPosition();
+		float deltaX = this.getY() - target.getYPosition();
 				
-				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
-				degrees += 180;
+		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
+		degrees += 180;
+		
+		SnakeLaser temp = new SnakeLaser(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
+		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
-				SteveDriver.field.addProjectile(new SnakeLaser(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
-				shootCounter = 0;
+		SteveDriver.field.addProjectile(temp);
+		shootCounter = 0;
 	}
 	
 	@Override

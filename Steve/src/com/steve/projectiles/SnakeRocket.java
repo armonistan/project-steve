@@ -8,9 +8,10 @@ public class SnakeRocket extends Projectile {
 	private final static float SPEED = 50;
 	private final static float MAX_SPEED = 250;
 	
-	public SnakeRocket(float x, float y, float dx, float dy, int level) {
-		super(x, y, level == 0 ? 12 : 14, 0, 1, 1, 100, true,
-				dx * SPEED, dy * SPEED);
+	public SnakeRocket(float x, float y, int level) {
+		super(x, y, level == 0 ? 12 : 14, 0, 1, 1, 100, true);
+		
+		speed = SPEED;
 	}
 	
 	public void update() {

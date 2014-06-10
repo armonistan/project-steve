@@ -235,7 +235,7 @@ public class Field {
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		//this.enemies.add(new Snail(40, 30));
 		//enemies.add(new HomaHawk(40, 30));
-		enemies.add(new Rhino(totalRadius/2 - 10, totalRadius/2));
+		enemies.add(new HomaHawk(totalRadius/2 - 10, totalRadius/2));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();

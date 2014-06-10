@@ -40,7 +40,7 @@ public class Tank extends Enemy {
 	
 	@Override
 	public void update(){
-		super.shoot(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2, 0, 0));
+		super.shoot(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
 		super.update();
 	}
 	

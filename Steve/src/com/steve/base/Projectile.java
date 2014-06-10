@@ -27,18 +27,15 @@ public class Projectile {
 	Rectangle tempCollider;
 
 	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
-			float percentDamage, boolean snakeFriendly, float dx, float dy) {
+			float percentDamage, boolean snakeFriendly) {
 		this.percentDamage = (snakeFriendly) ? percentDamage : 
 			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
 		this.snakeFriendly = snakeFriendly;
-		this.directionX = dx;
-		this.directionY = dy;
 		dead = false;
 		
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, atlasPositionX * SteveDriver.TEXTURE_WIDTH,
 				atlasPositionY * SteveDriver.TEXTURE_LENGTH, atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH));
 		avatar.setPosition(x, y);
-		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
 	
 		projectileTime = 100;
 		
@@ -115,7 +112,13 @@ public class Projectile {
 	}
 	
 	public void setDirection(float dx, float dy) {
-		directionX = MathUtils.clamp(dx, 0, 1) * speed;
-		directionY = MathUtils.clamp(dy, 0, 1) * speed;
+		if (dx == dy) {
+			System.out.println(dx);
+		}
+		
+		directionX = MathUtils.clamp(dx, -1, 1) * speed;
+		directionY = MathUtils.clamp(dy, -1, 1) * speed;
+		
+		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
 	}
 }

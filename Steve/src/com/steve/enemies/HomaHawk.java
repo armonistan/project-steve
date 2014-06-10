@@ -24,7 +24,7 @@ public class HomaHawk extends Enemy{
 	public void update(){
 		this.checkInField();
 		super.update();
-		super.airShoot(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2, 0f, 0f));
+		super.airShoot(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
 	}
 
 	@Override
