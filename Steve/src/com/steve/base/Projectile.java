@@ -47,7 +47,8 @@ public class Projectile {
 		this.percentDamage = (snakeFriendly) ? percentDamage : 
 			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
 		this.snakeFriendly = snakeFriendly;
-		this.direction = new Vector2(dx, dy);
+		directionX = dx; 
+		directionY = dy;
 		dead = false;
 		
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,

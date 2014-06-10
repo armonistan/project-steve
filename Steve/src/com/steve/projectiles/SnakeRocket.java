@@ -9,9 +9,8 @@ public class SnakeRocket extends Projectile {
 	private final static float MAX_SPEED = 250;
 	
 	public SnakeRocket(float x, float y, int level) {
-		super(x, y, level == 0 ? new Vector2(12, 0) : new Vector2(14, 0), new Vector2(1, 1), 100*SteveDriver.constants.get("fireDamage"), true,
-				dx * SPEED, dy * SPEED, 100*SteveDriver.constants.get("fireRange"));
-		speed = SPEED;
+		super(x, y, level == 0 ? 12 : 14, 0, 1, 1, 100*SteveDriver.constants.get("fireDamage"), true);
+		speed = SPEED*SteveDriver.constants.get("fireRange");
 	}
 	
 	public void update() {

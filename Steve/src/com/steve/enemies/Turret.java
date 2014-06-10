@@ -85,7 +85,10 @@ public class Turret extends Enemy{
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 		degrees += 180;
 		
-		SteveDriver.field.addProjectile(new Acorn(this.avatar.getX(), this.avatar.getY()));
+		Acorn temp = new Acorn(this.avatar.getX(), this.avatar.getY());
+		
+		SteveDriver.field.addProjectile(temp);
+		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 		shootCounter = 0;
 	}
 	
