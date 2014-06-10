@@ -7,7 +7,7 @@ public class SnakeBullet extends Projectile {
 	private final static float SPEED = 100;
 	
 	public SnakeBullet(float x, float y, float dx, float dy, int level) {
-		super(x, y, level == 0 ? new Vector2(11, 0) : new Vector2(13, 0), new Vector2(1, 1), 10, true,
+		super(x, y, level == 0 ? 11 : 13, 0, 1, 1, 10, true,
 				dx * SPEED, dy * SPEED);
 	}
 }

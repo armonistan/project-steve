@@ -19,7 +19,7 @@ public class AntiSpiral extends Enemy{
 	private Rectangle front;
 	
 	public AntiSpiral(float x, float y) {
-		super(x, y, new Vector2(15, 3), new Vector2(2, 2), 1.2f, 0.4f, 3, 75);
+		super(x, y, 15, 3, 2, 2, 1.2f, 0.4f, 3, 75);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 30;

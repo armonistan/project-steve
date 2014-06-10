@@ -234,7 +234,7 @@ public class Field {
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		//this.enemies.add(new Snail(40, 30));
 		//enemies.add(new HomaHawk(40, 30));
-		enemies.add(new Tank(totalRadius/2, totalRadius/2-10));
+		//enemies.add(new Tank(totalRadius/2, totalRadius/2-10));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -507,7 +507,7 @@ public class Field {
 		}
 		while (projectilesToRemove.size() > 0) {
 			projectiles.remove(projectilesToRemove.remove());
-		}
+		}/**/
 	}
 	
 	public void draw() {
@@ -518,13 +518,17 @@ public class Field {
 		TiledMapTileLayer blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		
 		SteveDriver.batch.begin();
-		for (int x = 0; x < totalRadius; x++) {
-			for (int y = 0; y < totalRadius; y++) {
-				if ((x + 1) * 16 >= SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2 &&
-					x * 16 < SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2 &&
-					(y + 1) * 16 >= SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2&
-					y * 16 < SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2) {
-					SteveDriver.batch.draw(background.getCell(x, y).getTile().getTextureRegion(),
+		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2) / 16;
+		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2) / 16;
+		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2) / 16;
+		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2) / 16;
+		
+		for (int x = startX; x < endX; x++) {
+			for (int y = startY; y < endY; y++) {
+				Cell temp = background.getCell(x, y);
+				
+				if (temp != null) {
+					SteveDriver.batch.draw(temp.getTile().getTextureRegion(),
 							x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
 					
 					if (blockers.getCell(x, y) != null) {

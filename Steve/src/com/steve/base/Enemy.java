@@ -15,7 +15,12 @@ import com.steve.helpers.CollisionHelper;
 
 public class Enemy {
 	public Sprite avatar;
-	protected Vector2 mapPosition;
+	protected float mapPositionX;
+	protected float mapPositionY;
+	private float atlasPositionX;
+	private float atlasPositionY;
+	private float atlasBoundsX;
+	private float atlasBoundsY;
 	
 	protected float moveTimer;
 	protected float moveTime;
@@ -24,8 +29,6 @@ public class Enemy {
 	protected float animateTime;
 	protected int currentFrame;
 	protected int numberFrames;
-	protected Vector2 atlasPosition;
-	protected Vector2 atlasBounds;
 	
 	protected float healthPercentage;
 	
@@ -47,24 +50,34 @@ public class Enemy {
 	protected boolean ignoresBlockers;
 	protected boolean destroysBlockers;
 	
-	public Enemy(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds, float moveTime, float animateTime, int numberFrames, float deathDamage) {
+	//Temp variables
+	Rectangle tempCollider;
+	
+	public Enemy(float x, float y, float atlasPositionX, float atlasPositionY, float atlasBoundsX, float atlasBoundsY, float moveTime, float animateTime, int numberFrames, float deathDamage) {
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;
-		this.atlasPosition = atlasPosition;
-		this.atlasBounds = atlasBounds;
 		
-		mapPosition = new Vector2(x, y);
+		this.atlasPositionX = atlasPositionX;
+		this.atlasPositionY = atlasPositionY;
+		this.atlasBoundsX = atlasBoundsX;
+		this.atlasBoundsY = atlasBoundsY;
 		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH, (int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		mapPositionX = x;
+		mapPositionY = y;
+		
+		avatar = new Sprite(new TextureRegion(SteveDriver.atlas,
+				atlasPositionX * SteveDriver.TEXTURE_WIDTH, atlasPositionY * SteveDriver.TEXTURE_LENGTH,
+				atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH));
 		updateAvatar();
-		avatar.setPosition(mapPosition.x * SteveDriver.TEXTURE_WIDTH, mapPosition.y * SteveDriver.TEXTURE_LENGTH);
+		avatar.setPosition(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH);
 		
 		healthPercentage = 100;
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 		this.ignoresBlockers = false;
 		this.destroysBlockers = false;
 		
+		tempCollider = new Rectangle();
 	}
 	
 	public void draw() {
@@ -174,7 +187,7 @@ public class Enemy {
 	}
 	
 	protected void updateAvatar() {
-		avatar.setRegion(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * currentFrame * (int)atlasBounds.x, (int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		avatar.setRegion(atlasPositionX * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * currentFrame * atlasBoundsX, atlasPositionY * SteveDriver.TEXTURE_LENGTH, atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH);
 	}
 	
 	public void kill() {
@@ -387,7 +400,12 @@ public class Enemy {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), this.avatar.getBoundingRectangle())) {
+				tempCollider.x = x * SteveDriver.TEXTURE_WIDTH;
+				tempCollider.y = y * SteveDriver.TEXTURE_LENGTH;
+				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
+				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
+				
+				if (cell != null && CollisionHelper.isCollide(tempCollider, this.avatar.getBoundingRectangle())) {
 					if(!destroysBlockers)
 						return ignoresBlockers || false;
 					else{

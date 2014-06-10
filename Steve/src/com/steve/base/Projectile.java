@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
@@ -15,23 +16,25 @@ import java.math.*;
 public class Projectile {
 	private Sprite avatar;
 	private float percentDamage;
-	protected Vector2 direction;
+	protected float directionX;
+	protected float directionY;
 	private boolean snakeFriendly;
 	private boolean dead;
 	private float projectileTime;
 	
 	protected float speed;
 
-	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
+	public Projectile(float x, float y, float atlasPositionX, float atlasPositionY, float atlasBoundsX, float atlasBoundsY,
 			float percentDamage, boolean snakeFriendly, float dx, float dy) {
 		this.percentDamage = (snakeFriendly) ? percentDamage : 
 			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
 		this.snakeFriendly = snakeFriendly;
-		this.direction = new Vector2(dx, dy);
+		this.directionX = dx;
+		this.directionY = dy;
 		dead = false;
 		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
-				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, atlasPositionX * SteveDriver.TEXTURE_WIDTH,
+				atlasPositionY * SteveDriver.TEXTURE_LENGTH, atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH));
 		avatar.setPosition(x, y);
 		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
 	
@@ -62,8 +65,8 @@ public class Projectile {
 	}
 	
 	private void move(){		
-		avatar.setPosition(avatar.getX() + direction.x * Gdx.graphics.getDeltaTime(),
-				avatar.getY() + direction.y * Gdx.graphics.getDeltaTime());
+		avatar.setPosition(avatar.getX() + directionX * Gdx.graphics.getDeltaTime(),
+				avatar.getY() + directionY * Gdx.graphics.getDeltaTime());
 	}
 	
 	private void checkCollisions() {
@@ -102,9 +105,7 @@ public class Projectile {
 	}
 	
 	public void setDirection(float dx, float dy) {
-		direction.x = dx;
-		direction.y = dy;
-		direction.nor();
-		direction.scl(speed);
+		directionX = MathUtils.clamp(dx, 0, 1) * speed;
+		directionY = MathUtils.clamp(dy, 0, 1) * speed;
 	}
 }

@@ -43,6 +43,8 @@ public class Snake {
 	private int helmetTier;
 	private int helmetHits;
 	
+	Rectangle tempCollider;
+	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
@@ -76,6 +78,8 @@ public class Snake {
 		helmetTier = SteveDriver.storePrefs.contains("helmetTier") ? SteveDriver.storePrefs.getInteger("helmetTier") : 0;
 		//need to add logic for the different helmet tiers. for instance, drill helmet won't break.
 		helmetHits = helmetTier;
+		
+		tempCollider = new Rectangle();
 	}
 	
 	public int getMoney() {
@@ -151,7 +155,12 @@ public class Snake {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), segments.get(0).getBoundingRectangle())) {
+				tempCollider.x = x * SteveDriver.TEXTURE_WIDTH;
+				tempCollider.y = y * SteveDriver.TEXTURE_LENGTH;
+				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
+				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
+				
+				if (cell != null && CollisionHelper.isCollide(tempCollider, segments.get(0).getBoundingRectangle())) {
 					if (helmetHits > 0) {
 						helmetHits -= 1;
 					}
