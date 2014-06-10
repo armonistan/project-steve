@@ -11,8 +11,8 @@ import com.steve.projectiles.SnakeRocket;
 public class Specialist extends Weapon{
 	public Specialist(float x, float y){
 		super(x,y, 16*10, 16);
-		shootSpeed = 200;
-		range = 1000;
+		shootSpeed = 200 - (int)(200*(SteveDriver.constants.get("fireRate")-1));
+		range = 700*SteveDriver.constants.get("fireRange");
 	}
 	
 	@Override

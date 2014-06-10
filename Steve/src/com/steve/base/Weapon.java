@@ -54,9 +54,9 @@ public class Weapon extends Sprite{
 			float enemyX = e.getXPosition();
 			float enemyY = e.getYPosition();
 			
-			float distance = CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY);
+			float distance = (CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY));
 			
-			if(minDistance > distance){
+			if(minDistance > distance && distance < (range*range)){
 				minDistance = distance;
 				target = e;
 			}
@@ -64,10 +64,10 @@ public class Weapon extends Sprite{
 	}
 	
 	protected void turn(){
-		float deltaY = this.getX() - target.getXPosition();
-		float deltaX = this.getY() - target.getYPosition();
+		float deltaX = this.getX() - target.getXPosition();
+		float deltaY = this.getY() - target.getYPosition();
 		
-		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
+		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaY, deltaX);
 		degrees += 90;
 		
 		float deltaPositiveDegrees = (degrees - this.getRotation() + 360)%360;
@@ -82,8 +82,9 @@ public class Weapon extends Sprite{
 			}
 		}
 		else{
-			if(deltaNegativeDegrees < 3)
+			if(deltaNegativeDegrees < 3){
 				this.isAimed = true;
+			}
 			else{
 				this.isAimed = false;
 				this.setRotation(((this.getRotation() +359)%360));
@@ -101,7 +102,7 @@ public class Weapon extends Sprite{
 	
 	protected boolean isInRange(){
 		float distance = CollisionHelper.distanceSquared(this.getX(),this.getY(), target.getXPosition(), target.getYPosition()); 
-		return distance <= range * range;
+		return distance <= (range*range);
 	}
 	
 	public boolean isUpgraded() {

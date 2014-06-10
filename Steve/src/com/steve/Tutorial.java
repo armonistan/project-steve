@@ -10,9 +10,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.commands.ChangeTutorialStage;
 import com.steve.commands.EndTutorial;
+import com.steve.enemies.Snail;
 import com.steve.helpers.CollisionHelper;
 import com.steve.pickups.Apple;
 import com.steve.pickups.GatlingGunPickUp;
@@ -137,11 +139,28 @@ public class Tutorial {
 			break;
 		case enemies:
 			description = "Various enemies roam your world.\nAttack them with your face.";
-			focus = new Vector3(40 * SteveDriver.TEXTURE_WIDTH, 30 * SteveDriver.TEXTURE_LENGTH, 0);
 			noGray.y = -32;
 			noGray.x = -32;
 			noGray.width = 48;
 			noGray.height = 48;
+			
+			Vector3 tempEnemy = new Vector3();
+			float closestEnemyDistance = Float.POSITIVE_INFINITY;
+			
+			for (Enemy e : SteveDriver.field.enemies) {
+				if (e.getClass() == Snail.class) {
+					float tempDist = CollisionHelper.distanceSquared(e.avatar.getX(), e.avatar.getY(),
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
+						
+					if (tempDist < closestEnemyDistance) {
+						closestEnemyDistance = tempDist;
+						tempEnemy.x = e.avatar.getX();
+						tempEnemy.y = e.avatar.getY();
+					}
+				}
+			}
+			
+			focus = tempEnemy;
 			break;
 		case weapons:
 			description = "Actually, don't use your face.\nTry eating these first.";

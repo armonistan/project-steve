@@ -213,7 +213,7 @@ public class Field {
 		this.barrenRadius = 60 * scale;
 		
 		this.totalRadius = 60 * scale;
-		this.blockerChains = 100 * scale * scale;
+		this.blockerChains = 200 * scale * scale;
 		this.maxBlockerLength = 10;
 		
 		this.grass = new TileRegion(6, 4, 1, 2);
@@ -233,8 +233,6 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		//this.enemies.add(new Snail(40, 30));
-		//enemies.add(new HomaHawk(40, 30));
 		enemies.add(new HomaHawk(totalRadius/2 - 10, totalRadius/2));
 		
 		this.projectiles = new ArrayList<Projectile>();
@@ -413,7 +411,7 @@ public class Field {
 				randX = randX + dx;
 				randY = randY + dy;
 				
-				if(this.checkRing(randX, randY) == this.checkRing(randX+2, randY+2) && this.checkRing(randX, randY) == this.checkRing(randX-1, randY-1)){
+				if(this.isOccupied(randX*16, randY*16) && this.checkRing(randX, randY) == this.checkRing(randX+2, randY+2) && this.checkRing(randX, randY) == this.checkRing(randX-1, randY-1)){
 					//ensures that there is always a tileable set of blockers
 					i++;
 					blockers.setCell(randX, randY, cell);
@@ -586,6 +584,26 @@ public class Field {
 					return false;
 				}
 			}
+		}
+		
+		return true;
+	}
+	
+	public boolean isOccupied(int x, int y){
+		float deltaX = 0;
+		float deltaY = 0;
+		
+		if(y > 100){
+			deltaX++;
+		}
+		
+		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
+				deltaX = s.getX() - x;
+				deltaY = s.getY() - y;			
+				
+				if(Math.abs(deltaX) < 80 && Math.abs(deltaY) < 80){
+					return false;
+				}
 		}
 		
 		return true;
