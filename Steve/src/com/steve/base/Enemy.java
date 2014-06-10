@@ -17,10 +17,10 @@ public class Enemy {
 	public Sprite avatar;
 	protected float mapPositionX;
 	protected float mapPositionY;
-	private float atlasPositionX;
-	private float atlasPositionY;
-	private float atlasBoundsX;
-	private float atlasBoundsY;
+	private int atlasPositionX;
+	private int atlasPositionY;
+	private int atlasBoundsX;
+	private int atlasBoundsY;
 	
 	protected float moveTimer;
 	protected float moveTime;
@@ -53,7 +53,7 @@ public class Enemy {
 	//Temp variables
 	Rectangle tempCollider;
 	
-	public Enemy(float x, float y, float atlasPositionX, float atlasPositionY, float atlasBoundsX, float atlasBoundsY, float moveTime, float animateTime, int numberFrames, float deathDamage) {
+	public Enemy(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY, float moveTime, float animateTime, int numberFrames, float deathDamage) {
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;

@@ -23,8 +23,10 @@ public class Projectile {
 	private float projectileTime;
 	
 	protected float speed;
+	
+	Rectangle tempCollider;
 
-	public Projectile(float x, float y, float atlasPositionX, float atlasPositionY, float atlasBoundsX, float atlasBoundsY,
+	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
 			float percentDamage, boolean snakeFriendly, float dx, float dy) {
 		this.percentDamage = (snakeFriendly) ? percentDamage : 
 			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
@@ -39,6 +41,8 @@ public class Projectile {
 		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
 	
 		projectileTime = 100;
+		
+		tempCollider = new Rectangle();
 	}
 	
 	public void update() {
@@ -76,8 +80,14 @@ public class Projectile {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);
 				
-				if (cell != null && CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), avatar.getBoundingRectangle())) {
+				tempCollider.x = x * SteveDriver.TEXTURE_WIDTH;
+				tempCollider.y = y * SteveDriver.TEXTURE_LENGTH;
+				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
+				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
+				
+				if (cell != null && CollisionHelper.isCollide(tempCollider, avatar.getBoundingRectangle())) {
 					kill();
+					return;
 				}
 			}
 		}

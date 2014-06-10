@@ -385,7 +385,7 @@ public class Snake {
 			atlasX += this.beltImageOffset;
 		}
 		
-		segments.get(1).setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
+		segments.get(1).setRegion(atlasX, atlasY, 16, 16);
 		segments.get(1).setRotation(degrees);
 	}
 	
@@ -394,20 +394,20 @@ public class Snake {
 			Sprite next = segments.get(i - 1);
 			Sprite current = segments.get(i);
 			if (i == segments.size() - 1) {
-				current.setRegion(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16));
+				current.setRegion(48, 16, 16, 16);
 			}
 			else if(i == 1){
 				updateBody();
 			}
 			else {
 				if (i < weapons.size() + 1) {
-					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+					current.setRegion(next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight());
 				}
 				else if (i == weapons.size() + 1 && (next.getRegionX()/TILE_WIDTH > 3)) {
-					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX() - this.beltImageOffset, next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+					current.setRegion(next.getRegionX() - this.beltImageOffset, next.getRegionY(), next.getRegionWidth(), next.getRegionHeight());
 				}
 				else {
-					current.setRegion(new TextureRegion(SteveDriver.atlas, next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight()));
+					current.setRegion(next.getRegionX(), next.getRegionY(), next.getRegionWidth(), next.getRegionHeight());
 				}
 			}
 		}
@@ -469,10 +469,10 @@ public class Snake {
 	
 	private void animateMouth(boolean aboutToEat){
 		if (aboutToEat) {
-			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 16, 0, 16, 16));
+			segments.get(0).setRegion(16, 0, 16, 16);
 		}
 		else {
-			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16));
+			segments.get(0).setRegion(0, 0, 16, 16);
 		}
 	}
 

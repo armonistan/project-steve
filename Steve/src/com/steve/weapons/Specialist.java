@@ -32,7 +32,7 @@ public class Specialist extends Weapon{
 	public void upgrade(){
 		super.upgrade();
 		this.shootSpeed = 100;
-		this.setRegion(new TextureRegion(SteveDriver.atlas, atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH);
 		//TODO more stuff to upgrade
 	}
 }

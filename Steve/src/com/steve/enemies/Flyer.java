@@ -15,17 +15,21 @@ public class Flyer extends Enemy{
 	private float spinTimer;
 	private int propellerFrame;
 	private int numPropellerFrames;
-	private Vector2 propellerAtlasPosition;
-	private Vector2 propellerAtlasBounds;
+	private int propellerAtlasPositionX;
+	private int propellerAtlasPositionY;
+	private int propellerAtlasBoundsX;
+	private int propellerAtlasBoundsY;
 
 	public Flyer(float x, float y) {
 		super(x, y, 11, 5, 2, 2, 1f, 0.5f, 2, 75);
 		shootTime = 1f;
 		
-		propellerAtlasPosition = new Vector2(15, 5);
-		propellerAtlasBounds = new Vector2(2, 2);
-		propeller = new Sprite(SteveDriver.atlas, (int)propellerAtlasPosition.x * SteveDriver.TEXTURE_WIDTH, (int)propellerAtlasPosition.y * SteveDriver.TEXTURE_LENGTH,
-				(int)propellerAtlasBounds.x * SteveDriver.TEXTURE_WIDTH, (int)propellerAtlasBounds.x * SteveDriver.TEXTURE_LENGTH);
+		propellerAtlasPositionX = 15;
+		propellerAtlasPositionY = 5;
+		propellerAtlasBoundsX = 2;
+		propellerAtlasBoundsY = 2;
+		propeller = new Sprite(SteveDriver.atlas, propellerAtlasPositionX * SteveDriver.TEXTURE_WIDTH, propellerAtlasPositionY * SteveDriver.TEXTURE_LENGTH,
+				propellerAtlasBoundsX * SteveDriver.TEXTURE_WIDTH, propellerAtlasBoundsY * SteveDriver.TEXTURE_LENGTH);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;
 	}
@@ -54,11 +58,11 @@ public class Flyer extends Enemy{
 	}
 	
 	protected void updatePropeller() {
-		propeller.setRegion(new TextureRegion(SteveDriver.atlas,
-				(int)propellerAtlasPosition.x * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * propellerFrame * (int)propellerAtlasBounds.x,
-				(int)propellerAtlasPosition.y * SteveDriver.TEXTURE_LENGTH,
-				(int)propellerAtlasBounds.x* SteveDriver.TEXTURE_WIDTH,
-				(int)propellerAtlasBounds.y * SteveDriver.TEXTURE_LENGTH));
+		propeller.setRegion(
+				propellerAtlasPositionX * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * propellerFrame * propellerAtlasBoundsX,
+				propellerAtlasPositionY * SteveDriver.TEXTURE_LENGTH,
+				propellerAtlasBoundsX * SteveDriver.TEXTURE_WIDTH,
+				propellerAtlasBoundsY * SteveDriver.TEXTURE_LENGTH);
 	}
 	
 	@Override
