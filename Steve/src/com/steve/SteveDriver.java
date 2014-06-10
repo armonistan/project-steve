@@ -115,7 +115,7 @@ public class SteveDriver implements ApplicationListener {
 		summary = new Summary();
 		
 		music = Gdx.audio.newSound(Gdx.files.internal("audio/MainV1.wav"));
-		//music.loop();
+		music.loop();
 	}
 
 	@Override
