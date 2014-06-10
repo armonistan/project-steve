@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -67,6 +68,8 @@ public class SteveDriver implements ApplicationListener {
 	public static Menu menu;
 	public static Game game;
 	
+	private Sound music;
+	
 	public static enum STAGE_TYPE {
 		MENU,
 		GAME,
@@ -110,6 +113,9 @@ public class SteveDriver implements ApplicationListener {
 		store.setStoreProgress();
 		
 		summary = new Summary();
+		
+		music = Gdx.audio.newSound(Gdx.files.internal("audio/MainV1.wav"));
+		music.loop();
 	}
 
 	@Override
