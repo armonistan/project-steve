@@ -53,8 +53,13 @@ public class Flyer extends Enemy{
 	
 	@Override
 	public void update() {
-		super.shoot(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
+		super.decideShoot();
 		super.update();
+	}
+	
+	@Override
+	public void shoot(float dx, float dy) {
+		super.addProjectile(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2), dx, dy);
 	}
 	
 	protected void updatePropeller() {

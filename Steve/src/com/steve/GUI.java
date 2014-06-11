@@ -65,8 +65,6 @@ public class GUI {
 				endHP.setRegionWidth(spriteSubSectionWidth);
 				endHP.setBounds(48f * (i - 2f), height/2f - 100f, spriteSubSectionWidth, 64f);
 				endHP.draw(SteveDriver.batch);
-				
-				System.out.println(endHP.getWidth() + " " + endHP.getRegionWidth());
 			} else {
 				guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
 				guiTextures.get(healthColor).draw(SteveDriver.batch);

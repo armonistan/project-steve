@@ -420,7 +420,7 @@ public class Enemy {
 		return true;
 	}
 	
-	protected void shoot(Projectile proj){
+	protected void decideShoot() {
 		float deltaX;
 		float deltaY;
 		float distance;
@@ -434,8 +434,7 @@ public class Enemy {
 				if(distance < sightDistance * sightDistance){
 					if(this.avatar.getRotation() == SteveDriver.RIGHT 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.RIGHT_ID){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(1, 0);
+						shoot(1f, 0f);
 						
 						shootTimer = 0;
 						hasShotCounter = 0;
@@ -443,8 +442,7 @@ public class Enemy {
 					}
 					else if(this.avatar.getRotation() == SteveDriver.UP
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.UP_ID){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(0,  1);
+						shoot(0f, 1f);
 						
 						shootTimer = 0;
 						hasShotCounter = 0;
@@ -452,8 +450,7 @@ public class Enemy {
 					}
 					else if(this.avatar.getRotation() == SteveDriver.LEFT
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.LEFT_ID){
-							SteveDriver.field.addProjectile(proj);
-						proj.setDirection(-1, 0);	
+						shoot(-1f, 0f);	
 							
 						shootTimer = 0;
 						hasShotCounter = 0;
@@ -461,8 +458,7 @@ public class Enemy {
 					}
 					else if(this.avatar.getRotation() == SteveDriver.DOWN 
 							&& this.doesSee(deltaX, deltaY) == SteveDriver.DOWN_ID){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(0, -1);
+						shoot(0f, -1f);
 						
 						shootTimer = 0;
 						hasShotCounter = 0;
@@ -475,42 +471,45 @@ public class Enemy {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}
 	}
+	
+	protected void shoot(float dx, float dy){
+		//Nothing by default
+	}
+	
+	protected void addProjectile(Projectile proj, float dx, float dy) {
+		if (proj != null) {
+			SteveDriver.field.addProjectile(proj);
+			proj.setDirection(dx, dy);
+		}
+	}
 
-	protected void airShoot(Projectile proj){
+	protected void decideShootAir(){
 		if (shootTimer >= shootTime) {
-					if(this.avatar.getRotation() == SteveDriver.RIGHT 
-						){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(1, 0);
-						
-						shootTimer = 0;
-						hasShotCounter = 0;
-					}
-					else if(this.avatar.getRotation() == SteveDriver.UP
-							){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(0,  1);
-						
-						shootTimer = 0;
-						hasShotCounter = 0;
-					}
-					else if(this.avatar.getRotation() == SteveDriver.LEFT
-							){
-							SteveDriver.field.addProjectile(proj);
-						proj.setDirection(-1, 0);	
-							
-						shootTimer = 0;
-						hasShotCounter = 0;
-					}
-					else if(this.avatar.getRotation() == SteveDriver.DOWN 
-							){
-						SteveDriver.field.addProjectile(proj);
-						proj.setDirection(0, -1);
-						
-						shootTimer = 0;
-						hasShotCounter = 0;
-					}
-			}	
+			if(this.avatar.getRotation() == SteveDriver.RIGHT) {
+				shoot(1f, 0f);
+				
+				shootTimer = 0;
+				hasShotCounter = 0;
+			}
+			else if(this.avatar.getRotation() == SteveDriver.UP) {
+				shoot(0f,  1f);
+				
+				shootTimer = 0;
+				hasShotCounter = 0;
+			}
+			else if(this.avatar.getRotation() == SteveDriver.LEFT) {
+				shoot(-1f, 0f);	
+					
+				shootTimer = 0;
+				hasShotCounter = 0;
+			}
+			else if(this.avatar.getRotation() == SteveDriver.DOWN) {
+				shoot(0f, -1f);
+				
+				shootTimer = 0;
+				hasShotCounter = 0;
+			}
+		}	
 		else {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}

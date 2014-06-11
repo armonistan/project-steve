@@ -22,7 +22,12 @@ public class HomaHawk extends Enemy{
 	public void update(){
 		this.checkInField();
 		super.update();
-		super.airShoot(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
+		super.decideShootAir();
+	}
+	
+	@Override
+	public void shoot(float dx, float dy) {
+		super.addProjectile(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2), dx, dy);
 	}
 
 	@Override
