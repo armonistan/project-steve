@@ -511,8 +511,7 @@ public class Field {
 				Cell temp = background.getCell(x, y);
 				
 				if (temp != null) {
-					SteveDriver.batch.draw(temp.getTile().getTextureRegion(),
-							x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+					SteveDriver.batch.draw(temp.getTile().getTextureRegion(), x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
 					
 					if (blockers.getCell(x, y) != null) {
 						SteveDriver.batch.draw(blockers.getCell(x, y).getTile().getTextureRegion(),
