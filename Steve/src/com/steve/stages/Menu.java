@@ -2,11 +2,8 @@ package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
-import com.steve.Button;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
-import com.steve.commands.ChangeStage;
 import com.steve.commands.ExitGame;
 import com.steve.commands.StartNewGame;
 import com.steve.commands.StartNewRound;

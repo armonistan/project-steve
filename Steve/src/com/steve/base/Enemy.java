@@ -2,16 +2,14 @@ package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.helpers.CollisionHelper;
+import com.steve.stages.Field;
 
 public class Enemy {
 	public Sprite avatar;
@@ -37,8 +35,8 @@ public class Enemy {
 	int numStepsInDirection = 0;
 	int stepsTaken = 0;
 	int directionID = 0;
-	protected int sightDistance = 100;
-	protected int knowledgeDistance = 0; 
+	protected float sightDistance = 100;
+	protected float knowledgeDistance = 0; 
 	protected int moneyAmount = 0;
 	
 	protected float shootTime;
@@ -285,9 +283,9 @@ public class Enemy {
 		for(Sprite s: SteveDriver.snake.getSegments()){
 			deltaY = this.avatar.getY() - s.getY();
 			deltaX = this.avatar.getX() - s.getX();
-			distance = (float)Math.sqrt((double)((deltaX * deltaX) + (deltaY * deltaY)));
+			distance = (deltaX * deltaX) + (deltaY * deltaY);
 			
-			if(distance < sightDistance){
+			if(distance < sightDistance * sightDistance){
 				if(this.avatar.getRotation() == SteveDriver.RIGHT 
 						&& this.doesSee(deltaX, deltaY) == SteveDriver.RIGHT_ID){
 					stepsTaken = 0;
@@ -331,9 +329,9 @@ public class Enemy {
 		for(Sprite s: SteveDriver.snake.getSegments()){
 			deltaY = this.avatar.getY() - s.getY();
 			deltaX = this.avatar.getX() - s.getX();
-			distance = (float)Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY, 2));
+			distance = deltaX * deltaX + deltaY * deltaY;
 			
-			if(distance < knowledgeDistance){
+			if(distance < knowledgeDistance * knowledgeDistance){
 				if(this.doesKnow(deltaX, deltaY) == SteveDriver.RIGHT_ID){
 					stepsTaken = 0;
 					directionID = SteveDriver.RIGHT_ID;
@@ -394,7 +392,11 @@ public class Enemy {
 	}
 	
 	protected boolean passedBarrierCheck(){
-		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		if (ignoresBlockers) {
+			return true;
+		}
+		
+		TiledMapTileLayer layer = Field.blockers;
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
@@ -406,11 +408,11 @@ public class Enemy {
 				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, this.avatar.getBoundingRectangle())) {
-					if(!destroysBlockers)
-						return ignoresBlockers || false;
-					else{
+					if(destroysBlockers) {
 						SteveDriver.field.destroyBlocker(x,y);
 					}
+					
+					return false;
 				}
 			}
 		}
@@ -475,10 +477,6 @@ public class Enemy {
 	}
 
 	protected void airShoot(Projectile proj){
-		float deltaX;
-		float deltaY;
-		float distance;
-		
 		if (shootTimer >= shootTime) {
 					if(this.avatar.getRotation() == SteveDriver.RIGHT 
 						){

@@ -2,7 +2,6 @@ package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -11,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.helpers.CollisionHelper;
-import java.math.*;
+import com.steve.stages.Field;
 
 public class Projectile {
 	protected Sprite avatar;
@@ -42,19 +41,9 @@ public class Projectile {
 		tempCollider = new Rectangle();
 	}
 	
-	public Projectile(float x, float y, Vector2 atlasPosition, Vector2 atlasBounds,
-			float percentDamage, boolean snakeFriendly, float dx, float dy, float projectileTime) {
-		this.percentDamage = (snakeFriendly) ? percentDamage : 
-			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
-		this.snakeFriendly = snakeFriendly;
-		directionX = dx; 
-		directionY = dy;
-		dead = false;
-		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, (int)atlasPosition.x * SteveDriver.TEXTURE_WIDTH,
-				(int)atlasPosition.y * SteveDriver.TEXTURE_LENGTH, (int)atlasBounds.x* SteveDriver.TEXTURE_WIDTH, (int)atlasBounds.y * SteveDriver.TEXTURE_LENGTH));
-		avatar.setPosition(x, y);
-		avatar.setRotation(CollisionHelper.angleFromDirectionVector(dx, dy));
+	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
+			float percentDamage, boolean snakeFriendly, float projectileTime) {
+		this(x, y, atlasPositionX, atlasPositionY, atlasBoundsX, atlasBoundsY, percentDamage, snakeFriendly);
 	
 		this.projectileTime = projectileTime;
 	}	
@@ -88,7 +77,7 @@ public class Projectile {
 	}
 	
 	private void checkCollisions() {
-		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		TiledMapTileLayer layer = Field.blockers;
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {

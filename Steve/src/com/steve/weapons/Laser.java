@@ -1,17 +1,14 @@
 package com.steve.weapons;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
-import com.steve.projectiles.SnakeBullet;
 import com.steve.projectiles.SnakeLaser;
 
 public class Laser extends Weapon{
 	public Laser(float x, float y){
 		super(x,y, 16*9, 16);
-		shootSpeed = 100 - (int)(100*(SteveDriver.constants.get("fireRate")-1));
+		shootSpeed = 100 - 100 * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 1000*SteveDriver.constants.get("fireRange");
 	}
 	

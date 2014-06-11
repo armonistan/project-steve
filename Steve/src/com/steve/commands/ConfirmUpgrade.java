@@ -11,6 +11,7 @@ public class ConfirmUpgrade implements ICommand {
 		store = s;
 	}
 	
+	@Override
 	public void execute() {
 		store.purchaseUpgrade();
 	}

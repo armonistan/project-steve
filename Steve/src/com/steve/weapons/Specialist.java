@@ -1,17 +1,14 @@
 package com.steve.weapons;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
-import com.steve.projectiles.SnakeBullet;
 import com.steve.projectiles.SnakeRocket;
 
 public class Specialist extends Weapon{
 	public Specialist(float x, float y){
 		super(x,y, 16*10, 16);
-		shootSpeed = 200 - (int)(200*(SteveDriver.constants.get("fireRate")-1));
+		shootSpeed = 200 - 200 * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 700*SteveDriver.constants.get("fireRange");
 	}
 	

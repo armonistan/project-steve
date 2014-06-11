@@ -8,6 +8,7 @@ public class WeaponUpgrade extends Pickup {
 		super(xPos, yPos, 9 * 16, 3 * 16);
 	}
 	
+	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
 		int index = snake.getUpgradableWeapon();

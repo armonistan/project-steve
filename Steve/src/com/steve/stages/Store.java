@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
 import com.steve.SteveDriver;
-import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.TextButton;
 import com.steve.commands.QueueUpgrade;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ConfirmUpgrade;
-import com.steve.commands.StartNewRound;
 import com.steve.commands.SwitchStoreTab;
 
 public class Store {	

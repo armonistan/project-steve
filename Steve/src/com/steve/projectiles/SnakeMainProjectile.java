@@ -9,17 +9,19 @@ public class SnakeMainProjectile extends Projectile {
 	private final static float MAX_SPEED = 250;
 	
 	public SnakeMainProjectile(float x, float y, float dx, float dy, int level) {
-		super(x, y, new Vector2(19, 0), new Vector2(1, 1), 100*SteveDriver.constants.get("fireDamage"), true,
-				dx * SPEED, dy * SPEED, 100*SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange"));
+		super(x, y, 19, 0, 1, 1, 100*SteveDriver.constants.get("fireDamage"), true,
+				100 * SteveDriver.constants.get("fireRange") * SteveDriver.constants.get("fireRange"));
 	}
 	
+	@Override
 	public void update() {
-		/*direction.x += (SteveDriver.random.nextFloat() - 0.5f) * 3;
-		direction.y += (SteveDriver.random.nextFloat() - 0.5f) * 3;
+		directionX += (SteveDriver.random.nextFloat() - 0.5f) * 3f;
+		directionY += (SteveDriver.random.nextFloat() - 0.5f) * 3f;
 		
-		if (direction.len2() < MAX_SPEED * MAX_SPEED) {
-			direction.scl(1.05f);
-		}*/
+		if ((directionX * directionX + directionY * directionY) < MAX_SPEED * MAX_SPEED) {
+			directionX *= 1.05f;
+			directionY *= 1.05f;
+		}
 		
 		super.update();
 	}

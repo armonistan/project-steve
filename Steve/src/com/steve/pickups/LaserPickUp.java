@@ -8,6 +8,7 @@ public class LaserPickUp extends Pickup {
 		super(xPos, yPos, 9 * 16, 0);
 	}
 	
+	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.mountUpgrade(1);

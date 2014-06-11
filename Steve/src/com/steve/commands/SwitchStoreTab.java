@@ -17,6 +17,7 @@ public class SwitchStoreTab implements ICommand {
 		index = i;
 	}
 	
+	@Override
 	public void execute() {
 		store.setStoreTab(index);
 	}

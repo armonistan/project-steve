@@ -2,10 +2,8 @@ package com.steve;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
@@ -13,6 +11,7 @@ import com.steve.base.Pickup;
 import com.steve.base.Projectile;
 import com.steve.base.Weapon;
 import com.steve.helpers.CollisionHelper;
+import com.steve.stages.Field;
 import com.steve.weapons.GatlingGun;
 import com.steve.weapons.Laser;
 import com.steve.weapons.MainCannon;
@@ -150,7 +149,7 @@ public class Snake {
 	}
 
 	private boolean checkCollisions() {
-		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+		TiledMapTileLayer layer = Field.blockers;
 		
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
@@ -412,8 +411,6 @@ public class Snake {
 				}
 			}
 		}
-		
-		int i = 0;
 	}
 
 	private void move(){
@@ -431,7 +428,7 @@ public class Snake {
 	
 	private boolean checkEat(){
 		boolean aboutToEat = false;
-		for (Pickup p : SteveDriver.field.pickups) {
+		for (Pickup p : Field.pickups) {
 			if (p.getActive()) {
 				if (segments.get(0).getX() == p.getX() && segments.get(0).getY() == p.getY()) {
 					p.consume(this);

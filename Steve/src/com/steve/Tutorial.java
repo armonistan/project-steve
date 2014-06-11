@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +18,7 @@ import com.steve.pickups.Apple;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
+import com.steve.stages.Field;
 
 public class Tutorial {
 	public enum TUTORIAL_STAGE_TYPE {
@@ -91,7 +90,7 @@ public class Tutorial {
 			Vector3 tempApple = new Vector3();
 			float closestAppleDistance = Float.POSITIVE_INFINITY;
 			
-			for (Pickup p : SteveDriver.field.pickups) {
+			for (Pickup p : Field.pickups) {
 				if (p.getClass() == Apple.class) {
 					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
@@ -114,7 +113,7 @@ public class Tutorial {
 			noGray.width = 48;
 			noGray.height = 48;
 			
-			TiledMapTileLayer blockerLayer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);
+			TiledMapTileLayer blockerLayer = Field.blockers;
 			
 			Vector3 tempBlocker = new Vector3();
 			float closestDistance = Float.POSITIVE_INFINITY;
@@ -173,7 +172,7 @@ public class Tutorial {
 			Vector3 tempWeapon = new Vector3();
 			float closestWeaponDistance = Float.POSITIVE_INFINITY;
 			
-			for (Pickup p : SteveDriver.field.pickups) {
+			for (Pickup p : Field.pickups) {
 				if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
 					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);

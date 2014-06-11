@@ -8,6 +8,7 @@ public class GatlingGunPickUp extends Pickup{
 		super(xPos, yPos, 8 * 16, 0);
 	}
 	
+	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.mountUpgrade(0);

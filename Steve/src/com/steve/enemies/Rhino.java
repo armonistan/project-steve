@@ -15,6 +15,7 @@ public class Rhino extends Enemy {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	protected void animate() {
 		myRotation += rotationPerFrame * MathUtils.radiansToDegrees * Gdx.graphics.getRawDeltaTime();
 		
@@ -23,6 +24,7 @@ public class Rhino extends Enemy {
 		avatar.setRotation(myRotation);
 	}
 	
+	@Override
 	protected Vector2 decideMove() {
 		return super.pursuitMoveWithSight();
 	}

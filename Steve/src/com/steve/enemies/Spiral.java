@@ -1,8 +1,5 @@
 package com.steve.enemies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
@@ -33,12 +30,12 @@ public class Spiral extends Enemy{
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 		float deltaY = this.avatar.getY() - snakePosition.y;
 		float deltaX = this.avatar.getX() - snakePosition.x;
-		float distance = (float)Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY, 2));
+		float distance = (float)Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		
-		moveTime = distance/knowledgeDistance;
-		moveTime = (moveTime > .8) ? .8f : 
-			(moveTime < .4) ? .4f : moveTime;
+		moveTime = distance / knowledgeDistance;
+		moveTime = (moveTime > .8f) ? .8f : 
+			(moveTime < .4f) ? .4f : moveTime;
 		
-		System.out.println("move speed: " + moveTime);
+		//System.out.println("move speed: " + moveTime);
 	}
 }

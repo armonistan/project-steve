@@ -3,7 +3,6 @@ package com.steve;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -20,6 +19,8 @@ public class GUI {
 	
 	private float spriteWidth = 48;
 	
+	private Sprite endHP;
+	
 	public GUI() {
 		guiTextures = new ArrayList<Sprite>();
 		for (int i = 0; i < 6; i++) {
@@ -30,6 +31,8 @@ public class GUI {
 		rightEndPosition = new Vector2(48 * 2, height/2 -100);
 		guiTextures.get(5).setPosition(leftEndPosition.x, leftEndPosition.y);
 		guiTextures.get(0).setPosition(rightEndPosition.x, rightEndPosition.y);
+		
+		endHP = new Sprite(new TextureRegion(SteveDriver.atlas, 0, 352, 48, 64));
 	}
 	
 	public void render() {
@@ -43,21 +46,27 @@ public class GUI {
 			guiTextures.get(1).draw(SteveDriver.batch);
 		}
 		
-		for (int i = 0; i < (int) (healthWidth * currentHealthPercent) + 1; i++) {
-			if (currentHealthPercent > .5) {
+		int finalPixel = (int) (healthWidth * currentHealthPercent);
+		
+		for (int i = 0; i < finalPixel + 1; i++) {
+			if (currentHealthPercent > .5f) {
 				healthColor = 2;
-			} else if (currentHealthPercent < .5 && currentHealthPercent > .25) {
+			} else if (currentHealthPercent < .5f && currentHealthPercent > .25f) {
 				healthColor = 3;
-			} else if (currentHealthPercent < .25) {
+			} else if (currentHealthPercent < .25f) {
 				healthColor = 4;
 			}
 			
 			
-			if (i == (int) (healthWidth * currentHealthPercent)) {
+			if (i == finalPixel) {
 				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
-				Sprite endHP = new Sprite(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*healthColor), 352, spriteSubSectionWidth, 64)));
-				endHP.setPosition(48 * (i - 2), height/2 -100);
+				//endHP.setRegion(240-(48*healthColor), 352, spriteSubSectionWidth, 64);
+				endHP.setRegionX(240-(48*healthColor));
+				endHP.setRegionWidth(spriteSubSectionWidth);
+				endHP.setBounds(48f * (i - 2f), height/2f - 100f, spriteSubSectionWidth, 64f);
 				endHP.draw(SteveDriver.batch);
+				
+				System.out.println(endHP.getWidth() + " " + endHP.getRegionWidth());
 			} else {
 				guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
 				guiTextures.get(healthColor).draw(SteveDriver.batch);

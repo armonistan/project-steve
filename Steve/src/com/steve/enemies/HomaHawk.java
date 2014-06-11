@@ -2,13 +2,10 @@ package com.steve.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
-import com.steve.helpers.CollisionHelper;
-import com.steve.projectiles.Acorn;
 import com.steve.projectiles.Tree;
 
 public class HomaHawk extends Enemy{
@@ -21,6 +18,7 @@ public class HomaHawk extends Enemy{
 		shootTime = 1.6f;
 	}
 	
+	@Override
 	public void update(){
 		this.checkInField();
 		super.update();
@@ -47,16 +45,18 @@ public class HomaHawk extends Enemy{
 	private void moveToNextBombingRun(){
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 		
-		float xPosTopBot = (snakePosition.x - SteveDriver.random.nextInt((int)(Gdx.graphics.getWidth()*.2)) + SteveDriver.random.nextInt((int)(Gdx.graphics.getWidth()*.2)));
-		float xPosLeft = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
-				+ SteveDriver.random.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosRight = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
-				- SteveDriver.random.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
-				+ SteveDriver.random.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
-				- SteveDriver.random.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - SteveDriver.random.nextInt((int)(Gdx.graphics.getHeight()*.2)) + SteveDriver.random.nextInt((int)(Gdx.graphics.getHeight()*.2)));
+		float xPosTopBot = snakePosition.x - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/5f +
+				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/5f;
+		float xPosLeft = snakePosition.x + SteveDriver.constants.get("screenWidth")/2f
+				+ SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/4f;
+		float xPosRight = snakePosition.x - SteveDriver.constants.get("screenWidth")/2f
+				- SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/4f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight")/2f
+				+ SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/4f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight")/2f
+				- SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/4f;
+		float yPosRightLeft = snakePosition.y - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/5f +
+				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/5f;
 		
 		int choiceX = 0; 
 		
@@ -66,37 +66,35 @@ public class HomaHawk extends Enemy{
 		else if(SteveDriver.random.nextBoolean()){
 			choiceX = -1;
 		}
-		else
+		else {
 			choiceX = 1;
+		}
 		
-		int xPos = 0;
+		float xPos = 0;
 		
 		if((choiceX == 0))
-			xPos = (int)xPosTopBot;
+			xPos = xPosTopBot;
 		else if(choiceX < 0){
-			xPos = (int)xPosLeft;
+			xPos = xPosLeft;
 		}
 		else
-			xPos = (int)xPosRight;
+			xPos = xPosRight;
 		
-		int yPos = 0;
+		float yPos = 0;
 		
 		if(choiceX != 0)
-			yPos = (int)yPosRightLeft; 
+			yPos = yPosRightLeft; 
 		else if(SteveDriver.random.nextBoolean())
-			yPos = (int)yPosBot;
+			yPos = yPosBot;
 		else 
-			yPos = (int)yPosTop;
+			yPos = yPosTop;
 		
 		float deltaY = yPos - snakePosition.x;
 		float deltaX = xPos - snakePosition.y;
 		
 		int rotationChoice = 0;
 		for(int i = 0; i < 100; i++){
-
 			rotationChoice = SteveDriver.random.nextInt(4);
-			
-
 			
 			if(choiceX != 0 && deltaX < 0 && rotationChoice == SteveDriver.RIGHT_ID){
 				this.avatar.setRotation(SteveDriver.RIGHT);

@@ -2,8 +2,6 @@ package com.steve.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
@@ -34,6 +32,7 @@ public class Flyer extends Enemy{
 		numPropellerFrames = 3;
 	}
 	
+	@Override
 	public void draw() {
 		super.draw();
 		
@@ -52,6 +51,7 @@ public class Flyer extends Enemy{
 		propeller.draw(SteveDriver.batch);
 	}
 	
+	@Override
 	public void update() {
 		super.shoot(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2));
 		super.update();

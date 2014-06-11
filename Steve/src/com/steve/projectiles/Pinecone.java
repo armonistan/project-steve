@@ -1,6 +1,5 @@
 package com.steve.projectiles;
 
-import com.badlogic.gdx.math.Vector2;
 import com.steve.base.Projectile;
 
 public class Pinecone extends Projectile {

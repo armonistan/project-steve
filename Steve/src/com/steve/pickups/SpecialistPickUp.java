@@ -8,6 +8,7 @@ public class SpecialistPickUp extends Pickup {
 		super(xPos, yPos, 10 * 16, 0);
 	}
 	
+	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.mountUpgrade(2);

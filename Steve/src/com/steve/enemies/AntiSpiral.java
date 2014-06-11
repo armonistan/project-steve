@@ -1,12 +1,7 @@
 package com.steve.enemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 
 public class AntiSpiral extends Enemy{
@@ -28,6 +23,7 @@ public class AntiSpiral extends Enemy{
 		changeTimer = 0;
 	}
 
+	@Override
 	public void update() {
 		
 		if (changeTimer > ((moveTime == slowMoveTime) ? slowChangeTime : fastChangeTime)) {

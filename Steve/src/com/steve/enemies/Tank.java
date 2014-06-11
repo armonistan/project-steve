@@ -1,9 +1,6 @@
 package com.steve.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
@@ -27,6 +24,7 @@ public class Tank extends Enemy {
 		moneyAmount = 10;
 	}
 	
+	@Override
 	public void draw() {
 		super.draw();
 		
@@ -44,6 +42,7 @@ public class Tank extends Enemy {
 		super.update();
 	}
 	
+	@Override
 	protected Vector2 decideMove() {
 		return super.randomMove();
 	}

@@ -1,13 +1,9 @@
 package com.steve.helpers;
 
-import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.enemies.AntiSpiral;
@@ -24,6 +20,7 @@ import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
 import com.steve.pickups.WeaponUpgrade;
+import com.steve.stages.Field;
 
 public class Generator {
 	private final int GATLING_GUN_ID = 0;
@@ -84,16 +81,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.25)) + r.nextInt((int)(Gdx.graphics.getWidth()*.5)));
-		float xPosRight = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosLeft = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
-				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
-				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.25)) + r.nextInt((int)(Gdx.graphics.getHeight()*.5)));
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -119,11 +118,11 @@ public class Generator {
 		}
 		
 		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_WIDTH);
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
 		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_LENGTH);
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
 	
-		int locationID = SteveDriver.field.checkRing((int)xPos, (int)yPos);
+		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(3) + 5;
 	
@@ -162,16 +161,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.25)) + r.nextInt((int)(Gdx.graphics.getWidth()*.5)));
-		float xPosRight = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosLeft = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
-				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
-				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.25)) + r.nextInt((int)(Gdx.graphics.getHeight()*.5)));
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -197,10 +198,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_WIDTH);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_LENGTH);
+		float xPos = ((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
+		float yPos = ((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
 	
 		return generateSlugTutorial(xPos, yPos);
 	}
@@ -209,16 +210,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.25)) + r.nextInt((int)(Gdx.graphics.getWidth()*.5)));
-		float xPosRight = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosLeft = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
-				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
-				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.25)) + r.nextInt((int)(Gdx.graphics.getHeight()*.5)));
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -244,9 +247,9 @@ public class Generator {
 		}
 		
 		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_WIDTH);
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
 		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_LENGTH);
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
 		
 		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 
@@ -308,9 +311,9 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot : 
+		float xPos = ((choiceX == 0) ? xPosTopBot : 
 			(choiceX < 0) ? xPosLeft : xPosRight);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft : 
+		float yPos = ((choiceY == 0) ? yPosRightLeft : 
 			(choiceY < 0) ? yPosBot : yPosTop);
 	
 		int pickUpType = type;
@@ -387,16 +390,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = (snakePosition.x - r.nextInt((int)(Gdx.graphics.getWidth()*.25)) + r.nextInt((int)(Gdx.graphics.getWidth()*.5)));
-		float xPosRight = (snakePosition.x + (int)(Gdx.graphics.getWidth()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float xPosLeft = (snakePosition.x - (int)(Gdx.graphics.getWidth()*.5)
-				- r.nextInt((int)(Gdx.graphics.getWidth()*.25)));
-		float yPosTop = (snakePosition.y + (int)(Gdx.graphics.getHeight()*.5)
-				+ r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosBot = (snakePosition.y - (int)(Gdx.graphics.getHeight()*.5)
-				- r.nextInt((int)(Gdx.graphics.getHeight()*.25)));
-		float yPosRightLeft = (snakePosition.y - r.nextInt((int)(Gdx.graphics.getHeight()*.25)) + r.nextInt((int)(Gdx.graphics.getHeight()*.5)));
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -429,7 +434,7 @@ public class Generator {
 		
 		Apple a = new Apple(xPos, yPos);
 		if(isOccupied(a.getRectangle()))
-			SteveDriver.field.pickups.add(a);	
+			Field.pickups.add(a);	
 	}
 	
 	public void generateRhino(float xPos, float yPos) {
@@ -446,16 +451,16 @@ public class Generator {
 		int yPos = 0;
 		
 		xPos = (int)(snakePosition.x / SteveDriver.TEXTURE_WIDTH) +
-					r.nextInt((int)Gdx.graphics.getWidth() / SteveDriver.TEXTURE_WIDTH) - 
-					(int)Gdx.graphics.getWidth() / SteveDriver.TEXTURE_WIDTH / 2;
+					r.nextInt(Gdx.graphics.getWidth() / SteveDriver.TEXTURE_WIDTH) - 
+					Gdx.graphics.getWidth() / SteveDriver.TEXTURE_WIDTH / 2;
 		yPos = (int)(snakePosition.y / SteveDriver.TEXTURE_LENGTH) +
-					r.nextInt((int)Gdx.graphics.getHeight() / SteveDriver.TEXTURE_LENGTH) -
-					(int)Gdx.graphics.getHeight() / SteveDriver.TEXTURE_LENGTH / 2;
+					r.nextInt(Gdx.graphics.getHeight() / SteveDriver.TEXTURE_LENGTH) -
+					Gdx.graphics.getHeight() / SteveDriver.TEXTURE_LENGTH / 2;
 		
 		Apple a = new Apple(xPos, yPos);
 		
 		if(isOccupied(a.getRectangle())){
-			SteveDriver.field.pickups.add(a);
+			Field.pickups.add(a);
 			return true;
 		}
 		return false;
@@ -466,18 +471,18 @@ public class Generator {
 			case GATLING_GUN_ID:
 				GatlingGunPickUp g = new GatlingGunPickUp(xPos, yPos);
 				if(isOccupied(g.getRectangle())){
-					SteveDriver.field.pickups.add(g);
+					Field.pickups.add(g);
 				}
 				break;
 			case LASER_ID:
 				LaserPickUp l = new LaserPickUp(xPos, yPos);
 				if(isOccupied(l.getRectangle()))
-					SteveDriver.field.pickups.add(l);				
+					Field.pickups.add(l);				
 				break;
 			case SPECIALIST_ID:
 				SpecialistPickUp s = new SpecialistPickUp(xPos, yPos);
 				if(isOccupied(s.getRectangle()))
-					SteveDriver.field.pickups.add(s);				
+					Field.pickups.add(s);				
 				break;
 		}
 	}
@@ -487,14 +492,14 @@ public class Generator {
 			case GATLING_GUN_ID:
 				GatlingGunPickUp g = new GatlingGunPickUp(xPos, yPos);
 				if(isOccupied(g.getRectangle())){
-					SteveDriver.field.pickups.add(g);
+					Field.pickups.add(g);
 					return true;
 				}
 				break;
 			case LASER_ID:
 				LaserPickUp l = new LaserPickUp(xPos, yPos);
 				if(isOccupied(l.getRectangle())){
-					SteveDriver.field.pickups.add(l);			
+					Field.pickups.add(l);			
 					return true;
 				}
 				break;
@@ -502,7 +507,7 @@ public class Generator {
 			case SPECIALIST_ID:
 				SpecialistPickUp s = new SpecialistPickUp(xPos, yPos);
 				if(isOccupied(s.getRectangle())){
-					SteveDriver.field.pickups.add(s);
+					Field.pickups.add(s);
 					return true;
 				}
 				break;
@@ -514,14 +519,14 @@ public class Generator {
 	public void generateWeaponUpgrade(float xPos, float yPos){
 		WeaponUpgrade wU = new WeaponUpgrade(xPos, yPos);
 		if(isOccupied(wU.getRectangle())){
-			SteveDriver.field.pickups.add(wU);
+			Field.pickups.add(wU);
 		}
 	}
 	
 	public boolean generateWeaponUpgradeTutorial(float xPos, float yPos){
 		WeaponUpgrade wU = new WeaponUpgrade(xPos, yPos);
 		if(isOccupied(wU.getRectangle())){
-			SteveDriver.field.pickups.add(wU);
+			Field.pickups.add(wU);
 			return true;
 		}
 		return false;

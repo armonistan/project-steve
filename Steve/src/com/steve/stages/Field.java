@@ -7,37 +7,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.*;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
-import com.steve.enemies.AntiSpiral;
-import com.steve.enemies.Brute;
-import com.steve.enemies.Flyer;
 import com.steve.enemies.HomaHawk;
-import com.steve.enemies.Rhino;
-import com.steve.enemies.Ring;
-import com.steve.enemies.Snail;
-import com.steve.enemies.Spiral;
-import com.steve.enemies.Tank;
-import com.steve.enemies.Turret;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
-import com.steve.pickups.Apple;
-import com.steve.pickups.GatlingGunPickUp;
-import com.steve.pickups.LaserPickUp;
-import com.steve.pickups.SpecialistPickUp;
-import com.steve.pickups.WeaponUpgrade;
-
 import java.util.*;
 
 public class Field {
@@ -54,6 +36,8 @@ public class Field {
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
 	TileRegion grass, desert, barren;
+	public static TiledMapTileLayer background;
+	public static TiledMapTileLayer blockers;
 	
 	public static LinkedList<Pickup> pickups;
 	public static LinkedList<Pickup> pickupsToRemove;
@@ -221,15 +205,18 @@ public class Field {
 		this.barren = new TileRegion(6, 10, 1, 2);
 		
 		this.tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
-		this.map = new TiledMap();
+		Field.map = new TiledMap();
 		
 		this.RandomizeField();
 		
-		this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1);
+		blockers = (TiledMapTileLayer)map.getLayers().get(1);
+		background = (TiledMapTileLayer)map.getLayers().get(0);
+		
+		this.mapRenderer = new OrthogonalTiledMapRenderer(Field.map, 1);
 		this.mapRenderer.setView(camera);
 		
-		this.pickups = new LinkedList<Pickup>();
-		this.pickupsToRemove = new LinkedList<Pickup>();
+		Field.pickups = new LinkedList<Pickup>();
+		Field.pickupsToRemove = new LinkedList<Pickup>();
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
@@ -244,7 +231,7 @@ public class Field {
 	}
 	
 	public void destroyBlocker(int xPos, int yPos){
-		TiledMapTileLayer blockers = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
+		TiledMapTileLayer blockers = (TiledMapTileLayer)Field.map.getLayers().get(1);	
 		blockers.setCell(xPos, yPos, null);
 	}
 	
@@ -342,7 +329,7 @@ public class Field {
 	
 	public void RandomizeField() {
 		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
-		MapLayers layers = this.map.getLayers();
+		MapLayers layers = Field.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
@@ -513,14 +500,11 @@ public class Field {
 		//mapRenderer.setView(SteveDriver.camera);
 		//mapRenderer.render();
 		
-		TiledMapTileLayer background = (TiledMapTileLayer)map.getLayers().get(0);
-		TiledMapTileLayer blockers = (TiledMapTileLayer)map.getLayers().get(1);
-		
 		SteveDriver.batch.begin();
-		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2) / 16;
-		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2) / 16;
-		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2) / 16;
-		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2) / 16;
+		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / 16;
+		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / 16;
+		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
+		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f) / 16;
 		
 		for (int x = startX; x < endX; x++) {
 			for (int y = startY; y < endY; y++) {
@@ -536,10 +520,10 @@ public class Field {
 					}
 				}
 			}
-		}
-		SteveDriver.batch.end();
+		}/**/
+		/*SteveDriver.batch.end();*/
 		
-		SteveDriver.batch.begin();
+		/*SteveDriver.batch.begin();*/
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
 				p.draw(SteveDriver.batch);
@@ -558,7 +542,7 @@ public class Field {
 		
 		for (Projectile p : projectiles) {
 			p.draw();
-		}
+		}/**/
 		SteveDriver.batch.end();
 	}
 	
@@ -574,7 +558,7 @@ public class Field {
 			}
 		}
 		
-		TiledMapTileLayer layer = (TiledMapTileLayer)SteveDriver.field.map.getLayers().get(1);	
+		TiledMapTileLayer layer = (TiledMapTileLayer)Field.map.getLayers().get(1);	
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
 				Cell cell = layer.getCell(x, y);

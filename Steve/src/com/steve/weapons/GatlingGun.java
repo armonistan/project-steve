@@ -1,8 +1,6 @@
 package com.steve.weapons;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
 import com.steve.projectiles.SnakeBullet;
@@ -10,8 +8,8 @@ import com.steve.projectiles.SnakeBullet;
 public class GatlingGun extends Weapon{
 	public GatlingGun(float x, float y){
 		super(x,y, 16*8, 16);
-		shootSpeed = 25 - (int)(25*(SteveDriver.constants.get("fireRate")-1));
-		range = 400*SteveDriver.constants.get("fireRange");
+		shootSpeed = 25 - 25 * (int)(SteveDriver.constants.get("fireRate")-1f);
+		range = 400f * SteveDriver.constants.get("fireRange");
 	}
 	
 	@Override

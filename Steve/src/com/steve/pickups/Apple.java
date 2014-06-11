@@ -1,6 +1,5 @@
 package com.steve.pickups;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.steve.Snake;
 import com.steve.SteveDriver;
 import com.steve.base.Pickup;
@@ -10,6 +9,7 @@ public class Apple extends Pickup {
 		super(x, y, 4 * 16, 0);
 	}
 	
+	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.addBody();
