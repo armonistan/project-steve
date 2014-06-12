@@ -12,7 +12,7 @@ public class AntiSpiral extends Enemy{
 	private float changeTimer;
 	
 	public AntiSpiral(float x, float y) {
-		super(x, y, 15, 3, 2, 2, 1.2f, 0.4f, 3, 75);
+		super(x, y, 15, 3, 2, 2, 1.2f, 0.4f, 3, 75, 50);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 30;

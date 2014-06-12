@@ -14,7 +14,7 @@ import com.steve.stages.Field;
 
 public class Projectile {
 	protected Sprite avatar;
-	private float percentDamage;
+	private float damage;
 	protected float directionX;
 	protected float directionY;
 	private boolean snakeFriendly;
@@ -24,9 +24,9 @@ public class Projectile {
 	protected float speed;
 
 	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
-			float percentDamage, boolean snakeFriendly) {
-		this.percentDamage = (snakeFriendly) ? percentDamage : 
-			(SteveDriver.snake.getSnakeTier() == 1) ? percentDamage : (percentDamage/SteveDriver.snake.getSnakeArmor());
+			float damage, boolean snakeFriendly) {
+		this.damage = (snakeFriendly) ? damage : 
+			(SteveDriver.snake.getSnakeTier() == 1) ? damage : (damage/SteveDriver.snake.getSnakeArmor());
 		this.snakeFriendly = snakeFriendly;
 		dead = false;
 		
@@ -103,8 +103,8 @@ public class Projectile {
 		return !dead;
 	}
 	
-	public float getPercentDamage() {
-		return percentDamage;
+	public float getDamage() {
+		return damage;
 	}
 	
 	public void setDirection(float dx, float dy) {

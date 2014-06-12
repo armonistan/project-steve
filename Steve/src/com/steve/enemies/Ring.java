@@ -8,7 +8,7 @@ import com.steve.stages.Field;
 public class Ring extends Enemy {
 
 	public Ring(float x, float y) {
-		super(x, y, 11, 7, 1, 2, 1f, 1, 10, 0);
+		super(x, y, 11, 7, 1, 2, 1f, 1, 10, 0, 50);
 		
 		moneyAmount = 20;
 	}

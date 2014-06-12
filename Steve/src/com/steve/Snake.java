@@ -31,6 +31,7 @@ public class Snake {
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
 	private float timeTillStarve = 20f; //unit is seconds
+	private float hungerPerSecond = 5f;
 	private float timer = 0;
 	private float hungerTimer = 0;
 	
@@ -179,7 +180,7 @@ public class Snake {
 			for (Projectile p : SteveDriver.field.getProjectiles()) {
 				if (!p.getFriendly() && p.getAlive()) {
 					if (CollisionHelper.isCollide(s.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
-						changeHungerByPercent(p.getPercentDamage());
+						changeHunger(p.getDamage());
 						
 						p.kill();
 					}
@@ -299,13 +300,11 @@ public class Snake {
 		}
 	}
 	
-	public void changeHungerByPercent(float percent) {
-		if (percent >= 0 && percent <= 100) {
-			hungerTimer += (timeTillStarve * percent/100);
-			
-			if (hungerTimer < 0) {
-				hungerTimer = 0;
-			}
+	public void changeHunger(float amount) {
+		hungerTimer += amount / hungerPerSecond;
+		
+		if (hungerTimer < 0f) {
+			hungerTimer = 0f;
 		}
 	}
 

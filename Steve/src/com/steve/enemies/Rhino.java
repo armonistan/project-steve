@@ -11,7 +11,7 @@ public class Rhino extends Enemy {
 	
 	public Rhino(float x, float y) {
 		super(x, y, 17, 13, 3, 3,
-				1.5f, 100, 1, 50);
+				1.5f, 100, 1, 50, 50);
 		// TODO Auto-generated constructor stub
 	}
 

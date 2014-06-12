@@ -19,7 +19,7 @@ public class Turret extends Enemy{
 	//sprivate Sprite base;
 
 	public Turret(float x, float y) {
-		super(x, y, 10, 5, 1, 1, 0.5f, 0.5f, 1, 80);
+		super(x, y, 10, 5, 1, 1, 0.5f, 0.5f, 1, 0, 125);
 		range = 300;//override range if need be
 		isAimed = false;
 		isUpgraded = false;}

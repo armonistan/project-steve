@@ -28,7 +28,7 @@ public class Enemy {
 	protected int currentFrame;
 	protected int numberFrames;
 	
-	protected float healthPercentage;
+	protected float health;
 	
 	protected float deathDamage;
 	
@@ -51,7 +51,7 @@ public class Enemy {
 	//Temp variables
 	Rectangle tempCollider;
 	
-	public Enemy(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY, float moveTime, float animateTime, int numberFrames, float deathDamage) {
+	public Enemy(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY, float moveTime, float animateTime, int numberFrames, float deathDamage, float health) {
 		this.moveTime = moveTime;
 		this.animateTime = animateTime;
 		this.numberFrames = numberFrames;
@@ -70,7 +70,7 @@ public class Enemy {
 		updateAvatar();
 		avatar.setPosition(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH);
 		
-		healthPercentage = 100;
+		this.health = health;
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 		this.ignoresBlockers = false;
 		this.destroysBlockers = false;
@@ -87,7 +87,7 @@ public class Enemy {
 		for (Projectile p : SteveDriver.field.getProjectiles()) {
 			if (p.getFriendly() && p.getAlive()) {
 				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
-					this.healthPercentage -= p.getPercentDamage();
+					this.health -= p.getDamage();
 					p.kill();
 				}
 			}
@@ -103,7 +103,7 @@ public class Enemy {
 	}
 	
 	protected void checkIsDead(){
-		if(this.healthPercentage <= 0){
+		if(this.health <= 0){
 			this.kill();
 		}
 	}
@@ -123,7 +123,7 @@ public class Enemy {
 	protected void checkCollideWithSnake(){
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
-				SteveDriver.snake.changeHungerByPercent(deathDamage);
+				SteveDriver.snake.changeHunger(deathDamage);
 				//TODO: Replace with something better.
 				kill();
 				break;

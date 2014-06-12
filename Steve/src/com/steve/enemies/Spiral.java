@@ -8,7 +8,7 @@ import com.steve.base.Enemy;
 public class Spiral extends Enemy{
 	
 	public Spiral(float x, float y) {
-		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 75);
+		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 50, 100);
 		knowledgeDistance = 500;//to be refined
 		
 		destroysBlockers = true;
