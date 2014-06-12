@@ -398,12 +398,18 @@ public class Enemy {
 		
 		TiledMapTileLayer layer = Field.blockers;
 		
-		for (int x = 0; x < layer.getWidth(); x++) {
-			for (int y = 0; y < layer.getHeight(); y++) {
-				Cell cell = layer.getCell(x, y);
+		int cellWidth = avatar.getRegionWidth() / SteveDriver.TEXTURE_WIDTH;
+		int cellHeight = avatar.getRegionHeight() / SteveDriver.TEXTURE_LENGTH;
+		
+		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_WIDTH;
+		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_LENGTH;
+		
+		for (int x = 0; x < cellWidth; x++) {
+			for (int y = 0; y < cellHeight; y++) {
+				Cell cell = layer.getCell(topCornerX + x, topCornerY + y);
 				
-				tempCollider.x = x * SteveDriver.TEXTURE_WIDTH;
-				tempCollider.y = y * SteveDriver.TEXTURE_LENGTH;
+				tempCollider.x = (topCornerX + x) * SteveDriver.TEXTURE_WIDTH;
+				tempCollider.y = (topCornerY + y) * SteveDriver.TEXTURE_LENGTH;
 				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
 				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
 				

@@ -22,8 +22,6 @@ public class Projectile {
 	private float projectileTime;
 	
 	protected float speed;
-	
-	Rectangle tempCollider;
 
 	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
 			float percentDamage, boolean snakeFriendly) {
@@ -37,8 +35,6 @@ public class Projectile {
 		avatar.setPosition(x, y);
 	
 		projectileTime = 100;
-		
-		tempCollider = new Rectangle();
 	}
 	
 	public Projectile(float x, float y, int atlasPositionX, int atlasPositionY, int atlasBoundsX, int atlasBoundsY,
@@ -79,20 +75,14 @@ public class Projectile {
 	private void checkCollisions() {
 		TiledMapTileLayer layer = Field.blockers;
 		
-		for (int x = 0; x < layer.getWidth(); x++) {
-			for (int y = 0; y < layer.getHeight(); y++) {
-				Cell cell = layer.getCell(x, y);
-				
-				tempCollider.x = x * SteveDriver.TEXTURE_WIDTH;
-				tempCollider.y = y * SteveDriver.TEXTURE_LENGTH;
-				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
-				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
-				
-				if (cell != null && CollisionHelper.isCollide(tempCollider, avatar.getBoundingRectangle())) {
-					kill();
-					return;
-				}
-			}
+		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_WIDTH;
+		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_LENGTH;
+
+		Cell cell = layer.getCell(topCornerX, topCornerY);
+		
+		if (cell != null) {
+			kill();
+			return;
 		}
 	}
 	
