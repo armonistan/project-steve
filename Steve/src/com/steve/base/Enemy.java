@@ -140,7 +140,7 @@ public class Enemy {
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
 
-			if(this.passedBarrierCheck()){
+			if(this.passedBarrierCheck() || ignoresBlockers){
 				//we good
 			}
 			else{
@@ -392,10 +392,6 @@ public class Enemy {
 	}
 	
 	protected boolean passedBarrierCheck(){
-		if (ignoresBlockers) {
-			return true;
-		}
-		
 		TiledMapTileLayer layer = Field.blockers;
 		
 		int cellWidth = avatar.getRegionWidth() / SteveDriver.TEXTURE_WIDTH;
@@ -415,7 +411,7 @@ public class Enemy {
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, this.avatar.getBoundingRectangle())) {
 					if(destroysBlockers) {
-						SteveDriver.field.destroyBlocker(x,y);
+						SteveDriver.field.destroyBlocker(x + topCornerX, y + topCornerY);
 					}
 					
 					return false;

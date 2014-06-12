@@ -22,9 +22,11 @@ public class MainCannon extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SteveDriver.field.addProjectile(new SnakeMainProjectile(this.getX(), this.getY(), MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees), (isUpgraded) ? 1 : 0));
+				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
+				
+				SteveDriver.field.addProjectile(temp);
+				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
+				
 				shootCounter = 0;
 	}
-	
-
 }

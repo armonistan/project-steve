@@ -12,6 +12,7 @@ public class Spiral extends Enemy{
 		knowledgeDistance = 500;//to be refined
 		
 		destroysBlockers = true;
+		ignoresBlockers = true;
 		moneyAmount = 30;
 	}
 	
