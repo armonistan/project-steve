@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 
-public class Spiral extends Enemy{
+public class Narwhal extends Enemy{
 	
-	public Spiral(float x, float y) {
+	public Narwhal(float x, float y) {
 		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 50, 100);
 		knowledgeDistance = 500;//to be refined
 		

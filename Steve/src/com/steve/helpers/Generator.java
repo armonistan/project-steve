@@ -6,13 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
-import com.steve.enemies.AntiSpiral;
+import com.steve.enemies.Spring;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
 import com.steve.enemies.HomaHawk;
 import com.steve.enemies.Rhino;
-import com.steve.enemies.Snail;
-import com.steve.enemies.Spiral;
+import com.steve.enemies.Slug;
+import com.steve.enemies.Narwhal;
 import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
@@ -329,13 +329,13 @@ public class Generator {
 	}
 	
 	public void generateSlug(float xPos, float yPos){
-		Snail s = new Snail(xPos, yPos);
+		Slug s = new Slug(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
 	}
 	
 	public boolean generateSlugTutorial(float xPos, float yPos){
-		Snail s = new Snail(xPos, yPos);
+		Slug s = new Slug(xPos, yPos);
 		if(isOccupied(s.getRectangle())){
 			SteveDriver.field.enemies.add(s);
 			return true;
@@ -351,13 +351,13 @@ public class Generator {
 	}
 	
 	public void generateAntiSpiral(float xPos, float yPos){
-		AntiSpiral s = new AntiSpiral(xPos, yPos);
+		Spring s = new Spring(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
 	}
 	
 	public void generateSpiral(float xPos, float yPos){
-		Spiral s = new Spiral(xPos, yPos);
+		Narwhal s = new Narwhal(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
 	}

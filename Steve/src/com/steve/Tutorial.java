@@ -12,7 +12,7 @@ import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.commands.ChangeTutorialStage;
 import com.steve.commands.EndTutorial;
-import com.steve.enemies.Snail;
+import com.steve.enemies.Slug;
 import com.steve.helpers.CollisionHelper;
 import com.steve.pickups.Apple;
 import com.steve.pickups.GatlingGunPickUp;
@@ -147,7 +147,7 @@ public class Tutorial {
 			float closestEnemyDistance = Float.POSITIVE_INFINITY;
 			
 			for (Enemy e : SteveDriver.field.enemies) {
-				if (e.getClass() == Snail.class) {
+				if (e.getClass() == Slug.class) {
 					float tempDist = CollisionHelper.distanceSquared(e.avatar.getX(), e.avatar.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
 						
