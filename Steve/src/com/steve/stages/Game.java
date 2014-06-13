@@ -23,15 +23,11 @@ public class Game {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		if (!SteveDriver.tutorial.isActive()) {
 			SteveDriver.field.update();
-		}
-		
-		SteveDriver.field.draw();
-		
-		SteveDriver.batch.begin();
-		if (!SteveDriver.tutorial.isActive()) {
 			SteveDriver.snake.update(deltaTime);
 		}
 		
+		SteveDriver.batch.begin();
+		SteveDriver.field.draw();
 		SteveDriver.snake.draw();
 		SteveDriver.batch.end();
 		
@@ -55,9 +51,9 @@ public class Game {
 		SteveDriver.guiCamera.update();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
-		SteveDriver.field.draw();
 		
 		SteveDriver.batch.begin();
+		SteveDriver.field.draw();
 		SteveDriver.snake.draw();
 		SteveDriver.batch.end();
 		

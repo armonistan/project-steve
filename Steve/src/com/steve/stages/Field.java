@@ -497,10 +497,6 @@ public class Field {
 	}
 	
 	public void draw() {
-		//mapRenderer.setView(SteveDriver.camera);
-		//mapRenderer.render();
-		
-		SteveDriver.batch.begin();
 		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / 16;
 		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / 16;
 		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
@@ -520,9 +516,7 @@ public class Field {
 				}
 			}
 		}/**/
-		/*SteveDriver.batch.end();*/
-		
-		/*SteveDriver.batch.begin();*/
+
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
 				p.draw(SteveDriver.batch);
@@ -542,7 +536,6 @@ public class Field {
 		for (Projectile p : projectiles) {
 			p.draw();
 		}/**/
-		SteveDriver.batch.end();
 	}
 	
 	public boolean isOccupied(Rectangle newObject){
