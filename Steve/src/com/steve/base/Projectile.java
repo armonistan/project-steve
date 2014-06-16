@@ -108,10 +108,6 @@ public class Projectile {
 	}
 	
 	public void setDirection(float dx, float dy) {
-		if (dx == dy) {
-			System.out.println(dx);
-		}
-		
 		directionX = MathUtils.clamp(dx, -1, 1) * speed;
 		directionY = MathUtils.clamp(dy, -1, 1) * speed;
 		

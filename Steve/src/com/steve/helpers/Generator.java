@@ -285,7 +285,7 @@ public class Generator {
 		
 		float yPosRightLeft = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.desertRadius) + SteveDriver.field.desertRadius;
 
-		System.out.println(xPosTopBot + ", " + yPosTop); //y < 500 y > 100  x < 500 x > 100
+		//System.out.println(xPosTopBot + ", " + yPosTop); //y < 500 y > 100  x < 500 x > 100
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
