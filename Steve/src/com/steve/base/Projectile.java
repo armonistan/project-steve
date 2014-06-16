@@ -45,8 +45,8 @@ public class Projectile {
 	}	
 	
 	public void update() {
-		if(this.projectileTime > 0) {
-			this.projectileTime--;
+		if(this.projectileTime > 0f) {
+			this.projectileTime-=1f;
 		}
 		else {
 			kill();
@@ -93,8 +93,10 @@ public class Projectile {
 	}
 	
 	public void kill() {
-		dead = true;
-		SteveDriver.field.projectilesToRemove.add(this);
+		if (!dead) {
+			dead = true;
+			SteveDriver.field.projectilesToRemove.add(this);
+		}
 	}
 	
 	public boolean getAlive() {

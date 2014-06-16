@@ -120,19 +120,19 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		return inputX - (Gdx.graphics.getWidth() / 2);
+		return inputX - ((int)SteveDriver.guiCamera.viewportWidth / 2);
 	}
 	
 	public int screenToCoordinateSpaceY(int inputY, int height) {
-		return -1 * (inputY - Gdx.graphics.getHeight() / 2 - height);
+		return -1 * (inputY - (int)SteveDriver.guiCamera.viewportHeight / 2 - height);
 	}
 	
 	public int coordinateToScreenSpaceX(int inputX) {
-		return (2 * inputX) + Gdx.graphics.getWidth();
+		return (2 * inputX) + (int)SteveDriver.guiCamera.viewportWidth;
 	}
 	
 	public int coordinateToScreenSpaceY(int inputY, int height) {
-		return 2 * ((inputY * -1) + height) + Gdx.graphics.getHeight();
+		return 2 * ((inputY * -1) + height) + (int)SteveDriver.guiCamera.viewportHeight;
 	}
 	
 	public boolean isOnScreen(float x, float y, float originX, float originY) {

@@ -105,7 +105,7 @@ public class Enemy {
 	}
 	
 	protected void checkIsDead(){
-		if(this.health <= 0){
+		if(this.health <= 0f){
 			this.kill();
 		}
 	}
@@ -142,7 +142,7 @@ public class Enemy {
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
 
-			if(this.passedBarrierCheck() || ignoresBlockers){
+			if(ignoresBlockers || this.passedBarrierCheck()){
 				//we good
 			}
 			else{
@@ -191,6 +191,7 @@ public class Enemy {
 	}
 	
 	public void kill() {
+		health = 0f;
 		SteveDriver.field.enemiesToRemove.add(this);
 		SteveDriver.snake.addMoney(moneyAmount);
 	}

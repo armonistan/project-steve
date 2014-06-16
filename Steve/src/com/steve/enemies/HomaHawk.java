@@ -40,8 +40,8 @@ public class HomaHawk extends Enemy{
 			float deltaY = this.avatar.getY() - s.getY();
 			float deltaX = this.avatar.getX() - s.getX();
 			
-			if(Math.abs(deltaX) > Gdx.graphics.getWidth()*1.2 ||
-					Math.abs(deltaY) > Gdx.graphics.getHeight()*1.2){
+			if(Math.abs(deltaX) > SteveDriver.guiCamera.viewportWidth*1.2f ||
+					Math.abs(deltaY) > Gdx.graphics.getHeight()*1.2f){
 				this.moveToNextBombingRun();
 			}
 		}
