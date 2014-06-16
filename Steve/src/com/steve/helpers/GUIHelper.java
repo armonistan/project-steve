@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 
 public class GUIHelper {
@@ -18,6 +19,8 @@ public class GUIHelper {
 	private Sprite bottomLeftBox;
 	private Sprite bottomBox;
 	private Sprite bottomRightBox;
+	
+	private Vector3 tempProjector;
 	
 	public GUIHelper() {
 		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
@@ -40,6 +43,8 @@ public class GUIHelper {
 				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
 		bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, 20 * SteveDriver.TEXTURE_WIDTH, 19 * SteveDriver.TEXTURE_LENGTH,
 				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		
+		tempProjector = new Vector3();
 	}
 	
 	public void drawText(String message, float x, float y, Color cualColorTienes) {
@@ -120,11 +125,20 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		return inputX - ((int)SteveDriver.guiCamera.viewportWidth / 2);
+		//return inputX - ((int)SteveDriver.guiCamera.viewportWidth / 2);
+		tempProjector.x = inputX;
+		
+		SteveDriver.guiCamera.unproject(tempProjector, SteveDriver.constants.get("screenWidth"), viewportY, viewportWidth, viewportHeight)
+		return (int)tempProjector.x;
 	}
 	
 	public int screenToCoordinateSpaceY(int inputY, int height) {
-		return -1 * (inputY - (int)SteveDriver.guiCamera.viewportHeight / 2 - height);
+		//return -1 * (inputY - (int)SteveDriver.guiCamera.viewportHeight / 2 - height);
+		
+		tempProjector.y = inputY;
+		
+		SteveDriver.guiCamera.unproject(tempProjector);
+		return (int)tempProjector.y;
 	}
 	
 	public int coordinateToScreenSpaceX(int inputX) {
