@@ -1,5 +1,6 @@
 package com.steve.base;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,13 +10,13 @@ import com.steve.helpers.CollisionHelper;
 public class Weapon extends Sprite{
 	
 	protected Enemy target;
-	protected int shootSpeed = 100;
-	protected int shootCounter = 0;
+	protected float shootSpeed = 2;
+	protected float shootCounter = 0;
 	protected float range;
 	float damage;//TODO use it?
 	protected int atlasX;
 	protected int atlasY;
-	boolean isAimed;
+	protected boolean isAimed;
 	protected boolean isUpgraded;
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
@@ -29,6 +30,7 @@ public class Weapon extends Sprite{
 	}
 	
 	public void update(float x, float y){
+		shootCounter += Gdx.graphics.getRawDeltaTime();
 		this.setPosition(x, y);
 		this.weaponBehavior();
 	}
@@ -38,10 +40,13 @@ public class Weapon extends Sprite{
 		targetEnemy();
 		if(target != null && SteveDriver.field.enemies.size() > 0){
 			turn();
-			if(shootCounter > shootSpeed && isInRange() && isAimed)
-				shoot();
+			if(shootCounter > shootSpeed){
+				if(isInRange() && isAimed)
+					shoot();
+				else
+					shootCounter = shootSpeed;
+			}
 		}
-		shootCounter += 1;
 	}
 	
 	protected void targetEnemy(){

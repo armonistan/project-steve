@@ -30,7 +30,7 @@ public class Snake {
 	private Vector3 headPosition;
 	
 	private final float TIME_BETWEEN_TURN = 0.5f;
-	private float timeTillStarve = 20f; //unit is seconds
+	private float timeTillStarve = 25f; //unit is seconds
 	private float hungerPerSecond = 5f;
 	private float timer = 0;
 	private float hungerTimer = 0;
@@ -534,8 +534,38 @@ public class Snake {
 					this.segments.get(this.weapons.size()+1).getY()));
 				break;
 			case 3:
+				int atlasX = 16*23;
+				int atlasY = 16*5;
+				
+				if((SteveDriver.constants.get("mainCannonType") == 0)){
+					if (SteveDriver.constants.get("fireRange") > 1f){
+						atlasX = 16*24;
+					}
+					else if(SteveDriver.constants.get("fireRate") > 1f){
+						atlasX = 16*24;
+						atlasY = 16*4;
+					}
+					else if(SteveDriver.constants.get("fireDamage") > 1f){
+						atlasX = 16*24;
+						atlasY = 16*6;
+					}
+				}
+				else if(SteveDriver.constants.get("mainCannonType") == 1){
+					atlasX = 16*25;
+					atlasY = 16*4;
+				}
+				else if(SteveDriver.constants.get("mainCannonType") == 2){
+					atlasX = 16*25;
+					atlasY = 16*5;
+				}
+				else if(SteveDriver.constants.get("mainCannonType") == 3){
+					atlasX = 16*25;
+					atlasY = 16*6;
+				}
+					
+				
 				weapons.add(new MainCannon(this.segments.get(this.weapons.size()+1).getX(), 
-					this.segments.get(this.weapons.size()+1).getY()));
+					this.segments.get(this.weapons.size()+1).getY(), atlasX, atlasY));
 			}
 		}
 	}

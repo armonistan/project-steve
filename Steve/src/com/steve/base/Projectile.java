@@ -20,6 +20,7 @@ public class Projectile {
 	private boolean snakeFriendly;
 	private boolean dead;
 	private float projectileTime;
+	protected boolean ignoreCollisions;
 	
 	protected float speed;
 
@@ -42,6 +43,7 @@ public class Projectile {
 		this(x, y, atlasPositionX, atlasPositionY, atlasBoundsX, atlasBoundsY, percentDamage, snakeFriendly);
 	
 		this.projectileTime = projectileTime;
+		ignoreCollisions = false;
 	}	
 	
 	public void update() {
@@ -55,7 +57,8 @@ public class Projectile {
 		
 		if (getAlive()) {
 			move();
-			checkCollisions();
+			if(!ignoreCollisions)
+				checkCollisions();
 		}
 	}
 	
