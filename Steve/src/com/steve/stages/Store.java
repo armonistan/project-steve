@@ -106,6 +106,14 @@ public class Store {
 			SteveDriver.storePrefs.putBoolean(key, activated);
 		}
 		
+		public void activateTierThreeMainCannonUpgrade() {
+			activated = true;
+			currentTier[category] = tier + 1;
+			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			SteveDriver.constants.modifyConstant(constantName, value);
+			SteveDriver.storePrefs.putBoolean(key, activated);
+		}
+		
 		public void setUnavailable() {
 			available = false;
 		}
@@ -524,11 +532,12 @@ public class Store {
 				panelX - 32 + (panelWidth / 2), 
 				panelY + 32 + (2 * panelHeight / 4)));
 		
+		
 		upgrades.add(new Upgrade("Fire Rate Increase", 
-				"fireRate",
+				"mainCannonType",
 				"wepTier3A",
-				"Steve gains a 30% fire rate bonus for his main gun,\nand a 15% boost for all other guns.",
-				.15f,
+				"Triple firepower!",
+				1f,
 				250000f,
 				2, 3,
 				panelX - 32 + (panelWidth / 2), 
@@ -545,10 +554,10 @@ public class Store {
 				panelY + 32 + (2 * panelHeight / 4)));
 		
 		upgrades.add(new Upgrade("Turret Range Increase", 
-				"fireRange",
+				"mainCannonType",
 				"wepTier3B",
-				"Steve gains a 20% range bonus for his main gun,\nand a 10% boost for all other guns.",
-				.1f,
+				"Turn the main cannon into a \npowerful Gauss Cannon.",
+				2f,
 				250000f,
 				2, 3,
 				panelX - 32 + (1 * panelWidth / 4), 
@@ -564,11 +573,13 @@ public class Store {
 				panelX - 32 + (3 * panelWidth / 4), 
 				panelY + 32 + (2 * panelHeight / 4)));
 		
+		
+		//firedamage .2f
 		upgrades.add(new Upgrade("Damage Increase", 
-				"fireDamage",
+				"mainCannonType",
 				"wepTier3C",
-				"Steve gains a 40% damage bonus for his main gun,\nand a 20% boost for all other guns.",
-				.2f,
+				"All missles fire!",
+				3f,
 				250000f,
 				2, 3,
 				panelX - 32 + (3 * panelWidth / 4), 

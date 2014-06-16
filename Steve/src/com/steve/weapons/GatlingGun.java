@@ -8,7 +8,7 @@ import com.steve.projectiles.SnakeBullet;
 public class GatlingGun extends Weapon{
 	public GatlingGun(float x, float y){
 		super(x,y, 16*8, 16);
-		shootSpeed = 25 - 25 * (int)(SteveDriver.constants.get("fireRate")-1f);
+		shootSpeed = 50 - 50 * (int)(SteveDriver.constants.get("fireRate")-1f);
 		range = 400f * SteveDriver.constants.get("fireRange");
 	}
 	
