@@ -17,6 +17,7 @@ import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
+import com.steve.enemies.Carrier;
 import com.steve.enemies.HomaHawk;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
@@ -220,7 +221,7 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		enemies.add(new HomaHawk(totalRadius/2 - 10, totalRadius/2));
+//		enemies.add(new Carrier(totalRadius/2 - 10, totalRadius/2));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
