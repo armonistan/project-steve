@@ -101,7 +101,7 @@ public class Store {
 		public void activateUpgrade() {
 			activated = true;
 			currentTier[category] = tier + 1;
-			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
 			SteveDriver.storePrefs.putBoolean(key, activated);
 		}

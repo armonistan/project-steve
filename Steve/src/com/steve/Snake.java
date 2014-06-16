@@ -492,7 +492,7 @@ public class Snake {
 
 	private void kill() {
 		//TODO: Make this better.
-		System.out.println("You suck.");
+		//System.out.println("You suck.");
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
 	}

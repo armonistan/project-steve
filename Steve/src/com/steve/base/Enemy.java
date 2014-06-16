@@ -256,19 +256,19 @@ public class Enemy {
 	
 	protected int doesKnow(float deltaX, float deltaY){
 		if((deltaX < 0)){
-			System.out.println("right");
+			//System.out.println("right");
 			return SteveDriver.RIGHT_ID;
 		}
 		else if((deltaY < 0)){
-			System.out.println("up");
+			//System.out.println("up");
 			return SteveDriver.UP_ID;
 		}
 		else if((deltaX > 0)){
-			System.out.println("left");
+			//System.out.println("left");
 			return SteveDriver.LEFT_ID;
 		}
 		else if((deltaY > 0)){
-			System.out.println("down");
+			//System.out.println("down");
 			return SteveDriver.DOWN_ID;
 		}
 		else 
