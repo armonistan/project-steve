@@ -60,10 +60,8 @@ public class Projectile {
 	}
 	
 	public void draw() {
-		avatar.draw(SteveDriver.batch);
-		
-		if (!getAlive()) {
-			//System.out.println("Drawn when dead.");
+		if (SteveDriver.guiHelper.isOnScreen(avatar.getX(), avatar.getY(), avatar.getOriginX(), avatar.getOriginY())) {
+			avatar.draw(SteveDriver.batch);
 		}
 	}
 	

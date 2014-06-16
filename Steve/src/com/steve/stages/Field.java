@@ -209,6 +209,8 @@ public class Field {
 		
 		this.RandomizeField();
 		
+		System.gc();
+		
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		

@@ -134,4 +134,11 @@ public class GUIHelper {
 	public int coordinateToScreenSpaceY(int inputY, int height) {
 		return 2 * ((inputY * -1) + height) + Gdx.graphics.getHeight();
 	}
+	
+	public boolean isOnScreen(float x, float y, float originX, float originY) {
+		return (x + originX * 2 >= SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f &&
+				x - originX * 2 < SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) &&
+				(y + originY >= SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f &&
+				y - originY < SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f);
+	}
 }

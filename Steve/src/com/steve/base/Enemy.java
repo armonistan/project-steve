@@ -79,7 +79,9 @@ public class Enemy {
 	}
 	
 	public void draw() {
-		avatar.draw(SteveDriver.batch);
+		if (SteveDriver.guiHelper.isOnScreen(avatar.getX(), avatar.getY(), avatar.getOriginX(), avatar.getOriginY())) {
+			avatar.draw(SteveDriver.batch);
+		}
 	}
 	
 	//TODO: Make more robust.
