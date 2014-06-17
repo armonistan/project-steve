@@ -39,6 +39,8 @@ public class Enemy {
 	protected float knowledgeDistance = 0; 
 	protected int moneyAmount = 0;
 	
+	protected int treasureAmount = 0;
+	
 	protected float shootTime;
 	protected float shootTimer;
 	
@@ -74,6 +76,11 @@ public class Enemy {
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
 		this.ignoresBlockers = false;
 		this.destroysBlockers = false;
+		
+		if (SteveDriver.constants.get("bulletTime") > 0f) {
+			this.moveTime *= 3;
+			this.animateTime *= 3;
+		}
 		
 		tempCollider = new Rectangle();
 	}
@@ -193,7 +200,11 @@ public class Enemy {
 	public void kill() {
 		health = 0f;
 		SteveDriver.field.enemiesToRemove.add(this);
-		SteveDriver.snake.addMoney(moneyAmount);
+		if (treasureAmount != 0) {
+			SteveDriver.snake.addTreasure(treasureAmount);
+		} else {
+			SteveDriver.snake.addMoney(moneyAmount);
+		}
 	}
 	
 	public float getXPosition(){

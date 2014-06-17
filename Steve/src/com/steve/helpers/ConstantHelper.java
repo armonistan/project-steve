@@ -23,6 +23,9 @@ public class ConstantHelper {
 	public void modifyConstant(String key, float modValue) {
 		float newValue = upgradeDict.get(key);
 		newValue += modValue;
+		if (newValue < 0f) {
+			newValue = 0f;
+		}
 		upgradeDict.put(key, newValue);
 	}
 	
@@ -45,5 +48,11 @@ public class ConstantHelper {
 		addToConstants("mainCannonType", 0f);
 		addToConstants("goldModifier", 1.0f);
 		addToConstants("priceModifier", 1.0f);
+		addToConstants("glueTrail", 0f);
+		addToConstants("candyZone", 0f);
+		addToConstants("nuke", 0f);
+		addToConstants("drill", 0f);
+		addToConstants("jetFuel", 0f);
+		addToConstants("bulletTime", 0f);
 	}
 }

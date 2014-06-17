@@ -39,7 +39,10 @@ public class Snake {
 	private float nextRotation;
 	
 	private int money;
+	private int treasure;
 	private int snakeTier;
+	
+	private boolean drill;
 	
 	private int helmetTier;
 	private int helmetHits;
@@ -61,6 +64,13 @@ public class Snake {
 
 		//TODO: Make this better
 		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
+		treasure = 10/*((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10)*/;
+		
+		if (SteveDriver.constants.get("drill") != 0f) {
+			drill = true;
+		} else {
+			drill = false;
+		}
 		
 		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
@@ -85,6 +95,24 @@ public class Snake {
 	
 	public int getMoney() {
 		return money;
+	}
+	
+	public int getTreasure() {
+		return treasure;
+	}
+	
+	public void addTreasure (int amount){
+		treasure += amount;
+		SteveDriver.prefs.putInteger("treasure", treasure);
+	}
+	
+	public boolean spendTreasure(int amount) {
+		if (treasure >= amount) {
+			treasure -= amount;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void addMoney(int amount) {
@@ -162,8 +190,9 @@ public class Snake {
 				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, segments.get(0).getBoundingRectangle())) {
-					if (helmetHits > 0) {
-						helmetHits -= 1;
+					if (drill) {
+						SteveDriver.field.destroyBlocker(x, y);
+						return false;
 					}
 					
 					kill();
