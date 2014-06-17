@@ -63,7 +63,7 @@ public class Store {
 			description = upgradeDescription;
 			
 			Button b = new Button(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos) - 4 * 16,
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos),
 						4, 4, new QueueUpgrade(this));
 			
 			upgradeButtons.get(category).add(b);
@@ -140,8 +140,8 @@ public class Store {
 		int screenWidth = Gdx.graphics.getWidth();
 		int screenHeight = Gdx.graphics.getHeight();
 		
-		panelX = (int)SteveDriver.guiCamera.viewportWidth / 2;
-		panelY = 0;
+		panelX = (int)SteveDriver.guiCamera.viewportWidth / 4;
+		panelY = -32;
 		panelWidth = 3 * (int)SteveDriver.guiCamera.viewportWidth / 4;
 		panelHeight = 3 * (int)SteveDriver.guiCamera.viewportHeight / 4;
 		
