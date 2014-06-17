@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 
 public class Button {
 	
-	float positionX;
-	float positionY;
+	public float positionX;
+	public float positionY;
 	int width;
 	int height;
 	int pxWidth;
@@ -35,7 +35,7 @@ public class Button {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(Gdx.input.getX()), 
-					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY() - pxHeight), 
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY()) + pxHeight, 
 					positionX, positionY, pxWidth, pxHeight)) {
 				if (buttonAction != null) {
 					buttonAction.execute();

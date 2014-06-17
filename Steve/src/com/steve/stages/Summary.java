@@ -25,7 +25,7 @@ public class Summary {
 		enemyCount = 0;
 		
 		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
-				SteveDriver.guiCamera.position.y + 2 * SteveDriver.TEXTURE_LENGTH, 12, 4,
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.STORE), "To the Store!");
 	}
 	
@@ -43,24 +43,14 @@ public class Summary {
 		continueButton.update();
 		continueButton.render();
 		
-		SteveDriver.guiHelper.drawText("Apples:", 
-				SteveDriver.guiHelper.screenToCoordinateSpaceX((int) (1 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4),
+		SteveDriver.guiHelper.drawTextCentered("Apples: $" + Math.round(appleScore * applePercent), 
+				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_WIDTH, 
+				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
 		
-		SteveDriver.guiHelper.drawText("$" + Math.round(appleScore * applePercent), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceX(25 + (int) (2 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4),
-				Color.BLACK);
-		
-		SteveDriver.guiHelper.drawText("Enemies:", 
-				SteveDriver.guiHelper.screenToCoordinateSpaceX((int) (1 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 *(int) SteveDriver.constants.get("screenHeight") / 5),
-				Color.BLACK);
-		
-		SteveDriver.guiHelper.drawText("$" + Math.round(enemyCount), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceX(25 + (int) (2 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * (int) SteveDriver.constants.get("screenHeight") / 5),
+		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyCount), 
+				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_WIDTH, 
+				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
 		
 		updateCounts();

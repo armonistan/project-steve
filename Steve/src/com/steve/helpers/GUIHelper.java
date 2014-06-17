@@ -121,8 +121,8 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		int temp = inputX * (int)SteveDriver.guiCamera.viewportWidth / Gdx.graphics.getWidth()
-				- ((int)(SteveDriver.guiCamera.viewportWidth) / 2);
+		int temp = (int)((inputX - Gdx.graphics.getWidth() / 2) *
+			SteveDriver.guiCamera.viewportWidth / Gdx.graphics.getWidth());
 		
 		System.out.println("X: " + inputX + " " + temp);
 		
@@ -130,8 +130,7 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceY(int inputY) {
-		int temp = -1 * (inputY * (int)SteveDriver.guiCamera.viewportHeight / Gdx.graphics.getHeight() -
-				(int)(SteveDriver.guiCamera.viewportHeight) / 2);
+		int temp = -1 * (int)((inputY - Gdx.graphics.getHeight() / 2) * SteveDriver.guiCamera.viewportHeight / Gdx.graphics.getHeight());
 		
 		System.out.println("Y: " + inputY + " " + temp);
 		
