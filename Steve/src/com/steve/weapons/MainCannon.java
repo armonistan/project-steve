@@ -13,7 +13,7 @@ public class MainCannon extends Weapon{
 	public MainCannon(float x, float y, int atlasX, int atlasY){
 		super(x,y, atlasX, atlasY);
 		shootSpeed = 2f - (2f * (SteveDriver.constants.get("fireRate") - 1f));
-		range = 700*SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange");
+		range = 700 * SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange");
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
@@ -40,8 +40,6 @@ public class MainCannon extends Weapon{
 				}
 			}
 		}
-			
-		shootCounter += 1;
 	}
 	
 	@Override
@@ -116,7 +114,7 @@ public class MainCannon extends Weapon{
 				
 				if(barrageCounter < 3){
 					barrageCounter++;
-					shootCounter-=10f;
+					shootCounter-=0.1f;
 				}
 				else{
 					barrageCounter = 0;
