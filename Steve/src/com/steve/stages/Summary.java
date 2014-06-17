@@ -24,8 +24,8 @@ public class Summary {
 		appleCount = 0;
 		enemyCount = 0;
 		
-		continueButton = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((int)SteveDriver.constants.get("screenWidth")/2) - 96,
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(7 * (int)SteveDriver.constants.get("screenHeight") / 8, 64), 12, 4,
+		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
+				SteveDriver.guiCamera.position.y + 2 * SteveDriver.TEXTURE_LENGTH, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.STORE), "To the Store!");
 	}
 	
@@ -45,22 +45,22 @@ public class Summary {
 		
 		SteveDriver.guiHelper.drawText("Apples:", 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX((int) (1 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4, 15),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4),
 				Color.BLACK);
 		
 		SteveDriver.guiHelper.drawText("$" + Math.round(appleScore * applePercent), 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX(25 + (int) (2 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4, 15),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (int) SteveDriver.constants.get("screenHeight") / 4),
 				Color.BLACK);
 		
 		SteveDriver.guiHelper.drawText("Enemies:", 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX((int) (1 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 *(int) SteveDriver.constants.get("screenHeight") / 5, 15),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 *(int) SteveDriver.constants.get("screenHeight") / 5),
 				Color.BLACK);
 		
 		SteveDriver.guiHelper.drawText("$" + Math.round(enemyCount), 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX(25 + (int) (2 * SteveDriver.constants.get("screenWidth") / 4)), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * (int) SteveDriver.constants.get("screenHeight") / 5, 15),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * (int) SteveDriver.constants.get("screenHeight") / 5),
 				Color.BLACK);
 		
 		updateCounts();

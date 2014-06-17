@@ -35,7 +35,7 @@ public class Button {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(Gdx.input.getX()), 
-					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY(), pxHeight), 
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY() - pxHeight), 
 					positionX, positionY, pxWidth, pxHeight)) {
 				if (buttonAction != null) {
 					buttonAction.execute();

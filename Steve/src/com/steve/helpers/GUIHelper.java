@@ -121,11 +121,21 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		return inputX - ((int)(SteveDriver.guiCamera.viewportWidth * Gdx.graphics.getWidth() / SteveDriver.guiCamera.viewportWidth) / 2);
+		int temp = inputX * (int)SteveDriver.guiCamera.viewportWidth / Gdx.graphics.getWidth()
+				- ((int)(SteveDriver.guiCamera.viewportWidth) / 2);
+		
+		System.out.println("X: " + inputX + " " + temp);
+		
+		return temp;
 	}
 	
-	public int screenToCoordinateSpaceY(int inputY, int height) {
-		return -1 * (inputY - (int)(SteveDriver.guiCamera.viewportHeight * Gdx.graphics.getHeight() / SteveDriver.guiCamera.viewportHeight) / 2 - height);
+	public int screenToCoordinateSpaceY(int inputY) {
+		int temp = -1 * (inputY * (int)SteveDriver.guiCamera.viewportHeight / Gdx.graphics.getHeight() -
+				(int)(SteveDriver.guiCamera.viewportHeight) / 2);
+		
+		System.out.println("Y: " + inputY + " " + temp);
+		
+		return temp;
 	}
 	
 	public int coordinateToScreenSpaceX(int inputX) {
