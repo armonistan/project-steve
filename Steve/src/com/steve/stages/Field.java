@@ -244,22 +244,23 @@ public class Field {
 	}
 	
 	public void destroyBlocker(int xPos, int yPos){
-		TiledMapTileLayer blockers = (TiledMapTileLayer)Field.map.getLayers().get(1);	
-		blockers.setCell(xPos, yPos, null);
-		Cell destroyed = new Cell();
-		switch (checkRing(xPos, yPos)) {
-			case 0:
-				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][8]));
-				rubble.setCell(xPos, yPos, destroyed);
-				break;
-			case 1:
-				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][9]));
-				rubble.setCell(xPos, yPos, destroyed);
-				break;
-			case 2:
-				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][10]));
-				rubble.setCell(xPos, yPos, destroyed);
-				break;
+		if (rubble.getCell(xPos, yPos) == null && blockers.getCell(xPos, yPos) != null) {
+			blockers.setCell(xPos, yPos, null);
+			Cell destroyed = new Cell();
+			switch (checkRing(xPos, yPos)) {
+				case 0:
+					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][8]));
+					rubble.setCell(xPos, yPos, destroyed);
+					break;
+				case 1:
+					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][9]));
+					rubble.setCell(xPos, yPos, destroyed);
+					break;
+				case 2:
+					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][10]));
+					rubble.setCell(xPos, yPos, destroyed);
+					break;
+			}
 		}
 	}
 	

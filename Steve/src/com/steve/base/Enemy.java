@@ -149,7 +149,7 @@ public class Enemy {
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
 
-			if(ignoresBlockers || this.passedBarrierCheck()){
+			if(this.passedBarrierCheck() || ignoresBlockers){
 				//we good
 			}
 			else{
@@ -425,7 +425,11 @@ public class Enemy {
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, this.avatar.getBoundingRectangle())) {
 					if(destroysBlockers) {
-						SteveDriver.field.destroyBlocker(x + topCornerX, y + topCornerY);
+						for (int destroyX = 0; destroyX < cellWidth; destroyX++) {
+							for (int destroyY = 0; destroyY < cellHeight; destroyY++) {
+								SteveDriver.field.destroyBlocker(destroyX + topCornerX, destroyY + topCornerY);
+							}
+						}
 					}
 					
 					return false;
