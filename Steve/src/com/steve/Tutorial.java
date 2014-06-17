@@ -15,9 +15,9 @@ import com.steve.commands.EndTutorial;
 import com.steve.enemies.Slug;
 import com.steve.helpers.CollisionHelper;
 import com.steve.pickups.Apple;
-import com.steve.pickups.GatlingGunPickup;
-import com.steve.pickups.LaserPickup;
-import com.steve.pickups.SpecialistPickup;
+import com.steve.pickups.GatlingGunPickUp;
+import com.steve.pickups.LaserPickUp;
+import com.steve.pickups.SpecialistPickUp;
 import com.steve.stages.Field;
 
 public class Tutorial {
@@ -173,7 +173,7 @@ public class Tutorial {
 			float closestWeaponDistance = Float.POSITIVE_INFINITY;
 			
 			for (Pickup p : Field.pickups) {
-				if (p.getClass() == GatlingGunPickup.class || p.getClass() == SpecialistPickup.class || p.getClass() == LaserPickup.class) {
+				if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
 					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
 						

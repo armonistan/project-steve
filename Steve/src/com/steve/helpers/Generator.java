@@ -16,9 +16,9 @@ import com.steve.enemies.Narwhal;
 import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
-import com.steve.pickups.GatlingGunPickup;
-import com.steve.pickups.LaserPickup;
-import com.steve.pickups.SpecialistPickup;
+import com.steve.pickups.GatlingGunPickUp;
+import com.steve.pickups.LaserPickUp;
+import com.steve.pickups.SpecialistPickUp;
 import com.steve.pickups.WeaponUpgrade;
 import com.steve.stages.Field;
 
@@ -469,18 +469,18 @@ public class Generator {
 	public void generateUpgrade(float xPos, float yPos, int upgradeType){
 		switch(upgradeType){
 			case GATLING_GUN_ID:
-				GatlingGunPickup g = new GatlingGunPickup(xPos, yPos);
+				GatlingGunPickUp g = new GatlingGunPickUp(xPos, yPos);
 				if(isOccupied(g.getRectangle())){
 					Field.pickups.add(g);
 				}
 				break;
 			case LASER_ID:
-				LaserPickup l = new LaserPickup(xPos, yPos);
+				LaserPickUp l = new LaserPickUp(xPos, yPos);
 				if(isOccupied(l.getRectangle()))
 					Field.pickups.add(l);				
 				break;
 			case SPECIALIST_ID:
-				SpecialistPickup s = new SpecialistPickup(xPos, yPos);
+				SpecialistPickUp s = new SpecialistPickUp(xPos, yPos);
 				if(isOccupied(s.getRectangle()))
 					Field.pickups.add(s);				
 				break;
@@ -490,14 +490,14 @@ public class Generator {
 	public boolean generateUpgradeTutorial(float xPos, float yPos, int upgradeType){
 		switch(upgradeType){
 			case GATLING_GUN_ID:
-				GatlingGunPickup g = new GatlingGunPickup(xPos, yPos);
+				GatlingGunPickUp g = new GatlingGunPickUp(xPos, yPos);
 				if(isOccupied(g.getRectangle())){
 					Field.pickups.add(g);
 					return true;
 				}
 				break;
 			case LASER_ID:
-				LaserPickup l = new LaserPickup(xPos, yPos);
+				LaserPickUp l = new LaserPickUp(xPos, yPos);
 				if(isOccupied(l.getRectangle())){
 					Field.pickups.add(l);			
 					return true;
@@ -505,7 +505,7 @@ public class Generator {
 				break;
 				
 			case SPECIALIST_ID:
-				SpecialistPickup s = new SpecialistPickup(xPos, yPos);
+				SpecialistPickUp s = new SpecialistPickUp(xPos, yPos);
 				if(isOccupied(s.getRectangle())){
 					Field.pickups.add(s);
 					return true;

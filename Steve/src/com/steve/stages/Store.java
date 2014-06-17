@@ -224,6 +224,7 @@ public class Store {
 		}
 		renderButtons();
 		
+		if (tabIndex != 5) {
 		SteveDriver.guiHelper.drawText("$" + SteveDriver.snake.getMoney(), 
 				infoBox.positionX,
 				infoBox.positionY + SteveDriver.BIG_TEXTURE_LENGTH,
@@ -231,7 +232,7 @@ public class Store {
 		} else {
 			SteveDriver.guiHelper.drawTextCentered("Treasure: " + SteveDriver.snake.getTreasure(), 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16, 15),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16),
 				Color.BLACK);
 		}
 		
@@ -246,7 +247,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				
@@ -261,7 +262,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				break;
@@ -275,7 +276,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				break;
@@ -289,7 +290,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				break;
@@ -303,7 +304,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				break;
@@ -317,7 +318,7 @@ public class Store {
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 							Color.BLACK);
 				}
 				break;
