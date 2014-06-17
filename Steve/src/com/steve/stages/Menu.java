@@ -39,15 +39,15 @@ public class Menu {
 		exitGame.update();
 		exitGame.render();
 		
-		if (Gdx.app.getPreferences("main").contains("money")) {
+		if (SteveDriver.prefs.contains("money")) {
 			continueGame.update();
 			continueGame.render();
 		}
 		SteveDriver.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-			Gdx.app.getPreferences("main").putInteger("money", 0);
-			Gdx.app.getPreferences("main").flush();
+			SteveDriver.prefs.putInteger("money", 0);
+			SteveDriver.prefs.flush();
 			SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 			
 			SteveDriver.store.resetStore();

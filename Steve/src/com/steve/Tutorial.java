@@ -49,8 +49,8 @@ public class Tutorial {
 				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
 		noGray = new Rectangle();
 		
-		continueButton = new TextButton(Gdx.graphics.getWidth() / 2 - 160, 0, 9, 4, new ChangeTutorialStage(), "Continue");
-		exitButton = new TextButton(Gdx.graphics.getWidth() / 2 - 160 - 16, -100, 10, 4, new EndTutorial(), "We Get It");
+		continueButton = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 160, 0, 9, 4, new ChangeTutorialStage(), "Continue");
+		exitButton = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 160 - 16, -100, 10, 4, new EndTutorial(), "We Get It");
 	}
 	
 	public void render() {

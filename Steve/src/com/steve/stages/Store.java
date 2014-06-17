@@ -130,8 +130,7 @@ public class Store {
 		}
 		
 		public void deactivateUpgrade() {
-			available = false;
-			b.setStatus(2);
+			setUnavailable();
 			SteveDriver.constants.modifyConstant(constantName, -value);
 			System.out.println("deactivating upgrade: " + name + " " + SteveDriver.constants.get(constantName) + " " + constantName);
 			SteveDriver.storePrefs.putBoolean(name, available);
@@ -144,6 +143,12 @@ public class Store {
 			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
 			SteveDriver.storePrefs.putBoolean(name, available);
+			SteveDriver.storePrefs.flush();
+		}
+		
+		public void reset() {
+			available = false;
+			SteveDriver.storePrefs.putBoolean(key, available);
 			SteveDriver.storePrefs.flush();
 		}
 		
@@ -434,7 +439,10 @@ public class Store {
 	}
 	
 	public void resetStore() {
-		SteveDriver.storePrefs.clear();
+		for (Upgrade u : upgrades) {
+			u.reset();
+		}
+		
 		SteveDriver.storePrefs.flush();
 	}
 	

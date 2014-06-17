@@ -8,8 +8,7 @@ public class StartNewGame extends StartNewRound {
 
 	@Override
 	public void execute() {
-		SteveDriver.storePrefs.clear();
-		SteveDriver.storePrefs.flush();
+		SteveDriver.store.resetStore();
 		//System.out.println(SteveDriver.storePrefs.getBoolean("goldTier1B"));
 		SteveDriver.prefs.putInteger("money", 0);
 		SteveDriver.prefs.flush();
