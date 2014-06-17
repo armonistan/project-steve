@@ -25,6 +25,7 @@ import com.steve.stages.Summary;
 
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
+	public static Texture background;
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
@@ -97,6 +98,9 @@ public class SteveDriver implements ApplicationListener {
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		background = new Texture(Gdx.files.internal("data/teset-1.png"));
+		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		guiHelper = new GUIHelper();
 		

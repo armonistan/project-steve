@@ -8,7 +8,7 @@ import com.steve.projectiles.SnakeLaser;
 public class Laser extends Weapon{
 	public Laser(float x, float y){
 		super(x,y, 16*9, 16);
-		shootSpeed = 100 - 100 * (int)(SteveDriver.constants.get("fireRate") - 1f);
+		shootSpeed = 3f - 3f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 1000*SteveDriver.constants.get("fireRange");
 	}
 	
@@ -31,7 +31,7 @@ public class Laser extends Weapon{
 	@Override
 	public void upgrade(){
 		super.upgrade();
-		this.shootSpeed = 50;
+		this.shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH);
 		//TODO more stuff to upgrade
 	}
