@@ -16,6 +16,7 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 		SteveDriver.constants.initConstants();
 		SteveDriver.store = new Store();
+		SteveDriver.tutorialOn = true;
 		super.execute();
 	}
 

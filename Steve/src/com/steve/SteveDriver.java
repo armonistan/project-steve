@@ -63,6 +63,8 @@ public class SteveDriver implements ApplicationListener {
 	public static Menu menu;
 	public static Game game;
 	
+	public static boolean tutorialOn = false;; 
+	
 	private Sound music;
 	
 	public static enum STAGE_TYPE {
