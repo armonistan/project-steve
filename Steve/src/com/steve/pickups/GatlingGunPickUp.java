@@ -5,7 +5,7 @@ import com.steve.base.Pickup;
 
 public class GatlingGunPickUp extends Pickup{
 	public GatlingGunPickUp(float xPos, float yPos){
-		super(xPos, yPos, 8 * 16, 0);
+		super(xPos, yPos, 8 * 16, 0, 0);
 	}
 	
 	@Override

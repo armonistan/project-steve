@@ -5,7 +5,7 @@ import com.steve.base.Pickup;
 
 public class WeaponUpgrade extends Pickup {
 	public WeaponUpgrade(float xPos, float yPos){
-		super(xPos, yPos, 9 * 16, 3 * 16);
+		super(xPos, yPos, 9 * 16, 3 * 16, 0);
 	}
 	
 	@Override
