@@ -92,7 +92,7 @@ public class Enemy {
 	}
 	
 	//TODO: Make more robust.
-	private void checkProjectiles() {
+	protected void checkProjectiles() {
 		for (Projectile p : SteveDriver.field.getProjectiles()) {
 			if (p.getFriendly() && p.getAlive()) {
 				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {

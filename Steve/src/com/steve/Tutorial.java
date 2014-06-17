@@ -214,11 +214,12 @@ public class Tutorial {
 	
 	public void startTutorial() {
 		stage = TUTORIAL_STAGE_TYPE.values()[0];
-		active = true;
+		active = SteveDriver.tutorialOn;
 	}
 	
 	public void endTutorial() {
-		active = false;
+		SteveDriver.tutorialOn = false;
+		active = SteveDriver.tutorialOn;
 	}
 	
 	public boolean isActive() {

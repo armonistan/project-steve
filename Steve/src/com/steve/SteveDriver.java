@@ -65,6 +65,8 @@ public class SteveDriver implements ApplicationListener {
 	public static Menu menu;
 	public static Game game;
 	
+	public static boolean tutorialOn = false;; 
+	
 	private Sound music;
 	private FPSLogger fpsLogger;
 	
