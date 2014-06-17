@@ -3,8 +3,8 @@ package com.steve.pickups;
 import com.steve.Snake;
 import com.steve.base.Pickup;
 
-public class SpecialistPickUp extends Pickup {
-	public SpecialistPickUp(float xPos, float yPos){
+public class SpecialistPickup extends Pickup {
+	public SpecialistPickup(float xPos, float yPos){
 		super(xPos, yPos, 10 * 16, 0);
 	}
 	

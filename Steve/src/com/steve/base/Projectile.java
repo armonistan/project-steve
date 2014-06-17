@@ -47,8 +47,8 @@ public class Projectile {
 	}	
 	
 	public void update() {
-		if(this.projectileTime > 0) {
-			this.projectileTime--;
+		if(this.projectileTime > 0f) {
+			this.projectileTime-=1f;
 		}
 		else {
 			kill();
@@ -63,10 +63,8 @@ public class Projectile {
 	}
 	
 	public void draw() {
-		avatar.draw(SteveDriver.batch);
-		
-		if (!getAlive()) {
-			//System.out.println("Drawn when dead.");
+		if (SteveDriver.guiHelper.isOnScreen(avatar.getX(), avatar.getY(), avatar.getOriginX(), avatar.getOriginY())) {
+			avatar.draw(SteveDriver.batch);
 		}
 	}
 	
@@ -98,8 +96,10 @@ public class Projectile {
 	}
 	
 	public void kill() {
-		dead = true;
-		SteveDriver.field.projectilesToRemove.add(this);
+		if (!dead) {
+			dead = true;
+			SteveDriver.field.projectilesToRemove.add(this);
+		}
 	}
 	
 	public boolean getAlive() {

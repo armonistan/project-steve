@@ -26,7 +26,7 @@ public class GUI {
 		for (int i = 0; i < 6; i++) {
 			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 64)));
 		}
-		height = Gdx.graphics.getHeight();
+		height = SteveDriver.constants.get("screenHeight");
 		leftEndPosition = new Vector2(48 * -3, height/2 -100);
 		rightEndPosition = new Vector2(48 * 2, height/2 -100);
 		guiTextures.get(5).setPosition(leftEndPosition.x, leftEndPosition.y);
@@ -60,7 +60,6 @@ public class GUI {
 			
 			if (i == finalPixel) {
 				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
-				//endHP.setRegion(240-(48*healthColor), 352, spriteSubSectionWidth, 64);
 				endHP.setRegionX(240-(48*healthColor));
 				endHP.setRegionWidth(spriteSubSectionWidth);
 				endHP.setBounds(48f * (i - 2f), height/2f - 100f, spriteSubSectionWidth, 64f);
@@ -70,8 +69,6 @@ public class GUI {
 				guiTextures.get(healthColor).draw(SteveDriver.batch);
 			}
 		}
-		
-		//SteveDriver.guiHelper.drawText(SteveDriver.snake.getMoney() + "", leftEndPosition.x, leftEndPosition.y, Color.BLACK);
 		
 		SteveDriver.batch.end();
 	}

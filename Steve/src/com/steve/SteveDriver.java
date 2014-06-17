@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -66,6 +67,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean tutorialOn = false;; 
 	
 	private Sound music;
+	private FPSLogger fpsLogger;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -80,9 +82,11 @@ public class SteveDriver implements ApplicationListener {
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+		float verticalSize = 30 * TEXTURE_WIDTH;
 		
-		camera = new OrthographicCamera(w, h);
-		guiCamera = new OrthographicCamera(w, h);
+		camera = new OrthographicCamera(verticalSize * w / h, verticalSize);
+		guiCamera = new OrthographicCamera(verticalSize * w / h, verticalSize);
+		
 		batch = new SpriteBatch();
 		random = new Random();
 		
@@ -90,8 +94,8 @@ public class SteveDriver implements ApplicationListener {
 		storePrefs = Gdx.app.getPreferences("store");
 		
 		constants = new ConstantHelper();
-		constants.addToConstants("screenWidth", Gdx.graphics.getWidth());
-		constants.addToConstants("screenHeight", Gdx.graphics.getHeight());
+		constants.addToConstants("screenWidth", SteveDriver.guiCamera.viewportWidth);
+		constants.addToConstants("screenHeight", SteveDriver.guiCamera.viewportHeight);
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
 		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -113,6 +117,8 @@ public class SteveDriver implements ApplicationListener {
 		
 		music = Gdx.audio.newSound(Gdx.files.internal("audio/MainV1.wav"));
 		music.loop();
+		
+		fpsLogger = new FPSLogger();
 	}
 
 	@Override
@@ -168,6 +174,8 @@ public class SteveDriver implements ApplicationListener {
 		if (tutorial.isActive()) {
 			tutorial.render();
 		}
+		
+		//fpsLogger.log();
 	}
 
 	@Override
@@ -186,7 +194,7 @@ public class SteveDriver implements ApplicationListener {
 	}
 	
 	public static void resetField() {
-		int scale = 10;
+		int scale = 5;
 		
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);

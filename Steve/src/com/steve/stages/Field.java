@@ -212,6 +212,8 @@ public class Field {
 		
 		this.RandomizeField();
 		
+		System.gc();
+		
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		
@@ -510,8 +512,8 @@ public class Field {
 		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
 		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f) / 16;
 		
-		for (int x = startX; x < endX; x++) {
-			for (int y = startY; y < endY; y++) {
+		for (int x = startX; x <= endX; x++) {
+			for (int y = startY; y <= endY; y++) {
 				Cell temp = background.getCell(x, y);
 				
 				if (temp != null) {

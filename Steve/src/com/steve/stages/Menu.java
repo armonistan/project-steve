@@ -10,9 +10,9 @@ import com.steve.commands.StartNewRound;
 import com.steve.TextButton;
 
 public class Menu {
-	TextButton newGame = new TextButton(0, 100, 10, 4, new StartNewGame(), "New Game");
-	TextButton continueGame = new TextButton(0, 0, 14, 4, new StartNewRound(), "Continue Game");
-	TextButton exitGame = new TextButton(0, -100, 10, 4, new ExitGame(), "Exit Game");
+	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2, 10, 4, new StartNewGame(), "New Game");
+	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 - 100, 14, 4, new StartNewRound(), "Continue Game");
+	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 - 200, 10, 4, new ExitGame(), "Exit Game");
 	
 	public void render() {
 		SteveDriver.guiCamera.position.x = 0;

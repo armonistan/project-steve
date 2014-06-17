@@ -15,9 +15,9 @@ import com.steve.commands.EndTutorial;
 import com.steve.enemies.Slug;
 import com.steve.helpers.CollisionHelper;
 import com.steve.pickups.Apple;
-import com.steve.pickups.GatlingGunPickUp;
-import com.steve.pickups.LaserPickUp;
-import com.steve.pickups.SpecialistPickUp;
+import com.steve.pickups.GatlingGunPickup;
+import com.steve.pickups.LaserPickup;
+import com.steve.pickups.SpecialistPickup;
 import com.steve.stages.Field;
 
 public class Tutorial {
@@ -173,7 +173,7 @@ public class Tutorial {
 			float closestWeaponDistance = Float.POSITIVE_INFINITY;
 			
 			for (Pickup p : Field.pickups) {
-				if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
+				if (p.getClass() == GatlingGunPickup.class || p.getClass() == SpecialistPickup.class || p.getClass() == LaserPickup.class) {
 					float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
 						
@@ -231,8 +231,8 @@ public class Tutorial {
 	}
 	
 	private void drawGray() {
-		for (float x = Gdx.graphics.getWidth() / 2 * -1; x < Gdx.graphics.getWidth() / 2; x += SteveDriver.TEXTURE_WIDTH) {
-			for (float y = Gdx.graphics.getHeight() / 2 * -1; y < Gdx.graphics.getHeight() / 2; y += SteveDriver.TEXTURE_LENGTH) {
+		for (float x = SteveDriver.guiCamera.viewportWidth / 2 * -1; x < SteveDriver.guiCamera.viewportWidth / 2; x += SteveDriver.TEXTURE_WIDTH) {
+			for (float y = SteveDriver.guiCamera.viewportHeight / 2 * -1; y < SteveDriver.guiCamera.viewportHeight / 2; y += SteveDriver.TEXTURE_LENGTH) {
 				if (!(x > noGray.x && x <= noGray.x + SteveDriver.TEXTURE_WIDTH + noGray.width && 
 					  y > noGray.y && y <= noGray.y + SteveDriver.TEXTURE_LENGTH + noGray.height)) {
 					grayBox.setPosition(x, y);

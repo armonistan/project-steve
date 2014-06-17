@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 
 public class GUIHelper {
@@ -120,18 +121,34 @@ public class GUIHelper {
 	}
 	
 	public int screenToCoordinateSpaceX(int inputX) {
-		return inputX - (Gdx.graphics.getWidth() / 2);
+		int temp = (int)((inputX - Gdx.graphics.getWidth() / 2) *
+			SteveDriver.guiCamera.viewportWidth / Gdx.graphics.getWidth());
+		
+		System.out.println("X: " + inputX + " " + temp);
+		
+		return temp;
 	}
 	
-	public int screenToCoordinateSpaceY(int inputY, int height) {
-		return -1 * (inputY - Gdx.graphics.getHeight() / 2 - height);
+	public int screenToCoordinateSpaceY(int inputY) {
+		int temp = -1 * (int)((inputY - Gdx.graphics.getHeight() / 2) * SteveDriver.guiCamera.viewportHeight / Gdx.graphics.getHeight());
+		
+		System.out.println("Y: " + inputY + " " + temp);
+		
+		return temp;
 	}
 	
 	public int coordinateToScreenSpaceX(int inputX) {
-		return (2 * inputX) + Gdx.graphics.getWidth();
+		return (2 * inputX) + (int)SteveDriver.guiCamera.viewportWidth;
 	}
 	
 	public int coordinateToScreenSpaceY(int inputY, int height) {
-		return 2 * ((inputY * -1) + height) + Gdx.graphics.getHeight();
+		return 2 * ((inputY * -1) + height) + (int)SteveDriver.guiCamera.viewportHeight;
+	}
+	
+	public boolean isOnScreen(float x, float y, float originX, float originY) {
+		return (x + originX * 2 >= SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f &&
+				x - originX * 2 < SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) &&
+				(y + originY >= SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f &&
+				y - originY < SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f);
 	}
 }
