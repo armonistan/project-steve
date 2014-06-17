@@ -86,7 +86,9 @@ public class Enemy {
 	}
 	
 	public void draw() {
-		avatar.draw(SteveDriver.batch);
+		if (SteveDriver.guiHelper.isOnScreen(avatar.getX(), avatar.getY(), avatar.getOriginX(), avatar.getOriginY())) {
+			avatar.draw(SteveDriver.batch);
+		}
 	}
 	
 	//TODO: Make more robust.
@@ -110,7 +112,7 @@ public class Enemy {
 	}
 	
 	protected void checkIsDead(){
-		if(this.health <= 0){
+		if(this.health <= 0f){
 			this.kill();
 		}
 	}
@@ -147,7 +149,7 @@ public class Enemy {
 			Vector2 direction = decideMove();
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
 
-			if(this.passedBarrierCheck() || ignoresBlockers){
+			if(ignoresBlockers || this.passedBarrierCheck()){
 				//we good
 			}
 			else{
@@ -196,6 +198,7 @@ public class Enemy {
 	}
 	
 	public void kill() {
+		health = 0f;
 		SteveDriver.field.enemiesToRemove.add(this);
 		if (treasureAmount != 0) {
 			SteveDriver.snake.addTreasure(treasureAmount);
@@ -267,19 +270,19 @@ public class Enemy {
 	
 	protected int doesKnow(float deltaX, float deltaY){
 		if((deltaX < 0)){
-			System.out.println("right");
+			//System.out.println("right");
 			return SteveDriver.RIGHT_ID;
 		}
 		else if((deltaY < 0)){
-			System.out.println("up");
+			//System.out.println("up");
 			return SteveDriver.UP_ID;
 		}
 		else if((deltaX > 0)){
-			System.out.println("left");
+			//System.out.println("left");
 			return SteveDriver.LEFT_ID;
 		}
 		else if((deltaY > 0)){
-			System.out.println("down");
+			//System.out.println("down");
 			return SteveDriver.DOWN_ID;
 		}
 		else 

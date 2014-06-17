@@ -12,7 +12,12 @@ public class StartNewRound extends ChangeStage {
 
 	@Override
 	public void execute() {
-		SteveDriver.resetField();
+		if (SteveDriver.snake.getMoney() == 0) {
+			SteveDriver.resetField();
+		}
+		else {
+			stage = STAGE_TYPE.STORE;
+		}
 		
 		super.execute();
 	}

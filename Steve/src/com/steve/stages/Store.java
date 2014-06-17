@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.steve.Button;
 import com.steve.SteveDriver;
@@ -63,7 +64,7 @@ public class Store {
 			description = upgradeDescription;
 			
 			b = new Button(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos, 4 * 16),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos),
 						4, 4, new QueueUpgrade(this));
 			
 			upgradeButtons.get(category).add(b);
@@ -114,7 +115,15 @@ public class Store {
 			activated = true;
 			currentTier[category] = tier + 1;
 			b.setStatus(1);
-			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			SteveDriver.constants.modifyConstant(constantName, value);
+			SteveDriver.storePrefs.putBoolean(key, activated);
+		}
+		
+		public void activateTierThreeMainCannonUpgrade() {
+			activated = true;
+			currentTier[category] = tier + 1;
+			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
 			SteveDriver.storePrefs.putBoolean(key, activated);
 			SteveDriver.storePrefs.flush();
@@ -161,49 +170,49 @@ public class Store {
 		isUpgradeSelected = false;
 		
 		tabIndex = 0;
-		int screenWidth = (int) SteveDriver.constants.get("screenWidth");
-		int screenHeight = (int) SteveDriver.constants.get("screenHeight");
+		int screenWidth = Gdx.graphics.getWidth();
+		int screenHeight = Gdx.graphics.getHeight();
 		
-		panelX = screenWidth / 4;
-		panelY = 0;
-		panelWidth = 3 * screenWidth / 4;
-		panelHeight = 3 * screenHeight / 4;
+		panelX = (int)SteveDriver.guiCamera.viewportWidth / 4;
+		panelY = -32;
+		panelWidth = 3 * (int)SteveDriver.guiCamera.viewportWidth / 4;
+		panelHeight = 3 * (int)SteveDriver.guiCamera.viewportHeight / 4;
 		
 		infoBox = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth/4),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4, screenHeight / 64),
-				3 * screenWidth / 64, screenHeight / 64, null, description);
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4),
+				3 * (int)SteveDriver.guiCamera.viewportWidth / 64, (int)SteveDriver.guiCamera.viewportHeight / 64, null, description);
 		
 		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4, screenHeight / 64),
-				screenWidth / (4 * 16 * 2), screenHeight / 64, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4)  - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16 * 2), (int)SteveDriver.guiCamera.viewportHeight / 64, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
 		
 		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth / 8),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4, screenHeight / 64),
-				screenWidth / (4 * 16 * 2), screenHeight / 64, new ConfirmUpgrade(this), "Buy!");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16 * 2), (int)SteveDriver.guiCamera.viewportHeight / 64, new ConfirmUpgrade(this), "Buy!");
 		
 		snakeTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 0), "Snake");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 0), "Snake");
 		
 		effTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(1 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 1), "Efficency");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(1 * (3 * screenHeight / (4 * 6)))  - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 1), "Efficency");
 		
 		lengthTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 2), "Length");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 2), "Length");
 		
 		weaponsTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 3), "Weapons");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 3), "Weapons");
 		
 		cashTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(4 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 4), "Cash");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(4 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 4), "Cash");
 		
 		specialTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * (3 * screenHeight / (4 * 6)), screenHeight / 64),
-				screenWidth / (4 * 16), 3 * screenHeight / (4 * 16 * 6), new SwitchStoreTab(this, 5), "Special");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * 16), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * 16 * 6), new SwitchStoreTab(this, 5), "Special");
 		
 		initializeUpgrades();
 		setStoreProgress();
@@ -215,10 +224,9 @@ public class Store {
 		}
 		renderButtons();
 		
-		if (tabIndex != 5) {
-			SteveDriver.guiHelper.drawTextCentered("$" + SteveDriver.snake.getMoney(), 
-				SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16, 15),
+		SteveDriver.guiHelper.drawText("$" + SteveDriver.snake.getMoney(), 
+				infoBox.positionX,
+				infoBox.positionY + SteveDriver.BIG_TEXTURE_LENGTH,
 				Color.BLACK);
 		} else {
 			SteveDriver.guiHelper.drawTextCentered("Treasure: " + SteveDriver.snake.getTreasure(), 
@@ -233,7 +241,7 @@ public class Store {
 					description = "Ascend to a higher existence.";
 					SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -248,7 +256,7 @@ public class Store {
 					description = "When the field gets tough, Steve gets \ntougher.";
 					SteveDriver.guiHelper.drawTextCentered("Durability Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -262,7 +270,7 @@ public class Store {
 					description = "Feeling inadequate? Small? You've\ncome to the right place.";
 					SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -276,7 +284,7 @@ public class Store {
 					description = "Go from boom to BOOM.";
 					SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -290,7 +298,7 @@ public class Store {
 					description = "Mo' money mo' prolems";
 					SteveDriver.guiHelper.drawTextCentered("Cash Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -304,7 +312,7 @@ public class Store {
 					description = "These are secrets. SECRET.";
 					SteveDriver.guiHelper.drawTextCentered("Special Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10)  - 15,
 							Color.BLACK);
 				} else {
 					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
@@ -622,11 +630,12 @@ public class Store {
 				panelX - 32 + (panelWidth / 2), 
 				panelY + 32 + (2 * panelHeight / 4)));
 		
+		
 		upgrades.add(new Upgrade("Fire Rate Increase", 
-				"fireRate",
+				"mainCannonType",
 				"wepTier3A",
-				"Steve gains a 30% fire rate bonus for his main gun,\nand a 15% boost for all other guns.",
-				.15f,
+				"Triple firepower!",
+				1f,
 				250000f,
 				2, 3,
 				panelX - 32 + (panelWidth / 2), 
@@ -643,10 +652,10 @@ public class Store {
 				panelY + 32 + (2 * panelHeight / 4)));
 		
 		upgrades.add(new Upgrade("Turret Range Increase", 
-				"fireRange",
+				"mainCannonType",
 				"wepTier3B",
-				"Steve gains a 20% range bonus for his main gun,\nand a 10% boost for all other guns.",
-				.1f,
+				"Turn the main cannon into a \npowerful Gauss Cannon.",
+				2f,
 				250000f,
 				2, 3,
 				panelX - 32 + (1 * panelWidth / 4), 
@@ -662,11 +671,13 @@ public class Store {
 				panelX - 32 + (3 * panelWidth / 4), 
 				panelY + 32 + (2 * panelHeight / 4)));
 		
+		
+		//firedamage .2f
 		upgrades.add(new Upgrade("Damage Increase", 
-				"fireDamage",
+				"mainCannonType",
 				"wepTier3C",
-				"Steve gains a 40% damage bonus for his main gun,\nand a 20% boost for all other guns.",
-				.2f,
+				"All missles fire!",
+				3f,
 				250000f,
 				2, 3,
 				panelX - 32 + (3 * panelWidth / 4), 

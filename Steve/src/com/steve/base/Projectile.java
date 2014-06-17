@@ -20,6 +20,7 @@ public class Projectile {
 	private boolean snakeFriendly;
 	private boolean dead;
 	private float projectileTime;
+	protected boolean ignoreCollisions;
 	
 	protected float speed;
 
@@ -42,11 +43,12 @@ public class Projectile {
 		this(x, y, atlasPositionX, atlasPositionY, atlasBoundsX, atlasBoundsY, percentDamage, snakeFriendly);
 	
 		this.projectileTime = projectileTime;
+		ignoreCollisions = false;
 	}	
 	
 	public void update() {
-		if(this.projectileTime > 0) {
-			this.projectileTime--;
+		if(this.projectileTime > 0f) {
+			this.projectileTime-=1f;
 		}
 		else {
 			kill();
@@ -55,15 +57,14 @@ public class Projectile {
 		
 		if (getAlive()) {
 			move();
-			checkCollisions();
+			if(!ignoreCollisions)
+				checkCollisions();
 		}
 	}
 	
 	public void draw() {
-		avatar.draw(SteveDriver.batch);
-		
-		if (!getAlive()) {
-			//System.out.println("Drawn when dead.");
+		if (SteveDriver.guiHelper.isOnScreen(avatar.getX(), avatar.getY(), avatar.getOriginX(), avatar.getOriginY())) {
+			avatar.draw(SteveDriver.batch);
 		}
 	}
 	
@@ -95,8 +96,10 @@ public class Projectile {
 	}
 	
 	public void kill() {
-		dead = true;
-		SteveDriver.field.projectilesToRemove.add(this);
+		if (!dead) {
+			dead = true;
+			SteveDriver.field.projectilesToRemove.add(this);
+		}
 	}
 	
 	public boolean getAlive() {
@@ -108,10 +111,6 @@ public class Projectile {
 	}
 	
 	public void setDirection(float dx, float dy) {
-		if (dx == dy) {
-			System.out.println(dx);
-		}
-		
 		directionX = MathUtils.clamp(dx, -1, 1) * speed;
 		directionY = MathUtils.clamp(dy, -1, 1) * speed;
 		

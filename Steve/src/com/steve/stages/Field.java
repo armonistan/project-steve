@@ -17,6 +17,7 @@ import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
+import com.steve.enemies.Carrier;
 import com.steve.enemies.HomaHawk;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
@@ -219,6 +220,8 @@ public class Field {
 		this.RandomizeField();
 		
 		rubble = (TiledMapTileLayer)map.getLayers().get(2);
+		System.gc();
+		
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		
@@ -230,7 +233,7 @@ public class Field {
 		
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
-		enemies.add(new HomaHawk(totalRadius/2 - 10, totalRadius/2));
+//		enemies.add(new Carrier(totalRadius/2 - 10, totalRadius/2));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -534,8 +537,8 @@ public class Field {
 		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
 		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f) / 16;
 		
-		for (int x = startX; x < endX; x++) {
-			for (int y = startY; y < endY; y++) {
+		for (int x = startX; x <= endX; x++) {
+			for (int y = startY; y <= endY; y++) {
 				Cell temp = background.getCell(x, y);
 				
 				if (temp != null) {
