@@ -8,38 +8,66 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
 
 public class GUIHelper {
+	
 	private BitmapFont font;
-	private Sprite topLeftBox;
-	private Sprite topBox;
-	private Sprite topRightBox;
-	private Sprite leftBox;
-	private Sprite centerBox;
-	private Sprite rightBox;
-	private Sprite bottomLeftBox;
-	private Sprite bottomBox;
-	private Sprite bottomRightBox;
+	private BoxSet blackBox;
+	private BoxSet goldBox;
+	private BoxSet redBox;
+	
+	public enum BoxColors {
+		BLACK, GOLD, RED;
+	}
+	
+	private class BoxSet {
+		public Sprite topLeftBox;
+		public Sprite topBox;
+		public Sprite topRightBox;
+		public Sprite leftBox;
+		public Sprite centerBox;
+		public Sprite rightBox;
+		public Sprite bottomLeftBox;
+		public Sprite bottomBox;
+		public Sprite bottomRightBox;
+		
+		public BoxSet(int x, int y) {
+			topLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			topBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			topRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			leftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			centerBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			rightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			bottomBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
+					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		}
+	}
 	
 	public GUIHelper() {
 		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
-		
-		topLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, 18 * SteveDriver.TEXTURE_WIDTH, 17 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		topBox = new Sprite(new TextureRegion(SteveDriver.atlas, 19 * SteveDriver.TEXTURE_WIDTH, 17 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		topRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, 20 * SteveDriver.TEXTURE_WIDTH, 17 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		leftBox = new Sprite(new TextureRegion(SteveDriver.atlas, 18 * SteveDriver.TEXTURE_WIDTH, 18 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		centerBox = new Sprite(new TextureRegion(SteveDriver.atlas, 19 * SteveDriver.TEXTURE_WIDTH, 18 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		rightBox = new Sprite(new TextureRegion(SteveDriver.atlas, 20 * SteveDriver.TEXTURE_WIDTH, 18 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, 18 * SteveDriver.TEXTURE_WIDTH, 19 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		bottomBox = new Sprite(new TextureRegion(SteveDriver.atlas, 19 * SteveDriver.TEXTURE_WIDTH, 19 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-		bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, 20 * SteveDriver.TEXTURE_WIDTH, 19 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		blackBox = new BoxSet(18, 17);
+		goldBox = new BoxSet(18, 20);
+		redBox = new BoxSet(18, 23);
+	}
+	
+	private BoxSet getBox(BoxColors whichBox) {
+		switch (whichBox) {
+			case BLACK:
+				return this.blackBox;
+			case GOLD:
+				return this.goldBox;
+			case RED:
+				return this.redBox;
+		}
+		return this.blackBox;
 	}
 	
 	public void drawText(String message, float x, float y, Color cualColorTienes) {
@@ -70,42 +98,42 @@ public class GUIHelper {
 		}
 	}
 	
-	public void drawBox(float x, float y, int width, int height) {
+	public void drawBox(float x, float y, int width, int height, BoxColors whichBox) {
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 				Sprite temp;
 				
 				if (row == 0) {
 					if (col == 0) {
-						temp = topLeftBox;
+						temp = getBox(whichBox).topLeftBox;
 					}
 					else if (col == width - 1) {
-						temp = topRightBox;
+						temp = getBox(whichBox).topRightBox;
 					}
 					else {
-						temp = topBox;
+						temp = getBox(whichBox).topBox;
 					}
 				}
 				else if (row == height - 1) {
 					if (col == 0) {
-						temp = bottomLeftBox;
+						temp = getBox(whichBox).bottomLeftBox;
 					}
 					else if (col == width - 1) {
-						temp = bottomRightBox;
+						temp = getBox(whichBox).bottomRightBox;
 					}
 					else {
-						temp = bottomBox;
+						temp = getBox(whichBox).bottomBox;
 					}
 				}
 				else {
 					if (col == 0) {
-						temp = leftBox;
+						temp = getBox(whichBox).leftBox;
 					}
 					else if (col == width - 1) {
-						temp = rightBox;
+						temp = getBox(whichBox).rightBox;
 					}
 					else {
-						temp = centerBox;
+						temp = getBox(whichBox).centerBox;
 					}
 				}
 				

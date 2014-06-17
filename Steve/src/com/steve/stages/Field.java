@@ -33,11 +33,13 @@ public class Field {
 	float pickUpTimer = 0;
 	
 	public static TiledMap map;
+	TextureRegion[][] splitTiles;
 	OrthogonalTiledMapRenderer mapRenderer;
 	Texture tiles;
 	TileRegion grass, desert, barren;
 	public static TiledMapTileLayer background;
 	public static TiledMapTileLayer blockers;
+	public static TiledMapTileLayer rubble;
 	
 	public static LinkedList<Pickup> pickups;
 	public static LinkedList<Pickup> pickupsToRemove;
@@ -200,15 +202,23 @@ public class Field {
 		this.blockerChains = 200 * scale * scale;
 		this.maxBlockerLength = 10;
 		
-		this.grass = new TileRegion(6, 4, 1, 2);
-		this.desert = new TileRegion(6, 7, 1, 2);
-		this.barren = new TileRegion(6, 10, 1, 2);
+		if (SteveDriver.constants.get("candyZone") == 0f) {
+			this.grass = new TileRegion(6, 4, 1, 2);
+			this.desert = new TileRegion(6, 7, 1, 2);
+			this.barren = new TileRegion(6, 10, 1, 2);
+		} else {
+			this.grass = new TileRegion(6, 13, 1, 2);
+			this.desert = new TileRegion(6, 16, 1, 2);
+			this.barren = new TileRegion(6, 19, 1, 2);
+		}
 		
 		this.tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
+		splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		Field.map = new TiledMap();
 		
 		this.RandomizeField();
 		
+		rubble = (TiledMapTileLayer)map.getLayers().get(2);
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		
@@ -233,6 +243,21 @@ public class Field {
 	public void destroyBlocker(int xPos, int yPos){
 		TiledMapTileLayer blockers = (TiledMapTileLayer)Field.map.getLayers().get(1);	
 		blockers.setCell(xPos, yPos, null);
+		Cell destroyed = new Cell();
+		switch (checkRing(xPos, yPos)) {
+			case 0:
+				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][8]));
+				rubble.setCell(xPos, yPos, destroyed);
+				break;
+			case 1:
+				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][9]));
+				rubble.setCell(xPos, yPos, destroyed);
+				break;
+			case 2:
+				destroyed.setTile(new StaticTiledMapTile(splitTiles[6][10]));
+				rubble.setCell(xPos, yPos, destroyed);
+				break;
+		}
 	}
 	
 	public int checkRing(int x, int y) {
@@ -328,15 +353,21 @@ public class Field {
 	}
 	
 	public void RandomizeField() {
-		TextureRegion[][] splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		MapLayers layers = Field.map.getLayers();
 		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		TiledMapTileLayer rubble = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
-		blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
-		blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
-		blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
 		
+		if (SteveDriver.constants.get("candyZone") == 0f){
+			blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
+		} else {
+			blockerTiles.add(new CellContainer(0, 13, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
+		}
 		//This is the Background generation	
 		//Barren tiles generated
 		for (int x = 0; x < this.totalRadius; x++) {
@@ -476,6 +507,7 @@ public class Field {
 		
 		layers.add(layer);
 		layers.add(blockers);
+		layers.add(rubble);
 	}
 	
 	public void update() {
@@ -493,7 +525,7 @@ public class Field {
 		}
 		while (projectilesToRemove.size() > 0) {
 			projectiles.remove(projectilesToRemove.remove());
-		}/**/
+		}
 	}
 	
 	public void draw() {
@@ -511,6 +543,11 @@ public class Field {
 					
 					if (blockers.getCell(x, y) != null) {
 						SteveDriver.batch.draw(blockers.getCell(x, y).getTile().getTextureRegion(),
+								x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+					}
+					
+					if (rubble.getCell(x, y) != null) {
+						SteveDriver.batch.draw(rubble.getCell(x, y).getTile().getTextureRegion(),
 								x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
 					}
 				}

@@ -39,6 +39,8 @@ public class Enemy {
 	protected float knowledgeDistance = 0; 
 	protected int moneyAmount = 0;
 	
+	protected int treasureAmount = 0;
+	
 	protected float shootTime;
 	protected float shootTimer;
 	
@@ -190,7 +192,11 @@ public class Enemy {
 	
 	public void kill() {
 		SteveDriver.field.enemiesToRemove.add(this);
-		SteveDriver.snake.addMoney(moneyAmount);
+		if (treasureAmount != 0) {
+			SteveDriver.snake.addTreasure(treasureAmount);
+		} else {
+			SteveDriver.snake.addMoney(moneyAmount);
+		}
 	}
 	
 	public float getXPosition(){

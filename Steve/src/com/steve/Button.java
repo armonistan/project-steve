@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.steve.helpers.GUIHelper;
 
 public class Button {
 	
@@ -14,6 +15,7 @@ public class Button {
 	ICommand buttonAction;
 	
 	boolean clicked;
+	int status;
 	
 	public Button(float posX, float posY, int width, int height, ICommand action) {
 		positionX = posX;
@@ -25,10 +27,21 @@ public class Button {
 		buttonAction = action;
 		
 		clicked = false;
+		status = 0;
 	}
 	
 	public void render() {
-		SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height);
+		switch(status) {
+			case 1:
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.GOLD);
+				break;
+			case 2:
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.RED);
+				break;
+			default:
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.BLACK);
+				break;
+		}
 	}
 	
 	public void update() {
@@ -46,5 +59,9 @@ public class Button {
 		else {
 			clicked = false;
 		}
+	}
+	
+	public void setStatus(int newStatus) {
+		status = newStatus;
 	}
 }

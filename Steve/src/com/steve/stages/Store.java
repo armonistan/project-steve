@@ -48,6 +48,7 @@ public class Store {
 		int tier;
 		boolean activated;
 		boolean available;
+		Button b;
 		
 		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int category, int xPos, int yPos) {
 			activated = false;
@@ -61,7 +62,7 @@ public class Store {
 			this.value = value;
 			description = upgradeDescription;
 			
-			Button b = new Button(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
+			b = new Button(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos, 4 * 16),
 						4, 4, new QueueUpgrade(this));
 			
@@ -69,12 +70,23 @@ public class Store {
 
 			if (SteveDriver.storePrefs.contains(key)) {
 				if (SteveDriver.storePrefs.getBoolean(key)) {
-					activated = true;
-					currentTier[category] = tier;
-					activateUpgrade();
+					if (category != 5) {
+						activated = true;
+						currentTier[category] = tier;
+						activateUpgrade();
+						b.setStatus(1);
+					} else {
+						activated = true;
+						if (!SteveDriver.storePrefs.getBoolean(name)) {
+							deactivateUpgrade();
+						} else {
+							setAvailable();
+						}
+					}
 				}
 			} else {
 				if (currentTier[category] > tier) {
+					b.setStatus(2);
 					setUnavailable();
 				}
 				SteveDriver.storePrefs.putBoolean(key, activated);
@@ -101,17 +113,38 @@ public class Store {
 		public void activateUpgrade() {
 			activated = true;
 			currentTier[category] = tier + 1;
+			b.setStatus(1);
 			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, value);
 			SteveDriver.storePrefs.putBoolean(key, activated);
+			SteveDriver.storePrefs.flush();
+		}
+		
+		public void deactivateUpgrade() {
+			available = false;
+			b.setStatus(2);
+			System.out.println("deactivating upgrade: " + name + " 0f " + constantName);
+			SteveDriver.constants.modifyConstant(constantName, -value);
+			SteveDriver.storePrefs.putBoolean(name, available);
+			SteveDriver.storePrefs.flush();
+		}
+		
+		public void setAvailable() {
+			available = true;
+			b.setStatus(1);
+			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			SteveDriver.constants.modifyConstant(constantName, value);
+			SteveDriver.storePrefs.putBoolean(name, available);
+			SteveDriver.storePrefs.flush();
 		}
 		
 		public void setUnavailable() {
 			available = false;
+			b.setStatus(2);
 		}
 		
 		public void setPrice(float price) {
-			this.price = price;
+			this.price = (int) price;
 		}
 	}
 	
@@ -178,69 +211,107 @@ public class Store {
 	
 	public void render() {
 		if (selectedUpgrade != null) {
-			setDescription();
+			//setDescription();
 		}
 		renderButtons();
 		
-		SteveDriver.guiHelper.drawTextCentered("$" + SteveDriver.snake.getMoney(), 
+		if (tabIndex != 5) {
+			SteveDriver.guiHelper.drawTextCentered("$" + SteveDriver.snake.getMoney(), 
 				SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16, 15),
 				Color.BLACK);
+		} else {
+			SteveDriver.guiHelper.drawTextCentered("Treasure: " + SteveDriver.snake.getTreasure(), 
+				SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight - 16, 15),
+				Color.BLACK);
+		}
 		
 		switch (tabIndex) {
 			case 0:
 				if (!isUpgradeSelected) {
 					description = "Ascend to a higher existence.";
+					SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
+				
 				break;
 			case 1:
 				if (!isUpgradeSelected) {
 					description = "When the field gets tough, Steve gets \ntougher.";
+					SteveDriver.guiHelper.drawTextCentered("Durability Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Durability Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
 				break;
 			case 2:
 				if (!isUpgradeSelected) {
 					description = "Feeling inadequate? Small? You've\ncome to the right place.";
+					SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
 				break;
 			case 3:
 				if (!isUpgradeSelected) {
 					description = "Go from boom to BOOM.";
+					SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
 				break;
 			case 4:
 				if (!isUpgradeSelected) {
 					description = "Mo' money mo' prolems";
+					SteveDriver.guiHelper.drawTextCentered("Cash Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Cash Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
 				break;
 			case 5:
 				if (!isUpgradeSelected) {
 					description = "These are secrets. SECRET.";
+					SteveDriver.guiHelper.drawTextCentered("Special Upgrades", 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
+				} else {
+					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
+							Color.BLACK);
 				}
-				SteveDriver.guiHelper.drawTextCentered("Special Upgrades", 
-						SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10, 15),
-						Color.BLACK);
 				break;
 			default:
 				break;
@@ -281,8 +352,24 @@ public class Store {
 		setDescription();
 	}
 	
+	public void flipSpecial() {
+		if (selectedUpgrade.available) {
+			selectedUpgrade.deactivateUpgrade();
+			description += "\nInactive!";
+		} else {
+			selectedUpgrade.setAvailable();
+			description += "\nActive!";
+		}
+	}
+	
 	public void setDescription() {
 		description = selectedUpgrade.getDescription();
+		
+		if (selectedUpgrade.category == 5 && selectedUpgrade.activated) {
+			flipSpecial();
+			return;
+		}
+		
 		if (selectedUpgrade.activated) {
 			description += "\nPurchased!";
 		} else if (!selectedUpgrade.available){
@@ -294,12 +381,23 @@ public class Store {
 	
 	public void purchaseUpgrade() {
 		if (selectedUpgrade != null) {
+			if (selectedUpgrade.category == 5) {
+				if (!selectedUpgrade.activated && SteveDriver.snake.spendTreasure((int) selectedUpgrade.price)) {
+					SteveDriver.snake.addTreasure(0);
+					selectedUpgrade.activateUpgrade();
+					SteveDriver.prefs.flush();
+					SteveDriver.storePrefs.flush();
+				}
+				return;
+			}
+			
+			
 			if (selectedUpgrade.available && !selectedUpgrade.activated && currentTier[selectedUpgrade.category] == selectedUpgrade.tier) {
 				if (SteveDriver.snake.spendMoney((int) (selectedUpgrade.price * SteveDriver.constants.get("priceModifier")))) {
 					selectedUpgrade.activateUpgrade();
 					SteveDriver.snake.addMoney(0);
 					for (Upgrade u : this.upgrades) {
-						if (u.category == selectedUpgrade.category && u.tier == selectedUpgrade.tier) {
+						if (u.category == selectedUpgrade.category && u.tier == selectedUpgrade.tier && !u.equals(selectedUpgrade)) {
 							u.setUnavailable();
 						}
 					}
@@ -633,5 +731,65 @@ public class Store {
 				2, 4,
 				panelX - 32 + (2 * panelWidth / 3), 
 				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Glue Trail", 
+				"glueTrail",
+				"special1",
+				"Steve lays down a trail of glue behind him.",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (1 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Candy Zone", 
+				"candyZone",
+				"special6",
+				"???",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (3 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Nuke", 
+				"nuke",
+				"special2",
+				"Steve sets off a detonation every\n60 seconds.",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (1 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Drill Helmet", 
+				"drill",
+				"special3",
+				"You are the snake that will pierce\nthe heavens.",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (2 * panelWidth / 3), 
+				panelY + 32 + (1 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Jet Fuel Only", 
+				"jetFuel",
+				"special4",
+				"Steve gains the ability to go fast.",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (4 * panelWidth / 5), 
+				panelY + 32 + (2 * panelHeight / 4)));
+		
+		upgrades.add(new Upgrade("Bullet Time", 
+				"bulletTime",
+				"special5",
+				"There is no snake.",
+				1f,
+				1f,
+				0, 5,
+				panelX - 32 + (1 * panelWidth / 5), 
+				panelY + 32 + (2 * panelHeight / 4)));
 	}
 }
