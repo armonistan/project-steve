@@ -123,8 +123,8 @@ public class Store {
 		public void deactivateUpgrade() {
 			available = false;
 			b.setStatus(2);
-			System.out.println("deactivating upgrade: " + name + " 0f " + constantName);
 			SteveDriver.constants.modifyConstant(constantName, -value);
+			System.out.println("deactivating upgrade: " + name + " " + SteveDriver.constants.get(constantName) + " " + constantName);
 			SteveDriver.storePrefs.putBoolean(name, available);
 			SteveDriver.storePrefs.flush();
 		}

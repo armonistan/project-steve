@@ -77,6 +77,11 @@ public class Enemy {
 		this.ignoresBlockers = false;
 		this.destroysBlockers = false;
 		
+		if (SteveDriver.constants.get("bulletTime") > 0f) {
+			this.moveTime *= 3;
+			this.animateTime *= 3;
+		}
+		
 		tempCollider = new Rectangle();
 	}
 	

@@ -23,6 +23,9 @@ public class ConstantHelper {
 	public void modifyConstant(String key, float modValue) {
 		float newValue = upgradeDict.get(key);
 		newValue += modValue;
+		if (newValue < 0f) {
+			newValue = 0f;
+		}
 		upgradeDict.put(key, newValue);
 	}
 	
