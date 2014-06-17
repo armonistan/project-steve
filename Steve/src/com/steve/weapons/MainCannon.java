@@ -12,7 +12,7 @@ public class MainCannon extends Weapon{
 	
 	public MainCannon(float x, float y, int atlasX, int atlasY){
 		super(x,y, atlasX, atlasY);
-		shootSpeed = 80f - (80f * (SteveDriver.constants.get("fireRate") - 1f)) * 2;
+		shootSpeed = 2f - (2f * (SteveDriver.constants.get("fireRate") - 1f));
 		range = 700*SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange");
 		this.isUpgraded = true;
 		alternate = true;

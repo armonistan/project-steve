@@ -8,7 +8,7 @@ import com.steve.projectiles.SnakeRocket;
 public class Specialist extends Weapon{
 	public Specialist(float x, float y){
 		super(x,y, 16*10, 16);
-		shootSpeed = 200 - 200 * (int)(SteveDriver.constants.get("fireRate") - 1f);
+		shootSpeed = 5f - 5f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 700*SteveDriver.constants.get("fireRange");
 	}
 	
@@ -31,7 +31,7 @@ public class Specialist extends Weapon{
 	@Override
 	public void upgrade(){
 		super.upgrade();
-		this.shootSpeed = 100;
+		this.shootSpeed = 3f - 3f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH);
 		//TODO more stuff to upgrade
 	}
