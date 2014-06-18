@@ -64,4 +64,8 @@ public class Button {
 	public void setStatus(int newStatus) {
 		status = newStatus;
 	}
+	
+	public ICommand getCommand() {
+		return buttonAction;
+	}
 }

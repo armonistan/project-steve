@@ -6,21 +6,31 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.commands.ChangeBooleanPreference;
+import com.steve.commands.ChangeStage;
 import com.steve.commands.ExitGame;
 import com.steve.commands.StartNewGame;
 import com.steve.commands.StartNewRound;
 import com.steve.TextButton;
 
 public class Menu {
-	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2, 10, 4, new StartNewGame(), "New Game");
-	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 - 100, 14, 4, new StartNewRound(), "Continue Game");
-	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 - 200, 10, 4, new ExitGame(), "Exit Game");
+	Sprite logo;
 	
-	Sprite background;
+	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 6 * 16, 10, 4, new StartNewGame(), "New Game");
+	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 2 * 16, 10, 4, new StartNewRound(), "Continue");
+	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * 16, 10, 4, new ExitGame(), "Credits");
+	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * 16, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ExitGame(), "Exit");
+	
+	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ChangeBooleanPreference("music"), "Music");
 	
 	public Menu() {
-		background = new Sprite(new TextureRegion(SteveDriver.background, 0f, 0f, 1f, 1f));
-		background.setPosition(-512, -512);
+		logo = new Sprite(new TextureRegion(SteveDriver.logo, 0f, 0f, 1f, 1f));
+		logo.setPosition(logo.getWidth() / 2 * -1, logo.getRegionHeight() / 1.3f /*Why the fuck do I have to do this?*/ * -1 + SteveDriver.guiCamera.viewportHeight / 2);
+		logo.scale(-0.5f);
+		
+		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();
+		temp.setButton(music);
+		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
 	}
 	
 	public void render() {
@@ -31,7 +41,8 @@ public class Menu {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		
 		SteveDriver.batch.begin();
-		background.draw(SteveDriver.batch);
+		
+		logo.draw(SteveDriver.batch);
 		
 		newGame.update();
 		newGame.render();
@@ -41,8 +52,19 @@ public class Menu {
 		
 		if (SteveDriver.prefs.contains("money")) {
 			continueGame.update();
-			continueGame.render();
+			continueGame.setStatus(0);
 		}
+		else {
+			continueGame.setStatus(2);
+		}
+
+		continueGame.render();
+		
+		credits.update();
+		credits.render();
+		
+		music.update();
+		music.render();
 		SteveDriver.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {

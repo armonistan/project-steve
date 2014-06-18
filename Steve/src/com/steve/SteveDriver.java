@@ -26,6 +26,7 @@ import com.steve.stages.Summary;
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Texture background;
+	public static Texture logo;
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
@@ -68,6 +69,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean tutorialOn = false;; 
 	
 	private Sound music;
+	private boolean musicPlaying;
 	private FPSLogger fpsLogger;
 	
 	public static enum STAGE_TYPE {
@@ -104,6 +106,9 @@ public class SteveDriver implements ApplicationListener {
 		background = new Texture(Gdx.files.internal("data/teset-1.png"));
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		logo = new Texture(Gdx.files.internal("data/Steve-title.png"));
+		logo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		guiHelper = new GUIHelper();
 		
 		//TODO: Make this better.
@@ -120,7 +125,6 @@ public class SteveDriver implements ApplicationListener {
 		summary = new Summary();
 		
 		music = Gdx.audio.newSound(Gdx.files.internal("audio/MainV1.wav"));
-		music.loop();
 		
 		fpsLogger = new FPSLogger();
 	}
@@ -179,7 +183,14 @@ public class SteveDriver implements ApplicationListener {
 			tutorial.render();
 		}
 		
-		//fpsLogger.log();
+		if (!prefs.getBoolean("music")) {
+			music.stop();
+			musicPlaying = false;
+		}
+		else if (prefs.getBoolean("music") && !musicPlaying) {
+			music.loop();
+			musicPlaying = true;
+		}
 	}
 
 	@Override
