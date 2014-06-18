@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
+import com.steve.MenuSnake;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.commands.ChangeBooleanPreference;
@@ -23,6 +25,9 @@ public class Menu {
 	
 	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ChangeBooleanPreference("music"), "Music");
 	
+	public MenuSnake snake;
+	public MenuField field;
+	
 	public Menu() {
 		logo = new Sprite(new TextureRegion(SteveDriver.logo, 0f, 0f, 1f, 1f));
 		logo.setPosition(logo.getWidth() / 2 * -1, logo.getRegionHeight() / 1.3f /*Why the fuck do I have to do this?*/ * -1 + SteveDriver.guiCamera.viewportHeight / 2);
@@ -31,15 +36,37 @@ public class Menu {
 		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();
 		temp.setButton(music);
 		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
+		
+		snake = new MenuSnake();
 	}
 	
 	public void render() {
+		if (field != SteveDriver.field || field == null) {
+			field = new MenuField();
+			SteveDriver.field = field;
+			
+			SteveDriver.camera.position.x = snake.getHeadPosition().x;
+			SteveDriver.camera.position.y = snake.getHeadPosition().y;
+		}
+		
+		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.01f);
+		SteveDriver.camera.position.x = test.x;
+		SteveDriver.camera.position.y = test.y;
+		SteveDriver.camera.update();
+		
 		SteveDriver.guiCamera.position.x = 0;
 		SteveDriver.guiCamera.position.y = 0;
 		SteveDriver.guiCamera.update();
 		
-		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
+		SteveDriver.batch.begin();
+		field.update();
+		field.draw();
+		snake.update();
+		snake.draw();
+		SteveDriver.batch.end();
 		
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		SteveDriver.batch.begin();
 		
 		logo.draw(SteveDriver.batch);

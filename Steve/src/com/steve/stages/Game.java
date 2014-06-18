@@ -23,7 +23,7 @@ public class Game {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		if (!SteveDriver.tutorial.isActive()) {
 			SteveDriver.field.update();
-			SteveDriver.snake.update(deltaTime);
+			SteveDriver.snake.update();
 		}
 		
 		SteveDriver.batch.begin();

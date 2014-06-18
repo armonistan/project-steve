@@ -20,23 +20,23 @@ import com.steve.weapons.Specialist;
 import java.util.*;
 
 public class Snake {
-	private ArrayList<Sprite> segments;
+	protected ArrayList<Sprite> segments;
 	private ArrayList<Weapon> weapons;
 	private int maxSegments = 10;
 	
 	private final int beltImageOffset = 64;
 	private final int TILE_WIDTH = 16;
 	
-	private Vector3 headPosition;
+	protected Vector3 headPosition;
 	
-	private final float TIME_BETWEEN_TURN = 0.5f;
+	protected final float TIME_BETWEEN_TURN = 0.5f;
 	private float timeTillStarve = 25f; //unit is seconds
 	private float hungerPerSecond = 5f;
-	private float timer = 0;
+	protected float timer = 0;
 	private float hungerTimer = 0;
 	
-	private Vector2 nextDirection;
-	private float nextRotation;
+	protected Vector2 nextDirection;
+	protected float nextRotation;
 	
 	private int money;
 	private int treasure;
@@ -140,7 +140,7 @@ public class Snake {
 		return this.timeTillStarve;
 	}
 
-	public void update(float deltaTime){
+	public void update(){
 		getTouch();
 		checkProjectiles();
 		
@@ -164,7 +164,7 @@ public class Snake {
 		}
 		
 		updateWeapons();
-		updateTimers(deltaTime);
+		updateTimers(Gdx.graphics.getRawDeltaTime());
 	}
 	
 	public void draw() {
@@ -417,7 +417,7 @@ public class Snake {
 		segments.get(1).setRotation(degrees);
 	}
 	
-	private void animate(){
+	protected void animate(){
 		for (int i = segments.size() - 1; i > 0; i--) {
 			Sprite next = segments.get(i - 1);
 			Sprite current = segments.get(i);
@@ -441,7 +441,7 @@ public class Snake {
 		}
 	}
 
-	private void move(){
+	protected void move(){
 		//Update the rest of the segments
 		for (int i = segments.size() - 1; i > 0; i--) {
 			Sprite next = segments.get(i - 1);
@@ -473,7 +473,7 @@ public class Snake {
 		return aboutToEat;
 	}
 	
-	private void rotateTail(){
+	protected void rotateTail(){
 		Sprite tail = segments.get(segments.size()-1);
 		Sprite next = segments.get(segments.size()-2);
 		
@@ -534,14 +534,14 @@ public class Snake {
 		return weapons;
 	}
 	
-	private void updateTimers(float deltaTime){
+	protected void updateTimers(float deltaTime){
 		timer += deltaTime;
 		hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 	}
 	
-	private void updateWeapons(){
+	protected void updateWeapons(){
 		for(int i = 0; i < weapons.size(); i++){
 			weapons.get(i).update(segments.get(i+1).getX(), segments.get(i+1).getY());
 		}

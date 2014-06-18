@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
+import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.helpers.CollisionHelper;
 
 public class Weapon extends Sprite{
@@ -50,7 +51,6 @@ public class Weapon extends Sprite{
 	}
 	
 	protected void targetEnemy(){
-		
 		float minDistance = Float.POSITIVE_INFINITY;
 		
 		for(Enemy e : SteveDriver.field.enemies){
