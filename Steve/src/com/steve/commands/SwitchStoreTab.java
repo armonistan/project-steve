@@ -21,4 +21,10 @@ public class SwitchStoreTab implements ICommand {
 	public void execute() {
 		store.setStoreTab(index);
 	}
+
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

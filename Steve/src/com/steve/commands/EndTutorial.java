@@ -8,4 +8,10 @@ public class EndTutorial implements ICommand {
 	public void execute() {
 		SteveDriver.tutorial.endTutorial();
 	}
+
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -15,4 +15,10 @@ public class ChangeStage implements ICommand {
 	public void execute() {
 		SteveDriver.stage = stage;
 	}
+
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

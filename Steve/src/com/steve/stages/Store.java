@@ -241,94 +241,60 @@ public class Store {
 				Color.BLACK);
 		}
 		
-		switch (tabIndex) {
-			case 0:
-				if (!isUpgradeSelected) {
+		if (!isUpgradeSelected) {
+			switch (tabIndex) {
+				case 0:
 					description = "Ascend to a higher existence.";
 					SteveDriver.guiHelper.drawTextCentered("Snake Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				
 				break;
-			case 1:
-				if (!isUpgradeSelected) {
+				case 1:
 					description = "When the field gets tough, Steve gets \ntougher.";
 					SteveDriver.guiHelper.drawTextCentered("Durability Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				break;
-			case 2:
-				if (!isUpgradeSelected) {
+				case 2:
 					description = "Feeling inadequate? Small? You've\ncome to the right place.";
 					SteveDriver.guiHelper.drawTextCentered("Length Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				break;
-			case 3:
-				if (!isUpgradeSelected) {
+				case 3:
 					description = "Go from boom to BOOM.";
 					SteveDriver.guiHelper.drawTextCentered("Weapon Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				break;
-			case 4:
-				if (!isUpgradeSelected) {
+				case 4:
 					description = "Mo' money mo' prolems";
 					SteveDriver.guiHelper.drawTextCentered("Cash Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10) - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				break;
-			case 5:
-				if (!isUpgradeSelected) {
+				case 5:
 					description = "These are secrets. SECRET.";
 					SteveDriver.guiHelper.drawTextCentered("Special Upgrades", 
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10)  - 15,
 							Color.BLACK);
-				} else {
-					SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
-							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
-							SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
-							Color.BLACK);
-				}
 				break;
-			default:
+				default:
 				break;
+			}
+		}
+		else if (selectedUpgrade != null) {
+			SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name, 
+					SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + panelWidth/2),
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
+					Color.BLACK);
 		}
 	}
 	
@@ -419,7 +385,7 @@ public class Store {
 					SteveDriver.storePrefs.flush();
 				} else {
 					description = "Not enough cash!";
-					selectedUpgrade = null;
+					//selectedUpgrade = null;
 					return;
 				}
 			} else if (selectedUpgrade.activated) {

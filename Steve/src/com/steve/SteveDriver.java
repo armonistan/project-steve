@@ -69,7 +69,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean tutorialOn = false;; 
 	
 	private Sound music;
-	private boolean musicPlaying;
+	public static boolean musicPlaying;
 	private FPSLogger fpsLogger;
 	
 	public static enum STAGE_TYPE {

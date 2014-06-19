@@ -20,4 +20,10 @@ public class QueueUpgrade implements ICommand {
 	public void execute() {
 		SteveDriver.store.queueUpgradePurchase(upgrade);
 	}
+
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 }
