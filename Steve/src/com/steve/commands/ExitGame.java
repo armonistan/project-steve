@@ -10,4 +10,10 @@ public class ExitGame implements ICommand {
 		Gdx.app.exit();
 	}
 
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

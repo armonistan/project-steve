@@ -59,6 +59,10 @@ public class Button {
 		else {
 			clicked = false;
 		}
+		
+		if (buttonAction != null) {
+			buttonAction.keepExecute();
+		}
 	}
 	
 	public void setStatus(int newStatus) {

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.commands.ChangeStage;
 
 public class GUI {
 	
@@ -56,7 +58,6 @@ public class GUI {
 			} else if (currentHealthPercent < .25f) {
 				healthColor = 4;
 			}
-			
 			
 			if (i == finalPixel) {
 				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);

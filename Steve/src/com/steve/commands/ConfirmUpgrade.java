@@ -15,4 +15,10 @@ public class ConfirmUpgrade implements ICommand {
 	public void execute() {
 		store.purchaseUpgrade();
 	}
+
+	@Override
+	public void keepExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

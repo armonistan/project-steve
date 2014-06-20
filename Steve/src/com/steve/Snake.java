@@ -522,7 +522,7 @@ public class Snake {
 		return false;
 	}
 
-	private void kill() {
+	public void kill() {
 		//TODO: Make this better.
 		//System.out.println("You suck.");
 		SteveDriver.prefs.flush();

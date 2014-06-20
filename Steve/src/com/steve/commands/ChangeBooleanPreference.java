@@ -16,13 +16,16 @@ public class ChangeBooleanPreference implements ICommand{
 	public void execute() {
 		SteveDriver.prefs.putBoolean(variable, !SteveDriver.prefs.getBoolean(variable, false));
 		SteveDriver.prefs.flush();
-		
-		if (myPrecious != null) {
-			myPrecious.setStatus((SteveDriver.prefs.getBoolean(variable)) ? 1 : 0);
-		}
 	}
 	
 	public void setButton(Button mine) {
 		myPrecious = mine;
+	}
+
+	@Override
+	public void keepExecute() {		
+		if (myPrecious != null) {
+			myPrecious.setStatus((SteveDriver.prefs.getBoolean(variable)) ? 1 : 0);
+		}
 	}
 }
