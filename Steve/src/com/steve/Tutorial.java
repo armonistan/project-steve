@@ -198,8 +198,8 @@ public class Tutorial {
 			break;
 		}
 		
-		SteveDriver.guiHelper.drawText(description, SteveDriver.camera.viewportWidth / 2 * -1 + 4,
-				SteveDriver.camera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_LENGTH, Color.BLACK);
+		SteveDriver.guiHelper.drawText(description, SteveDriver.guiCamera.viewportWidth / 2 * -1 + 4,
+				SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_LENGTH, Color.BLACK);
 		
 		SteveDriver.batch.end();
 	}

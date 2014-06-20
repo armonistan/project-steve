@@ -85,10 +85,11 @@ public class SteveDriver implements ApplicationListener {
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		float verticalSize = 30 * TEXTURE_WIDTH;
+		float verticalSize = 20 * TEXTURE_WIDTH;
+		float guiVerticalSize = 30 * TEXTURE_LENGTH;
 		
 		camera = new OrthographicCamera(verticalSize * w / h, verticalSize);
-		guiCamera = new OrthographicCamera(verticalSize * w / h, verticalSize);
+		guiCamera = new OrthographicCamera(guiVerticalSize * w / h, guiVerticalSize);
 		
 		batch = new SpriteBatch();
 		random = new Random();
