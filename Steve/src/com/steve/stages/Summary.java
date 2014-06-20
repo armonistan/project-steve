@@ -9,20 +9,15 @@ public class Summary {
 	
 	public float appleScore;
 	public float enemyScore;
-
-	private float appleCount;
-	private float enemyCount;
 	
 	private float applePercent;
+	private float enemyPercent;
 	
 	private TextButton continueButton;
 	
 	public Summary() {
 		appleScore = 0;
 		enemyScore = 0;
-		
-		appleCount = 0;
-		enemyCount = 0;
 		
 		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
@@ -34,9 +29,7 @@ public class Summary {
 		enemyScore = 0;
 		
 		applePercent = 0.0f;
-		
-		appleCount = 0;
-		enemyCount = 0;
+		enemyPercent = 0.0f;
 	}
 	
 	public void render() {
@@ -48,7 +41,7 @@ public class Summary {
 				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
 		
-		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyCount), 
+		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyScore * enemyPercent), 
 				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_WIDTH, 
 				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
@@ -61,8 +54,8 @@ public class Summary {
 			applePercent += 0.01f;
 		} 
 
-		if (enemyCount < enemyScore) {
-			enemyCount++;
+		if (enemyPercent < .99f) {
+			enemyPercent += 0.01f;
 		}
 	}
 }

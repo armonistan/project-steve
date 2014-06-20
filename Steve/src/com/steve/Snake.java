@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.*;
+import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
 import com.steve.base.Weapon;
@@ -29,11 +30,14 @@ public class Snake {
 	
 	protected Vector3 headPosition;
 	
-	protected final float TIME_BETWEEN_TURN = 0.5f;
+	protected float timeBetweenTurn = 0.4f;
 	private float timeTillStarve = 250f; //unit is seconds
 	private float hungerPerSecond = 5f;
 	protected float timer = 0;
 	private float hungerTimer = 0;
+	
+	private float bombsAwayTimer = 60f;
+	private float bombsAwayTime = 0f;
 	
 	protected Vector2 nextDirection;
 	protected float nextRotation;
@@ -43,9 +47,6 @@ public class Snake {
 	private int snakeTier;
 	
 	private boolean drill;
-	
-	private int helmetTier;
-	private int helmetHits;
 	
 	Rectangle tempCollider;
 	
@@ -83,13 +84,10 @@ public class Snake {
 		}
 		
 		timeTillStarve *= SteveDriver.constants.get("hitpoints");
-		
-		snakeTier = 1;
-		//will be used to save which tier of helmet it is
-		helmetTier = SteveDriver.storePrefs.contains("helmetTier") ? SteveDriver.storePrefs.getInteger("helmetTier") : 0;
-		//need to add logic for the different helmet tiers. for instance, drill helmet won't break.
-		helmetHits = helmetTier;
-		
+		if (SteveDriver.constants.get("jetFuel") != 0f) {
+			timeBetweenTurn = 0.1f;
+		}
+
 		tempCollider = new Rectangle();
 	}
 	
@@ -144,8 +142,13 @@ public class Snake {
 		getTouch();
 		checkProjectiles();
 		
+		if (bombsAwayTime > bombsAwayTimer) {
+			bombsAwayTime = 0f;
+			killThemAll();
+		}
+		
 		//update all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {
+		if (timer >= timeBetweenTurn) {
 			move();
 			
 			if (checkCollisions()) {
@@ -539,6 +542,9 @@ public class Snake {
 		hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
+		if (SteveDriver.constants.get("nuke") != 0f) {
+			bombsAwayTime += deltaTime;
+		}
 	}
 	
 	protected void updateWeapons(){
@@ -648,6 +654,19 @@ public class Snake {
 			return SteveDriver.LEFT_ID;
 		else
 			return SteveDriver.DOWN_ID;
+	}
+	
+	public void killThemAll() {
+		int explodeDistance = 300 * 300;
+		int x = (int) this.segments.get(0).getX();
+		int y = (int) this.segments.get(0).getY();
+		
+		for (Enemy e : SteveDriver.field.enemies) {
+			if (CollisionHelper.distanceSquared(x, y, e.getXPosition(), e.getYPosition()) < explodeDistance) {
+				e.kill();
+			}
+		}
+		SteveDriver.field.destroyBlockersRadius(15, x/SteveDriver.TEXTURE_WIDTH, y/SteveDriver.TEXTURE_LENGTH);
 	}
 }
 
