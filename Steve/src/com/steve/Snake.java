@@ -47,6 +47,7 @@ public class Snake {
 	private int snakeTier;
 	
 	private boolean drill;
+	private boolean glue;
 	
 	Rectangle tempCollider;
 	
@@ -71,6 +72,12 @@ public class Snake {
 			drill = true;
 		} else {
 			drill = false;
+		}
+		
+		if (SteveDriver.constants.get("glueTrail") != 0f) {
+			glue = true;
+		} else {
+			glue = false;
 		}
 		
 		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
@@ -145,6 +152,10 @@ public class Snake {
 		if (bombsAwayTime > bombsAwayTimer) {
 			bombsAwayTime = 0f;
 			killThemAll();
+		}
+		
+		if (glue) {
+			layGlue();
 		}
 		
 		//update all the segments.
@@ -667,6 +678,13 @@ public class Snake {
 			}
 		}
 		SteveDriver.field.destroyBlockersRadius(15, x/SteveDriver.TEXTURE_WIDTH, y/SteveDriver.TEXTURE_LENGTH);
+	}
+	
+	public void layGlue() {
+		int x = (int) this.segments.get(this.segments.size() - 1).getX() / SteveDriver.TEXTURE_LENGTH;
+		int y = (int) this.segments.get(this.segments.size() - 1).getY() / SteveDriver.TEXTURE_WIDTH;
+		
+		SteveDriver.field.setGlueTile(x, y);		
 	}
 }
 
