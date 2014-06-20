@@ -30,7 +30,7 @@ public class Snake {
 	protected Vector3 headPosition;
 	
 	protected final float TIME_BETWEEN_TURN = 0.5f;
-	private float timeTillStarve = 25f; //unit is seconds
+	private float timeTillStarve = 250f; //unit is seconds
 	private float hungerPerSecond = 5f;
 	protected float timer = 0;
 	private float hungerTimer = 0;

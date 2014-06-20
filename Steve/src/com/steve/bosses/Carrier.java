@@ -18,7 +18,7 @@ public class Carrier extends Enemy {
 	Rectangle front, middle, back;
 	
 	public Carrier(float x, float y) {
-		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, 50);
+		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, 5000);
 		front = new Rectangle(this.avatar.getX(), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, 100,50);
 		middle = new Rectangle(this.avatar.getX()+this.avatar.getBoundingRectangle().width/4, this.avatar.getY(), 280,120);
 		back = new Rectangle(this.avatar.getX()+(.85f*this.avatar.getBoundingRectangle().width), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, 48,64);
@@ -41,27 +41,24 @@ public class Carrier extends Enemy {
 	protected void checkCollideWithSnake(){
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(front, s.getBoundingRectangle())) {
-				SteveDriver.snake.changeHunger(deathDamage);
-				//TODO: Replace with something better.
-				kill();
+				//SteveDriver.snake.changeHunger(deathDamage);
+				System.out.println("collide front");
 				return;
 			}
 		}
 		
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(middle, s.getBoundingRectangle())) {
-				SteveDriver.snake.changeHunger(deathDamage);
-				//TODO: Replace with something better.
-				kill();
+				//SteveDriver.snake.changeHunger(deathDamage);
+				System.out.println("collide mid");
 				return;
 			}
 		}
 		
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(back, s.getBoundingRectangle())) {
-				SteveDriver.snake.changeHunger(deathDamage);
-				//TODO: Replace with something better.
-				kill();
+				//SteveDriver.snake.changeHunger(deathDamage);
+				System.out.println("collide back");
 				return;
 			}
 		}

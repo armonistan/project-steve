@@ -617,10 +617,6 @@ public class Field {
 		float deltaX = 0;
 		float deltaY = 0;
 		
-		if(y > 100){
-			deltaX++;
-		}
-		
 		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
 				deltaX = s.getX() - x;
 				deltaY = s.getY() - y;			
