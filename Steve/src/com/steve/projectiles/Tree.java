@@ -8,5 +8,6 @@ public class Tree extends Projectile {
 		super(x, y, 24, 0, 3, 2, 30, false);
 		
 		speed = 200;
+		CheckBulletTime();
 	}
 }

@@ -44,7 +44,14 @@ public class Projectile {
 	
 		this.projectileTime = projectileTime;
 		ignoreCollisions = false;
-	}	
+	}
+	
+	public void CheckBulletTime() {
+		if (SteveDriver.constants.get("bulletTime") != 0f) {
+			projectileTime *= 3;
+			speed /= 3;
+		}
+	}
 	
 	public void update() {
 		if(this.projectileTime > 0f) {
