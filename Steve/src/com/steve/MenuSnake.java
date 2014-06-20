@@ -17,7 +17,7 @@ public class MenuSnake extends Snake {
 	public void update()
 	{
 		//update all the segments.
-		if (timer >= TIME_BETWEEN_TURN) {
+		if (timer >= timeBetweenTurn) {
 			if (headPosition.x > 150 * SteveDriver.TEXTURE_WIDTH) {
 				if (segments.get(0).getRotation() == SteveDriver.RIGHT) {
 					nextRotation = SteveDriver.DOWN;

@@ -623,7 +623,7 @@ public class Field {
 		
 		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
 				deltaX = s.getX() - x;
-				deltaY = s.getY() - y;			
+				deltaY = s.getY() - y;
 				
 				if(Math.abs(deltaX) < 80 && Math.abs(deltaY) < 80){
 					return false;
@@ -645,5 +645,13 @@ public class Field {
 	
 	public ArrayList<Projectile> getProjectiles() {
 		return projectiles;
+	}
+	
+	public void destroyBlockersRadius(int radius, int startX, int startY) {
+		for (int y = startY - radius; y < startY + radius; y++) {
+			for (int x = startX - radius; x < startX + radius; x++) {
+				destroyBlocker(x, y);
+			}
+		}
 	}
 }

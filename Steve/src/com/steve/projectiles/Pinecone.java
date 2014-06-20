@@ -8,6 +8,7 @@ public class Pinecone extends Projectile {
 		super(x, y, 16, 0, 1, 1, 20, false);
 		
 		speed = 300;
+		CheckBulletTime();
 	}
 
 }
