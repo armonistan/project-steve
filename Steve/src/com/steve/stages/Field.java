@@ -49,6 +49,8 @@ public class Field {
 	public LinkedList<Enemy> enemiesToRemove;
 	public LinkedList<Enemy> enemiesToAdd;
 	
+	public Cell glue;
+	public StaticTiledMapTile glueTile;
 	
 	protected ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
@@ -221,11 +223,16 @@ public class Field {
 		
 		this.RandomizeField();
 		
-		rubble = (TiledMapTileLayer)map.getLayers().get(2);
 		System.gc();
 		
+		rubble = (TiledMapTileLayer)map.getLayers().get(2);		
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
+		
+		glue = new Cell();
+		glueTile = new StaticTiledMapTile(this.splitTiles[5][8]); 
+		glueTile.setId(100);
+		glue.setTile(glueTile);
 		
 		this.mapRenderer = new OrthogonalTiledMapRenderer(Field.map, 1);
 		this.mapRenderer.setView(camera);
@@ -653,5 +660,17 @@ public class Field {
 				destroyBlocker(x, y);
 			}
 		}
+	}
+	
+	public void setGlueTile(int x, int y) {
+		background.setCell(x, y, glue);
+	}
+	
+	public boolean checkGlueTile(int x, int y) {
+		//System.out.println(background.getCell(x, y).getTile().getProperties());
+		if (background.getCell(x, y).getTile().getId() == 100) {
+			return true;
+		}
+		return false;
 	}
 }
