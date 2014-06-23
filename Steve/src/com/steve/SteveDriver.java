@@ -28,6 +28,8 @@ public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Texture background;
 	public static Texture logo;
+	public static Texture space;
+	
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
@@ -114,6 +116,9 @@ public class SteveDriver implements ApplicationListener {
 		
 		logo = new Texture(Gdx.files.internal("data/Steve-title.png"));
 		logo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		space = new Texture(Gdx.files.internal("data/space.png"));
+		space.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		guiHelper = new GUIHelper();
 		

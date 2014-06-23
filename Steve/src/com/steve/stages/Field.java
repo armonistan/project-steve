@@ -35,8 +35,6 @@ public class Field {
 	
 	public static TiledMap map;
 	TextureRegion[][] splitTiles;
-	OrthogonalTiledMapRenderer mapRenderer;
-	Texture tiles;
 	TileRegion grass, desert, barren;
 	public static TiledMapTileLayer background;
 	public static TiledMapTileLayer blockers;
@@ -56,6 +54,8 @@ public class Field {
 	public LinkedList<Projectile> projectilesToRemove;
 	
 	public Generator generator;
+	
+	private Sprite space;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -217,8 +217,7 @@ public class Field {
 			this.barren = new TileRegion(6, 19, 1, 2);
 		}
 		
-		this.tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
-		splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		Field.map = new TiledMap();
 		
 		this.RandomizeField();
@@ -234,9 +233,6 @@ public class Field {
 		glueTile.setId(100);
 		glue.setTile(glueTile);
 		
-		this.mapRenderer = new OrthogonalTiledMapRenderer(Field.map, 1);
-		this.mapRenderer.setView(camera);
-		
 		Field.pickups = new LinkedList<Pickup>();
 		Field.pickupsToRemove = new LinkedList<Pickup>();
 		
@@ -251,6 +247,8 @@ public class Field {
 		
 		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
+		
+		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
 	}
 	
 	public void destroyBlocker(int xPos, int yPos){
@@ -544,9 +542,16 @@ public class Field {
 		while (projectilesToRemove.size() > 0) {
 			projectiles.remove(projectilesToRemove.remove());
 		}
+		
+		space.setPosition(SteveDriver.camera.position.x - space.getWidth() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_WIDTH / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
+				SteveDriver.camera.position.y - space.getHeight() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_WIDTH / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
 	}
 	
 	public void draw() {
+		space.draw(SteveDriver.batch);
+		
 		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / 16;
 		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / 16;
 		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
@@ -668,7 +673,9 @@ public class Field {
 	
 	public boolean checkGlueTile(int x, int y) {
 		//System.out.println(background.getCell(x, y).getTile().getProperties());
-		if (background.getCell(x, y).getTile().getId() == 100) {
+		Cell temp = background.getCell(x, y);
+		
+		if (temp != null && temp.getTile().getId() == 100) {
 			return true;
 		}
 		return false;

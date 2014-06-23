@@ -215,6 +215,14 @@ public class Snake {
 			}
 		}
 		
+		//TODO: ALWAYS KILLS YOU WHEN OUTSIDE RHELM
+		if (false && (
+				headPosition.x < 0 || headPosition.x >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH ||
+				headPosition.y < 0 || headPosition.y >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH)) {
+			kill();
+			return true;
+		}
+		
 		return false;
 	}
 	

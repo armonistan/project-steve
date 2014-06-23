@@ -28,8 +28,7 @@ public class MenuField extends Field {
 		
 		this.maxBlockerLength = 10;
 		
-		this.tiles = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
-		splitTiles = TextureRegion.split(this.tiles, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
 		map = new TmxMapLoader().load("menu.tmx");
 		
 		System.gc();
@@ -37,9 +36,6 @@ public class MenuField extends Field {
 		blockers = new TiledMapTileLayer(0, 0, 0, 0);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		rubble = new TiledMapTileLayer(0, 0, 0, 0);
-		
-		this.mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
-		this.mapRenderer.setView(SteveDriver.camera);
 		
 		Field.pickups = new LinkedList<Pickup>();
 		Field.pickupsToRemove = new LinkedList<Pickup>();
