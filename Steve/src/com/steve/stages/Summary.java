@@ -15,6 +15,8 @@ public class Summary {
 	
 	private TextButton continueButton;
 	
+	public boolean showingAds;
+	
 	public Summary() {
 		appleScore = 0;
 		enemyScore = 0;
@@ -22,6 +24,8 @@ public class Summary {
 		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.STORE), "To the Store!");
+		
+		showingAds = false;
 	}
 	
 	public void resetSummary() {

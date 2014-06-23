@@ -71,7 +71,7 @@ public class SteveDriver implements ApplicationListener {
 	
 	private Music music;
 	public static boolean musicPlaying;
-	private FPSLogger fpsLogger;
+	public static IActivityRequestHandler handler;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -80,6 +80,10 @@ public class SteveDriver implements ApplicationListener {
 		RESPAWNING,
 		SUMMARY,
 		PAUSED
+	}
+	
+	public SteveDriver(IActivityRequestHandler handler) {
+		this.handler = handler;
 	}
 	
 	@Override
@@ -127,8 +131,6 @@ public class SteveDriver implements ApplicationListener {
 		summary = new Summary();
 		
 		music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
-		
-		fpsLogger = new FPSLogger();
 	}
 
 	@Override
@@ -194,6 +196,15 @@ public class SteveDriver implements ApplicationListener {
 			music.setVolume(1);
 			music.play();
 			musicPlaying = true;
+		}
+		
+		if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
+			summary.showingAds = false;
+			handler.showAds(false);
+		}
+		else if (handler != null && !summary.showingAds && stage == STAGE_TYPE.SUMMARY) {
+			summary.showingAds = true;
+			handler.showAds(true);
 		}
 	}
 
