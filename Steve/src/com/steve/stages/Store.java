@@ -116,8 +116,15 @@ public class Store {
 			currentTier[category] = tier + 1;
 			b.setStatus(1);
 			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
+			
+			
 			SteveDriver.constants.modifyConstant(constantName, value);
 			SteveDriver.storePrefs.putBoolean(key, activated);
+			
+			if(this.name.contains(" Steve")){
+				SteveDriver.snake.snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : SteveDriver.snake.snakeTier);
+				SteveDriver.snake.snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : SteveDriver.snake.snakeTier);
+			}
 		}
 		
 		public void activateTierThreeMainCannonUpgrade() {
@@ -371,8 +378,13 @@ public class Store {
 				return;
 			}
 			
-			
-			if (selectedUpgrade.available && !selectedUpgrade.activated && currentTier[selectedUpgrade.category] == selectedUpgrade.tier) {
+			if(selectedUpgrade.tier >= SteveDriver.snake.getSnakeTier() && !selectedUpgrade.name.contains(" Steve"))
+			{
+				description = "Steve must accend to a higher tier first!";
+				selectedUpgrade = null;
+				return;
+			}
+			else if (selectedUpgrade.available && !selectedUpgrade.activated && currentTier[selectedUpgrade.category] == selectedUpgrade.tier) {
 				if (SteveDriver.snake.spendMoney((int) (selectedUpgrade.price * SteveDriver.constants.get("priceModifier")))) {
 					selectedUpgrade.activateUpgrade();
 					SteveDriver.snake.addMoney(0);
@@ -397,6 +409,7 @@ public class Store {
 				selectedUpgrade = null;
 				return;
 			} else if (currentTier[selectedUpgrade.category] != selectedUpgrade.tier) {
+				System.out.println(selectedUpgrade.tier);
 				description = "Too high tier!";
 				selectedUpgrade = null;
 				return;

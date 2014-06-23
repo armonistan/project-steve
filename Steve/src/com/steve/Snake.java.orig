@@ -30,8 +30,13 @@ public class Snake {
 	
 	protected Vector3 headPosition;
 	
+<<<<<<< HEAD
+	protected final float TIME_BETWEEN_TURN = 0.5f;
+	private float timeTillStarve = 250f; //unit is seconds
+=======
 	protected float timeBetweenTurn = 0.4f;
-	private float timeTillStarve;
+	private float timeTillStarve = 25f; //unit is seconds
+>>>>>>> f2b9237df36d014a66a4e29da8fe1b362f4cb2b0
 	private float hungerPerSecond = 5f;
 	protected float timer = 0;
 	private float hungerTimer = 0;
@@ -44,10 +49,7 @@ public class Snake {
 	
 	private int money;
 	private int treasure;
-	public int snakeTier;
-	
-	private int xOffSet;
-	private int yOffSet;
+	private int snakeTier;
 	
 	private boolean drill;
 	
@@ -56,27 +58,19 @@ public class Snake {
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
 		weapons = new ArrayList<Weapon>();
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0, 0, 16, 16)));
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 48, 16, 16, 16)));
 		
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
-
-		//TODO: Make this better
-		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
-		treasure = ((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10);
-		snakeTier = ((SteveDriver.constants.get("steve") != 0) ? 1 : 1);
-		snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : snakeTier);
-		snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : snakeTier);
-		
-		xOffSet = (snakeTier > 1) ? 27 : 0;
-
-		yOffSet = (snakeTier > 2) ? 5 : 0;
-		
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0+xOffSet*16, 0+yOffSet*16, 16, 16)));	
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 48+xOffSet*16, 16*yOffSet*16, 16, 16)));
 		segments.get(0).setRotation(0);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_WIDTH);
+
+		//TODO: Make this better
+		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
+		treasure = 10/*((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10)*/;
 		
 		if (SteveDriver.constants.get("drill") != 0f) {
 			drill = true;
@@ -93,9 +87,6 @@ public class Snake {
 			this.addBody();
 			this.mountUpgrade(3);
 		}
-		//tier modifier
-		timeTillStarve = 20f + (snakeTier*5f);
-		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
 		timeTillStarve *= SteveDriver.constants.get("hitpoints");
 		if (SteveDriver.constants.get("jetFuel") != 0f) {
@@ -430,9 +421,6 @@ public class Snake {
 			atlasX += this.beltImageOffset;
 		}
 		
-		atlasX += (xOffSet*16);
-		atlasY += (yOffSet*16);
-		
 		segments.get(1).setRegion(atlasX, atlasY, 16, 16);
 		segments.get(1).setRotation(degrees);
 	}
@@ -442,7 +430,7 @@ public class Snake {
 			Sprite next = segments.get(i - 1);
 			Sprite current = segments.get(i);
 			if (i == segments.size() - 1) {
-				current.setRegion(48+(xOffSet*16), 16+(yOffSet*16), 16, 16);
+				current.setRegion(48, 16, 16, 16);
 			}
 			else if(i == 1){
 				updateBody();
@@ -515,10 +503,10 @@ public class Snake {
 	
 	private void animateMouth(boolean aboutToEat){
 		if (aboutToEat) {
-			segments.get(0).setRegion(16+(xOffSet*16), 0+(yOffSet*16), 16, 16);
+			segments.get(0).setRegion(16, 0, 16, 16);
 		}
 		else {
-			segments.get(0).setRegion(0+(xOffSet*16), 0+(yOffSet*16), 16, 16);
+			segments.get(0).setRegion(0, 0, 16, 16);
 		}
 	}
 

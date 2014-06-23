@@ -1,4 +1,4 @@
-package com.steve.enemies;
+package com.steve.bosses;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
@@ -6,7 +6,7 @@ import com.steve.base.Enemy;
 import com.steve.helpers.CollisionHelper;
 import com.steve.projectiles.Acorn;
 
-public class Turret extends Enemy{
+public class CarrierTurret extends Enemy{
 	
 	int shootSpeed = 100;
 	int shootCounter = 0;
@@ -18,8 +18,8 @@ public class Turret extends Enemy{
 	boolean isUpgraded;
 	//sprivate Sprite base;
 
-	public Turret(float x, float y) {
-		super(x, y, 11, 16, 3, 3, 0.5f, 0.5f, 1, 0, 125);
+	public CarrierTurret(float x, float y) {
+		super(x, y, 9, 5, 1, 1, 0.5f, 0.5f, 1, 0, 125);
 		range = 300;//override range if need be
 		isAimed = false;
 		isUpgraded = false;}

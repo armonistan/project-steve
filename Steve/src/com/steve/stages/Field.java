@@ -18,6 +18,8 @@ import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
 import com.steve.bosses.Carrier;
+import com.steve.bosses.CarrierTurret;
+import com.steve.bosses.Razorbull;
 import com.steve.enemies.HomaHawk;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
@@ -32,6 +34,8 @@ public class Field {
 	int maxBlockerLength;
 	
 	float pickUpTimer = 0;
+	
+	boolean spawnIt = true;
 	
 	public static TiledMap map;
 	TextureRegion[][] splitTiles;
@@ -236,7 +240,6 @@ public class Field {
 		this.enemies = new ArrayList<Enemy>();
 		this.enemiesToRemove = new LinkedList<Enemy>();
 		this.enemiesToAdd = new LinkedList<Enemy>();
-		enemies.add(new Carrier(totalRadius/2 - 10, totalRadius/2 + 3));
 		
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
@@ -518,6 +521,14 @@ public class Field {
 	}
 	
 	public void update() {
+		if(spawnIt){
+		float x = totalRadius/2 - 10;
+		float y = totalRadius/2 + 3;
+		Razorbull c = new Razorbull(x, y);
+		enemies.add(c);
+		//c.intialize();
+		spawnIt = false;
+		}
 		this.generator.update();
 		
 		for (Enemy e : enemies) {
@@ -647,6 +658,92 @@ public class Field {
 		for (int y = startY - radius; y < startY + radius; y++) {
 			for (int x = startX - radius; x < startX + radius; x++) {
 				destroyBlocker(x, y);
+			}
+		}
+	}
+
+	public void createBlockerFormation(int x, int y){
+		Cell cell = new Cell();
+		cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
+		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
+		if (SteveDriver.constants.get("candyZone") == 0f){
+			blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
+		} else {
+			blockerTiles.add(new CellContainer(0, 13, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
+			blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
+		}
+		
+		blockers.setCell(x, y, cell);
+		blockers.setCell(x+1, y+1, cell);
+		blockers.setCell(x+1, y, cell);
+		blockers.setCell(x, y+1, cell);
+		
+		setBlockerFormationImage(blockerTiles, x,y);
+		setBlockerFormationImage(blockerTiles, x+1,y+1);
+		setBlockerFormationImage(blockerTiles, x+1,y);
+		setBlockerFormationImage(blockerTiles, x,y+1);
+	}
+	
+	private void setBlockerFormationImage(ArrayList<CellContainer> blockerTiles, int x, int y){
+		boolean left, right, top, bottom;
+		int tileRad = 0;
+		
+		tileRad = this.checkRing(x, y);
+		left = (blockers.getCell(x-1, y) == null) || (tileRad != this.checkRing(x - 1, y));
+		right = (blockers.getCell(x + 1, y) == null) || (tileRad != this.checkRing(x + 1, y));
+		top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
+		bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
+		
+		blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
+		//set the actual tile image
+		if (left) {
+			if (top) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+			} else if (bottom) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
+			} else {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).left());
+			}
+		} else if (right) {
+			if (top) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
+			} else if (bottom) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
+			} else {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).right());
+			}
+		} else if (bottom) {
+			if (left) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
+			} else if (right) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
+			} else {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).bottomA);
+			}
+		} else if (top) {
+			if (left) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+			} else if (right) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
+			} else {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).top());
+			}
+		} else {
+			boolean topLeft = (blockers.getCell(x-1, y + 1) == null) || (tileRad != this.checkRing(x - 1, y + 1));
+			boolean topRight = (blockers.getCell(x + 1, y + 1) == null) || (tileRad != this.checkRing(x + 1, y + 1));
+			boolean bottomLeft = (blockers.getCell(x - 1, y - 1) == null) || (tileRad != this.checkRing(x - 1, y - 1));
+			boolean bottomRight = (blockers.getCell(x + 1, y - 1) == null) || (tileRad != this.checkRing(x + 1, y - 1));
+			if (topLeft) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomRight);
+			} else if (topRight) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomLeft);
+			} else if (bottomLeft) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopRight);
+			} else if (bottomRight) {
+				blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopLeft);
 			}
 		}
 	}

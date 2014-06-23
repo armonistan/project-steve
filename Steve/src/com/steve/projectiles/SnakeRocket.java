@@ -4,11 +4,11 @@ import com.steve.SteveDriver;
 import com.steve.base.Projectile;
 
 public class SnakeRocket extends Projectile {
-	private final static float SPEED = 50;
-	private final static float MAX_SPEED = 250;
+	private final static float SPEED = 150;
+	private final static float MAX_SPEED = 550;
 	
 	public SnakeRocket(float x, float y, int level) {
-		super(x, y, level == 0 ? 12 : 14, 0, 1, 1, 50*SteveDriver.constants.get("fireDamage"), true, 100*SteveDriver.constants.get("fireRange"));
+		super(x, y, level == 0 ? 12 : 14, 0, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier)*SteveDriver.constants.get("fireDamage"), true, 100*SteveDriver.constants.get("fireRange"));
 		speed = SPEED;
 	}
 	

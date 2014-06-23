@@ -18,6 +18,16 @@ public class HomaHawk extends Enemy{
 		shootTime = 1.6f;
 	}
 	
+	public HomaHawk(float x, float y, float rotation) {
+		super(x, y, 11, 10, 3, 3, .2f, 0.4f, 4, 75, 200);
+		sightDistance = 500;//to be refined
+		knowledgeDistance = 600;
+		ignoresBlockers = true;
+		moneyAmount = 30;
+		shootTime = 1.6f;
+		this.avatar.setRotation(rotation+90);
+	}
+	
 	@Override
 	public void update(){
 		this.checkInField();

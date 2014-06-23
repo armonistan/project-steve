@@ -33,8 +33,8 @@ public class Enemy {
 	protected float deathDamage;
 	
 	int numStepsInDirection = 0;
-	int stepsTaken = 0;
-	int directionID = 0;
+	protected int stepsTaken = 0;
+	protected int directionID = 0;
 	protected float sightDistance = 100;
 	protected float knowledgeDistance = 0; 
 	protected int moneyAmount = 0;
