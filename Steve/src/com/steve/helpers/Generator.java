@@ -82,18 +82,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -167,18 +167,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -216,18 +216,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -402,18 +402,18 @@ public class Generator {
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenWidth") * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenWidth") * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenWidth") * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenWidth") * .5f;
+		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
+		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1

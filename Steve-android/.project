@@ -3,6 +3,7 @@
 	<name>Steve-android</name>
 	<comment></comment>
 	<projects>
+		<project>PlayServices</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

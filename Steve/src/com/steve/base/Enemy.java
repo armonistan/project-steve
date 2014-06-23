@@ -107,7 +107,9 @@ public class Enemy {
 		checkCollideWithSnake();
 		checkProjectiles();
 		checkIsDead();
-		move();
+		if (!SteveDriver.field.checkGlueTile((int)avatar.getX()/SteveDriver.TEXTURE_LENGTH, (int)avatar.getY()/SteveDriver.TEXTURE_WIDTH)) {
+			move();
+		}
 		animate();
 	}
 	

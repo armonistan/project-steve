@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
@@ -69,9 +70,9 @@ public class SteveDriver implements ApplicationListener {
 	
 	public static boolean tutorialOn = false;; 
 	
-	private Sound music;
+	private Music music;
 	public static boolean musicPlaying;
-	private FPSLogger fpsLogger;
+	public static IActivityRequestHandler handler;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -82,14 +83,19 @@ public class SteveDriver implements ApplicationListener {
 		PAUSED
 	}
 	
+	public SteveDriver(IActivityRequestHandler handler) {
+		this.handler = handler;
+	}
+	
 	@Override
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		float verticalSize = 30 * TEXTURE_WIDTH;
+		float verticalSize = 25 * TEXTURE_WIDTH;
+		float guiVerticalSize = 30 * TEXTURE_LENGTH;
 		
 		camera = new OrthographicCamera(verticalSize * w / h, verticalSize);
-		guiCamera = new OrthographicCamera(verticalSize * w / h, verticalSize);
+		guiCamera = new OrthographicCamera(guiVerticalSize * w / h, guiVerticalSize);
 		
 		batch = new SpriteBatch();
 		random = new Random();
@@ -125,9 +131,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		summary = new Summary();
 		
-		music = Gdx.audio.newSound(Gdx.files.internal("audio/MainV1.wav"));
-		
-		fpsLogger = new FPSLogger();
+		music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
 	}
 
 	@Override
@@ -189,8 +193,19 @@ public class SteveDriver implements ApplicationListener {
 			musicPlaying = false;
 		}
 		else if (prefs.getBoolean("music") && !musicPlaying) {
-			music.loop();
+			music.setLooping(true);
+			music.setVolume(1);
+			music.play();
 			musicPlaying = true;
+		}
+		
+		if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
+			summary.showingAds = false;
+			handler.showAds(false);
+		}
+		else if (handler != null && !summary.showingAds && stage == STAGE_TYPE.SUMMARY) {
+			summary.showingAds = true;
+			handler.showAds(true);
 		}
 	}
 
