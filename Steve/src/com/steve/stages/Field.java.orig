@@ -668,6 +668,7 @@ public class Field {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	public void createBlockerFormation(int x, int y){
 		Cell cell = new Cell();
@@ -753,7 +754,7 @@ public class Field {
 				blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopLeft);
 			}
 		}
-	}
+=======
 	
 	public void setGlueTile(int x, int y) {
 		background.setCell(x, y, glue);
@@ -761,9 +762,10 @@ public class Field {
 	
 	public boolean checkGlueTile(int x, int y) {
 		//System.out.println(background.getCell(x, y).getTile().getProperties());
-		if (background.getCell(x, y) != null && background.getCell(x, y).getTile().getId() == 100) {
+		if (background.getCell(x, y).getTile().getId() == 100) {
 			return true;
 		}
 		return false;
+>>>>>>> bb29394240f8e28f51269ca6b793bc12045e6ea6
 	}
 }

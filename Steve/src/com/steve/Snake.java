@@ -51,6 +51,10 @@ public class Snake {
 	
 	private boolean drill;
 	private boolean glue;
+	private boolean nuke;
+	private boolean jet;
+	private boolean matrix;
+	private boolean candy;
 	
 	Rectangle tempCollider;
 	
@@ -90,6 +94,30 @@ public class Snake {
 		} else {
 			glue = false;
 		}
+		if (SteveDriver.constants.get("nuke") != 0f){
+			nuke = true;
+		}
+		else{
+			nuke = false;
+		}
+		if(SteveDriver.constants.get("jetFuel") != 0f){
+			jet = true;
+		}
+		else{
+			jet = false;
+		}
+		if(SteveDriver.constants.get("bulletTime") != 0f){
+			matrix = true;
+		}
+		else{
+			matrix = false;
+		}
+		if(SteveDriver.constants.get("candyZone") != 0f){
+			candy = true;
+		}
+		else{
+			candy = false;
+		}
 		
 		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
@@ -105,7 +133,7 @@ public class Snake {
 		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
 		timeTillStarve *= SteveDriver.constants.get("hitpoints");
-		if (SteveDriver.constants.get("jetFuel") != 0f) {
+		if (jet) {
 			timeBetweenTurn = 0.1f;
 		}
 
@@ -190,7 +218,6 @@ public class Snake {
 		if (updateStarvation()) {
 			return;
 		}
-		
 		updateWeapons();
 		updateTimers(Gdx.graphics.getRawDeltaTime());
 	}
@@ -203,6 +230,7 @@ public class Snake {
 		for (Sprite w : weapons){
 			w.draw(SteveDriver.batch);
 		}
+		drawUpgradeImages();
 	}
 
 	private boolean checkCollisions() {
@@ -570,7 +598,7 @@ public class Snake {
 		hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
-		if (SteveDriver.constants.get("nuke") != 0f) {
+		if (nuke) {
 			bombsAwayTime += deltaTime;
 		}
 	}
@@ -702,6 +730,27 @@ public class Snake {
 		int y = (int) this.segments.get(this.segments.size() - 1).getY() / SteveDriver.TEXTURE_WIDTH;
 		
 		SteveDriver.field.setGlueTile(x, y);		
+	}
+	
+	private void drawUpgradeImages(){
+		if(drill){
+			
+		}
+		if(nuke){
+			
+		}
+		if(glue){
+			
+		}
+		if(jet){
+			
+		}
+		if(matrix){
+			
+		}
+		if(candy){
+			
+		}
 	}
 }
 
