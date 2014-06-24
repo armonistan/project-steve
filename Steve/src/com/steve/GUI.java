@@ -19,22 +19,23 @@ public class GUI {
 	private int healthColor = 2;
 	private float currentHealthPercent;
 	
-	private float spriteWidth = 48;
+	private float spriteWidth = 3 * SteveDriver.TEXTURE_SIZE;
 	
 	private Sprite endHP;
 	
 	public GUI() {
 		guiTextures = new ArrayList<Sprite>();
 		for (int i = 0; i < 6; i++) {
-			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 240-(48*i), 352, 48, 64)));
+			this.guiTextures.add(new Sprite(new TextureRegion(SteveDriver.atlas, 15 * SteveDriver.TEXTURE_SIZE -
+					(3 * SteveDriver.TEXTURE_SIZE * i), 22 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 4 * SteveDriver.TEXTURE_SIZE)));
 		}
 		height = SteveDriver.constants.get("screenHeight");
-		leftEndPosition = new Vector2(48 * -3, height/2 -100);
-		rightEndPosition = new Vector2(48 * 2, height/2 -100);
+		leftEndPosition = new Vector2(3  * SteveDriver.TEXTURE_SIZE * -3, height / 2 - 200);
+		rightEndPosition = new Vector2(3  * SteveDriver.TEXTURE_SIZE * 2, height / 2 - 200);
 		guiTextures.get(5).setPosition(leftEndPosition.x, leftEndPosition.y);
 		guiTextures.get(0).setPosition(rightEndPosition.x, rightEndPosition.y);
 		
-		endHP = new Sprite(new TextureRegion(SteveDriver.atlas, 0, 352, 48, 64));
+		endHP = new Sprite(new TextureRegion(SteveDriver.atlas, 0, 22 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 4 * SteveDriver.TEXTURE_SIZE));
 	}
 	
 	public void render() {
@@ -44,7 +45,7 @@ public class GUI {
 		guiTextures.get(0).draw(SteveDriver.batch);
 		guiTextures.get(5).draw(SteveDriver.batch);
 		for (int i = 0; i < healthWidth; i++) {
-			guiTextures.get(1).setPosition(48 * (i - 2), height/2 -100);
+			guiTextures.get(1).setPosition(3 * SteveDriver.TEXTURE_SIZE * (i - 2), height / 2 -200);
 			guiTextures.get(1).draw(SteveDriver.batch);
 		}
 		
@@ -61,12 +62,12 @@ public class GUI {
 			
 			if (i == finalPixel) {
 				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
-				endHP.setRegionX(240-(48*healthColor));
+				endHP.setRegionX(15 * SteveDriver.TEXTURE_SIZE - (3  * SteveDriver.TEXTURE_SIZE * healthColor));
 				endHP.setRegionWidth(spriteSubSectionWidth);
-				endHP.setBounds(48f * (i - 2f), height/2f - 100f, spriteSubSectionWidth, 64f);
+				endHP.setBounds(3f * SteveDriver.TEXTURE_SIZE * (i - 2f), height / 2f - 200f, spriteSubSectionWidth, 4f * SteveDriver.TEXTURE_SIZE);
 				endHP.draw(SteveDriver.batch);
 			} else {
-				guiTextures.get(healthColor).setPosition(48 * (i - 2), height/2 -100);
+				guiTextures.get(healthColor).setPosition(3f * SteveDriver.TEXTURE_SIZE * (i - 2), height/2 - 200);
 				guiTextures.get(healthColor).draw(SteveDriver.batch);
 			}
 		}

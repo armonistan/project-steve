@@ -221,7 +221,7 @@ public class Field {
 			this.barren = new TileRegion(6, 19, 1, 2);
 		}
 		
-		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		Field.map = new TiledMap();
 		
 		this.RandomizeField();
@@ -369,9 +369,9 @@ public class Field {
 	
 	public void RandomizeField() {
 		MapLayers layers = Field.map.getLayers();
-		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
-		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
-		TiledMapTileLayer rubble = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+		TiledMapTileLayer rubble = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
 		
 		if (SteveDriver.constants.get("candyZone") == 0f){
@@ -555,34 +555,35 @@ public class Field {
 		}
 		
 		space.setPosition(SteveDriver.camera.position.x - space.getWidth() / 2f +
-				(totalRadius * SteveDriver.TEXTURE_WIDTH / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
 				SteveDriver.camera.position.y - space.getHeight() / 2f +
-				(totalRadius * SteveDriver.TEXTURE_WIDTH / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
 	}
 	
 	public void draw() {
 		space.draw(SteveDriver.batch);
 		
-		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / 16;
-		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / 16;
-		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / 16;
-		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f) / 16;
+		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / SteveDriver.TEXTURE_SIZE;
+		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / SteveDriver.TEXTURE_SIZE;
+		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / SteveDriver.TEXTURE_SIZE;
+		int endY = (int)(SteveDriver.camera.position.y + SteveDriver.camera.viewportHeight / 2f) / SteveDriver.TEXTURE_SIZE;
 		
 		for (int x = startX; x <= endX; x++) {
 			for (int y = startY; y <= endY; y++) {
 				Cell temp = background.getCell(x, y);
 				
 				if (temp != null) {
-					SteveDriver.batch.draw(temp.getTile().getTextureRegion(), x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+					SteveDriver.batch.draw(temp.getTile().getTextureRegion(), x * SteveDriver.TEXTURE_SIZE,
+							y * SteveDriver.TEXTURE_SIZE, 8, 8, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, 1, 1, 0);
 					
 					if (blockers.getCell(x, y) != null) {
 						SteveDriver.batch.draw(blockers.getCell(x, y).getTile().getTextureRegion(),
-								x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+								x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, 8, 8, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, 1, 1, 0);
 					}
 					
 					if (rubble.getCell(x, y) != null) {
 						SteveDriver.batch.draw(rubble.getCell(x, y).getTile().getTextureRegion(),
-								x * 16, y * 16, 8, 8, 16, 16, 1, 1, 0);
+								x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, 8, 8, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, 1, 1, 0);
 					}
 				}
 			}
@@ -627,7 +628,7 @@ public class Field {
 				Cell cell = layer.getCell(x, y);
 			
 				if (cell != null && 
-						CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH), newObject)) {
+						CollisionHelper.isCollide(new Rectangle(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE), newObject)) {
 					return false;
 				}
 			}

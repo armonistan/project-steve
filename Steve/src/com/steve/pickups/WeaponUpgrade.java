@@ -1,11 +1,12 @@
 package com.steve.pickups;
 
 import com.steve.Snake;
+import com.steve.SteveDriver;
 import com.steve.base.Pickup;
 
 public class WeaponUpgrade extends Pickup {
 	public WeaponUpgrade(float xPos, float yPos){
-		super(xPos, yPos, 9 * 16, 3 * 16, 0);
+		super(xPos, yPos, 9 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 0);
 	}
 	
 	@Override

@@ -31,24 +31,24 @@ public class GUIHelper {
 		public Sprite bottomRightBox;
 		
 		public BoxSet(int x, int y) {
-			topLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			topBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			topRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			leftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			centerBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			rightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, (y + 1) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			bottomBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
-			bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_WIDTH, (y + 2) * SteveDriver.TEXTURE_LENGTH,
-					SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+			topLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			topBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			topRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			leftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			centerBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			rightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			bottomBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		}
 	}
 	
@@ -138,7 +138,7 @@ public class GUIHelper {
 					}
 				}
 				
-				temp.setPosition(x + col * SteveDriver.TEXTURE_WIDTH, y - row * SteveDriver.TEXTURE_LENGTH);
+				temp.setPosition(x + col * SteveDriver.TEXTURE_SIZE, y - row * SteveDriver.TEXTURE_SIZE);
 				temp.draw(SteveDriver.batch);
 			}
 		}

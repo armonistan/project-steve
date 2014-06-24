@@ -8,7 +8,7 @@ import com.steve.projectiles.SnakeRocket;
 
 public class Specialist extends Weapon{
 	public Specialist(float x, float y){
-		super(x,y, 16*10, 16);
+		super(x,y, SteveDriver.TEXTURE_SIZE*10, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 700*SteveDriver.constants.get("fireRange");
 		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist1.ogg"));
@@ -48,7 +48,7 @@ public class Specialist extends Weapon{
 	public void upgrade(){
 		super.upgrade();
 		this.shootSpeed = 3f - 3f * (int)(SteveDriver.constants.get("fireRate") - 1f);
-		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH);
+		this.setRegion(atlasX, atlasY + SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		//TODO more stuff to upgrade
 	}
 }

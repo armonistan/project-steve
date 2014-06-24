@@ -54,14 +54,14 @@ public class Tutorial {
 		stage = TUTORIAL_STAGE_TYPE.intro;
 		type = TUTORIAL_TYPE.main;
 		
-		grayBox = new Sprite(new TextureRegion(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_WIDTH, 17 * SteveDriver.TEXTURE_LENGTH,
-				SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+		grayBox = new Sprite(new TextureRegion(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_SIZE, 17 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		noGray = new Rectangle();
 		
 		continueButton = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1f,
-				SteveDriver.guiCamera.viewportHeight / 4f * -1f + 4f * SteveDriver.TEXTURE_LENGTH, 6, 4, new ChangeTutorialStage(), "More");
-		exitButton = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_WIDTH,
-				SteveDriver.guiCamera.viewportHeight / 4f * -1f + 4f * SteveDriver.TEXTURE_LENGTH, 6, 4, new EndTutorial(), "Exit");
+				SteveDriver.guiCamera.viewportHeight / 4f * -1f + 4f * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeTutorialStage(), "More");
+		exitButton = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.viewportHeight / 4f * -1f + 4f * SteveDriver.TEXTURE_SIZE, 6, 4, new EndTutorial(), "Exit");
 		
 		focus = new Vector3();
 	}
@@ -71,9 +71,9 @@ public class Tutorial {
 		drawGray();
 		
 		SteveDriver.guiHelper.drawBox(SteveDriver.guiCamera.viewportWidth / 2f * -1f,
-				SteveDriver.guiCamera.viewportHeight / 2f / 2f * -1f - SteveDriver.TEXTURE_LENGTH,
-				(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_WIDTH,
-				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_LENGTH / 4, GUIHelper.BoxColors.BLACK);
+				SteveDriver.guiCamera.viewportHeight / 2f / 2f * -1f - SteveDriver.TEXTURE_SIZE,
+				(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE,
+				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, GUIHelper.BoxColors.BLACK);
 		
 		exitButton.update();
 		exitButton.render();
@@ -101,7 +101,7 @@ public class Tutorial {
 				break;
 			case hunger:
 				description = "Eat apples to grow your snake.\nEat them to prevent your own destruction.";
-				focus = new Vector3(30 * SteveDriver.TEXTURE_WIDTH, 40 * SteveDriver.TEXTURE_LENGTH, 0);
+				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -32;
 				noGray.x = -32;
 				noGray.width = 32;
@@ -113,7 +113,7 @@ public class Tutorial {
 				for (Pickup p : Field.pickups) {
 					if (p.getClass() == Apple.class) {
 						float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
-							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
 						if (tempDist < closestAppleDistance) {
 							closestAppleDistance = tempDist;
@@ -147,8 +147,8 @@ public class Tutorial {
 						
 							if (tempDist < closestDistance) {
 								closestDistance = tempDist;
-								tempBlocker.x = x * SteveDriver.TEXTURE_WIDTH;
-								tempBlocker.y = y * SteveDriver.TEXTURE_LENGTH;
+								tempBlocker.x = x * SteveDriver.TEXTURE_SIZE;
+								tempBlocker.y = y * SteveDriver.TEXTURE_SIZE;
 							}
 						}
 					}
@@ -169,7 +169,7 @@ public class Tutorial {
 				for (Enemy e : SteveDriver.field.enemies) {
 					if (e.getClass() == Slug.class) {
 						float tempDist = CollisionHelper.distanceSquared(e.avatar.getX(), e.avatar.getY(),
-							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
 						if (tempDist < closestEnemyDistance) {
 							closestEnemyDistance = tempDist;
@@ -183,7 +183,7 @@ public class Tutorial {
 				break;
 			case weapons:
 				description = "Actually, don't use your face.\nTry eating these first.";
-				focus = new Vector3(30 * SteveDriver.TEXTURE_WIDTH, 20 * SteveDriver.TEXTURE_LENGTH, 0);
+				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 20 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -32;
 				noGray.x = -32;
 				noGray.width = 32;
@@ -195,7 +195,7 @@ public class Tutorial {
 				for (Pickup p : Field.pickups) {
 					if (p.getClass() == GatlingGunPickUp.class || p.getClass() == SpecialistPickUp.class || p.getClass() == LaserPickUp.class) {
 						float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
-							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_WIDTH, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_LENGTH);
+							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
 						if (tempDist < closestWeaponDistance) {
 							closestWeaponDistance = tempDist;
@@ -227,48 +227,48 @@ public class Tutorial {
 			float xModify = 0f;
 			float yModify = 0f;
 			
-			if (SteveDriver.snake.getHeadPosition().x > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_WIDTH &&
-				SteveDriver.snake.getHeadPosition().y > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_LENGTH) {
+			if (SteveDriver.snake.getHeadPosition().x > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE &&
+				SteveDriver.snake.getHeadPosition().y > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE) {
 				if (SteveDriver.snake.getHeadPosition().x > SteveDriver.snake.getHeadPosition().y) {
-					xModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH - SteveDriver.snake.getHeadPosition().x;
+					xModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().x;
 				}
 				else {
-					yModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH - SteveDriver.snake.getHeadPosition().y;
+					yModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().y;
 				}
 			}
-			else if (SteveDriver.snake.getHeadPosition().x < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_WIDTH &&
-				SteveDriver.snake.getHeadPosition().y > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_LENGTH) {
-				if (SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH - SteveDriver.snake.getHeadPosition().x > SteveDriver.snake.getHeadPosition().y) {
-					xModify = (SteveDriver.snake.getHeadPosition().x) * -1f - SteveDriver.TEXTURE_WIDTH;
+			else if (SteveDriver.snake.getHeadPosition().x < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE &&
+				SteveDriver.snake.getHeadPosition().y > SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE) {
+				if (SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().x > SteveDriver.snake.getHeadPosition().y) {
+					xModify = (SteveDriver.snake.getHeadPosition().x) * -1f - SteveDriver.TEXTURE_SIZE;
 				}
 				else {
-					yModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH - SteveDriver.snake.getHeadPosition().y;
+					yModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().y;
 				}
 			}
-			else if (SteveDriver.snake.getHeadPosition().x < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_WIDTH &&
-				SteveDriver.snake.getHeadPosition().y < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_LENGTH) {
+			else if (SteveDriver.snake.getHeadPosition().x < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE &&
+				SteveDriver.snake.getHeadPosition().y < SteveDriver.field.totalRadius / 2f * SteveDriver.TEXTURE_SIZE) {
 				if (SteveDriver.snake.getHeadPosition().x < SteveDriver.snake.getHeadPosition().y) {
-					xModify = (SteveDriver.snake.getHeadPosition().x) * -1f - SteveDriver.TEXTURE_WIDTH;
+					xModify = (SteveDriver.snake.getHeadPosition().x) * -1f - SteveDriver.TEXTURE_SIZE;
 				}
 				else {
-					yModify = (SteveDriver.snake.getHeadPosition().y) * -1f - SteveDriver.TEXTURE_LENGTH;
+					yModify = (SteveDriver.snake.getHeadPosition().y) * -1f - SteveDriver.TEXTURE_SIZE;
 				}
 			}
 			else {
-				if (SteveDriver.snake.getHeadPosition().x > SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH - SteveDriver.snake.getHeadPosition().y) {
-					xModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH - SteveDriver.snake.getHeadPosition().x;
+				if (SteveDriver.snake.getHeadPosition().x > SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().y) {
+					xModify = SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE - SteveDriver.snake.getHeadPosition().x;
 				}
 				else {
-					yModify = (SteveDriver.snake.getHeadPosition().y) * -1f - SteveDriver.TEXTURE_LENGTH;
+					yModify = (SteveDriver.snake.getHeadPosition().y) * -1f - SteveDriver.TEXTURE_SIZE;
 				}
 			}
 			
-			noGray.x = SteveDriver.guiCamera.position.x + xModify - 1.5f * SteveDriver.TEXTURE_WIDTH;
-			noGray.y = SteveDriver.guiCamera.position.y + yModify - 1.5f * SteveDriver.TEXTURE_LENGTH;
+			noGray.x = SteveDriver.guiCamera.position.x + xModify - 1.5f * SteveDriver.TEXTURE_SIZE;
+			noGray.y = SteveDriver.guiCamera.position.y + yModify - 1.5f * SteveDriver.TEXTURE_SIZE;
 		}
 		
-		SteveDriver.guiHelper.drawText(description, SteveDriver.guiCamera.viewportWidth / 2 * -1 + 1 * SteveDriver.TEXTURE_WIDTH,
-				SteveDriver.guiCamera.viewportHeight / 2 * -1 + 6 * SteveDriver.TEXTURE_LENGTH, Color.BLACK);
+		SteveDriver.guiHelper.drawText(description, SteveDriver.guiCamera.viewportWidth / 2 * -1 + 1 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.viewportHeight / 2 * -1 + 6 * SteveDriver.TEXTURE_SIZE, Color.BLACK);
 		
 		SteveDriver.batch.end();
 	}
@@ -307,10 +307,10 @@ public class Tutorial {
 	}
 	
 	private void drawGray() {
-		for (float x = SteveDriver.guiCamera.viewportWidth / 2 * -1; x < SteveDriver.guiCamera.viewportWidth / 2; x += SteveDriver.TEXTURE_WIDTH) {
-			for (float y = SteveDriver.guiCamera.viewportHeight / 2 * -1; y < SteveDriver.guiCamera.viewportHeight / 2; y += SteveDriver.TEXTURE_LENGTH) {
-				if (!(x > noGray.x && x <= noGray.x + SteveDriver.TEXTURE_WIDTH + noGray.width && 
-					  y > noGray.y && y <= noGray.y + SteveDriver.TEXTURE_LENGTH + noGray.height)) {
+		for (float x = SteveDriver.guiCamera.viewportWidth / 2 * -1; x < SteveDriver.guiCamera.viewportWidth / 2; x += SteveDriver.TEXTURE_SIZE) {
+			for (float y = SteveDriver.guiCamera.viewportHeight / 2 * -1; y < SteveDriver.guiCamera.viewportHeight / 2; y += SteveDriver.TEXTURE_SIZE) {
+				if (!(x > noGray.x && x <= noGray.x + SteveDriver.TEXTURE_SIZE + noGray.width && 
+					  y > noGray.y && y <= noGray.y + SteveDriver.TEXTURE_SIZE + noGray.height)) {
 					grayBox.setPosition(x, y);
 					grayBox.draw(SteveDriver.batch);
 				}

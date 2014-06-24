@@ -14,14 +14,14 @@ import com.steve.TextButton;
 public class Game {
 	private boolean pPressed = false;
 
-	private TextButton pause = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 7 * SteveDriver.TEXTURE_WIDTH,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_LENGTH, 7, 4, new PauseButton(), "Pause");
+	private TextButton pause = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 7 * SteveDriver.TEXTURE_SIZE,
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 7, 4, new PauseButton(), "Pause");
 	private TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ChangeBooleanPreference("music"), "Music");
-	private TextButton menu = new TextButton(4 * SteveDriver.TEXTURE_WIDTH * -1,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_LENGTH, 8, 4, new ChangeStage(STAGE_TYPE.MENU), "Menu");
-	private TextButton store = new TextButton(4 * SteveDriver.TEXTURE_WIDTH * -1,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 8 * SteveDriver.TEXTURE_LENGTH, 8, 4, new KillSnake(), "Store");
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("music"), "Music");
+	private TextButton menu = new TextButton(4 * SteveDriver.TEXTURE_SIZE * -1,
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 8, 4, new ChangeStage(STAGE_TYPE.MENU), "Menu");
+	private TextButton store = new TextButton(4 * SteveDriver.TEXTURE_SIZE * -1,
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 8 * SteveDriver.TEXTURE_SIZE, 8, 4, new KillSnake(), "Store");
 	
 	public Game() {
 		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();

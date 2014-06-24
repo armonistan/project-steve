@@ -118,10 +118,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
 	
 		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
@@ -204,10 +204,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		float xPos = ((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
-		float yPos = ((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
+		float xPos = ((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
+		float yPos = ((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
 	
 		return generateSlugTutorial(xPos, yPos);
 	}
@@ -252,10 +252,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_WIDTH : xPosRight/SteveDriver.TEXTURE_WIDTH);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_LENGTH : yPosTop/SteveDriver.TEXTURE_LENGTH);
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
 		
 		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 
@@ -438,10 +438,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_WIDTH : 
-			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_WIDTH);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_LENGTH : 
-			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_LENGTH);
+		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_SIZE);
+		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_SIZE);
 		
 		
 		Apple a = new Apple(xPos, yPos);
@@ -462,12 +462,12 @@ public class Generator {
 		int xPos = 0;
 		int yPos = 0;
 		
-		xPos = (int)(snakePosition.x / SteveDriver.TEXTURE_WIDTH) +
-					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_WIDTH) - 
-					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_WIDTH / 2;
-		yPos = (int)(snakePosition.y / SteveDriver.TEXTURE_LENGTH) +
-					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_LENGTH) -
-					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_LENGTH / 2;
+		xPos = (int)(snakePosition.x / SteveDriver.TEXTURE_SIZE) +
+					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE) - 
+					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 2;
+		yPos = (int)(snakePosition.y / SteveDriver.TEXTURE_SIZE) +
+					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE) -
+					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 2;
 		
 		Apple a = new Apple(xPos, yPos);
 		

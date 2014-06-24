@@ -28,7 +28,7 @@ public class MenuField extends Field {
 		
 		this.maxBlockerLength = 10;
 		
-		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_LENGTH, SteveDriver.TEXTURE_WIDTH);
+		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		map = new TmxMapLoader().load("menu.tmx");
 		
 		System.gc();
@@ -56,7 +56,7 @@ public class MenuField extends Field {
 		if (spawnTimer > SPAWN_TIME) {
 			if (enemies.size() < 10) {
 				Slug temp = new Slug((SteveDriver.menu.snake.getHeadPosition().x + SteveDriver.camera.viewportWidth / 2 *
-						((SteveDriver.menu.snake.getRotationIndex() == SteveDriver.RIGHT_ID) ? 1 : -1)) / SteveDriver.TEXTURE_WIDTH, SteveDriver.menu.snake.getHeadPosition().y / SteveDriver.TEXTURE_LENGTH);
+						((SteveDriver.menu.snake.getRotationIndex() == SteveDriver.RIGHT_ID) ? 1 : -1)) / SteveDriver.TEXTURE_SIZE, SteveDriver.menu.snake.getHeadPosition().y / SteveDriver.TEXTURE_SIZE);
 				enemiesToAdd.add(temp);
 				spawnTimer = 0f;
 			}

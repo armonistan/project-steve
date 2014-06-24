@@ -22,8 +22,8 @@ public class Button {
 		positionY = posY;
 		this.width = width;
 		this.height = height;
-		pxWidth = width * SteveDriver.TEXTURE_WIDTH;
-		pxHeight = height * SteveDriver.TEXTURE_LENGTH;
+		pxWidth = width * SteveDriver.TEXTURE_SIZE;
+		pxHeight = height * SteveDriver.TEXTURE_SIZE;
 		buttonAction = action;
 		
 		clicked = false;
@@ -33,13 +33,13 @@ public class Button {
 	public void render() {
 		switch(status) {
 			case 1:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.GOLD);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.GOLD);
 				break;
 			case 2:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.RED);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.RED);
 				break;
 			default:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_LENGTH, width, height, GUIHelper.BoxColors.BLACK);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.BLACK);
 				break;
 		}
 	}
