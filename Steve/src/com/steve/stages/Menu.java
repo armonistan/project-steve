@@ -30,7 +30,7 @@ public class Menu {
 	public MenuField field;
 	
 	public Menu() {
-		logo = new Sprite(new TextureRegion(SteveDriver.logo, 0f, 0f, 1f, 1f));
+		logo = new Sprite(new TextureRegion(SteveDriver.steveLogo, 0f, 0f, 1f, 1f));
 		logo.setPosition(logo.getWidth() / 2 * -1, logo.getRegionHeight() / 1.3f /*Why the fuck do I have to do this?*/ * -1 + SteveDriver.guiCamera.viewportHeight / 2);
 		logo.scale(-0.5f);
 		
