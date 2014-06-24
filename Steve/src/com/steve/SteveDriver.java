@@ -22,6 +22,7 @@ import com.steve.helpers.GUIHelper;
 import com.steve.stages.Credits;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
+import com.steve.stages.Loading;
 import com.steve.stages.Logo;
 import com.steve.stages.Menu;
 import com.steve.stages.Store;
@@ -75,6 +76,7 @@ public class SteveDriver implements ApplicationListener {
 	public static Game game;
 	public static Credits credits;
 	public static Logo logo;
+	public static Loading loading;
 	
 	public static boolean tutorialOn = false;; 
 	
@@ -90,6 +92,7 @@ public class SteveDriver implements ApplicationListener {
 		RESPAWNING,
 		SUMMARY,
 		PAUSED,
+		LOGO,
 		LOADING
 	}
 	
@@ -138,7 +141,7 @@ public class SteveDriver implements ApplicationListener {
 		gui = new GUI();
 		snake = new Snake(30, 30);
 		
-		stage = STAGE_TYPE.LOADING;
+		stage = STAGE_TYPE.LOGO;
 		menu = new Menu();
 		game = new Game();
 		tutorial = new Tutorial();
@@ -146,6 +149,7 @@ public class SteveDriver implements ApplicationListener {
 		store.setStoreProgress();
 		credits = new Credits();
 		logo = new Logo();
+		loading = new Loading();
 		
 		summary = new Summary();
 		
@@ -178,7 +182,7 @@ public class SteveDriver implements ApplicationListener {
 		case RESPAWNING:
 			resetField();
 			summary.resetSummary();
-			stage = STAGE_TYPE.GAME;
+			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
 			batch.begin();
@@ -206,10 +210,11 @@ public class SteveDriver implements ApplicationListener {
 		case PAUSED:
 			game.renderPaused();
 			break;
-		case LOADING:
+		case LOGO:
 			logo.render();
 			break;
-		default:
+		case LOADING:
+			loading.render();
 			break;
 		}
 
@@ -259,29 +264,13 @@ public class SteveDriver implements ApplicationListener {
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
 		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generateAppleTutorial())
-				break;
+		try {
+			field.generatingField.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generatePickUpTutorial(1))
-				break;
-		}
-/*To Do: add to tutorial about weapon upgrades		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generatePickUpTutorial(2))
-				break;
-		}
-*/	
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generateEnemyTutorial())
-				break;
-		}
 		
-		//TODO: TEMP
-		if (SteveDriver.snake.getMoney() == 0 && !SteveDriver.tutorial.isActive()) {
-			SteveDriver.tutorial.startTutorial();
-		}
 	}
 }

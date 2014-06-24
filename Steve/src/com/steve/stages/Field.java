@@ -58,8 +58,9 @@ public class Field {
 	public LinkedList<Projectile> projectilesToRemove;
 	
 	public Generator generator;
+	public Thread generatingField;
 	
-	private Sprite space;
+	protected Sprite space;
 	
 	private class TileRegion {
 		int startX, startY, width, length;
@@ -225,7 +226,9 @@ public class Field {
 		Field.map = new TiledMap();
 		
 		this.RandomizeField();
-		
+	}
+
+	public void cleanupSetup() {
 		System.gc();
 		
 		rubble = (TiledMapTileLayer)map.getLayers().get(2);		
@@ -368,161 +371,177 @@ public class Field {
 	}
 	
 	public void RandomizeField() {
-		MapLayers layers = Field.map.getLayers();
-		TiledMapTileLayer layer = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
-		TiledMapTileLayer blockers = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
-		TiledMapTileLayer rubble = new TiledMapTileLayer(this.totalRadius, this.totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
-		ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
-		
-		if (SteveDriver.constants.get("candyZone") == 0f){
-			blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
-			blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
-			blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
-		} else {
-			blockerTiles.add(new CellContainer(0, 13, splitTiles, SteveDriver.random));
-			blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
-			blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
-		}
-		//This is the Background generation	
-		//Barren tiles generated
-		for (int x = 0; x < this.totalRadius; x++) {
-			for (int y = 0; y < this.totalRadius; y++) {
-				int ty = this.barren.GetRandomY();
-				int tx = this.barren.GetRandomX();
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
-				layer.setCell(x, y, cell);
-			}
-		}
-		
-		//Desert tiles generated
-		for (int x = this.desertRadius; x < this.totalRadius - this.desertRadius; x++) {
-			for (int y = this.desertRadius; y < this.totalRadius - this.desertRadius; y++) {
-				this.placeTile(x, y, splitTiles, layer, 1);
-			}
-		}
-		
-		//Grass tiles generated
-		for (int x = this.grassRadius; x < this.totalRadius - this.grassRadius; x++) {
-			for (int y = this.grassRadius; y < this.totalRadius - this.grassRadius; y++) {
-				this.placeTile(x, y, splitTiles, layer, 0);
-			}
-		}
-		
-		int randX, randY;
-		//this code sets up the positions for the blockers on the grid
-		for (int i = 0; i < this.blockerChains; ) {
-			randX = SteveDriver.random.nextInt(totalRadius);
-			randY = SteveDriver.random.nextInt(totalRadius);
-			
-			Cell cell = new Cell();
-			cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
-			
-			int dx = 0;
-			int dy = 0;
-			
-			for (int j = 0; j < this.maxBlockerLength && SteveDriver.random.nextFloat() > .4f; j++) {
-				float nextX = SteveDriver.random.nextFloat();
-				float nextY = SteveDriver.random.nextFloat();
+		generatingField = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Nothing yet.");
 				
-				if (nextX < .33f) {
-					dx = -1;
-				} else if (nextX > .66f) {
-					dx = 1;
+				MapLayers layers = Field.map.getLayers();
+				TiledMapTileLayer layer = new TiledMapTileLayer(totalRadius, totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+				TiledMapTileLayer blockers = new TiledMapTileLayer(totalRadius, totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+				TiledMapTileLayer rubble = new TiledMapTileLayer(totalRadius, totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+				ArrayList<CellContainer> blockerTiles = new ArrayList<CellContainer>();
+				
+				if (SteveDriver.constants.get("candyZone") == 0f){
+					blockerTiles.add(new CellContainer(0, 4, splitTiles, SteveDriver.random));
+					blockerTiles.add(new CellContainer(0, 7, splitTiles, SteveDriver.random));
+					blockerTiles.add(new CellContainer(0, 10, splitTiles, SteveDriver.random));
 				} else {
-					dx = 0;
+					blockerTiles.add(new CellContainer(0, 13, splitTiles, SteveDriver.random));
+					blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
+					blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
+				}
+				//This is the Background generation	
+				//Barren tiles generated
+				for (int x = 0; x < totalRadius; x++) {
+					for (int y = 0; y < totalRadius; y++) {
+						int ty = barren.GetRandomY();
+						int tx = barren.GetRandomX();
+						Cell cell = new Cell();
+						cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
+						layer.setCell(x, y, cell);
+					}
 				}
 				
-				if (nextY < .33f && dx == 0) {
-					dy = -1;
-				} else if (nextY > .66f && dx == 0) {
-					dy = 1;
-				} else {
-					dy = 0;
+				//Desert tiles generated
+				for (int x = desertRadius; x < totalRadius - desertRadius; x++) {
+					for (int y = desertRadius; y < totalRadius - desertRadius; y++) {
+						placeTile(x, y, splitTiles, layer, 1);
+					}
 				}
 				
-				randX = randX + dx;
-				randY = randY + dy;
-				
-				if(this.isOccupied(randX*16, randY*16) && this.checkRing(randX, randY) == this.checkRing(randX+2, randY+2) && this.checkRing(randX, randY) == this.checkRing(randX-1, randY-1)){
-					//ensures that there is always a tileable set of blockers
-					i++;
-					blockers.setCell(randX, randY, cell);
-					blockers.setCell(randX+1, randY+1, cell);
-					blockers.setCell(randX+1, randY, cell);
-					blockers.setCell(randX, randY+1, cell);
+				//Grass tiles generated
+				for (int x = grassRadius; x < totalRadius - grassRadius; x++) {
+					for (int y = grassRadius; y < totalRadius - grassRadius; y++) {
+						placeTile(x, y, splitTiles, layer, 0);
+					}
 				}
-			}
-		}
-		
-		boolean left, right, top, bottom;
-		int tileRad = 0;
-		//code to set the blockers to the correct images
-		for (int x = 0; x < this.totalRadius; x++) {
-			for (int y = 0; y < this.totalRadius; y++) {
-				if(blockers.getCell(x, y) != null) {
-					tileRad = this.checkRing(x, y);
-					left = (blockers.getCell(x-1, y) == null) || (tileRad != this.checkRing(x - 1, y));
-					right = (blockers.getCell(x + 1, y) == null) || (tileRad != this.checkRing(x + 1, y));
-					top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
-					bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
+				
+				int randX, randY;
+				//this code sets up the positions for the blockers on the grid
+				for (int i = 0; i < blockerChains; ) {
+					randX = SteveDriver.random.nextInt(totalRadius);
+					randY = SteveDriver.random.nextInt(totalRadius);
 					
-					blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
-					//set the actual tile image
-					if (left) {
-						if (top) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
-						} else if (bottom) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
+					Cell cell = new Cell();
+					cell.setTile(new StaticTiledMapTile(splitTiles[5][1]));
+					
+					int dx = 0;
+					int dy = 0;
+					
+					for (int j = 0; j < maxBlockerLength && SteveDriver.random.nextFloat() > .4f; j++) {
+						float nextX = SteveDriver.random.nextFloat();
+						float nextY = SteveDriver.random.nextFloat();
+						
+						if (nextX < .33f) {
+							dx = -1;
+						} else if (nextX > .66f) {
+							dx = 1;
 						} else {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).left());
+							dx = 0;
 						}
-					} else if (right) {
-						if (top) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
-						} else if (bottom) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
+						
+						if (nextY < .33f && dx == 0) {
+							dy = -1;
+						} else if (nextY > .66f && dx == 0) {
+							dy = 1;
 						} else {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).right());
+							dy = 0;
 						}
-					} else if (bottom) {
-						if (left) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
-						} else if (right) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
-						} else {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).bottomA);
-						}
-					} else if (top) {
-						if (left) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
-						} else if (right) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
-						} else {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).top());
-						}
-					} else {
-						boolean topLeft = (blockers.getCell(x-1, y + 1) == null) || (tileRad != this.checkRing(x - 1, y + 1));
-						boolean topRight = (blockers.getCell(x + 1, y + 1) == null) || (tileRad != this.checkRing(x + 1, y + 1));
-						boolean bottomLeft = (blockers.getCell(x - 1, y - 1) == null) || (tileRad != this.checkRing(x - 1, y - 1));
-						boolean bottomRight = (blockers.getCell(x + 1, y - 1) == null) || (tileRad != this.checkRing(x + 1, y - 1));
-						if (topLeft) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomRight);
-						} else if (topRight) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomLeft);
-						} else if (bottomLeft) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopRight);
-						} else if (bottomRight) {
-							blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopLeft);
+						
+						randX = randX + dx;
+						randY = randY + dy;
+						
+						if(isOccupied(randX*16, randY*16) && checkRing(randX, randY) == checkRing(randX+2, randY+2) && checkRing(randX, randY) == checkRing(randX-1, randY-1)){
+							//ensures that there is always a tileable set of blockers
+							i++;
+							blockers.setCell(randX, randY, cell);
+							blockers.setCell(randX+1, randY+1, cell);
+							blockers.setCell(randX+1, randY, cell);
+							blockers.setCell(randX, randY+1, cell);
 						}
 					}
 				}
+				
+				boolean left, right, top, bottom;
+				int tileRad = 0;
+				//code to set the blockers to the correct images
+				for (int x = 0; x < totalRadius; x++) {
+					for (int y = 0; y < totalRadius; y++) {
+						if(blockers.getCell(x, y) != null) {
+							tileRad = checkRing(x, y);
+							left = (blockers.getCell(x-1, y) == null) || (tileRad != checkRing(x - 1, y));
+							right = (blockers.getCell(x + 1, y) == null) || (tileRad != checkRing(x + 1, y));
+							top = (blockers.getCell(x, y + 1) == null) || (tileRad != checkRing(x, y + 1));
+							bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != checkRing(x, y - 1));
+							
+							blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
+							//set the actual tile image
+							if (left) {
+								if (top) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+								} else if (bottom) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
+								} else {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).left());
+								}
+							} else if (right) {
+								if (top) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
+								} else if (bottom) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
+								} else {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).right());
+								}
+							} else if (bottom) {
+								if (left) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).bottomLeft);
+								} else if (right) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).bottomRight);
+								} else {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).bottomA);
+								}
+							} else if (top) {
+								if (left) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).topLeft);
+								} else if (right) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).topRight);
+								} else {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).top());
+								}
+							} else {
+								boolean topLeft = (blockers.getCell(x-1, y + 1) == null) || (tileRad != checkRing(x - 1, y + 1));
+								boolean topRight = (blockers.getCell(x + 1, y + 1) == null) || (tileRad != checkRing(x + 1, y + 1));
+								boolean bottomLeft = (blockers.getCell(x - 1, y - 1) == null) || (tileRad != checkRing(x - 1, y - 1));
+								boolean bottomRight = (blockers.getCell(x + 1, y - 1) == null) || (tileRad != checkRing(x + 1, y - 1));
+								if (topLeft) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomRight);
+								} else if (topRight) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).innerBottomLeft);
+								} else if (bottomLeft) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopRight);
+								} else if (bottomRight) {
+									blockers.setCell(x, y, blockerTiles.get(tileRad).innerTopLeft);
+								}
+							}
+						}
+					}
+				}
+				
+				layers.add(layer);
+				layers.add(blockers);
+				layers.add(rubble);
 			}
-		}
+		});
 		
-		layers.add(layer);
-		layers.add(blockers);
-		layers.add(rubble);
+		generatingField.start();
+		
+		/*try {
+			test.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/	
 	}
 	
 	public void update() {
