@@ -257,6 +257,23 @@ public class Snake {
 			}
 		}
 		
+		//TODO: ALWAYS KILLS YOU WHEN OUTSIDE RHELM
+		if (!SteveDriver.prefs.getBoolean("edgeTutorial", false) && (headPosition.x < 6 * SteveDriver.TEXTURE_WIDTH ||
+				headPosition.x >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH - 6 * SteveDriver.TEXTURE_WIDTH ||
+				headPosition.y < 6 * SteveDriver.TEXTURE_LENGTH ||
+				headPosition.y >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH - 6 * SteveDriver.TEXTURE_LENGTH)) {
+			SteveDriver.prefs.putBoolean("edgeTutorial", true);
+			SteveDriver.prefs.flush();
+			SteveDriver.tutorialOn = true;
+			SteveDriver.tutorial.startEdgeTutorial();
+		}
+		else if (false && (
+				headPosition.x < 0 || headPosition.x >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_WIDTH ||
+				headPosition.y < 0 || headPosition.y >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_LENGTH)) {
+			kill();
+			return true;
+		}
+		
 		return false;
 	}
 	
