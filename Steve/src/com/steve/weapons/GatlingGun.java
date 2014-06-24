@@ -7,7 +7,7 @@ import com.steve.projectiles.SnakeBullet;
 
 public class GatlingGun extends Weapon{
 	public GatlingGun(float x, float y){
-		super(x,y, 16*8, 16);
+		super(x,y, SteveDriver.TEXTURE_SIZE*8, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = .5f - .5f * (int)(SteveDriver.constants.get("fireRate")-1f);
 		range = 400f * SteveDriver.constants.get("fireRange");
 	}
@@ -32,7 +32,7 @@ public class GatlingGun extends Weapon{
 	public void upgrade(){
 		super.upgrade();
 		this.shootSpeed = 0.5f - 0.5f * (int)(SteveDriver.constants.get("fireRate")-1f);
-		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH);
+		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		//TODO more stuff to upgrade
 	}
 }

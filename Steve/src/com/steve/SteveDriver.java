@@ -41,10 +41,7 @@ public class SteveDriver implements ApplicationListener {
 	public static Preferences prefs;
 	public static Preferences storePrefs;
 	
-	public static final int TEXTURE_WIDTH = 16;
-	public static final int TEXTURE_LENGTH = 16;
-	public static final int BIG_TEXTURE_WIDTH = 32;
-	public static final int BIG_TEXTURE_LENGTH = 32;
+	public static final int TEXTURE_SIZE = 32;
 	public static int snakeTierWeaponDamageModifier = 10;
 	
 	public static final float RIGHT = MathUtils.PI * 3f / 2f * MathUtils.radiansToDegrees;
@@ -96,8 +93,8 @@ public class SteveDriver implements ApplicationListener {
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		float verticalSize = 25 * TEXTURE_WIDTH;
-		float guiVerticalSize = 30 * TEXTURE_LENGTH;
+		float verticalSize = 25 * TEXTURE_SIZE;
+		float guiVerticalSize = 30 * TEXTURE_SIZE;
 		
 		camera = new OrthographicCamera(verticalSize * w / h, verticalSize);
 		guiCamera = new OrthographicCamera(guiVerticalSize * w / h, guiVerticalSize);
@@ -112,17 +109,17 @@ public class SteveDriver implements ApplicationListener {
 		constants.addToConstants("screenWidth", SteveDriver.guiCamera.viewportWidth);
 		constants.addToConstants("screenHeight", SteveDriver.guiCamera.viewportHeight);
 		
-		atlas = new Texture(Gdx.files.internal("data/SpriteAtlas.png"));
-		atlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		atlas = new Texture(Gdx.files.internal("data/SpriteAtlasDouble.png"));
+		atlas.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		background = new Texture(Gdx.files.internal("data/teset-1.png"));
-		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		background.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		logo = new Texture(Gdx.files.internal("data/Steve-title.png"));
-		logo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		logo.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		space = new Texture(Gdx.files.internal("data/space.png"));
-		space.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		space.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		guiHelper = new GUIHelper();
 		

@@ -67,10 +67,10 @@ public class Enemy {
 		mapPositionY = y;
 		
 		avatar = new Sprite(new TextureRegion(SteveDriver.atlas,
-				atlasPositionX * SteveDriver.TEXTURE_WIDTH, atlasPositionY * SteveDriver.TEXTURE_LENGTH,
-				atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH));
+				atlasPositionX * SteveDriver.TEXTURE_SIZE, atlasPositionY * SteveDriver.TEXTURE_SIZE,
+				atlasBoundsX * SteveDriver.TEXTURE_SIZE, atlasBoundsY * SteveDriver.TEXTURE_SIZE));
 		updateAvatar();
-		avatar.setPosition(x * SteveDriver.TEXTURE_WIDTH, y * SteveDriver.TEXTURE_LENGTH);
+		avatar.setPosition(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE);
 		
 		this.health = health;
 		this.deathDamage = (SteveDriver.snake.getSnakeTier() == 1) ? deathDamage : deathDamage - (deathDamage*SteveDriver.snake.getSnakeTier()/10);
@@ -107,7 +107,7 @@ public class Enemy {
 		checkCollideWithSnake();
 		checkProjectiles();
 		checkIsDead();
-		if (!SteveDriver.field.checkGlueTile((int)avatar.getX()/SteveDriver.TEXTURE_LENGTH, (int)avatar.getY()/SteveDriver.TEXTURE_WIDTH)) {
+		if (!SteveDriver.field.checkGlueTile((int)avatar.getX()/SteveDriver.TEXTURE_SIZE, (int)avatar.getY()/SteveDriver.TEXTURE_SIZE)) {
 			move();
 		}
 		animate();
@@ -149,14 +149,14 @@ public class Enemy {
 	protected void move() {
 		if (moveTimer >= moveTime){
 			Vector2 direction = decideMove();
-			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
+			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_SIZE, avatar.getY() + direction.y * SteveDriver.TEXTURE_SIZE);		
 
 			if(this.passedBarrierCheck() || ignoresBlockers){
 				//we good
 			}
 			else{
 				for(int i = 0; i < 100; i++){
-					avatar.setPosition(avatar.getX() - direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() - direction.y * SteveDriver.TEXTURE_LENGTH);
+					avatar.setPosition(avatar.getX() - direction.x * SteveDriver.TEXTURE_SIZE, avatar.getY() - direction.y * SteveDriver.TEXTURE_SIZE);
 					int j = SteveDriver.random.nextInt(4);
 					float rotation = 0;
 					
@@ -179,7 +179,7 @@ public class Enemy {
 						break;
 					}
 					
-					avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_WIDTH, avatar.getY() + direction.y * SteveDriver.TEXTURE_LENGTH);		
+					avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_SIZE, avatar.getY() + direction.y * SteveDriver.TEXTURE_SIZE);		
 
 					if(this.passedBarrierCheck()){
 						avatar.setRotation(rotation);
@@ -196,7 +196,7 @@ public class Enemy {
 	}
 	
 	protected void updateAvatar() {
-		avatar.setRegion(atlasPositionX * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * currentFrame * atlasBoundsX, atlasPositionY * SteveDriver.TEXTURE_LENGTH, atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH);
+		avatar.setRegion(atlasPositionX * SteveDriver.TEXTURE_SIZE + SteveDriver.TEXTURE_SIZE * currentFrame * atlasBoundsX, atlasPositionY * SteveDriver.TEXTURE_SIZE, atlasBoundsX * SteveDriver.TEXTURE_SIZE, atlasBoundsY * SteveDriver.TEXTURE_SIZE);
 	}
 	
 	public void kill() {
@@ -411,20 +411,20 @@ public class Enemy {
 	protected boolean passedBarrierCheck(){
 		TiledMapTileLayer layer = Field.blockers;
 		
-		int cellWidth = avatar.getRegionWidth() / SteveDriver.TEXTURE_WIDTH;
-		int cellHeight = avatar.getRegionHeight() / SteveDriver.TEXTURE_LENGTH;
+		int cellWidth = avatar.getRegionWidth() / SteveDriver.TEXTURE_SIZE;
+		int cellHeight = avatar.getRegionHeight() / SteveDriver.TEXTURE_SIZE;
 		
-		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_WIDTH;
-		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_LENGTH;
+		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_SIZE;
+		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_SIZE;
 		
 		for (int x = 0; x < cellWidth; x++) {
 			for (int y = 0; y < cellHeight; y++) {
 				Cell cell = layer.getCell(topCornerX + x, topCornerY + y);
 				
-				tempCollider.x = (topCornerX + x) * SteveDriver.TEXTURE_WIDTH;
-				tempCollider.y = (topCornerY + y) * SteveDriver.TEXTURE_LENGTH;
-				tempCollider.width = SteveDriver.TEXTURE_WIDTH;
-				tempCollider.height = SteveDriver.TEXTURE_LENGTH;
+				tempCollider.x = (topCornerX + x) * SteveDriver.TEXTURE_SIZE;
+				tempCollider.y = (topCornerY + y) * SteveDriver.TEXTURE_SIZE;
+				tempCollider.width = SteveDriver.TEXTURE_SIZE;
+				tempCollider.height = SteveDriver.TEXTURE_SIZE;
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, this.avatar.getBoundingRectangle())) {
 					if(destroysBlockers) {

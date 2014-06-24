@@ -31,8 +31,8 @@ public class Projectile {
 		this.snakeFriendly = snakeFriendly;
 		dead = false;
 		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, atlasPositionX * SteveDriver.TEXTURE_WIDTH,
-				atlasPositionY * SteveDriver.TEXTURE_LENGTH, atlasBoundsX * SteveDriver.TEXTURE_WIDTH, atlasBoundsY * SteveDriver.TEXTURE_LENGTH));
+		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, atlasPositionX * SteveDriver.TEXTURE_SIZE,
+				atlasPositionY * SteveDriver.TEXTURE_SIZE, atlasBoundsX * SteveDriver.TEXTURE_SIZE, atlasBoundsY * SteveDriver.TEXTURE_SIZE));
 		avatar.setPosition(x, y);
 	
 		projectileTime = 100;
@@ -83,8 +83,8 @@ public class Projectile {
 	private void checkCollisions() {
 		TiledMapTileLayer layer = Field.blockers;
 		
-		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_WIDTH;
-		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_LENGTH;
+		int topCornerX = (int)avatar.getX() / SteveDriver.TEXTURE_SIZE;
+		int topCornerY = (int)avatar.getY() / SteveDriver.TEXTURE_SIZE;
 
 		Cell cell = layer.getCell(topCornerX, topCornerY);
 		

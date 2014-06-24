@@ -11,7 +11,7 @@ public class Apple extends Pickup {
 	private Sound eatApple;
 	
 	public Apple(float x, float y) {
-		super(x, y, 4 * 16, 0, 250000);
+		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 250000);
 		int soundDecider = SteveDriver.random.nextInt(3)+1;
 		eatApple = Gdx.audio.newSound(Gdx.files.internal("audio/eatApple" + soundDecider + ".ogg"));
 	}

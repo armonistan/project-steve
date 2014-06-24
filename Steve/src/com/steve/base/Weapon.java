@@ -26,7 +26,7 @@ public class Weapon extends Sprite{
 	protected Sound shootSound3;	
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
-	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
+	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		this.atlasX = atlasX;
 		this.atlasY = atlasY;
 		range = 300;//override range if need be

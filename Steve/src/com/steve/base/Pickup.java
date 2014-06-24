@@ -11,8 +11,8 @@ public class Pickup extends Sprite {
 	protected int points;
 	
 	public Pickup(float x, float y, int atlasX, int atlasY, int points) {
-		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, 16, 16));
-		this.setPosition(x * 16, y * 16);
+		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+		this.setPosition(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE);
 		active = true;
 		this.points = points;
 	}

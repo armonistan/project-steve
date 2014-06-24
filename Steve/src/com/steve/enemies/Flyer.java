@@ -26,8 +26,8 @@ public class Flyer extends Enemy{
 		propellerAtlasPositionY = 5;
 		propellerAtlasBoundsX = 2;
 		propellerAtlasBoundsY = 2;
-		propeller = new Sprite(SteveDriver.atlas, propellerAtlasPositionX * SteveDriver.TEXTURE_WIDTH, propellerAtlasPositionY * SteveDriver.TEXTURE_LENGTH,
-				propellerAtlasBoundsX * SteveDriver.TEXTURE_WIDTH, propellerAtlasBoundsY * SteveDriver.TEXTURE_LENGTH);
+		propeller = new Sprite(SteveDriver.atlas, propellerAtlasPositionX * SteveDriver.TEXTURE_SIZE, propellerAtlasPositionY * SteveDriver.TEXTURE_SIZE,
+				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE, propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;
 	}
@@ -59,15 +59,15 @@ public class Flyer extends Enemy{
 	
 	@Override
 	public void shoot(float dx, float dy) {
-		super.addProjectile(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2), dx, dy);
+		super.addProjectile(new Pinecone(avatar.getX() + SteveDriver.TEXTURE_SIZE / 2, avatar.getY() + SteveDriver.TEXTURE_SIZE / 2), dx, dy);
 	}
 	
 	protected void updatePropeller() {
 		propeller.setRegion(
-				propellerAtlasPositionX * SteveDriver.TEXTURE_WIDTH + SteveDriver.TEXTURE_WIDTH * propellerFrame * propellerAtlasBoundsX,
-				propellerAtlasPositionY * SteveDriver.TEXTURE_LENGTH,
-				propellerAtlasBoundsX * SteveDriver.TEXTURE_WIDTH,
-				propellerAtlasBoundsY * SteveDriver.TEXTURE_LENGTH);
+				propellerAtlasPositionX * SteveDriver.TEXTURE_SIZE + SteveDriver.TEXTURE_SIZE * propellerFrame * propellerAtlasBoundsX,
+				propellerAtlasPositionY * SteveDriver.TEXTURE_SIZE,
+				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE,
+				propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 	}
 	
 	@Override

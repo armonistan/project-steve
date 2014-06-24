@@ -21,8 +21,8 @@ public class Summary {
 		appleScore = 0;
 		enemyScore = 0;
 		
-		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
-				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
+		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.STORE), "To the Store!");
 		
 		showingAds = false;
@@ -41,13 +41,13 @@ public class Summary {
 		continueButton.render();
 		
 		SteveDriver.guiHelper.drawTextCentered("Apples: $" + Math.round(appleScore * applePercent), 
-				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_WIDTH, 
-				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
+				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
 		
 		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyScore * enemyPercent), 
-				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_WIDTH, 
-				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2,
+				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
 		
 		updateCounts();

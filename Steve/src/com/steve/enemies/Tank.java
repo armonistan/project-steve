@@ -15,8 +15,8 @@ public class Tank extends Enemy {
 		shootTime = 0.5f;
 		sightDistance = 600;
 		
-		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_WIDTH, 1 * SteveDriver.TEXTURE_LENGTH,
-				2 * SteveDriver.TEXTURE_WIDTH, 2 * SteveDriver.TEXTURE_LENGTH);
+		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE,
+				2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE);
 		
 		shotCap = 10;
 		hasShotCounter = 11;
@@ -44,7 +44,7 @@ public class Tank extends Enemy {
 	
 	@Override
 	public void shoot(float dx, float dy) {
-		super.addProjectile(new Acorn(avatar.getX() + SteveDriver.TEXTURE_WIDTH / 2, avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2), dx, dy);
+		super.addProjectile(new Acorn(avatar.getX() + SteveDriver.TEXTURE_SIZE / 2, avatar.getY() + SteveDriver.TEXTURE_SIZE / 2), dx, dy);
 	}
 	
 	@Override

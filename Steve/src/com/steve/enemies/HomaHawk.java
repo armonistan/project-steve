@@ -37,7 +37,7 @@ public class HomaHawk extends Enemy{
 	
 	@Override
 	public void shoot(float dx, float dy) {
-		super.addProjectile(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_LENGTH / 2), dx, dy);
+		super.addProjectile(new Tree(avatar.getX(), avatar.getY() + SteveDriver.TEXTURE_SIZE / 2), dx, dy);
 	}
 
 	@Override

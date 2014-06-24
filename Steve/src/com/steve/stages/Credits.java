@@ -21,8 +21,8 @@ public class Credits {
 		appleScore = 0;
 		enemyScore = 0;
 		
-		backButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_WIDTH,
-				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
+		backButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Back to Menu");
 		
 		showingAds = false;
@@ -33,13 +33,13 @@ public class Credits {
 		backButton.render();
 		
 		SteveDriver.guiHelper.drawTextCentered("Armon", 
-				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_WIDTH, 
-				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_LENGTH,
+				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE,
 				Color.BLACK);
 		
 		SteveDriver.guiHelper.drawTextCentered("Meatspin?", 
-				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_WIDTH, 
-				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_LENGTH,
+				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_SIZE,
 				Color.BLACK);
 	}
 }

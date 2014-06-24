@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 public class MenuSnake extends Snake {
 	public MenuSnake() {
-		super(100, 16);
+		super(100, SteveDriver.TEXTURE_SIZE / 2);
 
 		for (int i = 0; i < 5; i++) {
 			this.addBody();
@@ -18,7 +18,7 @@ public class MenuSnake extends Snake {
 	{
 		//update all the segments.
 		if (timer >= timeBetweenTurn) {
-			if (headPosition.x > 150 * SteveDriver.TEXTURE_WIDTH) {
+			if (headPosition.x > 150 * SteveDriver.TEXTURE_SIZE) {
 				if (segments.get(0).getRotation() == SteveDriver.RIGHT) {
 					nextRotation = SteveDriver.DOWN;
 					nextDirection = SteveDriver.VDOWN;
@@ -28,7 +28,7 @@ public class MenuSnake extends Snake {
 					nextDirection = SteveDriver.VLEFT;
 				}
 			}
-			else if (headPosition.x < 50 * SteveDriver.TEXTURE_WIDTH) {
+			else if (headPosition.x < 50 * SteveDriver.TEXTURE_SIZE) {
 				if (segments.get(0).getRotation() == SteveDriver.LEFT) {
 					nextRotation = SteveDriver.UP;
 					nextDirection = SteveDriver.VUP;
