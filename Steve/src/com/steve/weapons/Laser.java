@@ -1,5 +1,6 @@
 package com.steve.weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
@@ -10,6 +11,9 @@ public class Laser extends Weapon{
 		super(x,y, 16*9, 16);
 		shootSpeed = .7f - .7f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 1000*SteveDriver.constants.get("fireRange");
+		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/pulseLaser1.ogg"));
+		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/pulseLaser2.ogg"));
+		shootSound3 = Gdx.audio.newSound(Gdx.files.internal("audio/pulseLaser3.ogg"));
 	}
 	
 	@Override
@@ -25,6 +29,18 @@ public class Laser extends Weapon{
 		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 		SteveDriver.field.addProjectile(temp);
+		int shootSoundInt = SteveDriver.random.nextInt(3)+1;
+		switch(shootSoundInt){
+			case 1:
+				shootSound1.play();
+			break;
+			case 2:
+				shootSound2.play();
+			break;
+			case 3:
+				shootSound3.play();
+			break;
+		}
 		shootCounter = 0;
 	}
 	

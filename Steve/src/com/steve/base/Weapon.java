@@ -1,6 +1,8 @@
 package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -19,6 +21,9 @@ public class Weapon extends Sprite{
 	protected int atlasY;
 	protected boolean isAimed;
 	protected boolean isUpgraded;
+	protected Sound shootSound1;
+	protected Sound shootSound2;
+	protected Sound shootSound3;	
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
 	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_WIDTH, SteveDriver.TEXTURE_LENGTH));
