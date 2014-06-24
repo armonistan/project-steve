@@ -159,14 +159,6 @@ public class GUIHelper {
 		return temp;
 	}
 	
-	public int coordinateToScreenSpaceX(int inputX) {
-		return (2 * inputX) + (int)SteveDriver.guiCamera.viewportWidth;
-	}
-	
-	public int coordinateToScreenSpaceY(int inputY, int height) {
-		return 2 * ((inputY * -1) + height) + (int)SteveDriver.guiCamera.viewportHeight;
-	}
-	
 	public boolean isOnScreen(float x, float y, float originX, float originY) {
 		return (x + originX * 2 >= SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f &&
 				x - originX * 2 < SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) &&
