@@ -5,19 +5,19 @@ import com.steve.SteveDriver;
 import com.steve.base.Projectile;
 
 public class SnakeMainProjectile extends Projectile {
-	private final static float SPEED = 100;
-	private final static float MAX_SPEED = 550;
+	private final static float SPEED = 150;
+	private final static float MAX_SPEED = 750;
 	private boolean isRocket;
 	
-	public SnakeMainProjectile(float x, float y, int level) {
-		super(x, y, 16, 0, 1, 1, 40 * SteveDriver.constants.get("fireDamage"), true,
+	public SnakeMainProjectile(float x, float y, int level, int atlasX, int atlasY) {
+		super(x, y, atlasX, atlasY, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
 				100 * SteveDriver.constants.get("fireRange"));
 		isRocket = false;
 		speed = SPEED;
 	}
 	
-	public SnakeMainProjectile(float x, float y) {
-		super(x, y, 16, 0, 1, 1, 40 * SteveDriver.constants.get("fireDamage"), true,
+	public SnakeMainProjectile(float x, float y, int atlasX, int atlasY) {
+		super(x, y, atlasX, atlasY, 1, 1, 40 * SteveDriver.constants.get("fireDamage"), true,
 				100 * SteveDriver.constants.get("fireRange"));
 		isRocket = false;
 		speed = SPEED;

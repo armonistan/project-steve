@@ -44,7 +44,8 @@ public class SteveDriver implements ApplicationListener {
 	public static final int TEXTURE_LENGTH = 16;
 	public static final int BIG_TEXTURE_WIDTH = 32;
 	public static final int BIG_TEXTURE_LENGTH = 32;
-
+	public static int snakeTierWeaponDamageModifier = 10;
+	
 	public static final float RIGHT = MathUtils.PI * 3f / 2f * MathUtils.radiansToDegrees;
 	public static final float UP = 0;
 	public static final float LEFT = MathUtils.PI / 2f * MathUtils.radiansToDegrees;

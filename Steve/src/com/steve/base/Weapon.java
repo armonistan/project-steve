@@ -77,20 +77,20 @@ public class Weapon extends Sprite{
 		float deltaNegativeDegrees = (this.getRotation() - degrees + 360)%360;
 		
 		if(deltaPositiveDegrees < deltaNegativeDegrees){
-			if(deltaPositiveDegrees < 3)
+			if(Math.abs(deltaPositiveDegrees) < 3)
 				this.isAimed = true;
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +361)%360));
+				this.setRotation(((this.getRotation() +363)%360));
 			}
 		}
 		else{
-			if(deltaNegativeDegrees < 3){
+			if(Math.abs(deltaNegativeDegrees) < 3){
 				this.isAimed = true;
 			}
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +359)%360));
+				this.setRotation(((this.getRotation() +357)%360));
 			}
 		}
 	}

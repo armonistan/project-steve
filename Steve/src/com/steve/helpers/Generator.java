@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
+import com.steve.enemies.Ring;
 import com.steve.enemies.Spring;
 import com.steve.enemies.Brute;
 import com.steve.enemies.Flyer;
@@ -124,7 +125,12 @@ public class Generator {
 	
 		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
-			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(3) + 5;
+			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
+		
+		if(SteveDriver.random.nextInt(100) <=  locationID){
+			this.generateRing(xPos, yPos);
+			return;
+		}
 	
 		switch(enemyType){
 			case 0:
@@ -326,6 +332,12 @@ public class Generator {
 		}
 	
 		return false;
+	}
+	
+	public void generateRing(float xPos, float yPos){
+		Ring r = new Ring(xPos, yPos);
+		if(isOccupied(r.getRectangle()))
+			SteveDriver.field.enemies.add(r);	
 	}
 	
 	public void generateSlug(float xPos, float yPos){

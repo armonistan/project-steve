@@ -12,7 +12,7 @@ public class MainCannon extends Weapon{
 	
 	public MainCannon(float x, float y, int atlasX, int atlasY){
 		super(x,y, atlasX, atlasY);
-		shootSpeed = 2f - (2f * (SteveDriver.constants.get("fireRate") - 1f));
+		shootSpeed = .6f - (.6f * (SteveDriver.constants.get("fireRate") - 1f));
 		range = 700 * SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange");
 		this.isUpgraded = true;
 		alternate = true;
@@ -51,7 +51,7 @@ public class MainCannon extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
+				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0, 19, 0);
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
@@ -67,9 +67,9 @@ public class MainCannon extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
-				SnakeMainProjectile temp2 = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
-				SnakeMainProjectile temp3 = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
+				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0, 19, 0);
+				SnakeMainProjectile temp2 = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0, 19, 0);
+				SnakeMainProjectile temp3 = new SnakeMainProjectile(this.getX(), this.getY(), (isUpgraded) ? 1 : 0, 19, 0);
 				
 				SteveDriver.field.addProjectile(temp);
 				SteveDriver.field.addProjectile(temp2);
@@ -89,7 +89,7 @@ public class MainCannon extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY());
+				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX(), this.getY(), 21, 0);
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
@@ -107,7 +107,7 @@ public class MainCannon extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX()+MathUtils.sinDeg(degrees)*offset, this.getY()+MathUtils.cosDeg(degrees)*offset, (isUpgraded) ? 1 : 0);
+				SnakeMainProjectile temp = new SnakeMainProjectile(this.getX()+MathUtils.sinDeg(degrees)*offset, this.getY()+MathUtils.cosDeg(degrees)*offset, (isUpgraded) ? 1 : 0, 20, 0);
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
