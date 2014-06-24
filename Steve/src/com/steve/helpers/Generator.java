@@ -40,10 +40,10 @@ public class Generator {
 	final float appleGenerationTime = 3; 
 	float appleGenerationCounter; 
 	
-	final float pickUpGenerationTime = 10; 
+	final float pickUpGenerationTime = 1; 
 	float pickUpGenerationCounter; 
 	
-	final float upgradeGenerationTime = 20; 
+	final float upgradeGenerationTime = 2; 
 	float upgradeGenerationCounter; 
 	
 	public Generator(){

@@ -1,5 +1,6 @@
 package com.steve.weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
@@ -10,6 +11,9 @@ public class GatlingGun extends Weapon{
 		super(x,y, SteveDriver.TEXTURE_SIZE*8, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = .5f - .5f * (int)(SteveDriver.constants.get("fireRate")-1f);
 		range = 400f * SteveDriver.constants.get("fireRange");
+		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/gatlingGun1.ogg"));
+		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/gatlingGun2.ogg"));
+		shootSound3 = Gdx.audio.newSound(Gdx.files.internal("audio/gatlingGun3.ogg"));
 	}
 	
 	@Override
@@ -25,6 +29,18 @@ public class GatlingGun extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 				SteveDriver.field.addProjectile(temp);
+				int shootSoundInt = 1;//SteveDriver.random.nextInt(3)+1;
+				switch(shootSoundInt){
+					case 1:
+						shootSound1.play(.4f, 1, 0);
+					break;
+					case 2:
+						shootSound2.play();
+					break;
+					case 3:
+						shootSound3.play();
+					break;
+				}
 				shootCounter = 0;
 	}
 	
