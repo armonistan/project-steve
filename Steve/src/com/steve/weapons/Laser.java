@@ -36,13 +36,13 @@ public class Laser extends Weapon{
 		int shootSoundInt = SteveDriver.random.nextInt(3)+1;
 		switch(shootSoundInt){
 			case 1:
-				shootSound1.play(.8f, 1, 0);
+				shootSound1.play(1f, 1, 0);
 			break;
 			case 2:
-				shootSound2.play(.8f, 1, 0);
+				shootSound2.play(1f, 1, 0);
 			break;
 			case 3:
-				shootSound3.play(.8f, 1, 0);
+				shootSound3.play(1f, 1, 0);
 			break;
 		}
 		shootCounter = 0;

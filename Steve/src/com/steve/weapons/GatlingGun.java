@@ -32,7 +32,7 @@ public class GatlingGun extends Weapon{
 				int shootSoundInt = 1;//SteveDriver.random.nextInt(3)+1;
 				switch(shootSoundInt){
 					case 1:
-						shootSound1.play(.4f, 1, 0);
+						shootSound1.play(.8f, 1, 0);
 					break;
 					case 2:
 						shootSound2.play();
