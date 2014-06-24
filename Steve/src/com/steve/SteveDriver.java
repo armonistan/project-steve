@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.helpers.ConstantHelper;
 import com.steve.helpers.GUIHelper;
+import com.steve.stages.Credits;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Menu;
@@ -69,6 +70,7 @@ public class SteveDriver implements ApplicationListener {
 	public static STAGE_TYPE stage;
 	public static Menu menu;
 	public static Game game;
+	public static Credits credits;
 	
 	public static boolean tutorialOn = false;; 
 	
@@ -78,6 +80,7 @@ public class SteveDriver implements ApplicationListener {
 	
 	public static enum STAGE_TYPE {
 		MENU,
+		CREDITS,
 		GAME,
 		STORE,
 		RESPAWNING,
@@ -133,6 +136,7 @@ public class SteveDriver implements ApplicationListener {
 		tutorial = new Tutorial();
 		store = new Store();
 		store.setStoreProgress();
+		credits = new Credits();
 		
 		summary = new Summary();
 		
@@ -153,6 +157,11 @@ public class SteveDriver implements ApplicationListener {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		switch (stage) {
+		case CREDITS:
+			batch.begin();
+			credits.render();
+			batch.end();
+			break;
 		case MENU:
 			menu.render();
 			break;

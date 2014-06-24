@@ -11,6 +11,7 @@ import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.commands.ChangeBooleanPreference;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ExitGame;
+import com.steve.commands.GoToCredits;
 import com.steve.commands.StartNewGame;
 import com.steve.commands.StartNewRound;
 import com.steve.TextButton;
@@ -20,7 +21,7 @@ public class Menu {
 	
 	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 6 * 16, 10, 4, new StartNewGame(), "New Game");
 	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 2 * 16, 10, 4, new StartNewRound(), "Continue");
-	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * 16, 10, 4, new ExitGame(), "Credits");
+	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * 16, 10, 4, new GoToCredits(), "Credits");
 	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * 16, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ExitGame(), "Exit");
 	
 	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * 16, 6, 4, new ChangeBooleanPreference("music"), "Music");
