@@ -48,7 +48,7 @@ public class GatlingGun extends Weapon{
 	public void upgrade(){
 		super.upgrade();
 		this.shootSpeed = 0.5f - 0.5f * (int)(SteveDriver.constants.get("fireRate")-1f);
-		this.setRegion(atlasX, atlasY+16, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+		this.setRegion(atlasX, atlasY + SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		//TODO more stuff to upgrade
 	}
 }

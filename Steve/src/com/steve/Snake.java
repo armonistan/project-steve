@@ -25,7 +25,7 @@ public class Snake {
 	private ArrayList<Weapon> weapons;
 	private int maxSegments = 10;
 	
-	private final int beltImageOffset = 64;
+	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
 	private final int TILE_WIDTH = SteveDriver.TEXTURE_SIZE;
 	
 	protected Vector3 headPosition;
@@ -76,8 +76,8 @@ public class Snake {
 
 		yOffSet = (snakeTier > 2) ? 5 : 0;
 		
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0+xOffSet* SteveDriver.TEXTURE_SIZE, 0+yOffSet*16, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
-		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 48+xOffSet* SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE*yOffSet*16, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, 0 + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 4 * SteveDriver.TEXTURE_SIZE + xOffSet* SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE * yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));
 		segments.get(0).setRotation(0);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
@@ -486,8 +486,8 @@ public class Snake {
 			atlasX += this.beltImageOffset;
 		}
 		
-		atlasX += (xOffSet*16);
-		atlasY += (yOffSet*16);
+		atlasX += (xOffSet * SteveDriver.TEXTURE_SIZE);
+		atlasY += (yOffSet * SteveDriver.TEXTURE_SIZE);
 		
 		segments.get(1).setRegion(atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		segments.get(1).setRotation(degrees);
