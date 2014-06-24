@@ -208,7 +208,7 @@ public class SteveDriver implements ApplicationListener {
 		}
 		else if (prefs.getBoolean("music") && !musicPlaying) {
 			music.setLooping(true);
-			music.setVolume(1);
+			music.setVolume(.4f);
 			music.play();
 			musicPlaying = true;
 		}
