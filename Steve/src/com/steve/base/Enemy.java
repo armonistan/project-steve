@@ -1,6 +1,7 @@
 package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -50,6 +51,8 @@ public class Enemy {
 	protected boolean ignoresBlockers;
 	protected boolean destroysBlockers;
 	
+	protected Sound enemyDeath;
+	
 	//Temp variables
 	Rectangle tempCollider;
 	
@@ -83,6 +86,7 @@ public class Enemy {
 		}
 		
 		tempCollider = new Rectangle();
+		enemyDeath = Gdx.audio.newSound(Gdx.files.internal("audio/enemyDeath" + ".ogg"));
 	}
 	
 	public void draw() {
@@ -201,6 +205,7 @@ public class Enemy {
 	
 	public void kill() {
 		health = 0f;
+		enemyDeath.play();
 		SteveDriver.field.enemiesToRemove.add(this);
 		if (treasureAmount != 0) {
 			SteveDriver.snake.addTreasure(treasureAmount);
