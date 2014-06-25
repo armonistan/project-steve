@@ -1,5 +1,6 @@
 package com.steve;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Gdx;
@@ -55,6 +56,7 @@ public class Snake {
 	private boolean jet;
 	private boolean matrix;
 	private boolean candy;
+	private Sound blockerCollide;
 	
 	Rectangle tempCollider;
 	
@@ -82,6 +84,7 @@ public class Snake {
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
 		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_SIZE);
+		blockerCollide = Gdx.audio.newSound(Gdx.files.internal("audio/blockerCollide" + ".ogg"));
 		
 		if (SteveDriver.constants.get("drill") != 0f) {
 			drill = true;
@@ -250,7 +253,7 @@ public class Snake {
 						SteveDriver.field.destroyBlocker(x, y);
 						return false;
 					}
-					
+					blockerCollide.play();
 					kill();
 					return true;
 				}
