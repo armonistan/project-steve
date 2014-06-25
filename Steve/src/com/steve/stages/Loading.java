@@ -1,11 +1,27 @@
 package com.steve.stages;
-
-import com.badlogic.gdx.graphics.Color;
 import com.steve.SteveDriver;
-import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.TextButton;
+import com.steve.commands.WrapUpLoading;
 
 public class Loading {
+	boolean threadFinished;
+	
+	TextButton startButton;
+	
+	public Loading() {
+		threadFinished = false;
+		
+		startButton = new TextButton(-5f * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.viewportHeight / 2f * -1f + 4f * SteveDriver.TEXTURE_SIZE, 10, 4,
+				new WrapUpLoading(), "Generating...");
+	}
+	
 	public void render() {
+		if (threadFinished) {
+			startButton.setText("Start!");
+			startButton.update();
+		}
+		
 		SteveDriver.guiCamera.position.x = 0;
 		SteveDriver.guiCamera.position.y = 0;
 		SteveDriver.guiCamera.update();
@@ -13,38 +29,35 @@ public class Loading {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		
 		SteveDriver.batch.begin();	
-		SteveDriver.guiHelper.drawTextCentered("Loading", 0, 0, Color.BLACK);
+		startButton.render();
 		SteveDriver.batch.end();
 		
 		if (!SteveDriver.field.generatingField.isAlive()) {
-			SteveDriver.field.cleanupSetup();
+			if (!threadFinished) {
+				SteveDriver.field.cleanupSetup();
 			
-			for (int i = 0; i < 100; i++) {
-				if(SteveDriver.field.generator.generateAppleTutorial())
-					break;
-			}
+				for (int i = 0; i < 100; i++) {
+					if(SteveDriver.field.generator.generateAppleTutorial())
+						break;
+				}
 			
-			for (int i = 0; i < 100; i++) {
-				if(SteveDriver.field.generator.generatePickUpTutorial(1))
-					break;
-			}
-	/*To Do: add to tutorial about weapon upgrades		
-			for (int i = 0; i < 100; i++) {
-				if(field.generator.generatePickUpTutorial(2))
-					break;
-			}
-	*/	
-			for (int i = 0; i < 100; i++) {
-				if(SteveDriver.field.generator.generateEnemyTutorial())
-					break;
-			}
+				for (int i = 0; i < 100; i++) {
+					if(SteveDriver.field.generator.generatePickUpTutorial(1))
+						break;
+				}
+				/*To Do: add to tutorial about weapon upgrades		
+				for (int i = 0; i < 100; i++) {
+					if(field.generator.generatePickUpTutorial(2))
+						break;
+				}*/
 			
-			//TODO: TEMP
-			if (SteveDriver.snake.getMoney() == 0 && !SteveDriver.tutorial.isActive()) {
-				SteveDriver.tutorial.startTutorial();
+				for (int i = 0; i < 100; i++) {
+					if(SteveDriver.field.generator.generateEnemyTutorial())
+						break;
+				}
+				
+				threadFinished = true;
 			}
-			
-			SteveDriver.stage = STAGE_TYPE.GAME;
 		}
 	}
 }

@@ -164,9 +164,6 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void render() {
-		
-		float deltaTime = Gdx.graphics.getRawDeltaTime();
-		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
@@ -205,7 +202,7 @@ public class SteveDriver implements ApplicationListener {
 			}
 			break;
 		case GAME:
-			game.render(deltaTime);
+			game.render();
 			break;
 		case PAUSED:
 			game.renderPaused();
@@ -263,14 +260,6 @@ public class SteveDriver implements ApplicationListener {
 		
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
-		
-		try {
-			field.generatingField.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		loading = new Loading();
 	}
 }
