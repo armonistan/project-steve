@@ -29,7 +29,7 @@ public class Game {
 		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
 	}
 	
-	public void render(float deltaTime) {		
+	public void render() {		
 		Vector3 test = SteveDriver.camera.position.lerp((SteveDriver.tutorial.isActive()) ? SteveDriver.tutorial.getFocus() :
 			SteveDriver.snake.getHeadPosition(), (SteveDriver.tutorial.isActive()) ? 0.1f : 0.05f);
 		SteveDriver.camera.position.x = test.x;

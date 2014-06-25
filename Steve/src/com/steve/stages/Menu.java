@@ -11,7 +11,6 @@ import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.commands.ChangeBooleanPreference;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ExitGame;
-import com.steve.commands.GoToCredits;
 import com.steve.commands.StartNewGame;
 import com.steve.commands.StartNewRound;
 import com.steve.TextButton;
@@ -21,7 +20,7 @@ public class Menu {
 	
 	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 6 * SteveDriver.TEXTURE_SIZE, 10, 4, new StartNewGame(), "New Game");
 	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 2 * SteveDriver.TEXTURE_SIZE, 10, 4, new StartNewRound(), "Continue");
-	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * SteveDriver.TEXTURE_SIZE, 10, 4, new GoToCredits(), "Credits");
+	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * SteveDriver.TEXTURE_SIZE, 10, 4, new ChangeStage(STAGE_TYPE.CREDITS), "Credits");
 	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_SIZE, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ExitGame(), "Exit");
 	
 	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("music"), "Music");
@@ -30,7 +29,7 @@ public class Menu {
 	public MenuField field;
 	
 	public Menu() {
-		logo = new Sprite(new TextureRegion(SteveDriver.logo, 0f, 0f, 1f, 1f));
+		logo = new Sprite(new TextureRegion(SteveDriver.steveLogo, 0f, 0f, 1f, 1f));
 		logo.setPosition(logo.getWidth() / 2 * -1, logo.getRegionHeight() / 1.3f /*Why the fuck do I have to do this?*/ * -1 + SteveDriver.guiCamera.viewportHeight / 2);
 		logo.scale(-0.5f);
 		

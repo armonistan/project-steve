@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
@@ -21,6 +22,8 @@ import com.steve.helpers.GUIHelper;
 import com.steve.stages.Credits;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
+import com.steve.stages.Loading;
+import com.steve.stages.Logo;
 import com.steve.stages.Menu;
 import com.steve.stages.Store;
 import com.steve.stages.Summary;
@@ -28,16 +31,19 @@ import com.steve.stages.Summary;
 public class SteveDriver implements ApplicationListener {
 	public static Texture atlas;
 	public static Texture background;
-	public static Texture logo;
+	public static Texture steveLogo;
 	public static Texture space;
+	public static Texture emberware;
 	
 	public static Snake snake;
 	public static Field field;
 	public static Random random;
 	public static GUIHelper guiHelper;
 	public static ConstantHelper constants;
+	
 	public static Store store;
 	public static Summary summary;
+	
 	public static Preferences prefs;
 	public static Preferences storePrefs;
 	
@@ -48,6 +54,7 @@ public class SteveDriver implements ApplicationListener {
 	public static final float UP = 0;
 	public static final float LEFT = MathUtils.PI / 2f * MathUtils.radiansToDegrees;
 	public static final float DOWN = MathUtils.PI * MathUtils.radiansToDegrees;
+	
 	public static final Vector2 VRIGHT = new Vector2(1, 0);
 	public static final Vector2 VUP = new Vector2(0, 1);
 	public static final Vector2 VLEFT = new Vector2(-1, 0);
@@ -68,6 +75,8 @@ public class SteveDriver implements ApplicationListener {
 	public static Menu menu;
 	public static Game game;
 	public static Credits credits;
+	public static Logo logo;
+	public static Loading loading;
 	
 	public static boolean tutorialOn = false;; 
 	
@@ -82,7 +91,9 @@ public class SteveDriver implements ApplicationListener {
 		STORE,
 		RESPAWNING,
 		SUMMARY,
-		PAUSED
+		PAUSED,
+		LOGO,
+		LOADING
 	}
 	
 	public SteveDriver(IActivityRequestHandler handler) {
@@ -115,11 +126,14 @@ public class SteveDriver implements ApplicationListener {
 		background = new Texture(Gdx.files.internal("data/teset-1.png"));
 		background.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
-		logo = new Texture(Gdx.files.internal("data/Steve-title.png"));
-		logo.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		steveLogo = new Texture(Gdx.files.internal("data/Steve-title.png"));
+		steveLogo.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		space = new Texture(Gdx.files.internal("data/space.png"));
 		space.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		
+		emberware = new Texture(Gdx.files.internal("data/emberware.png"));
+		emberware.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		guiHelper = new GUIHelper();
 		
@@ -127,13 +141,15 @@ public class SteveDriver implements ApplicationListener {
 		gui = new GUI();
 		snake = new Snake(30, 30);
 		
-		stage = STAGE_TYPE.MENU;
+		stage = STAGE_TYPE.LOGO;
 		menu = new Menu();
 		game = new Game();
 		tutorial = new Tutorial();
 		store = new Store();
 		store.setStoreProgress();
 		credits = new Credits();
+		logo = new Logo();
+		loading = new Loading();
 		
 		summary = new Summary();
 		
@@ -148,8 +164,6 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void render() {
-		float deltaTime = Gdx.graphics.getRawDeltaTime();
-		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
@@ -165,7 +179,7 @@ public class SteveDriver implements ApplicationListener {
 		case RESPAWNING:
 			resetField();
 			summary.resetSummary();
-			stage = STAGE_TYPE.GAME;
+			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
 			batch.begin();
@@ -188,10 +202,16 @@ public class SteveDriver implements ApplicationListener {
 			}
 			break;
 		case GAME:
-			game.render(deltaTime);
+			game.render();
 			break;
 		case PAUSED:
 			game.renderPaused();
+			break;
+		case LOGO:
+			logo.render();
+			break;
+		case LOADING:
+			loading.render();
 			break;
 		}
 
@@ -240,30 +260,6 @@ public class SteveDriver implements ApplicationListener {
 		
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
-		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generateAppleTutorial())
-				break;
-		}
-		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generatePickUpTutorial(1))
-				break;
-		}
-/*To Do: add to tutorial about weapon upgrades		
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generatePickUpTutorial(2))
-				break;
-		}
-*/	
-		for (int i = 0; i < 100; i++) {
-			if(field.generator.generateEnemyTutorial())
-				break;
-		}
-		
-		//TODO: TEMP
-		if (SteveDriver.snake.getMoney() == 0 && !SteveDriver.tutorial.isActive()) {
-			SteveDriver.tutorial.startTutorial();
-		}
+		loading = new Loading();
 	}
 }
