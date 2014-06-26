@@ -39,8 +39,8 @@ public class Razorbull extends Enemy{
 	}
 	
 	public void shoot() {
-		int x = (int)(this.avatar.getX()/16);
-		int y = (int)(this.avatar.getY()/16);
+		int x = (int)(this.avatar.getX()/SteveDriver.TEXTURE_SIZE);
+		int y = (int)(this.avatar.getY()/SteveDriver.TEXTURE_SIZE);
 		
 		if(this.avatar.getRotation() == SteveDriver.RIGHT){
 			y+=2;
