@@ -10,7 +10,7 @@ public class SpriteButton extends Button {
 			ICommand action, Sprite s) {
 		super(posX, posY, width, height, action);
 		sprite = s;
-		s.setPosition(posX+24, posY-40);
+		s.setPosition(posX+32, posY-96);
 	}
 
 	@Override

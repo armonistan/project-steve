@@ -1,5 +1,7 @@
 package com.steve.weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
@@ -9,6 +11,9 @@ public class MainCannon extends Weapon{
 	
 	private boolean alternate;
 	private int barrageCounter;
+	private Sound cannonSound;
+	private Sound gausSound;
+	private Sound rocketSound;
 	
 	public MainCannon(float x, float y, int atlasX, int atlasY){
 		super(x,y, atlasX, atlasY);
@@ -17,6 +22,9 @@ public class MainCannon extends Weapon{
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
+		this.cannonSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon1" + ".ogg"));
+		this.gausSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon2" + ".ogg"));
+		this.rocketSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon3" + ".ogg"));
 	}
 	
 	@Override
@@ -55,6 +63,7 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
+				this.cannonSound.play();
 				
 				shootCounter = 0;
 	}
@@ -77,6 +86,7 @@ public class MainCannon extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				temp2.setDirection(MathUtils.cosDeg(degrees+10), MathUtils.sinDeg(degrees+10));
 				temp3.setDirection(MathUtils.cosDeg(degrees-10), MathUtils.sinDeg(degrees-10));
+				this.cannonSound.play();
 				
 				shootCounter = 0;
 	}
@@ -93,12 +103,14 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
+				gausSound.play();
 				
 				shootCounter = 0;
 	}
 	
 	protected void fireDamageShoot(){
 		//different angle
+				shootCounter = this.shootSpeed;
 				float deltaY = this.getX() - target.getXPosition();
 				float deltaX = this.getY() - target.getYPosition();
 				
@@ -111,10 +123,11 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
+				this.rocketSound.play();
 				
 				if(barrageCounter < 3){
 					barrageCounter++;
-					shootCounter-=0.1f;
+					shootCounter-=0.2f;
 				}
 				else{
 					barrageCounter = 0;

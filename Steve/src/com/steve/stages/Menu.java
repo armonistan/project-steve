@@ -61,9 +61,10 @@ public class Menu {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		SteveDriver.batch.begin();
 		field.update();
-		field.draw();
+		field.drawBelowSnake();
 		snake.update();
 		snake.draw();
+		field.drawAboveSnake();
 		SteveDriver.batch.end();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
