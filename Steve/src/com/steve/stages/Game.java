@@ -47,8 +47,9 @@ public class Game {
 		}
 		
 		SteveDriver.batch.begin();
-		SteveDriver.field.draw();
+		SteveDriver.field.drawBelowSnake();
 		SteveDriver.snake.draw();
+		SteveDriver.field.drawAboveSnake();
 		SteveDriver.batch.end();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
@@ -81,8 +82,9 @@ public class Game {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		
 		SteveDriver.batch.begin();
-		SteveDriver.field.draw();
+		SteveDriver.field.drawBelowSnake();
 		SteveDriver.snake.draw();
+		SteveDriver.field.drawAboveSnake();
 		SteveDriver.batch.end();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);

@@ -1,5 +1,6 @@
 package com.steve.weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
@@ -10,6 +11,9 @@ public class Specialist extends Weapon{
 		super(x,y, SteveDriver.TEXTURE_SIZE*10, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 700*SteveDriver.constants.get("fireRange");
+		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist1.ogg"));
+		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist2.ogg"));
+		shootSound3 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist3.ogg"));
 	}
 	
 	@Override
@@ -25,6 +29,18 @@ public class Specialist extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 				SteveDriver.field.addProjectile(temp);
+				int shootSoundInt = 3;//SteveDriver.random.nextInt(3)+1;
+				switch(shootSoundInt){
+					case 1:
+						shootSound1.play(.6f, 1, 0);
+					break;
+					case 2:
+						shootSound2.play(.6f, 1, 0);
+					break;
+					case 3:
+						shootSound3.play(.6f, 1, 0);
+					break;
+				}
 				shootCounter = 0;
 	}
 	

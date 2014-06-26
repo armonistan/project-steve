@@ -130,7 +130,7 @@ public class SteveDriver implements ApplicationListener {
 		steveLogo = new Texture(Gdx.files.internal("data/Steve-title.png"));
 		steveLogo.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
-		space = new Texture(Gdx.files.internal("data/space.png"));
+		space = new Texture(Gdx.files.internal("data/Space Background.png"));
 		space.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		emberware = new Texture(Gdx.files.internal("data/emberware.png"));

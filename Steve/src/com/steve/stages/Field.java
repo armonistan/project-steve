@@ -579,7 +579,7 @@ public class Field {
 				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
 	}
 	
-	public void draw() {
+	public void drawBelowSnake() {
 		space.draw(SteveDriver.batch);
 		
 		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / SteveDriver.TEXTURE_SIZE;
@@ -624,9 +624,13 @@ public class Field {
 			e.draw();
 		}
 		
+		/**/
+	}
+	
+	public void drawAboveSnake(){
 		for (Projectile p : projectiles) {
 			p.draw();
-		}/**/
+		}
 	}
 	
 	public boolean isOccupied(Rectangle newObject){

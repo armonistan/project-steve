@@ -5,7 +5,7 @@ import com.steve.SteveDriver;
 import com.steve.base.Projectile;
 
 public class SnakeMainProjectile extends Projectile {
-	private final static float SPEED = 150;
+	private final static float SPEED = 250;
 	private final static float MAX_SPEED = 750;
 	private boolean isRocket;
 	

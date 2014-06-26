@@ -29,13 +29,13 @@ public class GatlingGun extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 				SteveDriver.field.addProjectile(temp);
-				int shootSoundInt = 1;//SteveDriver.random.nextInt(3)+1;
+				int shootSoundInt = SteveDriver.random.nextInt(2)+1;
 				switch(shootSoundInt){
 					case 1:
-						shootSound1.play(.4f, 1, 0);
+						shootSound1.play(.3f, 1, 0);
 					break;
 					case 2:
-						shootSound2.play();
+						shootSound2.play(.3f, 1, 0);
 					break;
 					case 3:
 						shootSound3.play();
