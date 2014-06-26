@@ -319,7 +319,7 @@ public class Store {
 		}
 	}
 
-	public void resetStore() {
+	public void resetStore() {		
 		for (Upgrade u : upgrades) {
 			u.reset();
 		}
