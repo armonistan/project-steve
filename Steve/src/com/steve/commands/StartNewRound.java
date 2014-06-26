@@ -20,6 +20,9 @@ public class StartNewRound extends ChangeStage {
 			SteveDriver.store.initializeUpgrades();
 			
 			stage = STAGE_TYPE.STORE;
+			
+			SteveDriver.camera.position.x = SteveDriver.store.snake.getHeadPosition().x;
+			SteveDriver.camera.position.y = SteveDriver.store.snake.getHeadPosition().y;
 		}
 		
 		super.execute();

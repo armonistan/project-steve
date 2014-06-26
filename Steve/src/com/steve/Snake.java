@@ -129,8 +129,9 @@ public class Snake {
 		
 		for (int i = segments.size() - 3; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
-			animate();
 		}
+		
+		animate();
 		
 		if (SteveDriver.constants.get("mainGun") == 1.0f) {
 			this.mountUpgrade(3);

@@ -70,19 +70,19 @@ public class Store {
 		
 		infoBox = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth/4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * screenHeight / 4) - SteveDriver.TEXTURE_SIZE / 2,
-				3 * (int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 4, (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, null, description);
+				2 * (int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 4, (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, null, description);
 		
 		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(7 * screenHeight / 8)  - screenHeight / 64,
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(6 * screenHeight / 8)  - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
 		
-		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
+		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(6 * screenWidth / 8),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(6 * screenHeight / 8) - screenHeight / 64,
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ConfirmUpgrade(this), "Buy!");
 		
-		resetChoices = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth / 2),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(6 * screenHeight / 8) - screenHeight / 64,
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Buy!");
+		resetChoices = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(6 * screenWidth / 8),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(7 * screenHeight / 8) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Reset");
 		
 		snakeTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
@@ -115,7 +115,7 @@ public class Store {
 	}
 	
 	public void resetChoices() {
-		for (int i = upgrades.size() - 1; i >= 0; i--) {
+		for (int i = 0; i < upgrades.size(); i++) {
 			upgrades.get(i).resetChoice();
 		}
 		
@@ -142,7 +142,7 @@ public class Store {
 			SteveDriver.field = field;
 		}
 		
-		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.01f);
+		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.1f);
 		SteveDriver.camera.position.x = test.x;
 		SteveDriver.camera.position.y = test.y;
 		SteveDriver.camera.update();
@@ -150,7 +150,7 @@ public class Store {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		SteveDriver.batch.begin();
 		field.update();
-		field.draw();
+		field.drawBelowSnake();
 		snake.update();
 		snake.draw();
 		SteveDriver.batch.end();
@@ -381,6 +381,8 @@ public class Store {
 		}
 		
 		saveStoreProgress();
+		
+		initializeUpgrades();
 	}
 	
 	public void setStoreTab(int i) {
@@ -923,6 +925,7 @@ public class Store {
 		
 		public void resetChoice() {
 			SteveDriver.storePrefs.putBoolean(key, initActivated);
+			
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;
 		}
