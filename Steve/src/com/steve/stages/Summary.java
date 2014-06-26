@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
+import com.steve.commands.OpenStore;
 
 public class Summary {
 	
@@ -23,7 +24,7 @@ public class Summary {
 		
 		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
-				new ChangeStage(SteveDriver.STAGE_TYPE.STORE), "To the Store!");
+				new OpenStore(), "To the Store!");
 		
 		showingAds = false;
 	}

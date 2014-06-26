@@ -5,17 +5,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.steve.Button;
 import com.steve.SpriteButton;
 import com.steve.SteveDriver;
+import com.steve.StoreSnake;
 import com.steve.TextButton;
+import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.commands.QueueUpgrade;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ConfirmUpgrade;
+import com.steve.commands.ResetStoreChanges;
 import com.steve.commands.SwitchStoreTab;
 import com.steve.helpers.GUIHelper;
 
@@ -25,6 +30,10 @@ public class Store {
 	private TextButton infoBox;
 	private TextButton returnToGame;
 	private TextButton buyUpgrade;
+	private TextButton resetChoices;
+	
+	private StoreField field;
+	public StoreSnake snake;
 	
 	private boolean isUpgradeSelected;
 	private Upgrade selectedUpgrade;
@@ -42,147 +51,11 @@ public class Store {
 	private Map<Integer, ArrayList<SpriteButton>> upgradeButtons;
 	private int[] currentTier;
 	
-	public class Upgrade {
-		
-		String name;
-		String constantName;
-		String key;
-		String description;
-		float value;
-		float price;
-		int category;
-		int tier;
-		boolean activated;
-		boolean available;
-		SpriteButton b;
-		
-		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int category, int xPos, int yPos, Sprite buttonIcon) {
-			activated = false;
-			available = true;
-			key = prefsKey;
-			name = displayName;
-			this.constantName = constantName;
-			this.price = price;
-			this.category = category;
-			this.tier = tier;
-			this.value = value;
-			description = upgradeDescription;
-			
-			b = new SpriteButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
-						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos),
-						4, 4, new QueueUpgrade(this), buttonIcon);
-			
-			upgradeButtons.get(category).add(b);
-
-			if (SteveDriver.storePrefs.contains(key)) {
-				if (SteveDriver.storePrefs.getBoolean(key)) {
-					if (category != 5) {
-						activated = true;
-						currentTier[category] = tier;
-						activateUpgrade();
-						b.setStatus(1);
-					} else {
-						activated = true;
-						if (!SteveDriver.storePrefs.getBoolean(name)) {
-							deactivateUpgrade();
-						} else {
-							setAvailable();
-						}
-					}
-				}
-			} else {
-				if (currentTier[category] > tier) {
-					b.setStatus(2);
-					setUnavailable();
-				}
-				SteveDriver.storePrefs.putBoolean(key, activated);
-			}
-			
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public String getDescription() {
-			return description;
-		}
-		
-		public float getPrice() {
-			return price;
-		}
-		
-		public boolean isActivated() {
-			return activated;
-		}
-		
-		public void activateUpgrade() {
-			activated = true;
-			currentTier[category] = tier + 1;
-			b.setStatus(1);
-			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
-			
-			
-			SteveDriver.constants.modifyConstant(constantName, value);
-			SteveDriver.storePrefs.putBoolean(key, activated);
-			
-			if(this.name.contains(" Steve")){
-				SteveDriver.snake.snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : SteveDriver.snake.snakeTier);
-				SteveDriver.snake.snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : SteveDriver.snake.snakeTier);
-			}
-		}
-		
-		public void activateTierThreeMainCannonUpgrade() {
-			activated = true;
-			currentTier[category] = tier + 1;
-			//System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
-			SteveDriver.constants.modifyConstant(constantName, value);
-			SteveDriver.storePrefs.putBoolean(key, activated);
-			SteveDriver.storePrefs.flush();
-		}
-		
-		public void deactivateUpgrade() {
-			setUnavailable();
-			SteveDriver.constants.modifyConstant(constantName, -value);
-			System.out.println("deactivating upgrade: " + name + " " + SteveDriver.constants.get(constantName) + " " + constantName);
-			SteveDriver.storePrefs.putBoolean(name, available);
-			SteveDriver.storePrefs.flush();
-		}
-		
-		public void setAvailable() {
-			available = true;
-			b.setStatus(1);
-			System.out.println("activating upgrade: " + name + " " + value + " " + constantName);
-			SteveDriver.constants.modifyConstant(constantName, value);
-			SteveDriver.storePrefs.putBoolean(name, available);
-			SteveDriver.storePrefs.flush();
-		}
-		
-		public void reset() {
-			available = false;
-			SteveDriver.storePrefs.putBoolean(key, available);
-			SteveDriver.storePrefs.flush();
-		}
-		
-		public void setUnavailable() {
-			available = false;
-			b.setStatus(2);
-		}
-		
-		public void setPrice(float price) {
-			this.price = (int) price;
-		}
-	}
+	private int[] initCurrentTier;
+	private int initMoney;
+	private int initTreasure;
 	
-	public Store() {
-		upgrades = new ArrayList<Upgrade>();
-		upgradeButtons = new HashMap<Integer, ArrayList<SpriteButton>>();
-		currentTier = new int[6];
-		
-		for (int i = 0; i < 6; i++) {
-			upgradeButtons.put(i, new ArrayList<SpriteButton>());
-		}
-		
+	public Store() {		
 		description = "";
 		isUpgradeSelected = false;
 		
@@ -206,6 +79,10 @@ public class Store {
 		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(6 * screenHeight / 8) - screenHeight / 64,
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ConfirmUpgrade(this), "Buy!");
+		
+		resetChoices = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth / 2),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(6 * screenHeight / 8) - screenHeight / 64,
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Buy!");
 		
 		snakeTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * (3 * screenHeight / (4 * 6))) - screenHeight / 64,
@@ -232,13 +109,59 @@ public class Store {
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), 3 * (int)SteveDriver.guiCamera.viewportHeight / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 		
 		initializeUpgrades();
-		setStoreProgress();
+		
+		field = new StoreField();
+		snake = new StoreSnake();
+	}
+	
+	public void resetChoices() {
+		for (int i = upgrades.size() - 1; i >= 0; i--) {
+			upgrades.get(i).resetChoice();
+		}
+		
+		for (int i = 0; i < currentTier.length; i++) {
+			currentTier[i] = initCurrentTier[i];
+		}
+		
+		SteveDriver.snake.addTreasure(initTreasure - SteveDriver.snake.getTreasure()); 
+		SteveDriver.snake.addMoney(initMoney - SteveDriver.snake.getMoney());
 	}
 	
 	public void render() {
 		if (selectedUpgrade != null) {
 			//setDescription();
 		}
+		
+		for (Upgrade u : upgrades) {
+			u.update();
+		}
+		
+		if (field != SteveDriver.field || field == null) {
+			field = new StoreField();
+			snake = new StoreSnake();
+			SteveDriver.field = field;
+		}
+		
+		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.01f);
+		SteveDriver.camera.position.x = test.x;
+		SteveDriver.camera.position.y = test.y;
+		SteveDriver.camera.update();
+		
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
+		SteveDriver.batch.begin();
+		field.update();
+		field.draw();
+		snake.update();
+		snake.draw();
+		SteveDriver.batch.end();
+		
+		SteveDriver.guiCamera.position.x = 0;
+		SteveDriver.guiCamera.position.y = 0;
+		SteveDriver.guiCamera.update();
+		
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
+		
+		SteveDriver.batch.begin();
 		renderButtons();
 		
 		if (tabIndex != 5) {
@@ -308,6 +231,7 @@ public class Store {
 					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + panelHeight/10),
 					Color.BLACK);
 		}
+		SteveDriver.batch.end();
 	}
 	
 	public void renderButtons() {		
@@ -318,6 +242,8 @@ public class Store {
 		buyUpgrade.render();
 		returnToGame.update();
 		returnToGame.render();
+		resetChoices.update();
+		resetChoices.render();
 		snakeTier.update();
 		snakeTier.render();
 		effTier.update();
@@ -330,7 +256,6 @@ public class Store {
 		cashTier.render();
 		specialTier.update();
 		specialTier.render();
-		
 		
 		for (SpriteButton b : this.upgradeButtons.get(tabIndex)) {
 			b.update();
@@ -345,19 +270,22 @@ public class Store {
 	}
 	
 	public void flipSpecial() {
-		if (selectedUpgrade.available) {
+		if (selectedUpgrade.activated) {
 			selectedUpgrade.deactivateUpgrade();
 			description += "\nInactive!";
 		} else {
-			selectedUpgrade.setAvailable();
+			selectedUpgrade.activateUpgrade();
 			description += "\nActive!";
 		}
+		
+		SteveDriver.store.snake.refreshSnakeLoadout(SteveDriver.store.snake.getHeadPosition().x / SteveDriver.TEXTURE_SIZE,
+				SteveDriver.store.snake.getHeadPosition().y / SteveDriver.TEXTURE_SIZE);
 	}
 	
 	public void setDescription() {
 		description = selectedUpgrade.getDescription();
 		
-		if (selectedUpgrade.category == 5 && selectedUpgrade.activated) {
+		if (selectedUpgrade.category == 5 && selectedUpgrade.available) {
 			flipSpecial();
 			return;
 		}
@@ -373,12 +301,38 @@ public class Store {
 	
 	public void purchaseUpgrade() {
 		if (selectedUpgrade != null) {
+			int tryBuy = selectedUpgrade.trySpendCurrency();
+			
+			if (tryBuy == 0) {
+				selectedUpgrade.activateUpgrade();
+				description = "Upgrade activated!";
+			}
+			else if (tryBuy == 1) {
+				description = "Not enough cash!";
+			}
+			else if (tryBuy == 2) {
+				description = "Steve must accend to a higher tier first!";
+			}
+			else if (tryBuy == 3) {
+				description = "You already own this.";
+			}
+			else if (tryBuy == 4) {
+				description = "Upgrade not available!";
+			}
+			
+			selectedUpgrade = null;
+		}
+		
+		
+		
+		
+		
+		/*if (selectedUpgrade != null) {
 			if (selectedUpgrade.category == 5) {
 				if (!selectedUpgrade.activated && SteveDriver.snake.spendTreasure((int) selectedUpgrade.price)) {
 					SteveDriver.snake.addTreasure(0);
 					selectedUpgrade.activateUpgrade();
-					SteveDriver.prefs.flush();
-					SteveDriver.storePrefs.flush();
+					//SteveDriver.storePrefs.flush();
 				}
 				return;
 			}
@@ -398,8 +352,7 @@ public class Store {
 							u.setUnavailable();
 						}
 					}
-					SteveDriver.prefs.flush();
-					SteveDriver.storePrefs.flush();
+					//SteveDriver.storePrefs.flush();
 				} else {
 					description = "Not enough cash!";
 					//selectedUpgrade = null;
@@ -419,7 +372,7 @@ public class Store {
 				selectedUpgrade = null;
 				return;
 			}
-		}
+		}*/
 	}
 	
 	public void resetStore() {
@@ -427,17 +380,7 @@ public class Store {
 			u.reset();
 		}
 		
-		SteveDriver.storePrefs.flush();
-	}
-	
-	public void setStoreProgress() {
-		for (int i = 0; i < 6; i++) {
-			for (Upgrade u : this.upgrades) {
-				if (u.category == i && u.tier < currentTier[i] && !u.activated) {
-					u.setUnavailable();
-				}
-			}
-		}
+		saveStoreProgress();
 	}
 	
 	public void setStoreTab(int i) {
@@ -450,7 +393,18 @@ public class Store {
 		SteveDriver.storePrefs.flush();
 	}
 	
-	private void initializeUpgrades() {
+	public void initializeUpgrades() {
+		upgrades = new ArrayList<Upgrade>();
+		upgradeButtons = new HashMap<Integer, ArrayList<SpriteButton>>();
+		currentTier = new int[6];
+		
+		for (int i = 0; i < 6; i++) {
+			upgradeButtons.put(i, new ArrayList<SpriteButton>());
+		}
+		
+		initMoney = SteveDriver.snake.getMoney();
+		initTreasure = SteveDriver.snake.getTreasure();
+		
 		Upgrade steve = new Upgrade("Regular Steve", 
 				"steve",
 				"snakeTier0",
@@ -792,76 +746,265 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Glue Trail", 
+		upgrades.add(new ToggleUpgrade("Glue Trail", 
 				"glueTrail",
 				"special1",
 				"Steve lays down a trail of glue behind him.",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (1 * panelWidth / 3), 
 				panelY + 32 + (3 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Candy Zone", 
+		upgrades.add(new ToggleUpgrade("Candy Zone", 
 				"candyZone",
 				"special6",
 				"???",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (2 * panelWidth / 3), 
 				panelY + 32 + (3 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Nuke", 
+		upgrades.add(new ToggleUpgrade("Nuke", 
 				"nuke",
 				"special2",
 				"Steve sets off a detonation every\n60 seconds.",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (1 * panelWidth / 3), 
 				panelY + 32 + (1 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Drill Helmet", 
+		upgrades.add(new ToggleUpgrade("Drill Helmet", 
 				"drill",
 				"special3",
 				"You are the snake that will pierce\nthe heavens.",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (2 * panelWidth / 3), 
 				panelY + 32 + (1 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Jet Fuel Only", 
+		upgrades.add(new ToggleUpgrade("Jet Fuel Only", 
 				"jetFuel",
 				"special4",
 				"Steve gains the ability to go fast.",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (4 * panelWidth / 5), 
 				panelY + 32 + (2 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Bullet Time", 
+		upgrades.add(new ToggleUpgrade("Bullet Time", 
 				"bulletTime",
 				"special5",
 				"There is no snake.",
 				1f,
 				1f,
-				0, 5,
 				panelX - 32 + (1 * panelWidth / 5), 
 				panelY + 32 + (2 * panelHeight / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
 						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+		
+		initCurrentTier = new int[currentTier.length];
+		for (int i = 0; i < currentTier.length; i++) {
+			initCurrentTier[i] = currentTier[i];
+		}
+	}
+
+	public class Upgrade {
+		String name;
+		String constantName;
+		String key;
+		String description;
+		
+		float value;
+		float price;
+		
+		int category;
+		int tier;
+		
+		boolean activated;
+		boolean initActivated;
+		boolean available;
+		float initConstantValue;
+		
+		SpriteButton b;
+		
+		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int category, int xPos, int yPos, Sprite buttonIcon) {
+			available = true;
+			
+			key = prefsKey;
+			name = displayName;
+			this.constantName = constantName;
+			
+			this.price = price;
+			this.category = category;
+			this.tier = tier;
+			this.value = value;
+			
+			description = upgradeDescription;
+			
+			b = new SpriteButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(xPos), 
+						SteveDriver.guiHelper.screenToCoordinateSpaceY(yPos),
+						4, 4, new QueueUpgrade(this), buttonIcon);
+			
+			upgradeButtons.get(category).add(b);
+			
+			//Initial value when opening store.
+			activated = SteveDriver.storePrefs.getBoolean(key, false);
+			if (activated) {
+				activateUpgrade();
+			}
+
+			initActivated = activated;
+			initConstantValue = SteveDriver.constants.get(constantName);
+		}
+		
+		public void update() {
+			available = currentTier[category] == tier || activated;
+			
+			b.setStatus(available ? (activated ? 1 : 0) : 2);
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public float getPrice() {
+			return price;
+		}
+		
+		public boolean isActivated() {
+			return activated;
+		}
+		
+		public void activateUpgrade() {
+			if (available) {
+				activated = true;
+				currentTier[category] = tier + 1;
+				
+				if (constantName == "mainGun") {
+					System.out.println();
+				}
+			
+				SteveDriver.constants.modifyConstant(constantName, value);
+				SteveDriver.storePrefs.putBoolean(key, activated);
+			}
+		}
+		
+		public void deactivateUpgrade() {
+			activated = false;
+			currentTier[category] = tier;
+			
+			SteveDriver.constants.modifyConstant(constantName, -1 * value);
+			SteveDriver.storePrefs.putBoolean(key, activated);
+		}
+		
+		public void reset() {
+			activated = false;
+			available = true;
+			SteveDriver.storePrefs.putBoolean(key, activated);
+		}
+		
+		public void setPrice(float price) {
+			this.price = (int) price;
+		}
+		
+		public void resetChoice() {
+			SteveDriver.storePrefs.putBoolean(key, initActivated);
+			SteveDriver.constants.addToConstants(constantName, initConstantValue);
+			activated = initActivated;
+		}
+		
+		public int trySpendCurrency() {
+			if (available) {
+				if (!activated) {
+					if (currentTier[0] > tier || category == 0) {
+						if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
+							return 0; //Success
+						}
+						else {
+							return 1; //Insufficient funds
+						}
+					}
+					else {
+						return 2; //Insufficient tier
+					}
+				}
+				else {
+					return 3; //You already own it
+				}
+			}
+			else {
+				return 4; //You can't buy it
+			}
+		}
+	}
+
+	public class ToggleUpgrade extends Upgrade {
+		boolean initAvailable;
+
+		public ToggleUpgrade(String displayName, String constantName,
+				String prefsKey, String upgradeDescription, float value,
+				float price, int xPos, int yPos,
+				Sprite buttonIcon) {
+			super(displayName, constantName, prefsKey, upgradeDescription, value, price,
+					0, 5, xPos, yPos, buttonIcon);
+			
+			available = SteveDriver.storePrefs.getBoolean(key, false);
+			initAvailable = available;
+		}
+		
+		@Override
+		public void update() {			
+			b.setStatus(available ? (activated ? 1 : 2) : 0);
+		}
+		
+		@Override
+		public void activateUpgrade() {
+			if (!available) {
+				available = true;
+			}
+
+			super.activateUpgrade();
+		}
+		
+		@Override
+		public void deactivateUpgrade() {
+			activated = false;
+			SteveDriver.constants.modifyConstant(constantName, -1 * value);
+		}
+		
+		@Override
+		public void resetChoice() {
+			available = initAvailable;
+			super.resetChoice();
+		}
+		
+		@Override
+		public int trySpendCurrency() {
+			if (!available) {
+				if (SteveDriver.snake.spendTreasure((int) price)) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else {
+				return 3;
+			}
+		}
 	}
 }

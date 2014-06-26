@@ -16,7 +16,7 @@ public class ConstantHelper {
 		upgradeDict.put(key, value);
 	}
 	
-	public void removeFromConstant(String key) {
+	public void removeFromConstants(String key) {
 		upgradeDict.remove(key);
 	}
 

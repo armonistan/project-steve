@@ -93,25 +93,5 @@ public class Menu {
 		music.update();
 		music.render();
 		SteveDriver.batch.end();
-		
-		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-			SteveDriver.prefs.putInteger("money", 0);
-			SteveDriver.prefs.flush();
-			SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
-			
-			SteveDriver.store.resetStore();
-			
-			SteveDriver.resetField();
-			
-			SteveDriver.stage = STAGE_TYPE.GAME;
-		}
-		
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-			if (SteveDriver.snake.getMoney() != 0){
-				SteveDriver.stage = STAGE_TYPE.STORE;
-			} else {
-				SteveDriver.stage = STAGE_TYPE.RESPAWNING;
-			}
-		}
 	}
 }

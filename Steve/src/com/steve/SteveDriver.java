@@ -113,6 +113,7 @@ public class SteveDriver implements ApplicationListener {
 		batch = new SpriteBatch();
 		random = new Random();
 		
+		//TODO: Change names
 		prefs = Gdx.app.getPreferences("main");
 		storePrefs = Gdx.app.getPreferences("store");
 		
@@ -146,7 +147,6 @@ public class SteveDriver implements ApplicationListener {
 		game = new Game();
 		tutorial = new Tutorial();
 		store = new Store();
-		store.setStoreProgress();
 		credits = new Credits();
 		logo = new Logo();
 		loading = new Loading();
@@ -177,6 +177,7 @@ public class SteveDriver implements ApplicationListener {
 			menu.render();
 			break;
 		case RESPAWNING:
+			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
@@ -187,19 +188,7 @@ public class SteveDriver implements ApplicationListener {
 			batch.end();
 			break;
 		case STORE:
-			guiCamera.position.x = 0;
-			guiCamera.position.y = 0;
-			guiCamera.update();
-			
-			batch.setProjectionMatrix(guiCamera.combined);
-			
-			batch.begin();
 			store.render();
-			batch.end();
-			
-			if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-				stage = STAGE_TYPE.GAME;
-			}
 			break;
 		case GAME:
 			game.render();

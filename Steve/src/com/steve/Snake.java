@@ -60,28 +60,30 @@ public class Snake {
 	
 	public Snake(float x, float y){
 		segments = new ArrayList<Sprite>();
-		weapons = new ArrayList<Weapon>();
 		
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
-
-		//TODO: Make this better
-		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
-		treasure = ((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10);
-		snakeTier = ((SteveDriver.constants.get("steve") != 0) ? 1 : 1);
-		snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : snakeTier);
-		snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : snakeTier);
 		
-		xOffSet = (snakeTier > 1) ? 27 : 0;
-
-		yOffSet = (snakeTier > 2) ? 5 : 0;
+		gatherTier();
 		
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, 0 + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
+		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 4 * SteveDriver.TEXTURE_SIZE + xOffSet* SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE * yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));
 		segments.get(0).setRotation(0);
 		headPosition = new Vector3(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE, 0);
 		segments.get(0).setPosition(headPosition.x, headPosition.y);
-		segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_SIZE);
+		segments.get(1).setPosition(headPosition.x, headPosition.y - SteveDriver.TEXTURE_SIZE);
+		segments.get(2).setPosition(headPosition.x, headPosition.y - 2 * SteveDriver.TEXTURE_SIZE);
+		
+		refreshSnakeLoadout(x, y);
+
+		tempCollider = new Rectangle();
+	}
+
+	public void refreshSnakeLoadout(float x, float y) {
+		weapons = new ArrayList<Weapon>();
+
+		gatherTier();
 		
 		if (SteveDriver.constants.get("drill") != 0f) {
 			drill = true;
@@ -119,13 +121,14 @@ public class Snake {
 			candy = false;
 		}
 		
-		for (int i = 0; i < SteveDriver.constants.get("startLength"); i++) {
+		animateMouth(false);
+		
+		for (int i = segments.size() - 3; i < SteveDriver.constants.get("startLength"); i++) {
 			this.addBody();
 			animate();
 		}
 		
 		if (SteveDriver.constants.get("mainGun") == 1.0f) {
-			this.addBody();
 			this.mountUpgrade(3);
 		}
 		//tier modifier
@@ -136,8 +139,18 @@ public class Snake {
 		if (jet) {
 			timeBetweenTurn = 0.1f;
 		}
+	}
 
-		tempCollider = new Rectangle();
+	private void gatherTier() {
+		//TODO: Make this better
+		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
+		treasure = ((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10);
+		snakeTier = ((SteveDriver.constants.get("steve") != 0) ? 1 : 1);
+		snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : snakeTier);
+		snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : snakeTier);
+		
+		xOffSet = (snakeTier > 1) ? 27 : 0;
+		yOffSet = (snakeTier > 2) ? 5 : 0;
 	}
 	
 	public int getMoney() {
@@ -155,7 +168,7 @@ public class Snake {
 	
 	public boolean spendTreasure(int amount) {
 		if (treasure >= amount) {
-			treasure -= amount;
+			addTreasure(-1 * amount);
 			return true;
 		} else {
 			return false;
@@ -171,7 +184,7 @@ public class Snake {
 	
 	public boolean spendMoney(int amount) {
 		if (money >= amount) {
-			money -= amount;
+			addMoney(-1 * amount);
 			return true;
 		}
 		else {
@@ -600,6 +613,7 @@ public class Snake {
 		//System.out.println("You suck.");
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
+		SteveDriver.store.initializeUpgrades();
 	}
 	
 	public ArrayList<Sprite> getSegments() {
