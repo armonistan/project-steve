@@ -66,8 +66,6 @@ public class Snake {
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
 		
-		gatherTier();
-		
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, 0 + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));	
 		segments.add(new Sprite(new TextureRegion(SteveDriver.atlas, 4 * SteveDriver.TEXTURE_SIZE + xOffSet* SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE * yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE)));
@@ -169,6 +167,7 @@ public class Snake {
 	public void addTreasure (int amount){
 		treasure += amount;
 		SteveDriver.prefs.putInteger("treasure", treasure);
+		SteveDriver.prefs.flush();
 	}
 	
 	public boolean spendTreasure(int amount) {
@@ -185,11 +184,14 @@ public class Snake {
 		
 		//TODO: Make this only save when needed.
 		SteveDriver.prefs.putInteger("money", money);
+		SteveDriver.prefs.flush();
 	}
 	
 	public boolean spendMoney(int amount) {
 		if (money >= amount) {
-			addMoney(-1 * amount);
+			money -= amount;
+			SteveDriver.prefs.putInteger("money", money);
+			SteveDriver.prefs.flush();
 			return true;
 		}
 		else {

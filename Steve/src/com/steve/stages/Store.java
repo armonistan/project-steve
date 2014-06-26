@@ -319,7 +319,7 @@ public class Store {
 		}
 	}
 
-	public void resetStore() {
+	public void resetStore() {		
 		for (Upgrade u : upgrades) {
 			u.reset();
 		}
@@ -814,7 +814,7 @@ public class Store {
 		}
 
 		public void update() {
-			available = (currentTier[category] == tier) || activated;
+			available = ((currentTier[category] == tier) || activated) && (tier < currentTier[0] || category == 0);
 
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}
