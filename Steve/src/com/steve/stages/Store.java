@@ -470,8 +470,8 @@ public class Store {
 				0, 2,
 				(panelX - 32) + (panelWidth / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 45 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
@@ -482,8 +482,8 @@ public class Store {
 				0, 2,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 45 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Increase start length",
 				"startLength",
@@ -494,8 +494,8 @@ public class Store {
 				1, 2,
 				(panelX - 32) + (panelWidth / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 47 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
@@ -506,8 +506,8 @@ public class Store {
 				1, 2,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 47 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Increase start length",
 				"startLength",
@@ -518,8 +518,8 @@ public class Store {
 				2, 2,
 				(panelX - 32) + (panelWidth / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 49 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
@@ -530,8 +530,8 @@ public class Store {
 				2, 2,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 49 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Main Gun",
 				"mainGun",
@@ -542,8 +542,8 @@ public class Store {
 				0, 3,
 				(panelX - 32) + (panelWidth / 2),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Fire Rate Increase",
 				"fireRate",
@@ -554,8 +554,8 @@ public class Store {
 				1, 3,
 				(panelX - 32) + (panelWidth / 2),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 
 		upgrades.add(new Upgrade("Fire Rate Increase",
@@ -567,8 +567,8 @@ public class Store {
 				2, 3,
 				(panelX - 32) + (panelWidth / 2),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 61 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Turret Range Increase",
 				"fireRange",
@@ -579,8 +579,8 @@ public class Store {
 				1, 3,
 				(panelX - 32) + ((1 * panelWidth) / 4),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Turret Range Increase",
 				"mainCannonType",
@@ -591,8 +591,8 @@ public class Store {
 				2, 3,
 				(panelX - 32) + ((1 * panelWidth) / 4),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 61 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Damage Increase",
 				"fireDamage",
@@ -603,8 +603,8 @@ public class Store {
 				1, 3,
 				(panelX - 32) + ((3 * panelWidth) / 4),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 
 		//firedamage .2f
@@ -617,8 +617,8 @@ public class Store {
 				2, 3,
 				(panelX - 32) + ((3 * panelWidth) / 4),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
+						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Plentiful Money",
 				"goldModifier",
@@ -629,8 +629,8 @@ public class Store {
 				0, 4,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Plentiful Money",
 				"goldModifier",
@@ -641,8 +641,8 @@ public class Store {
 				1, 4,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Plentiful Money",
 				"goldModifier",
@@ -653,8 +653,8 @@ public class Store {
 				2, 4,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
@@ -665,8 +665,8 @@ public class Store {
 				0, 4,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
@@ -677,8 +677,8 @@ public class Store {
 				1, 4,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
@@ -689,8 +689,8 @@ public class Store {
 				2, 4,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
@@ -700,8 +700,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 41 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Candy Zone",
 				"candyZone",
@@ -711,8 +711,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 37 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Nuke",
 				"nuke",
@@ -722,8 +722,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 37 * SteveDriver.TEXTURE_SIZE,
+						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Drill Helmet",
 				"drill",
@@ -733,8 +733,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Jet Fuel Only",
 				"jetFuel",
@@ -744,8 +744,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((4 * panelWidth) / 5),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 43 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new ToggleUpgrade("Bullet Time",
 				"bulletTime",
@@ -755,8 +755,8 @@ public class Store {
 				1f,
 				(panelX - 32) + ((1 * panelWidth) / 5),
 				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 0 * SteveDriver.TEXTURE_SIZE,
-						0 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE))));
+				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
+						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		initCurrentTier = new int[currentTier.length];
 		for (int i = 0; i < currentTier.length; i++) {
