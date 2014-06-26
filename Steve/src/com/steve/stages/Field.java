@@ -452,7 +452,7 @@ public class Field {
 						randX = randX + dx;
 						randY = randY + dy;
 						
-						if(isOccupied(randX*16, randY*16) && checkRing(randX, randY) == checkRing(randX+2, randY+2) && checkRing(randX, randY) == checkRing(randX-1, randY-1)){
+						if(isOccupied(randX*SteveDriver.TEXTURE_SIZE, randY*SteveDriver.TEXTURE_SIZE) && checkRing(randX, randY) == checkRing(randX+2, randY+2) && checkRing(randX, randY) == checkRing(randX-1, randY-1)){
 							//ensures that there is always a tileable set of blockers
 							i++;
 							blockers.setCell(randX, randY, cell);
@@ -623,8 +623,6 @@ public class Field {
 		for (Enemy e : enemies) {
 			e.draw();
 		}
-		
-		/**/
 	}
 	
 	public void drawAboveSnake(){
@@ -668,7 +666,7 @@ public class Field {
 				deltaX = s.getX() - x;
 				deltaY = s.getY() - y;
 				
-				if(Math.abs(deltaX) < 80 && Math.abs(deltaY) < 80){
+				if(Math.abs(deltaX) < 100 && Math.abs(deltaY) < 100){
 					return false;
 				}
 		}
@@ -726,6 +724,11 @@ public class Field {
 	private void setBlockerFormationImage(ArrayList<CellContainer> blockerTiles, int x, int y){
 		boolean left, right, top, bottom;
 		int tileRad = 0;
+		
+		if (rubble.getCell(x, y) != null) {
+			blockers.setCell(x, y, new Cell());
+			rubble.setCell(x,y, null);
+		}
 		
 		tileRad = this.checkRing(x, y);
 		left = (blockers.getCell(x-1, y) == null) || (tileRad != this.checkRing(x - 1, y));
