@@ -41,6 +41,25 @@ public class GUI {
 	public void render() {
 		currentHealthPercent = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
+		for (Sprite s : guiTextures) {
+			s.setRegion(s.getRegionX(), (22 + (SteveDriver.snake.getLastDamageTimer() > 0 ? 4 : 0)) * SteveDriver.TEXTURE_SIZE,
+					s.getRegionWidth(), s.getRegionHeight());
+		}
+
+		Sprite temp = guiTextures.get(5);
+		if (SteveDriver.snake.segments.size() == 2) {
+			if (temp.getRegionY() < (22 + 8) * SteveDriver.TEXTURE_SIZE) {
+				temp.setRegion(temp.getRegionX(), temp.getRegionY() + (8) * SteveDriver.TEXTURE_SIZE,
+					temp.getRegionWidth(), temp.getRegionHeight());
+			}
+		}
+		else {
+			if (temp.getRegionY() >= (22 + 8) * SteveDriver.TEXTURE_SIZE) {
+				temp.setRegion(temp.getRegionX(), temp.getRegionY() - (8) * SteveDriver.TEXTURE_SIZE,
+					temp.getRegionWidth(), temp.getRegionHeight());
+			}
+		}
+		
 		SteveDriver.batch.begin();
 		guiTextures.get(0).draw(SteveDriver.batch);
 		guiTextures.get(5).draw(SteveDriver.batch);

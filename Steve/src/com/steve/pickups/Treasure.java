@@ -7,7 +7,7 @@ import com.steve.base.Pickup;
 
 public class Treasure extends Pickup {
 	public Treasure(float x, float y) {
-		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 0);
+		super(x, y, 5 * SteveDriver.TEXTURE_SIZE, 0, 0);
 		//int soundDecider = SteveDriver.random.nextInt(3)+1;
 		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/treasurePickup" + ".ogg"));
 	}

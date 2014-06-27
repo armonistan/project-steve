@@ -1,12 +1,23 @@
 package com.steve.stages;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.OpenStore;
 
 public class Summary {
+	Texture diedEnemy;
+	Texture diedStarvation;
+	Texture diedBlocker;
+	
+	Sprite diedEnemySprite;
+	Sprite diedStarvationSprite;
+	Sprite diedBlockerSprite;
 	
 	public float appleScore;
 	public float enemyScore;
@@ -18,7 +29,31 @@ public class Summary {
 	
 	public boolean showingAds;
 	
+	private WHY_DIED why;
+	
+	public enum WHY_DIED {
+		player,
+		blocker,
+		enemy,
+		starvation,
+		space
+	}
+	
 	public Summary() {
+		diedEnemy = new Texture(Gdx.files.internal("data/diedEnemy.png"));
+		diedStarvation = new Texture(Gdx.files.internal("data/diedStarvation.png"));
+		diedBlocker = new Texture(Gdx.files.internal("data/diedBlocker.png"));
+		
+		diedEnemySprite = new Sprite(new TextureRegion(diedEnemy, 0f, 0f, 1f, 1f));
+		diedEnemySprite.scale(SteveDriver.guiCamera.viewportWidth / diedEnemySprite.getWidth() - 1f);
+		diedEnemySprite.setPosition(diedEnemySprite.getWidth() / 2 * -1, diedEnemySprite.getHeight() / 2 * -1);
+		diedStarvationSprite = new Sprite(new TextureRegion(diedStarvation, 0f, 0f, 1f, 1f));
+		diedStarvationSprite.scale(SteveDriver.guiCamera.viewportWidth / diedStarvationSprite.getWidth() - 1f);
+		diedStarvationSprite.setPosition(diedStarvationSprite.getWidth() / 2 * -1, diedStarvationSprite.getHeight() / 2 * -1);
+		diedBlockerSprite = new Sprite(new TextureRegion(diedBlocker, 0f, 0f, 1f, 1f));
+		diedBlockerSprite.scale(SteveDriver.guiCamera.viewportWidth / diedBlockerSprite.getWidth() - 1f);
+		diedBlockerSprite.setPosition(diedBlockerSprite.getWidth() / 2 * -1, diedBlockerSprite.getHeight() / 2 * -1);
+		
 		appleScore = 0;
 		enemyScore = 0;
 		
@@ -37,7 +72,30 @@ public class Summary {
 		enemyPercent = 0.0f;
 	}
 	
+	public void setWhyDied(WHY_DIED died) {
+		why = died;
+	}
+	
 	public void render() {
+		switch (why) {
+		case blocker:
+			diedBlockerSprite.draw(SteveDriver.batch);
+			break;
+		case enemy:
+			diedEnemySprite.draw(SteveDriver.batch);
+			break;
+		case player:
+			break;
+		case space:
+			break;
+		case starvation:
+			diedStarvationSprite.draw(SteveDriver.batch);
+			break;
+		default:
+			break;
+		
+		}
+		
 		continueButton.update();
 		continueButton.render();
 		
@@ -55,11 +113,11 @@ public class Summary {
 	}
 	
 	private void updateCounts() {
-		if (applePercent < .99f) {
+		if (applePercent < 1f) {
 			applePercent += 0.01f;
 		} 
 
-		if (enemyPercent < .99f) {
+		if (enemyPercent < 1f) {
 			enemyPercent += 0.01f;
 		}
 	}

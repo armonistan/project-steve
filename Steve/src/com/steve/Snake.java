@@ -14,6 +14,7 @@ import com.steve.base.Projectile;
 import com.steve.base.Weapon;
 import com.steve.helpers.CollisionHelper;
 import com.steve.stages.Field;
+import com.steve.stages.Summary.WHY_DIED;
 import com.steve.weapons.GatlingGun;
 import com.steve.weapons.Laser;
 import com.steve.weapons.MainCannon;
@@ -40,6 +41,12 @@ public class Snake {
 	private float bombsAwayTimer = 60f;
 	private float bombsAwayTime = 0f;
 	
+	private float lastDamageTimer;
+	
+	public float getLastDamageTimer() {
+		return lastDamageTimer;
+	}
+
 	protected Vector2 nextDirection;
 	protected float nextRotation;
 	
@@ -147,6 +154,7 @@ public class Snake {
 		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
 		timeTillStarve *= SteveDriver.constants.get("hitpoints");
+		
 		if (jet) {
 			timeBetweenTurn = 0.1f;
 		}
@@ -279,7 +287,7 @@ public class Snake {
 						return false;
 					}
 					blockerCollide.play();
-					kill();
+					kill(WHY_DIED.blocker); //Collide with wall death
 					return true;
 				}
 			}
@@ -298,7 +306,7 @@ public class Snake {
 		else if (false && (
 				headPosition.x < 0 || headPosition.x >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE ||
 				headPosition.y < 0 || headPosition.y >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE)) {
-			kill();
+			kill(WHY_DIED.space); //Tried to go to space death
 			return true;
 		}
 		
@@ -436,6 +444,8 @@ public class Snake {
 		if (hungerTimer < 0f) {
 			hungerTimer = 0f;
 		}
+		
+		lastDamageTimer = 0.5f;
 	}
 
 	private void updateBody(){
@@ -609,7 +619,7 @@ public class Snake {
 	private boolean updateStarvation(){
 		if(hungerTimer > timeTillStarve){
 			if (segments.size() <= 2) {
-				kill();
+				kill((lastDamageTimer > 0) ? WHY_DIED.enemy : WHY_DIED.starvation); //Either starved, or was clobbered.
 				return true;
 			}
 			
@@ -623,11 +633,12 @@ public class Snake {
 		return false;
 	}
 
-	public void kill() {
+	public void kill(WHY_DIED why) {
 		//TODO: Make this better.
 		//System.out.println("You suck.");
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
+		SteveDriver.summary.setWhyDied(why);
 		SteveDriver.store.initializeUpgrades();
 	}
 	
@@ -646,6 +657,10 @@ public class Snake {
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
 		if (nuke) {
 			bombsAwayTime += deltaTime;
+		}
+		
+		if (lastDamageTimer > 0) {
+			lastDamageTimer -= deltaTime;
 		}
 	}
 	
