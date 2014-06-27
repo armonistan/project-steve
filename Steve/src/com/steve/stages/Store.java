@@ -786,6 +786,32 @@ public class Store {
 		public Upgrade(String displayName, String constantName, String prefsKey, String upgradeDescription, float value, float price, int tier, int category, int xPos, int yPos, Sprite buttonIcon) {
 			available = true;
 
+			initMetaData(displayName, constantName, prefsKey,
+					upgradeDescription, value, price, tier, category, xPos,
+					yPos, buttonIcon);
+
+			//Initial value when opening store.
+			activated = SteveDriver.storePrefs.getBoolean(key, false);
+			if (activated) {
+				activateUpgrade();
+			}
+
+			initInits();
+		}
+		
+		public Upgrade() {
+			//Empty and sad.
+		}
+
+		protected void initInits() {
+			initActivated = activated;
+			initConstantValue = SteveDriver.constants.get(constantName);
+		}
+
+		protected void initMetaData(String displayName, String constantName,
+				String prefsKey, String upgradeDescription, float value,
+				float price, int tier, int category, int xPos, int yPos,
+				Sprite buttonIcon) {
 			key = prefsKey;
 			name = displayName;
 			this.constantName = constantName;
@@ -802,15 +828,6 @@ public class Store {
 						4, 4, new QueueUpgrade(this), buttonIcon);
 
 			upgradeButtons.get(category).add(b);
-
-			//Initial value when opening store.
-			activated = SteveDriver.storePrefs.getBoolean(key, false);
-			if (activated) {
-				activateUpgrade();
-			}
-
-			initActivated = activated;
-			initConstantValue = SteveDriver.constants.get(constantName);
 		}
 
 		public void update() {
@@ -906,11 +923,17 @@ public class Store {
 				String prefsKey, String upgradeDescription, float value,
 				float price, int xPos, int yPos,
 				Sprite buttonIcon) {
-			super(displayName, constantName, prefsKey, upgradeDescription, value, price,
-					0, 5, xPos, yPos, buttonIcon);
+			initMetaData(displayName, constantName, prefsKey, upgradeDescription, value, price, 0, 5, xPos, yPos, buttonIcon);
 
 			available = SteveDriver.storePrefs.getBoolean(key, false);
+			activated = SteveDriver.storePrefs.getBoolean(key + "ACT", false);
 			initAvailable = available;
+			
+			if (activated) {
+				activateUpgrade();
+			}
+			
+			initInits();
 		}
 
 		@Override
@@ -924,12 +947,18 @@ public class Store {
 				available = true;
 			}
 
-			super.activateUpgrade();
+			activated = true;
+
+			SteveDriver.constants.modifyConstant(constantName, value);
+			SteveDriver.storePrefs.putBoolean(key, available);
+
+			SteveDriver.storePrefs.putBoolean(key + "ACT", activated);
 		}
 
 		@Override
 		public void deactivateUpgrade() {
 			activated = false;
+			SteveDriver.storePrefs.putBoolean(key + "ACT", activated);
 			SteveDriver.constants.modifyConstant(constantName, -1 * value);
 		}
 
