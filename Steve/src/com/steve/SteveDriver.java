@@ -80,6 +80,12 @@ public class SteveDriver implements ApplicationListener {
 	
 	public static boolean tutorialOn = false;; 
 	
+	public static boolean carrierDefeated = false;
+	public static boolean razorbullDefeated = false;
+	public static boolean cyborgBossActivate = false;
+	public static boolean robotBossActivate = false;
+
+	
 	private Music music;
 	public static boolean musicPlaying;
 	public static IActivityRequestHandler handler;

@@ -20,6 +20,7 @@ public class Carrier extends Enemy {
 
 	Rectangle front, middle, back;
 	ArrayList <CarrierTurret> turrets = new ArrayList<CarrierTurret>();
+	Admiral swiggins;
 	int threshHold;
 	float startX;
 	float startY;
@@ -44,7 +45,8 @@ public class Carrier extends Enemy {
 		turrets.add(new CarrierTurret(x+8,y));
 		turrets.add(new CarrierTurret(x+16,y+6));
 		turrets.add(new CarrierTurret(x+16,y));
-		SteveDriver.field.enemies.add(new Admiral(x+20,y+3));
+		swiggins = new Admiral(x+20,y+3);
+		SteveDriver.field.enemies.add(swiggins);
 		
 		for(CarrierTurret c : turrets){
 			SteveDriver.field.enemies.add(c);
@@ -91,6 +93,16 @@ public class Carrier extends Enemy {
 				return;
 			}
 		}
+	}
+	
+	@Override
+	public void kill(){
+		swiggins.kill();
+		SteveDriver.prefs.putBoolean("carrierDefeated", true);
+		SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+		SteveDriver.prefs.flush();
+		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate", false);
+		super.kill();
 	}
 	
 	protected void decideShoot(){

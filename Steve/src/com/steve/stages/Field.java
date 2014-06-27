@@ -10,17 +10,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
-import com.steve.bosses.Carrier;
-import com.steve.bosses.CarrierTurret;
-import com.steve.bosses.Razorbull;
-import com.steve.enemies.HomaHawk;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
 import com.steve.pickups.BossSummon;
@@ -36,8 +31,6 @@ public class Field {
 	int maxBlockerLength;
 	
 	float pickUpTimer = 0;
-	
-	boolean spawnIt = true;
 	
 	public static TiledMap map;
 	TextureRegion[][] splitTiles;
@@ -213,6 +206,12 @@ public class Field {
 		this.totalRadius = 60 * scale;
 		this.blockerChains = 200 * scale * scale;
 		this.maxBlockerLength = 10;
+		
+		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate", false);
+		SteveDriver.robotBossActivate = SteveDriver.prefs.getBoolean("robotBossActivate", false);
+		SteveDriver.carrierDefeated = SteveDriver.prefs.getBoolean("carrierDefeated", SteveDriver.carrierDefeated);
+		SteveDriver.razorbullDefeated = SteveDriver.prefs.getBoolean("razorbullDefeated", SteveDriver.razorbullDefeated);
+		
 		
 		if (SteveDriver.constants.get("candyZone") == 0f) {
 			this.grass = new TileRegion(6, 4, 1, 2);
@@ -550,11 +549,29 @@ public class Field {
 	}
 	
 	public void update() {
-		if(spawnIt){
-			BossSummon bs = new BossSummon(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE, SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE+2 ,0);
+		if(SteveDriver.cyborgBossActivate){
+			BossSummon bs = new BossSummon((int)(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE), (int)(SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE)+8, 0);
 			pickups.add(bs);
-			spawnIt = false;
+			SteveDriver.cyborgBossActivate = false;
+			if (!SteveDriver.prefs.getBoolean("cyborgBossTutorial", false)){
+				SteveDriver.prefs.putBoolean("cyborgBossTutorial", true);
+				SteveDriver.prefs.flush();
+				SteveDriver.tutorialOn = true;
+				SteveDriver.tutorial.startCyborgBossTutorial();
+			}
 		}
+		else if(SteveDriver.robotBossActivate){
+			BossSummon bs = new BossSummon((int)(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE), (int)(SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE)+4, 1);
+			pickups.add(bs);
+			if (!SteveDriver.prefs.getBoolean("robotBossTutorial", false)){
+				SteveDriver.prefs.putBoolean("robotBossTutorial", true);
+				SteveDriver.prefs.flush();
+				SteveDriver.tutorialOn = true;
+				SteveDriver.tutorial.startRobotBossTutorial();
+			}
+			SteveDriver.robotBossActivate = false;
+		}
+		
 		this.generator.update();
 		
 		for (Enemy e : enemies) {
@@ -639,6 +656,13 @@ public class Field {
 				return false;
 			}
 		}
+		
+		for(Pickup p : pickups){
+			if(CollisionHelper.isCollide(newObject, p.getRectangle())){
+				return false;
+			}
+		}
+		
 		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
 			if(CollisionHelper.isCollide(newObject, s.getBoundingRectangle())){
 				return false;

@@ -840,8 +840,15 @@ public class Store {
 				activated = true;
 				currentTier[category] = tier + 1;
 
-				if (constantName == "mainGun") {
-					System.out.println();
+				if (constantName == "cyborg") {
+					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
+					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));
+					SteveDriver.prefs.flush();
+				}
+				else if(constantName == "robot"){
+					SteveDriver.prefs.putBoolean("robotBossActivate", (!SteveDriver.prefs.getBoolean("razorbullDefeated", true)));
+					SteveDriver.prefs.putBoolean("razorbullDefeated", (SteveDriver.prefs.getBoolean("razorbullDefeated", false)));
+					SteveDriver.prefs.flush();
 				}
 
 				SteveDriver.constants.modifyConstant(constantName, value);
@@ -869,6 +876,17 @@ public class Store {
 
 		public void resetChoice() {
 			SteveDriver.storePrefs.putBoolean(key, initActivated);
+			
+			if (constantName == "cyborg") {
+				SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+				SteveDriver.prefs.putBoolean("carrierDefeated", false);
+				SteveDriver.prefs.flush();
+			}
+			else if(constantName == "robot"){
+				SteveDriver.prefs.putBoolean("robotBossActivate", false);
+				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
+				SteveDriver.prefs.flush();
+			}
 
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;

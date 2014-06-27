@@ -16,6 +16,7 @@ import com.steve.enemies.Slug;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.GUIHelper;
 import com.steve.pickups.Apple;
+import com.steve.pickups.BossSummon;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
@@ -35,7 +36,8 @@ public class Tutorial {
 	public enum TUTORIAL_TYPE {
 		main,
 		edge,
-		boss
+		cyborgBoss,
+		robotBoss
 	}
 	
 	private TUTORIAL_STAGE_TYPE stage;
@@ -267,11 +269,44 @@ public class Tutorial {
 			noGray.y = SteveDriver.guiCamera.position.y + yModify - 1.5f * SteveDriver.TEXTURE_SIZE;
 		}
 		
+
+		else if (type == TUTORIAL_TYPE.cyborgBoss) {
+			description = "There is a disturbance. Investigate by eating this.";
+			noGray.y = -32;
+			noGray.x = -32;
+			noGray.width = 32;
+			noGray.height = 32;
+			focus = new Vector3();
+			
+			for (Pickup p : Field.pickups) {
+				if (p.getClass() == BossSummon.class) {
+					focus = new Vector3(p.getX(), p.getY(), 0);
+				}
+			}	
+		}
+		
+		else if (type == TUTORIAL_TYPE.robotBoss) {
+			description = "Another disturbance. Investigate by eating this.";
+			noGray.y = -32;
+			noGray.x = -32;
+			noGray.width = 32;
+			noGray.height = 32;
+			focus = new Vector3();
+			
+			for (Pickup p : Field.pickups) {
+				if (p.getClass() == BossSummon.class) {
+					focus = new Vector3(p.getX(), p.getY(), 0);
+				}
+			}	
+		}
+		
 		SteveDriver.guiHelper.drawText(description, SteveDriver.guiCamera.viewportWidth / 2 * -1 + 1 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.viewportHeight / 2 * -1 + 6 * SteveDriver.TEXTURE_SIZE, Color.BLACK);
 		
 		SteveDriver.batch.end();
-	}
+	}	
+	
+	
 	
 	public void goToNextStage() {
 		if (stage.ordinal() < TUTORIAL_STAGE_TYPE.values().length - 1) {
@@ -296,6 +331,16 @@ public class Tutorial {
 	public void startEdgeTutorial() {
 		active = SteveDriver.tutorialOn;
 		type = TUTORIAL_TYPE.edge;
+	}
+	
+	public void startCyborgBossTutorial(){
+		active = SteveDriver.tutorialOn;
+		type = TUTORIAL_TYPE.cyborgBoss;
+	}
+	
+	public void startRobotBossTutorial(){
+		active = SteveDriver.tutorialOn;
+		type = TUTORIAL_TYPE.robotBoss;
 	}
 	
 	public boolean isActive() {

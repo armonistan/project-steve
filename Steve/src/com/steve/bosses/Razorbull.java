@@ -63,6 +63,14 @@ public class Razorbull extends Enemy{
 		return razorMove();
 	}
 	
+	@Override
+	public void kill(){
+		SteveDriver.prefs.putBoolean("razorbullDefeated", true);
+		SteveDriver.prefs.putBoolean("robotBossActivate", false);
+		SteveDriver.prefs.flush();
+		super.kill();
+	}
+	
 	protected void checkCollideWithSnake(){
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {

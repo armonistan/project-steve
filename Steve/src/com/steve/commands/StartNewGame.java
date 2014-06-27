@@ -12,6 +12,14 @@ public class StartNewGame extends StartNewRound {
 		//System.out.println(SteveDriver.storePrefs.getBoolean("goldTier1B"));
 		SteveDriver.prefs.putInteger("money", 0);
 		SteveDriver.prefs.putBoolean("edgeTutorial", false);
+		SteveDriver.prefs.putBoolean("cyborgBossTutorial", false);
+		SteveDriver.prefs.putBoolean("robotBossTutorial", false);
+		
+		SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+		SteveDriver.prefs.putBoolean("carrierDefeated", false);
+		SteveDriver.prefs.putBoolean("robotBossActivate", false);
+		SteveDriver.prefs.putBoolean("razorbullDefeated", false);
+		
 		SteveDriver.prefs.flush();
 		SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 		SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
