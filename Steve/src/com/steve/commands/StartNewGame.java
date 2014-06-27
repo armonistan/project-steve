@@ -20,6 +20,10 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.prefs.putBoolean("robotBossActivate", false);
 		SteveDriver.prefs.putBoolean("razorbullDefeated", false);
 		
+		SteveDriver.prefs.putInteger("bossesDefeated", 0);
+		SteveDriver.prefs.putBoolean("canGoToSpace",false);
+		SteveDriver.prefs.putBoolean("bossDefeatedTutorial", false);
+		
 		SteveDriver.prefs.flush();
 		SteveDriver.snake.spendMoney(SteveDriver.snake.getMoney());
 		SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());

@@ -226,9 +226,6 @@ public class Field {
 		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		Field.map = new TiledMap();
 		
-		float x = totalRadius/2 - 10;
-		float y = totalRadius/2 + 3;
-		
 		this.RandomizeField();
 	}
 
@@ -254,9 +251,9 @@ public class Field {
 		this.projectiles = new ArrayList<Projectile>();
 		this.projectilesToRemove =  new LinkedList<Projectile>();
 		this.generator = new Generator();
-		
 		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
+		
 		
 		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
 	}
@@ -380,9 +377,7 @@ public class Field {
 	public void RandomizeField() {
 		generatingField = new Thread(new Runnable() {
 			@Override
-			public void run() {
-				System.out.println("Nothing yet.");
-				
+			public void run() {				
 				MapLayers layers = Field.map.getLayers();
 				TiledMapTileLayer layer = new TiledMapTileLayer(totalRadius, totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 				TiledMapTileLayer blockers = new TiledMapTileLayer(totalRadius, totalRadius, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
@@ -552,6 +547,18 @@ public class Field {
 	}
 	
 	public void update() {
+		if(SteveDriver.prefs.getInteger("bossesDefeated", 0) == SteveDriver.numBosses){
+			SteveDriver.prefs.putBoolean("canGoToSpace", true);
+			if (!SteveDriver.prefs.getBoolean("bossesDefeatedTutorial", false)){
+				SteveDriver.prefs.putBoolean("bossesDefeatedTutorial", true);
+				SteveDriver.prefs.flush();
+				SteveDriver.tutorialOn = true;
+				SteveDriver.tutorial.endGameTutorial();
+			}
+		}
+		System.out.println(SteveDriver.prefs.getBoolean("canGoToSpace", false));
+		
+	
 		if(SteveDriver.cyborgBossActivate){
 			BossSummon bs = new BossSummon((int)(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE), (int)(SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE)+8, 0);
 			pickups.add(bs);

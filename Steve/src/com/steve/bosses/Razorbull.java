@@ -67,6 +67,7 @@ public class Razorbull extends Enemy{
 	public void kill(){
 		SteveDriver.prefs.putBoolean("razorbullDefeated", true);
 		SteveDriver.prefs.putBoolean("robotBossActivate", false);
+		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
 		super.kill();
 	}

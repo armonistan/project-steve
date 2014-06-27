@@ -30,7 +30,8 @@ public class Game {
 	}
 	
 	public void render() {		
-		Vector3 test = SteveDriver.camera.position.lerp((SteveDriver.tutorial.isActive()) ? SteveDriver.tutorial.getFocus() :
+		Vector3 test = new Vector3();
+		test = SteveDriver.camera.position.lerp((SteveDriver.tutorial.isActive()) ? SteveDriver.tutorial.getFocus() :
 			SteveDriver.snake.getHeadPosition(), (SteveDriver.tutorial.isActive()) ? 0.1f : 0.05f);
 		SteveDriver.camera.position.x = test.x;
 		SteveDriver.camera.position.y = test.y;

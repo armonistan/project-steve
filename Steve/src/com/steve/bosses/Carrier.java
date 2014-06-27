@@ -100,6 +100,7 @@ public class Carrier extends Enemy {
 		swiggins.kill();
 		SteveDriver.prefs.putBoolean("carrierDefeated", true);
 		SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
 		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate", false);
 		super.kill();

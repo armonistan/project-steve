@@ -85,6 +85,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean cyborgBossActivate = false;
 	public static boolean robotBossActivate = false;
 
+	public static int numBosses = 2;
 	
 	private Music music;
 	public static boolean musicPlaying;
@@ -94,6 +95,7 @@ public class SteveDriver implements ApplicationListener {
 		MENU,
 		CREDITS,
 		GAME,
+		ENDGAME,
 		STORE,
 		RESPAWNING,
 		SUMMARY,
@@ -188,6 +190,11 @@ public class SteveDriver implements ApplicationListener {
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
+		case ENDGAME:
+			resetFieldForSpace();
+			summary.resetSummary();
+			stage = STAGE_TYPE.LOADING;
+			break;
 		case SUMMARY:
 			batch.begin();
 			summary.render();
@@ -256,5 +263,13 @@ public class SteveDriver implements ApplicationListener {
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
 		loading = new Loading();
+	}
+	
+	public static void resetFieldForSpace(){
+		int scale = 5;
+		
+		snake = new AstroSteve(30 * scale, 30 * scale);
+		field = new Field(camera, scale);
+		loading = new Loading();		
 	}
 }

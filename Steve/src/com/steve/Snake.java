@@ -25,7 +25,7 @@ import java.util.*;
 public class Snake {
 	protected ArrayList<Sprite> segments;
 	private ArrayList<Weapon> weapons;
-	private int maxSegments = 10;
+	private int maxSegments = 4;
 	
 	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
 	private final int TILE_WIDTH = SteveDriver.TEXTURE_SIZE;
@@ -54,16 +54,19 @@ public class Snake {
 	private int treasure;
 	public int snakeTier;
 	
-	private int xOffSet;
-	private int yOffSet;
+	protected int xOffSet;
+	protected int yOffSet;
 	
-	private boolean drill;
+	protected boolean drill;
 	protected boolean glue;
-	private boolean nuke;
-	private boolean jet;
-	private boolean matrix;
-	private boolean candy;
+	protected boolean nuke;
+	protected boolean jet;
+	protected boolean matrix;
+	protected boolean candy;
 	private Sound blockerCollide;
+	
+	protected boolean endGame = false;
+	protected boolean inSpace = false;
 	
 	Sprite helmet;
 	Rectangle tempCollider;
@@ -224,18 +227,22 @@ public class Snake {
 	}
 
 	public void update(){
-		getTouch();
-		checkProjectiles();
+		//if(!inSpace)
+			getTouch();
 		
-		if (bombsAwayTime > bombsAwayTimer) {
-			bombsAwayTime = 0f;
-			killThemAll();
+		
+		if(!endGame){
+			checkProjectiles();
+		
+			if (bombsAwayTime > bombsAwayTimer) {
+				bombsAwayTime = 0f;
+				killThemAll();
+			}
+		
+			if (glue) {
+				layGlue();
+			}
 		}
-		
-		if (glue) {
-			layGlue();
-		}
-		
 		//update all the segments.
 		if (timer >= timeBetweenTurn) {
 			move();
@@ -243,18 +250,23 @@ public class Snake {
 			if (checkCollisions()) {
 				return;
 			}
-			
+			if(!endGame){
 			boolean aboutToEat = checkEat();
-			animateMouth(aboutToEat);
+				animateMouth(aboutToEat);
+			}
+			else{
+				animateMouth(false);
+			}
 			rotateTail();
 			animate();
 			timer = 0;
 		}
 		
-		if (updateStarvation()) {
+		if (!endGame && updateStarvation()) {
 			return;
 		}
-		updateWeapons();
+		if(!endGame)
+			updateWeapons();
 		updateTimers(Gdx.graphics.getRawDeltaTime());
 	}
 	
@@ -282,7 +294,7 @@ public class Snake {
 				tempCollider.height = SteveDriver.TEXTURE_SIZE;
 				
 				if (cell != null && CollisionHelper.isCollide(tempCollider, segments.get(0).getBoundingRectangle())) {
-					if (drill) {
+					if (drill || endGame) {
 						SteveDriver.field.destroyBlocker(x, y);
 						return false;
 					}
@@ -303,10 +315,16 @@ public class Snake {
 			SteveDriver.tutorialOn = true;
 			SteveDriver.tutorial.startEdgeTutorial();
 		}
-		else if (false && (
+		else if ((
 				headPosition.x < 0 || headPosition.x >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE ||
 				headPosition.y < 0 || headPosition.y >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE)) {
-			kill(WHY_DIED.space); //Tried to go to space death
+			if(!endGame)
+				kill(WHY_DIED.space); //Tried to go to space death
+			else{
+				this.timeBetweenTurn = .5f;
+				inSpace = true;
+				return false;
+			}
 			return true;
 		}
 		
@@ -439,13 +457,15 @@ public class Snake {
 	}
 	
 	public void changeHunger(float amount) {
-		hungerTimer += amount / hungerPerSecond;
+		if(!endGame){
+			hungerTimer += amount / hungerPerSecond;
 		
-		if (hungerTimer < 0f) {
-			hungerTimer = 0f;
+			if (hungerTimer < 0f) {
+				hungerTimer = 0f;
+			}
+		
+			lastDamageTimer = 0.5f;
 		}
-		
-		lastDamageTimer = 0.5f;
 	}
 
 	private void updateBody(){
@@ -652,14 +672,15 @@ public class Snake {
 	
 	protected void updateTimers(float deltaTime){
 		timer += deltaTime;
-		hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
+		if(!endGame)
+			hungerTimer += deltaTime/SteveDriver.constants.get("hungerRate");
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
-		if (nuke) {
+		if (nuke && !endGame) {
 			bombsAwayTime += deltaTime;
 		}
 		
-		if (lastDamageTimer > 0) {
+		if (lastDamageTimer > 0 && !endGame) {
 			lastDamageTimer -= deltaTime;
 		}
 	}

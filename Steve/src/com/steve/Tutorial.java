@@ -37,7 +37,8 @@ public class Tutorial {
 		main,
 		edge,
 		cyborgBoss,
-		robotBoss
+		robotBoss,
+		endGame
 	}
 	
 	private TUTORIAL_STAGE_TYPE stage;
@@ -300,6 +301,15 @@ public class Tutorial {
 			}	
 		}
 		
+		else if(type == TUTORIAL_TYPE.endGame){
+			description = "This is it. You have defeated every boss.\nWhen you are ready, space awaits.";
+			noGray.y = -32;
+			noGray.x = -32;
+			noGray.width = 32;
+			noGray.height = 32;
+			focus = SteveDriver.snake.getHeadPosition();
+		}
+		
 		SteveDriver.guiHelper.drawText(description, SteveDriver.guiCamera.viewportWidth / 2 * -1 + 1 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.viewportHeight / 2 * -1 + 6 * SteveDriver.TEXTURE_SIZE, Color.BLACK);
 		
@@ -336,6 +346,11 @@ public class Tutorial {
 	public void startCyborgBossTutorial(){
 		active = SteveDriver.tutorialOn;
 		type = TUTORIAL_TYPE.cyborgBoss;
+	}
+	
+	public void endGameTutorial(){
+		active = SteveDriver.tutorialOn;
+		type = TUTORIAL_TYPE.endGame;
 	}
 	
 	public void startRobotBossTutorial(){
