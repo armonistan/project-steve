@@ -38,8 +38,8 @@ public class Snake {
 	protected float timer = 0;
 	private float hungerTimer = 0;
 	
-	private float bombsAwayTimer = 60f;
-	private float bombsAwayTime = 0f;
+	protected float bombsAwayTimer = 60f;
+	protected float bombsAwayTime = 0f;
 	
 	private float lastDamageTimer;
 	
@@ -58,7 +58,7 @@ public class Snake {
 	private int yOffSet;
 	
 	private boolean drill;
-	private boolean glue;
+	protected boolean glue;
 	private boolean nuke;
 	private boolean jet;
 	private boolean matrix;
