@@ -127,12 +127,13 @@ public class Generator {
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
 		
-		if(SteveDriver.random.nextInt(10) <=  locationID){
-			this.generateRing(xPos, yPos);
-			return;
-		}
+		if (locationID < 3) {
+			if(SteveDriver.random.nextInt(10) <=  locationID){
+				this.generateRing(xPos, yPos);
+				return;
+			}
 	
-		switch(enemyType){
+			switch(enemyType){
 			case 0:
 				this.generateSlug(xPos, yPos);
 				break;
@@ -160,6 +161,7 @@ public class Generator {
 			case 8:
 				this.generateRhino(xPos, yPos);
 				break;
+			}
 		}
 	}
 	
@@ -263,17 +265,18 @@ public class Generator {
 		int pickUpType = (locationID == GRASS_ID) ?  0 :
 			(locationID == DESERT_ID) ?  r.nextInt(2) : r.nextInt(2)+1;
 
-			
-		switch(pickUpType){
-			case 1:
+		if (locationID < 3) {
+			switch(pickUpType){
+				case 1:
 				if(SteveDriver.snake.hasWeaponSpace())
 					this.generateUpgrade(xPos, yPos, r.nextInt(3));
-			break;
+				break;
 			
-			case 2:
+				case 2:
 				if(SteveDriver.snake.hasWeaponToUpgrade())
 					this.generateWeaponUpgrade(xPos, yPos);
-			break;
+				break;
+			}
 		}
 	}
 		
@@ -443,10 +446,12 @@ public class Generator {
 		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
 			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_SIZE);
 		
-		
-		Apple a = new Apple(xPos, yPos);
-		if(isOccupied(a.getRectangle()))
-			Field.pickups.add(a);	
+		if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
+			Apple a = new Apple(xPos, yPos);
+			if(isOccupied(a.getRectangle())) {
+				Field.pickups.add(a);	
+			}
+		}
 	}
 	
 	public void generateRhino(float xPos, float yPos) {

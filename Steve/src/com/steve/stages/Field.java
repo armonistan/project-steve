@@ -288,8 +288,11 @@ public class Field {
 			return 0;
 		} else if (x >= this.desertRadius && x < this.totalRadius - this.desertRadius && y >= this.desertRadius && y < this.totalRadius - this.desertRadius) {
 			return 1;
-		} else {
+		} else if (x >= 0 && x < totalRadius && y >= 0 && y < totalRadius) {
 			return 2;
+		}
+		else {
+			return 3;
 		}
 	}
 	
