@@ -12,7 +12,7 @@ public class Ring extends Enemy {
 	public Ring(float x, float y) {
 		super(x, y, 11, 7, 1, 2, 1f, 1, 10, 0, 50);
 		
-		treasureAmount = 1;
+		treasureAmount = 0;
 	}
 	
 	@Override
