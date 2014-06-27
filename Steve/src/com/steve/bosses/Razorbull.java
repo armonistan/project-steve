@@ -53,7 +53,7 @@ public class Razorbull extends Enemy{
 			y+=1;
 			x+=10;
 		}
-		
+		if(x > 0 && y > 0 && x*SteveDriver.TEXTURE_SIZE < SteveDriver.field.totalRadius && y*SteveDriver.TEXTURE_SIZE < SteveDriver.field.totalRadius)
 		SteveDriver.field.createBlockerFormation(x, y);
 		shootTimer = 0;
 	}

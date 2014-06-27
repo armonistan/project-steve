@@ -766,6 +766,7 @@ public class Field {
 		top = (blockers.getCell(x, y + 1) == null) || (tileRad != this.checkRing(x, y + 1));
 		bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 		
+		
 		blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
 		//set the actual tile image
 		if (left) {
