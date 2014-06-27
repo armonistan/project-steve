@@ -61,6 +61,7 @@ public class Snake {
 	private boolean candy;
 	private Sound blockerCollide;
 	
+	Sprite helmet;
 	Rectangle tempCollider;
 	
 	public Snake(float x, float y){
@@ -125,6 +126,13 @@ public class Snake {
 		else{
 			candy = false;
 		}
+		if(SteveDriver.constants.get("drill") != 0f){
+			helmet = new Sprite(new TextureRegion(SteveDriver.atlas,
+					3 * SteveDriver.TEXTURE_SIZE, 0 * SteveDriver.TEXTURE_SIZE,
+					1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE));
+		}
+		else
+			helmet = null;
 		
 		animateMouth(false);
 		
@@ -783,7 +791,9 @@ public class Snake {
 	
 	private void drawUpgradeImages(){
 		if(drill){
-			
+			helmet.setPosition(segments.get(0).getX(), segments.get(0).getY());
+			helmet.setRotation(segments.get(0).getRotation());
+			helmet.draw(SteveDriver.batch);
 		}
 		if(nuke){
 			

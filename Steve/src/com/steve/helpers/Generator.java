@@ -37,10 +37,10 @@ public class Generator {
 	final float enemyGenerationTime = 2; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 3; 
+	final float appleGenerationTime = 2; 
 	float appleGenerationCounter; 
 	
-	final float pickUpGenerationTime = 1; 
+	final float pickUpGenerationTime = 2; 
 	float pickUpGenerationCounter; 
 	
 	final float upgradeGenerationTime = 2; 
@@ -127,7 +127,7 @@ public class Generator {
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
 		
-		if(SteveDriver.random.nextInt(100) <=  locationID){
+		if(SteveDriver.random.nextInt(10) <=  locationID){
 			this.generateRing(xPos, yPos);
 			return;
 		}

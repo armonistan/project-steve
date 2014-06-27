@@ -12,8 +12,6 @@ import com.steve.projectiles.Tree;
 import com.steve.stages.Field;
 
 public class Razorbull extends Enemy{
-	float slowMoveTime;
-	float fastMoveTime;
 	
 	public Razorbull(float x, float y) {
 		super(x, y, 21, 23, 9, 3, .2f, 0.3f, 1, 75, 200);
@@ -23,9 +21,7 @@ public class Razorbull extends Enemy{
 		super.ignoresBlockers = true;
 		moneyAmount = 30;
 		shootTime = .5f;
-		slowMoveTime = .5f;
-		fastMoveTime = .1f;
-		super.moveTime = slowMoveTime;
+		super.moveTime = .1f;
 	}
 	
 	@Override
@@ -112,15 +108,6 @@ public class Razorbull extends Enemy{
 			if(Math.abs(deltaX) > SteveDriver.guiCamera.viewportWidth*1.1f ||
 					Math.abs(deltaY) > Gdx.graphics.getHeight()*1.1f){
 				this.moveToNextBombingRun();
-				moveTime = fastMoveTime;
-			}
-			else if(Math.abs(deltaX) > SteveDriver.guiCamera.viewportWidth*1f ||
-					Math.abs(deltaY) > Gdx.graphics.getHeight()*1f){
-				moveTime = slowMoveTime;
-			}
-			else if(Math.abs(deltaX) < SteveDriver.guiCamera.viewportWidth*.95f ||
-					Math.abs(deltaY) < Gdx.graphics.getHeight()*.95f){
-				moveTime = fastMoveTime;
 			}
 		}
 	}
