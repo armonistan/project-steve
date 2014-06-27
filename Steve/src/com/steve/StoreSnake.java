@@ -10,6 +10,15 @@ public class StoreSnake extends Snake {
 	@Override
 	public void update()
 	{
+		if (bombsAwayTime > bombsAwayTimer) {
+			bombsAwayTime = 0f;
+			killThemAll();
+		}
+		
+		if (glue) {
+			layGlue();
+		}
+		
 		//update all the segments.
 		if (timer >= timeBetweenTurn) {
 			if (headPosition.x > 150 * SteveDriver.TEXTURE_SIZE) {
