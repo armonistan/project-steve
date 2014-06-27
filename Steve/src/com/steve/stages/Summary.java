@@ -116,9 +116,15 @@ public class Summary {
 		if (applePercent < 1f) {
 			applePercent += 0.01f;
 		} 
+		else {
+			applePercent = 1f;
+		}
 
 		if (enemyPercent < 1f) {
 			enemyPercent += 0.01f;
+		}
+		else {
+			enemyPercent = 1f;
 		}
 	}
 }
