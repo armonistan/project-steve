@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.pickups.Apple;
+import com.steve.pickups.Treasure;
 import com.steve.stages.Field;
 
 public class Ring extends Enemy {
@@ -22,7 +23,7 @@ public class Ring extends Enemy {
 	@Override
 	public void kill() {
 		//TODO: Make this better.
-		Field.pickups.add(new Apple(avatar.getX() / SteveDriver.TEXTURE_SIZE, avatar.getY() / SteveDriver.TEXTURE_SIZE));
+		Field.pickups.add(new Treasure(avatar.getX() / SteveDriver.TEXTURE_SIZE, avatar.getY() / SteveDriver.TEXTURE_SIZE));
 		
 		super.kill();
 	}

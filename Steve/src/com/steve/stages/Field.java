@@ -23,6 +23,8 @@ import com.steve.bosses.Razorbull;
 import com.steve.enemies.HomaHawk;
 import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.Generator;
+import com.steve.pickups.BossSummon;
+
 import java.util.*;
 
 public class Field {
@@ -224,6 +226,9 @@ public class Field {
 		
 		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		Field.map = new TiledMap();
+		
+		float x = totalRadius/2 - 10;
+		float y = totalRadius/2 + 3;
 		
 		this.RandomizeField();
 	}
@@ -546,12 +551,9 @@ public class Field {
 	
 	public void update() {
 		if(spawnIt){
-		float x = totalRadius/2 - 10;
-		float y = totalRadius/2 + 3;
-		Razorbull c = new Razorbull(x, y);
-		enemies.add(c);
-		//c.intialize();
-		spawnIt = false;
+			BossSummon bs = new BossSummon(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE, SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE+2 ,0);
+			pickups.add(bs);
+			spawnIt = false;
 		}
 		this.generator.update();
 		
@@ -670,6 +672,7 @@ public class Field {
 					return false;
 				}
 		}
+
 		
 		return true;
 	}
