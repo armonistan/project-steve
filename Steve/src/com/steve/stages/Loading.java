@@ -1,14 +1,26 @@
 package com.steve.stages;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.WrapUpLoading;
 
 public class Loading {
+	Texture loading;
+	Sprite loadingSprite;
+	
 	boolean threadFinished;
 	
 	TextButton startButton;
 	
 	public Loading() {
+		loading = new Texture(Gdx.files.internal("data/loading.png"));
+		loadingSprite = new Sprite(new TextureRegion(loading, 0f, 0f, 1f, 1f));
+		loadingSprite.scale(-0.2f);
+		loadingSprite.setPosition(loadingSprite.getWidth() / 2 * -1, loadingSprite.getHeight() / 2 * -1);
+		
 		threadFinished = false;
 		
 		startButton = new TextButton(-5f * SteveDriver.TEXTURE_SIZE,
@@ -29,6 +41,7 @@ public class Loading {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		
 		SteveDriver.batch.begin();	
+		loadingSprite.draw(SteveDriver.batch);
 		startButton.render();
 		SteveDriver.batch.end();
 		
