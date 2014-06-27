@@ -43,6 +43,10 @@ public class Snake {
 	
 	private float lastDamageTimer;
 	
+	public float getLastDamageTimer() {
+		return lastDamageTimer;
+	}
+
 	protected Vector2 nextDirection;
 	protected float nextRotation;
 	
