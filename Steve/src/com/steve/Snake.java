@@ -24,7 +24,7 @@ import java.util.*;
 
 public class Snake {
 	protected ArrayList<Sprite> segments;
-	private ArrayList<Weapon> weapons;
+	protected ArrayList<Weapon> weapons;
 	private int maxSegments = 4;
 	
 	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
@@ -91,6 +91,7 @@ public class Snake {
 		refreshSnakeLoadout(x, y);
 
 		tempCollider = new Rectangle();
+		SteveDriver.prefs.putBoolean("astroSteve", false);
 	}
 
 	public void refreshSnakeLoadout(float x, float y) {
@@ -227,10 +228,9 @@ public class Snake {
 	}
 
 	public void update(){
-		//if(!inSpace)
+		if(!inSpace)
 			getTouch();
-		
-		
+	
 		if(!endGame){
 			checkProjectiles();
 		
@@ -321,6 +321,10 @@ public class Snake {
 			if(!endGame)
 				kill(WHY_DIED.space); //Tried to go to space death
 			else{
+				//clear field and prevent anymore spawning
+				SteveDriver.field.emptyField();
+				SteveDriver.field.disableGenerator();
+				//slow down
 				this.timeBetweenTurn = .5f;
 				inSpace = true;
 				return false;
@@ -344,7 +348,7 @@ public class Snake {
 			}
 		}
 	}
-
+	
 	private void getTouch() {
 		if (Gdx.input.isTouched()) {			
 			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;

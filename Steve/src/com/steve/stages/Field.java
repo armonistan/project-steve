@@ -57,6 +57,8 @@ public class Field {
 	
 	protected Sprite space;
 	
+	private boolean generatorEnabled;
+	
 	private class TileRegion {
 		int startX, startY, width, length;
 		Random rand;
@@ -227,6 +229,7 @@ public class Field {
 		Field.map = new TiledMap();
 		
 		this.RandomizeField();
+		this.generatorEnabled = true;
 	}
 
 	public void cleanupSetup() {
@@ -264,15 +267,30 @@ public class Field {
 			Cell destroyed = new Cell();
 			switch (checkRing(xPos, yPos)) {
 				case 0:
-					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][8]));
+					if(SteveDriver.constants.get("candyZone") == 0f){
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[6][8]));
+					}
+					else{
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[15][8]));
+					}
 					rubble.setCell(xPos, yPos, destroyed);
 					break;
 				case 1:
-					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][9]));
+					if(SteveDriver.constants.get("candyZone") == 0f){
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[6][9]));
+					}
+					else{
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[15][9]));
+					}
 					rubble.setCell(xPos, yPos, destroyed);
 					break;
 				case 2:
-					destroyed.setTile(new StaticTiledMapTile(splitTiles[6][10]));
+					if(SteveDriver.constants.get("candyZone") == 0f){
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[6][10]));
+					}
+					else{
+						destroyed.setTile(new StaticTiledMapTile(splitTiles[15][10]));
+					}
 					rubble.setCell(xPos, yPos, destroyed);
 					break;
 			}
@@ -549,8 +567,9 @@ public class Field {
 	public void update() {
 		if(SteveDriver.prefs.getInteger("bossesDefeated", 0) == SteveDriver.numBosses){
 			SteveDriver.prefs.putBoolean("canGoToSpace", true);
-			if (!SteveDriver.prefs.getBoolean("bossesDefeatedTutorial", false)){
-				SteveDriver.prefs.putBoolean("bossesDefeatedTutorial", true);
+			if (!SteveDriver.prefs.getBoolean("bossDefeatedTutorial", false)){
+				SteveDriver.prefs.putBoolean("bossDefeatedTutorial", true);
+				SteveDriver.prefs.putBoolean("edgeTutorial", true);
 				SteveDriver.prefs.flush();
 				SteveDriver.tutorialOn = true;
 				SteveDriver.tutorial.endGameTutorial();
@@ -582,7 +601,8 @@ public class Field {
 			SteveDriver.robotBossActivate = false;
 		}
 		
-		this.generator.update();
+		if(this.generatorEnabled)
+			this.generator.update();
 		
 		for (Enemy e : enemies) {
 			e.update();
@@ -837,5 +857,14 @@ public class Field {
 			return true;
 		}
 		return false;
+	}
+	
+	public void emptyField(){
+		enemies.clear();
+		pickups.clear();
+	}
+	
+	public void disableGenerator(){
+		this.generatorEnabled = false;
 	}
 }

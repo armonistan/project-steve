@@ -15,6 +15,10 @@ public class AstroSteve extends Snake {
 		jet = false;
 		nuke = false;
 		timeBetweenTurn = 0.05f;
+		super.weapons.clear();
+		SteveDriver.prefs.putBoolean("astroSteve", true);
+		SteveDriver.prefs.putInteger("themeIndex", 0);
+		SteveDriver.switchTheme();
 	}
 
 	@Override

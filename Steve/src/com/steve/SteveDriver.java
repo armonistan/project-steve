@@ -78,6 +78,9 @@ public class SteveDriver implements ApplicationListener {
 	public static Logo logo;
 	public static Loading loading;
 	
+	public static int mainThemeIndex = 0;
+	public static int spaceThemeIndex = 1;
+	
 	public static boolean tutorialOn = false;; 
 	
 	public static boolean carrierDefeated = false;
@@ -87,7 +90,7 @@ public class SteveDriver implements ApplicationListener {
 
 	public static int numBosses = 2;
 	
-	private Music music;
+	private static Music music;
 	public static boolean musicPlaying;
 	public static IActivityRequestHandler handler;
 	
@@ -182,9 +185,13 @@ public class SteveDriver implements ApplicationListener {
 			batch.end();
 			break;
 		case MENU:
+			SteveDriver.prefs.putBoolean("astroSteve", false);
+			SteveDriver.switchTheme();
 			menu.render();
 			break;
 		case RESPAWNING:
+			SteveDriver.prefs.putBoolean("astroSteve", false);
+			SteveDriver.switchTheme();
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
@@ -271,5 +278,32 @@ public class SteveDriver implements ApplicationListener {
 		snake = new AstroSteve(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
 		loading = new Loading();		
+	}
+	
+	public static void switchTheme(){
+		if(prefs.getBoolean("music") && prefs.getInteger("themeIndex", 0) != mainThemeIndex && !prefs.getBoolean("astroSteve", false)){
+			if(music != null)
+				music.stop();
+			music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
+			music.setLooping(true);
+			music.setVolume(.4f);
+			music.play();
+			musicPlaying = true;
+			prefs.putInteger("themeIndex", mainThemeIndex);
+		}
+		else if(prefs.getBoolean("music") && prefs.getInteger("themeIndex", 1) != spaceThemeIndex && prefs.getBoolean("astroSteve", false)){
+			if(music != null)
+				music.stop();
+			music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainSpace.ogg"));
+			music.setLooping(true);
+			music.setVolume(.4f);
+			music.play();
+			musicPlaying = true;
+			prefs.putInteger("themeIndex", spaceThemeIndex);
+		}
+		else if(music != null && !prefs.getBoolean("music")){
+			music.stop();
+			musicPlaying = false;
+		}
 	}
 }

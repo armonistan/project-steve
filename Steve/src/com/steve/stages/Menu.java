@@ -36,7 +36,8 @@ public class Menu {
 		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();
 		temp.setButton(music);
 		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
-		
+
+
 		snake = new MenuSnake();
 	}
 	

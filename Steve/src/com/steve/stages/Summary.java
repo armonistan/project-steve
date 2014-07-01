@@ -62,16 +62,13 @@ public class Summary {
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new OpenStore(), "To the Store!");
 	
-		if(SteveDriver.prefs.getBoolean("canGoToSpace", false)){
-			spaceButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
+		spaceButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.guiCamera.position.y + 12 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 					new ChangeStage(SteveDriver.STAGE_TYPE.ENDGAME), "Fufill your destiny");
-		}
-		else{
-			spaceButton = null;
-		}
 		
 		showingAds = false;
+		SteveDriver.prefs.putBoolean("astroSteve", false);
+		SteveDriver.switchTheme();
 	}
 	
 	public void resetSummary() {
@@ -109,7 +106,7 @@ public class Summary {
 		continueButton.update();
 		continueButton.render();
 		
-		if(spaceButton != null){
+		if(SteveDriver.prefs.getBoolean("canGoToSpace", false)){
 			spaceButton.update();
 			spaceButton.render();
 		}

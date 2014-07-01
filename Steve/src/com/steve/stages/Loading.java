@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
+import com.steve.commands.ChangeStage;
 import com.steve.commands.WrapUpLoading;
 
 public class Loading {
@@ -14,6 +15,7 @@ public class Loading {
 	boolean threadFinished;
 	
 	TextButton startButton;
+	private TextButton spaceButton;
 	
 	public Loading() {
 		loading = new Texture(Gdx.files.internal("data/loading.png"));
@@ -26,6 +28,11 @@ public class Loading {
 		startButton = new TextButton(-5f * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.viewportHeight / 2f * -1f + 4f * SteveDriver.TEXTURE_SIZE, 10, 4,
 				new WrapUpLoading(), "Generating...");
+		
+		spaceButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.position.y + 12 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
+				new ChangeStage(SteveDriver.STAGE_TYPE.ENDGAME), "Fufill your destiny");
+	
 	}
 	
 	public void render() {
@@ -43,6 +50,12 @@ public class Loading {
 		SteveDriver.batch.begin();	
 		loadingSprite.draw(SteveDriver.batch);
 		startButton.render();
+		
+		if(SteveDriver.prefs.getBoolean("canGoToSpace", false) && !SteveDriver.prefs.getBoolean("astroSteve", false)){
+			spaceButton.update();
+			spaceButton.render();
+		}
+		
 		SteveDriver.batch.end();
 		
 		if (!SteveDriver.field.generatingField.isAlive()) {

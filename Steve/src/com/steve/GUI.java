@@ -39,58 +39,60 @@ public class GUI {
 	}
 	
 	public void render() {
-		currentHealthPercent = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
+		if(!SteveDriver.prefs.getBoolean("astroSteve", false)){
+			currentHealthPercent = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
 		
-		for (Sprite s : guiTextures) {
-			s.setRegion(s.getRegionX(), (22 + (SteveDriver.snake.getLastDamageTimer() > 0 ? 4 : 0)) * SteveDriver.TEXTURE_SIZE,
-					s.getRegionWidth(), s.getRegionHeight());
-		}
+			for (Sprite s : guiTextures) {
+				s.setRegion(s.getRegionX(), (22 + (SteveDriver.snake.getLastDamageTimer() > 0 ? 4 : 0)) * SteveDriver.TEXTURE_SIZE,
+						s.getRegionWidth(), s.getRegionHeight());
+			}
 
-		Sprite temp = guiTextures.get(5);
-		if (SteveDriver.snake.segments.size() == 2) {
-			if (temp.getRegionY() < (22 + 8) * SteveDriver.TEXTURE_SIZE) {
+			Sprite temp = guiTextures.get(5);
+			if (SteveDriver.snake.segments.size() == 2) {
+				if (temp.getRegionY() < (22 + 8) * SteveDriver.TEXTURE_SIZE) {
 				temp.setRegion(temp.getRegionX(), temp.getRegionY() + (8) * SteveDriver.TEXTURE_SIZE,
 					temp.getRegionWidth(), temp.getRegionHeight());
+				}
 			}
-		}
-		else {
-			if (temp.getRegionY() >= (22 + 8) * SteveDriver.TEXTURE_SIZE) {
-				temp.setRegion(temp.getRegionX(), temp.getRegionY() - (8) * SteveDriver.TEXTURE_SIZE,
-					temp.getRegionWidth(), temp.getRegionHeight());
+			else {
+				if (temp.getRegionY() >= (22 + 8) * SteveDriver.TEXTURE_SIZE) {
+					temp.setRegion(temp.getRegionX(), temp.getRegionY() - (8) * SteveDriver.TEXTURE_SIZE,
+							temp.getRegionWidth(), temp.getRegionHeight());
+				}
 			}
-		}
 		
-		SteveDriver.batch.begin();
-		guiTextures.get(0).draw(SteveDriver.batch);
-		guiTextures.get(5).draw(SteveDriver.batch);
-		for (int i = 0; i < healthWidth; i++) {
-			guiTextures.get(1).setPosition(3 * SteveDriver.TEXTURE_SIZE * (i - 2), height / 2 -200);
-			guiTextures.get(1).draw(SteveDriver.batch);
-		}
-		
-		int finalPixel = (int) (healthWidth * currentHealthPercent);
-		
-		for (int i = 0; i < finalPixel + 1; i++) {
-			if (currentHealthPercent > .5f) {
-				healthColor = 2;
-			} else if (currentHealthPercent < .5f && currentHealthPercent > .25f) {
-				healthColor = 3;
-			} else if (currentHealthPercent < .25f) {
-				healthColor = 4;
+			SteveDriver.batch.begin();
+			guiTextures.get(0).draw(SteveDriver.batch);
+			guiTextures.get(5).draw(SteveDriver.batch);
+			for (int i = 0; i < healthWidth; i++) {
+				guiTextures.get(1).setPosition(3 * SteveDriver.TEXTURE_SIZE * (i - 2), height / 2 -200);
+				guiTextures.get(1).draw(SteveDriver.batch);
 			}
+		
+			int finalPixel = (int) (healthWidth * currentHealthPercent);
+		
+			for (int i = 0; i < finalPixel + 1; i++) {
+				if (currentHealthPercent > .5f) {
+					healthColor = 2;
+				} else if (currentHealthPercent < .5f && currentHealthPercent > .25f) {
+					healthColor = 3;
+				} else if (currentHealthPercent < .25f) {
+					healthColor = 4;
+				}
 			
-			if (i == finalPixel) {
-				int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
-				endHP.setRegionX(15 * SteveDriver.TEXTURE_SIZE - (3  * SteveDriver.TEXTURE_SIZE * healthColor));
-				endHP.setRegionWidth(spriteSubSectionWidth);
-				endHP.setBounds(3f * SteveDriver.TEXTURE_SIZE * (i - 2f), height / 2f - 200f, spriteSubSectionWidth, 4f * SteveDriver.TEXTURE_SIZE);
-				endHP.draw(SteveDriver.batch);
-			} else {
-				guiTextures.get(healthColor).setPosition(3f * SteveDriver.TEXTURE_SIZE * (i - 2), height/2 - 200);
-				guiTextures.get(healthColor).draw(SteveDriver.batch);
+				if (i == finalPixel) {
+					int spriteSubSectionWidth = (int) (spriteWidth * ((currentHealthPercent * 100) % 25) / 25);
+					endHP.setRegionX(15 * SteveDriver.TEXTURE_SIZE - (3  * SteveDriver.TEXTURE_SIZE * healthColor));
+					endHP.setRegionWidth(spriteSubSectionWidth);
+					endHP.setBounds(3f * SteveDriver.TEXTURE_SIZE * (i - 2f), height / 2f - 200f, spriteSubSectionWidth, 4f * SteveDriver.TEXTURE_SIZE);
+					endHP.draw(SteveDriver.batch);
+				} else {
+					guiTextures.get(healthColor).setPosition(3f * SteveDriver.TEXTURE_SIZE * (i - 2), height/2 - 200);
+					guiTextures.get(healthColor).draw(SteveDriver.batch);
+				}
 			}
-		}
 		
-		SteveDriver.batch.end();
+			SteveDriver.batch.end();
+		}
 	}
 }
