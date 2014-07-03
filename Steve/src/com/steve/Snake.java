@@ -298,7 +298,8 @@ public class Snake {
 						SteveDriver.field.destroyBlocker(x, y);
 						return false;
 					}
-					blockerCollide.play();
+					if(SteveDriver.prefs.getBoolean("sfx", true))
+						blockerCollide.play();
 					kill(WHY_DIED.blocker); //Collide with wall death
 					return true;
 				}

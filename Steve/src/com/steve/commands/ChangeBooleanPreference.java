@@ -1,8 +1,10 @@
 package com.steve.commands;
 
+
 import com.steve.Button;
 import com.steve.ICommand;
 import com.steve.SteveDriver;
+import com.steve.TextButton;
 
 public class ChangeBooleanPreference implements ICommand{
 	String variable;

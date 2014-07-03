@@ -75,14 +75,29 @@ public class Weapon extends Sprite{
 		float deltaX = this.getX() - target.getXPosition();
 		float deltaY = this.getY() - target.getYPosition();
 		
-		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaY, deltaX);
+		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(3, 4));
+		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(-3, 4));
+		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(-3, -4));
+		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(3, -4));
+		
+		int degrees = (int)(MathUtils.radiansToDegrees * MathUtils.atan2(deltaY, deltaX));
+		//System.out.println("degrees: " + degrees);
+		
+		//this turns our degrees into a positive number from 0-359
 		degrees += 90;
+		//this is to return degrees to be within 0-359
+		//degrees %= 360;
+		//this is for the image offset rotation
+		//degrees += 90;
+		//this is to return degrees to be within 0-359
+		//degrees %= 360;
 		
-		float deltaPositiveDegrees = (degrees - this.getRotation() + 360)%360;
-		float deltaNegativeDegrees = (this.getRotation() - degrees + 360)%360;
 		
+		float deltaPositiveDegrees = Math.abs(degrees - this.getRotation() + 360)%360;
+		float deltaNegativeDegrees = Math.abs(this.getRotation() - degrees + 360)%360;
+	
 		if(deltaPositiveDegrees < deltaNegativeDegrees){
-			if(Math.abs(deltaPositiveDegrees) < 3)
+			if((deltaPositiveDegrees) < 3)
 				this.isAimed = true;
 			else{
 				this.isAimed = false;
@@ -90,7 +105,7 @@ public class Weapon extends Sprite{
 			}
 		}
 		else{
-			if(Math.abs(deltaNegativeDegrees) < 3){
+			if((deltaNegativeDegrees) < 3){
 				this.isAimed = true;
 			}
 			else{
@@ -98,6 +113,9 @@ public class Weapon extends Sprite{
 				this.setRotation(((this.getRotation() +357)%360));
 			}
 		}
+		
+
+		System.out.println("");
 	}
 	
 	protected void shoot(){

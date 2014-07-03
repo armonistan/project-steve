@@ -15,7 +15,8 @@ public class GatlingGunPickUp extends Pickup{
 	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
-		pickupSound.play();
+		if(SteveDriver.prefs.getBoolean("sfx", true))
+			pickupSound.play();
 		snake.mountUpgrade(0);
 	}
 }

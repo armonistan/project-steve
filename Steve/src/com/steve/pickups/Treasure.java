@@ -16,7 +16,8 @@ public class Treasure extends Pickup {
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.addTreasure(1);
-		pickupSound.play();
+		if(SteveDriver.prefs.getBoolean("sfx", true))
+			pickupSound.play();
 		SteveDriver.summary.appleScore += points;
 	}
 }

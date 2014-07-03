@@ -575,7 +575,7 @@ public class Field {
 				SteveDriver.tutorial.endGameTutorial();
 			}
 		}
-		System.out.println(SteveDriver.prefs.getBoolean("canGoToSpace", false));
+		//System.out.println(SteveDriver.prefs.getBoolean("canGoToSpace", false));
 		
 	
 		if(SteveDriver.cyborgBossActivate){

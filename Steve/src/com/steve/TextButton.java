@@ -20,4 +20,8 @@ public class TextButton extends Button {
 	public void setText(String t) {
 		text = t;
 	}
+	
+	public String getText(){
+		return text;
+	}
 }

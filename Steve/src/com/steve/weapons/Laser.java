@@ -27,13 +27,17 @@ public class Laser extends Weapon{
 		float deltaX = this.getY() - target.getYPosition();
 				
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
+		System.out.println("shoot: " + degrees);
 		degrees += 180;
+		
 		
 		SnakeLaser temp = new SnakeLaser(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
 		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 		SteveDriver.field.addProjectile(temp);
-		int shootSoundInt = SteveDriver.random.nextInt(3)+1;
+		int shootSoundInt = -1;
+		if(SteveDriver.prefs.getBoolean("sfx", true))
+			shootSoundInt = SteveDriver.random.nextInt(3)+1;
 		switch(shootSoundInt){
 			case 1:
 				shootSound1.play(1f, 1, 0);

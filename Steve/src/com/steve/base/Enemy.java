@@ -205,7 +205,8 @@ public class Enemy {
 	
 	public void kill() {
 		health = 0f;
-		enemyDeath.play();
+		if(SteveDriver.prefs.getBoolean("sfx", true))
+			enemyDeath.play();
 		SteveDriver.field.enemiesToRemove.add(this);
 		if (treasureAmount != 0) {
 			SteveDriver.snake.addTreasure(treasureAmount);

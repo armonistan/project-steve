@@ -16,7 +16,8 @@ public class WeaponUpgrade extends Pickup {
 		super.consume(snake);
 		int index = snake.getUpgradableWeapon();
 		if(index != -1){
-			pickupSound.play();
+			if(SteveDriver.prefs.getBoolean("sfx", true))
+				pickupSound.play();
 			snake.getWeapons().get(index).upgrade();
 		}
 	}

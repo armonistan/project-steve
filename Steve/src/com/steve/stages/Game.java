@@ -22,11 +22,17 @@ public class Game {
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 8, 4, new ChangeStage(STAGE_TYPE.MENU), "Menu");
 	private TextButton store = new TextButton(4 * SteveDriver.TEXTURE_SIZE * -1,
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 8 * SteveDriver.TEXTURE_SIZE, 8, 4, new KillSnake(), "Store");
+	private TextButton sfx = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1+200,
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("sfx"), "SFX");
+
 	
 	public Game() {
 		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();
 		temp.setButton(music);
+		ChangeBooleanPreference temp2 = (ChangeBooleanPreference)sfx.getCommand();
+		temp2.setButton(sfx);
 		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
+		sfx.setStatus((SteveDriver.prefs.getBoolean("sfx")) ? 1 : 0);
 	}
 	
 	public void render() {		
@@ -95,6 +101,8 @@ public class Game {
 		pause.render();
 		music.update();
 		music.render();
+		sfx.update();
+		sfx.render();
 		menu.update();
 		menu.render();
 		store.update();

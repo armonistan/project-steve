@@ -24,6 +24,8 @@ public class Menu {
 	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_SIZE, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ExitGame(), "Exit");
 	
 	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("music"), "Music");
+	TextButton sfx = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1+200, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("sfx"), "SFX");
+	
 	
 	public MenuSnake snake;
 	public MenuField field;
@@ -35,8 +37,11 @@ public class Menu {
 		
 		ChangeBooleanPreference temp = (ChangeBooleanPreference)music.getCommand();
 		temp.setButton(music);
+		ChangeBooleanPreference temp2 = (ChangeBooleanPreference)sfx.getCommand();
+		temp2.setButton(sfx);
 		music.setStatus((SteveDriver.prefs.getBoolean("music")) ? 1 : 0);
-
+		sfx.setStatus((SteveDriver.prefs.getBoolean("sfx")) ? 1 : 0);
+		
 
 		snake = new MenuSnake();
 	}
@@ -94,6 +99,10 @@ public class Menu {
 		
 		music.update();
 		music.render();
+		
+		sfx.update();
+		sfx.render();
+		
 		SteveDriver.batch.end();
 	}
 }
