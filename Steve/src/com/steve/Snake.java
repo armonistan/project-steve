@@ -25,7 +25,7 @@ import java.util.*;
 public class Snake {
 	protected ArrayList<Sprite> segments;
 	protected ArrayList<Weapon> weapons;
-	private int maxSegments = 4;
+	private int maxSegments = 12;
 	
 	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
 	private final int TILE_WIDTH = SteveDriver.TEXTURE_SIZE;
