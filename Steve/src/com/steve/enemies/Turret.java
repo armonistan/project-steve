@@ -38,9 +38,9 @@ public class Turret extends Enemy{
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 		degrees += 90;
 		
-		float deltaPositiveDegrees = (degrees - this.avatar.getRotation() + 360)%360;
-		float deltaNegativeDegrees = (this.avatar.getRotation() - degrees + 360)%360;
-		
+		float deltaPositiveDegrees = Math.abs(degrees - this.avatar.getRotation() + 360)%360;
+		float deltaNegativeDegrees = Math.abs(this.avatar.getRotation() - degrees + 360)%360;
+	
 		if(deltaPositiveDegrees < deltaNegativeDegrees){
 			if(Math.abs(deltaPositiveDegrees) < 3)
 				this.isAimed = true;

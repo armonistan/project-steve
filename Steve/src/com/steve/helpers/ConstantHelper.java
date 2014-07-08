@@ -39,8 +39,8 @@ public class ConstantHelper {
 		addToConstants("robot", 0f);
 		addToConstants("hitpoints", 1.0f);
 		addToConstants("hungerRate", 1.0f);
-		addToConstants("startLength", 0f);
-		addToConstants("maxLength", 10f);
+		addToConstants("startLength", 3f);
+		addToConstants("maxLength", 6f);//to be balanced
 		addToConstants("mainGun", 0f);
 		addToConstants("fireRate", 1.0f);
 		addToConstants("fireRange", 1.0f);
