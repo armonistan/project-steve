@@ -83,15 +83,9 @@ public class Weapon extends Sprite{
 		int degrees = (int)(MathUtils.radiansToDegrees * MathUtils.atan2(deltaY, deltaX));
 		//System.out.println("degrees: " + degrees);
 		
-		//this turns our degrees into a positive number from 0-359
+		//image offset
 		degrees += 90;
-		//this is to return degrees to be within 0-359
-		//degrees %= 360;
-		//this is for the image offset rotation
-		//degrees += 90;
-		//this is to return degrees to be within 0-359
-		//degrees %= 360;
-		
+
 		
 		float deltaPositiveDegrees = Math.abs(degrees - this.getRotation() + 360)%360;
 		float deltaNegativeDegrees = Math.abs(this.getRotation() - degrees + 360)%360;
@@ -113,9 +107,6 @@ public class Weapon extends Sprite{
 				this.setRotation(((this.getRotation() +357)%360));
 			}
 		}
-		
-
-		System.out.println("");
 	}
 	
 	protected void shoot(){

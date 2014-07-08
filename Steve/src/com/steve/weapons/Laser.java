@@ -27,7 +27,7 @@ public class Laser extends Weapon{
 		float deltaX = this.getY() - target.getYPosition();
 				
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
-		System.out.println("shoot: " + degrees);
+		//System.out.println("shoot: " + degrees);
 		degrees += 180;
 		
 		

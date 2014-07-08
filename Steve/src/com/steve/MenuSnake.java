@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 public class MenuSnake extends Snake {
 	public MenuSnake() {
 		super(100, SteveDriver.TEXTURE_SIZE / 2);
-
 		for (int i = 0; i < 5; i++) {
 			this.addBody();
 			this.mountUpgrade(SteveDriver.random.nextInt(3));

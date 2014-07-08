@@ -51,5 +51,6 @@ public class StoreSnake extends Snake {
 		
 		updateWeapons();
 		updateTimers(Gdx.graphics.getRawDeltaTime());
+		//System.out.println("current: " + segments.size());
 	}
 }
