@@ -14,10 +14,12 @@ public class Summary {
 	Texture diedEnemy;
 	Texture diedStarvation;
 	Texture diedBlocker;
+	Texture background;
 	
 	Sprite diedEnemySprite;
 	Sprite diedStarvationSprite;
 	Sprite diedBlockerSprite;
+	Sprite backgroundSprite;
 	
 	public float appleScore;
 	public float enemyScore;
@@ -44,16 +46,19 @@ public class Summary {
 		diedEnemy = new Texture(Gdx.files.internal("data/diedEnemy.png"));
 		diedStarvation = new Texture(Gdx.files.internal("data/diedStarvation.png"));
 		diedBlocker = new Texture(Gdx.files.internal("data/diedBlocker.png"));
+		background = new Texture(Gdx.files.internal("data/diedBackground.png"));
 		
 		diedEnemySprite = new Sprite(new TextureRegion(diedEnemy, 0f, 0f, 1f, 1f));
-		diedEnemySprite.scale(SteveDriver.guiCamera.viewportWidth / diedEnemySprite.getWidth() - 1f);
+		diedEnemySprite.scale(SteveDriver.guiCamera.viewportHeight / diedEnemySprite.getHeight() - 1f);
 		diedEnemySprite.setPosition(diedEnemySprite.getWidth() / 2 * -1, diedEnemySprite.getHeight() / 2 * -1);
 		diedStarvationSprite = new Sprite(new TextureRegion(diedStarvation, 0f, 0f, 1f, 1f));
-		diedStarvationSprite.scale(SteveDriver.guiCamera.viewportWidth / diedStarvationSprite.getWidth() - 1f);
+		diedStarvationSprite.scale(SteveDriver.guiCamera.viewportHeight / diedStarvationSprite.getHeight() - 1f);
 		diedStarvationSprite.setPosition(diedStarvationSprite.getWidth() / 2 * -1, diedStarvationSprite.getHeight() / 2 * -1);
 		diedBlockerSprite = new Sprite(new TextureRegion(diedBlocker, 0f, 0f, 1f, 1f));
-		diedBlockerSprite.scale(SteveDriver.guiCamera.viewportWidth / diedBlockerSprite.getWidth() - 1f);
+		diedBlockerSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
 		diedBlockerSprite.setPosition(diedBlockerSprite.getWidth() / 2 * -1, diedBlockerSprite.getHeight() / 2 * -1);
+		backgroundSprite = new Sprite(new TextureRegion(background, 0f, 0f, 1f, 1f));
+		backgroundSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
 		
 		appleScore = 0;
 		enemyScore = 0;
@@ -84,6 +89,15 @@ public class Summary {
 	}
 	
 	public void render() {
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
+		
+		SteveDriver.batch.begin();
+		for (int i = 0; i <= backgroundSprite.getWidth(); i += backgroundSprite.getWidth() * backgroundSprite.getScaleX()) {
+			backgroundSprite.setPosition(SteveDriver.guiCamera.viewportWidth * -1 + i, backgroundSprite.getHeight() / 2 * -1);
+			
+			backgroundSprite.draw(SteveDriver.batch);
+		}
+		
 		switch (why) {
 		case blocker:
 			diedBlockerSprite.draw(SteveDriver.batch);
@@ -121,6 +135,8 @@ public class Summary {
 				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_SIZE, 
 				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
+
+		SteveDriver.batch.end();
 		
 		updateCounts();
 	}
