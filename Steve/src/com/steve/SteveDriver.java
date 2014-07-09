@@ -203,9 +203,7 @@ public class SteveDriver implements ApplicationListener {
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
-			batch.begin();
 			summary.render();
-			batch.end();
 			break;
 		case STORE:
 			store.render();
