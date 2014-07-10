@@ -10,7 +10,9 @@ import com.steve.SteveDriver;
 
 public class GUIHelper {
 	
-	private BitmapFont font;
+	private BitmapFont font48;
+	private BitmapFont font32;
+	private BitmapFont activeFont;
 	private BoxSet blackBox;
 	private BoxSet goldBox;
 	private BoxSet redBox;
@@ -53,10 +55,13 @@ public class GUIHelper {
 	}
 	
 	public GUIHelper() {
-		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+		font48 = new BitmapFont(Gdx.files.internal("fonts/fixedsys48.fnt"));
+		font32 = new BitmapFont(Gdx.files.internal("fonts/fixedsys32.fnt"));
 		blackBox = new BoxSet(18, 17);
 		goldBox = new BoxSet(18, 20);
 		redBox = new BoxSet(18, 23);
+		
+		setActiveFont48();
 	}
 	
 	private BoxSet getBox(BoxColors whichBox) {
@@ -71,14 +76,22 @@ public class GUIHelper {
 		return this.blackBox;
 	}
 	
+	public void setActiveFont48() {
+		this.activeFont = font48;
+	}
+	
+	public void setActiveFont32() {
+		this.activeFont = font32;
+	}
+	
 	public void drawText(String message, float x, float y, Color cualColorTienes) {
-		font.setColor(cualColorTienes);
+		activeFont.setColor(cualColorTienes);
 		int lineNumber = 0;
 		
 		for (int i = 0; i < message.length() - 1; ) {
 			int tempEndIndex = message.indexOf("\n", i);
 			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
-			font.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x, y - lineNumber * font.getLineHeight());
+			activeFont.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x, y - lineNumber * activeFont.getLineHeight());
 			
 			i = tempEndIndex + 1;
 			lineNumber++;
@@ -86,13 +99,13 @@ public class GUIHelper {
 	}
 	
 	public void drawTextCentered(String message, float x, float y, Color c) {
-		font.setColor(c);
+		activeFont.setColor(c);
 		int lineNumber = 0;
 		
 		for (int i = 0; i < message.length() - 1; ) {
 			int tempEndIndex = message.indexOf("\n", i);
 			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
-			font.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (font.getBounds(message.substring(i, tempEndIndex)).width/2), y - lineNumber * font.getLineHeight());
+			activeFont.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (activeFont.getBounds(message.substring(i, tempEndIndex)).width/2), y - lineNumber * activeFont.getLineHeight());
 			
 			i = tempEndIndex + 1;
 			lineNumber++;

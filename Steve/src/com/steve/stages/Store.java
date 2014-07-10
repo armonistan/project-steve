@@ -236,8 +236,10 @@ public class Store {
 
 	public void renderButtons() {
 		infoBox.setText(description);
+		SteveDriver.guiHelper.setActiveFont32();
 		infoBox.update();
 		infoBox.render();
+		SteveDriver.guiHelper.setActiveFont48();
 		buyUpgrade.update();
 		buyUpgrade.render();
 		returnToGame.update();
