@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.enemies.Ring;
@@ -57,43 +58,51 @@ public class Generator {
 
 	public void update(){
 		if(this.enemyGenerationCounter > this.enemyGenerationTime){
-			generateEnemy();
-			this.enemyGenerationCounter = 0;
+			if(generateEnemy())
+				this.enemyGenerationCounter = 0;
 		}
 		else
 			enemyGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
 		if(this.pickUpGenerationCounter > this.pickUpGenerationTime){
-			generatePickUp();
-			this.pickUpGenerationCounter = 0;
+			if(generatePickUp())
+				this.pickUpGenerationCounter = 0;
 		}
 		else
 			pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
 		if(this.appleGenerationCounter > this.appleGenerationTime){
-			generateApple();
-			this.appleGenerationCounter = 0;
+			if(generateApple())
+				this.appleGenerationCounter = 0;
 		}
 		else
 			appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
+
 	}
 	
-	private void generateEnemy(){
-		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
-
+	private boolean generateEnemy(){
+		//our center would like to fix
+		Vector3 cameraPosition = SteveDriver.camera.position;
+		
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		//for the x axis top and bottom
+		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
+		//for the x axis right
+		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the x axis left
+		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis top
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis bot
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.25f;
+		//for the y axis right and left
+		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -128,41 +137,33 @@ public class Generator {
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
 		
 		if (locationID < 3) {
-			if(SteveDriver.random.nextInt(10) <=  locationID){
-				this.generateRing(xPos, yPos);
-				return;
+			if(SteveDriver.random.nextInt(100) <= locationID){
+				return this.generateRing(xPos, yPos);
 			}
 	
 			switch(enemyType){
 			case 0:
-				this.generateSlug(xPos, yPos);
-				break;
+				return this.generateSlug(xPos, yPos);
 			case 1:
-				this.generateTank(xPos, yPos);
-				break;
+				return this.generateTank(xPos, yPos);
 			case 2:
-				this.generateBrute(xPos, yPos);
-				break;
+				return this.generateBrute(xPos, yPos);
 			case 3:
-				this.generateAntiSpiral(xPos, yPos);
-				break;
+				return this.generateAntiSpiral(xPos, yPos);
 			case 4:
-				this.generateFlyer(xPos, yPos);
-				break;
+				return this.generateFlyer(xPos, yPos);
 			case 5:
-				this.generateTurret(xPos, yPos);
-				break;
+				return this.generateTurret(xPos, yPos);
 			case 6:
-				this.generateSpiral(xPos, yPos);
-				break;
+				return this.generateSpiral(xPos, yPos);
 			case 7:
-				this.generateHomaHawk(xPos, yPos);
-				break;
+				return this.generateHomaHawk(xPos, yPos);
 			case 8:
-				this.generateRhino(xPos, yPos);
-				break;
+				return this.generateRhino(xPos, yPos);
 			}
 		}
+		
+		return true;
 	}
 	
 	public boolean generateEnemyTutorial(){
@@ -213,23 +214,30 @@ public class Generator {
 	
 		return generateSlugTutorial(xPos, yPos);
 	}
-	
-	public void generatePickUp(){
-		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 
+	public boolean generatePickUp(){
+		//our center would like to fix
+		Vector3 cameraPosition = SteveDriver.camera.position;
+		
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		//for the x axis top and bottom
+		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
+		//for the x axis right
+		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the x axis left
+		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis top
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis bot
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.25f;
+		//for the y axis right and left
+		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -269,15 +277,17 @@ public class Generator {
 			switch(pickUpType){
 				case 1:
 				if(SteveDriver.snake.hasWeaponSpace())
-					this.generateUpgrade(xPos, yPos, r.nextInt(3));
+					return this.generateUpgrade(xPos, yPos, r.nextInt(3));
 				break;
 			
 				case 2:
 				if(SteveDriver.snake.hasWeaponToUpgrade())
-					this.generateWeaponUpgrade(xPos, yPos);
+					return this.generateWeaponUpgrade(xPos, yPos);
 				break;
 			}
 		}
+		
+		return true;
 	}
 		
 	public boolean generatePickUpTutorial(int type){
@@ -337,16 +347,22 @@ public class Generator {
 		return false;
 	}
 	
-	public void generateRing(float xPos, float yPos){
+	public boolean generateRing(float xPos, float yPos){
 		Ring r = new Ring(xPos, yPos);
 		if(isOccupied(r.getRectangle()))
 			SteveDriver.field.enemies.add(r);	
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateSlug(float xPos, float yPos){
+	public boolean generateSlug(float xPos, float yPos){
 		Slug s = new Slug(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
+		else
+			return false;
+		return true;
 	}
 	
 	public boolean generateSlugTutorial(float xPos, float yPos){
@@ -359,64 +375,92 @@ public class Generator {
 		return false;
 	}
 	
-	public void generateBrute(float xPos, float yPos){
+	public boolean generateBrute(float xPos, float yPos){
 		Brute b = new Brute(xPos, yPos);
 		if(isOccupied(b.getRectangle()))
 			SteveDriver.field.enemies.add(b);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateAntiSpiral(float xPos, float yPos){
+	public boolean generateAntiSpiral(float xPos, float yPos){
 		Spring s = new Spring(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateSpiral(float xPos, float yPos){
+	public boolean generateSpiral(float xPos, float yPos){
 		Narwhal s = new Narwhal(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateHomaHawk(float xPos, float yPos){
+	public boolean generateHomaHawk(float xPos, float yPos){
 		HomaHawk s = new HomaHawk(xPos, yPos);
 		if(isOccupied(s.getRectangle()))
 			SteveDriver.field.enemies.add(s);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateTank(float xPos, float yPos){
+	public boolean generateTank(float xPos, float yPos){
 		Tank t = new Tank(xPos, yPos);
 		if(isOccupied(t.getRectangle()))
 			SteveDriver.field.enemies.add(t);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateFlyer(float xPos, float yPos){
+	public boolean generateFlyer(float xPos, float yPos){
 		Flyer f = new Flyer(xPos, yPos);
 		if(isOccupied(f.getRectangle()))
 			SteveDriver.field.enemies.add(f);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateTurret(float xPos, float yPos){
+	public boolean generateTurret(float xPos, float yPos){
 		Turret t = new Turret(xPos, yPos);
 		if(isOccupied(t.getRectangle()))
 			SteveDriver.field.enemies.add(t);
+		else
+			return false;
+		return true;
 	}
 	
-	public void generateApple(){
-		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
-
+	public boolean generateApple(){
+		//our center would like to fix
+		Vector3 cameraPosition = SteveDriver.camera.position;
+		
 		//using pixel
-		float xPosTopBot = snakePosition.x - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
-		float xPosRight = snakePosition.x + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float xPosLeft = snakePosition.x - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosTop = snakePosition.y + SteveDriver.constants.get("screenHeight") * 2 * .5f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight") * 2 * .5f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f;
-		float yPosRightLeft = snakePosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .25f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight") * 2 * .5f;
+		//for the x axis top and bottom
+		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
+		//for the x axis right
+		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the x axis left
+		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis top
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .25f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		//for the y axis bot
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.25f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.25f;
+		//for the y axis right and left
+		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight");
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -451,15 +495,21 @@ public class Generator {
 			if(isOccupied(a.getRectangle())) {
 				Field.pickups.add(a);	
 			}
+			else
+				return false;
 		}
+		return true;
 	}
 	
-	public void generateRhino(float xPos, float yPos) {
+	public boolean generateRhino(float xPos, float yPos) {
 		Rhino r = new Rhino(xPos, yPos);
 		
 		if (isOccupied(r.getRectangle())) {
 			SteveDriver.field.enemies.add(r);
 		}
+		else
+			return false;
+		return true;
 	}
 	
 	public boolean generateAppleTutorial (){
@@ -483,25 +533,32 @@ public class Generator {
 		return false;
 	}
 	
-	public void generateUpgrade(float xPos, float yPos, int upgradeType){
+	public boolean generateUpgrade(float xPos, float yPos, int upgradeType){
 		switch(upgradeType){
 			case GATLING_GUN_ID:
 				GatlingGunPickUp g = new GatlingGunPickUp(xPos, yPos);
 				if(isOccupied(g.getRectangle())){
 					Field.pickups.add(g);
 				}
-				break;
+				else
+					return false;
+				return true;
 			case LASER_ID:
 				LaserPickUp l = new LaserPickUp(xPos, yPos);
 				if(isOccupied(l.getRectangle()))
-					Field.pickups.add(l);				
-				break;
+					Field.pickups.add(l);
+				else
+					return false;
+				return true;
 			case SPECIALIST_ID:
 				SpecialistPickUp s = new SpecialistPickUp(xPos, yPos);
 				if(isOccupied(s.getRectangle()))
 					Field.pickups.add(s);				
-				break;
+				else
+					return false;
+				return true;
 		}
+		return true;
 	}
 	
 	public boolean generateUpgradeTutorial(float xPos, float yPos, int upgradeType){
@@ -533,11 +590,14 @@ public class Generator {
 		return false;
 	}
 	
-	public void generateWeaponUpgrade(float xPos, float yPos){
+	public boolean generateWeaponUpgrade(float xPos, float yPos){
 		WeaponUpgrade wU = new WeaponUpgrade(xPos, yPos);
 		if(isOccupied(wU.getRectangle())){
 			Field.pickups.add(wU);
 		}
+		else
+			return false;
+		return true;
 	}
 	
 	public boolean generateWeaponUpgradeTutorial(float xPos, float yPos){
