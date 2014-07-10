@@ -13,8 +13,7 @@ public class BossSummon extends Pickup {
 	
 	public BossSummon(float x, float y, int type) {
 		super(x, y, 8 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 0);
-		int soundDecider = SteveDriver.random.nextInt(3)+1;
-		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/eatApple" + soundDecider + ".ogg"));
+		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/bossSummon"  + ".ogg"));
 		this.type = type;
 	}
 	
@@ -33,8 +32,7 @@ public class BossSummon extends Pickup {
 				SteveDriver.field.enemies.add(new Razorbull(this.getX()/SteveDriver.TEXTURE_SIZE, this.getY()/SteveDriver.TEXTURE_SIZE+3));
 			break;
 		}
-		
-		//pickupSound.play();
-
+		if(SteveDriver.prefs.getBoolean("sfx", true))
+			pickupSound.play();
 	}
 }

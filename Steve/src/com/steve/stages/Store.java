@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,6 +50,8 @@ public class Store {
 	private int[] initCurrentTier;
 	private int initMoney;
 	private int initTreasure;
+	
+	private Sound purchaseSound;
 
 	public Store() {
 		description = "";
@@ -103,6 +106,8 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 
+		purchaseSound = Gdx.audio.newSound(Gdx.files.internal("audio/storePurchase" + ".ogg"));
+		
 		initializeUpgrades();
 
 		field = new StoreField();
@@ -299,6 +304,8 @@ public class Store {
 			int tryBuy = selectedUpgrade.trySpendCurrency();
 
 			if (tryBuy == 0) {
+				if(SteveDriver.prefs.getBoolean("sfx", true))
+					purchaseSound.play();
 				selectedUpgrade.activateUpgrade();
 				description = "Upgrade activated!";
 			}
