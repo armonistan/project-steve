@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.steve.SteveDriver;
+import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
 import com.steve.base.Projectile;
@@ -46,8 +47,8 @@ public class Field {
 	public LinkedList<Enemy> enemiesToRemove;
 	public LinkedList<Enemy> enemiesToAdd;
 	
-	public Cell glue;
-	public StaticTiledMapTile glueTile;
+	public Cell[] glues;
+	public StaticTiledMapTile[] glueTiles;
 	
 	protected ArrayList<Projectile> projectiles;
 	public LinkedList<Projectile> projectilesToRemove;
@@ -239,10 +240,16 @@ public class Field {
 		blockers = (TiledMapTileLayer)map.getLayers().get(1);
 		background = (TiledMapTileLayer)map.getLayers().get(0);
 		
-		glue = new Cell();
-		glueTile = new StaticTiledMapTile(this.splitTiles[5][8]); 
-		glueTile.setId(100);
-		glue.setTile(glueTile);
+		glues = new Cell[6];
+		glueTiles = new StaticTiledMapTile[6];
+		
+		for (int i = 0; i < 6; i++) {
+			glues[i] = new Cell();
+			glueTiles[i] = new StaticTiledMapTile(this.splitTiles[9][11 + i]); 
+			glueTiles[i].setId(100);
+			glues[i].setTile(glueTiles[i]);
+		}
+		
 		
 		Field.pickups = new LinkedList<Pickup>();
 		Field.pickupsToRemove = new LinkedList<Pickup>();
@@ -846,7 +853,20 @@ public class Field {
 	}
 	
 	public void setGlueTile(int x, int y) {
-		background.setCell(x, y, glue);
+		int ring = checkRing(x, y);
+		
+		if (SteveDriver.stage == STAGE_TYPE.STORE) {			
+			background.setCell(x, y, glues[0]);
+		}
+		
+		//If not space
+		else if (ring != 3) {
+			if (SteveDriver.constants.get("candyZone") != 0f) {
+				ring += 3;
+			}
+			
+			background.setCell(x, y, glues[ring]);
+		}
 	}
 	
 	public boolean checkGlueTile(int x, int y) {
