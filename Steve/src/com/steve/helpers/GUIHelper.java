@@ -12,7 +12,7 @@ public class GUIHelper {
 	
 	private BitmapFont font48;
 	private BitmapFont font32;
-	private BitmapFont activeFont;
+	public BitmapFont activeFont;
 	private BoxSet blackBox;
 	private BoxSet goldBox;
 	private BoxSet redBox;

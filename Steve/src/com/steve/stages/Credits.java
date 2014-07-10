@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
+import com.steve.helpers.GUIHelper.BoxColors;
 
 public class Credits {
 	
@@ -17,6 +18,15 @@ public class Credits {
 	
 	public boolean showingAds;
 	
+	private String[] lines = {"Emberware Team:",
+			"Armon Nayeraini",
+			"David \"Steak\" Campbell",
+			"Daniel Pumford",
+			"Riley Turben",
+			"Alyssa Draper",
+			"James Green",
+			"Tyler Ferguson"};
+	
 	public Credits() {
 		appleScore = 0;
 		enemyScore = 0;
@@ -29,17 +39,24 @@ public class Credits {
 	}
 	
 	public void render() {
+		SteveDriver.menu.drawMenuField();
+
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
+		SteveDriver.batch.begin();
+		SteveDriver.menu.logo.draw(SteveDriver.batch);
+		
 		backButton.update();
 		backButton.render();
 		
-		SteveDriver.guiHelper.drawTextCentered("Armon", 
-				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_SIZE, 
-				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE,
-				Color.BLACK);
+		SteveDriver.guiHelper.drawBox(-1 * 18 * SteveDriver.TEXTURE_SIZE / 2, 7 * SteveDriver.TEXTURE_SIZE, 18, 18, BoxColors.GOLD);
 		
-		SteveDriver.guiHelper.drawTextCentered("Meatspin?", 
-				SteveDriver.guiCamera.position.x + 1 * SteveDriver.TEXTURE_SIZE, 
-				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_SIZE,
-				Color.BLACK);
+		for (int i = 0; i < lines.length; i++) {
+			SteveDriver.guiHelper.drawTextCentered(lines[i], 
+					SteveDriver.guiCamera.position.x + 0 * SteveDriver.TEXTURE_SIZE, 
+					SteveDriver.guiCamera.position.y + (lines.length / 2 - i - 1) * 2 * SteveDriver.TEXTURE_SIZE,
+					Color.BLACK);
+		}
+
+		SteveDriver.batch.end();
 	}
 }

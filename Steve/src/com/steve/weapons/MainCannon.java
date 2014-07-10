@@ -63,7 +63,10 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
-				this.cannonSound.play();
+				
+				if (SteveDriver.prefs.getBoolean("sfx", true)) {
+					this.cannonSound.play();
+				}
 				
 				shootCounter = 0;
 	}
@@ -86,7 +89,10 @@ public class MainCannon extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				temp2.setDirection(MathUtils.cosDeg(degrees+10), MathUtils.sinDeg(degrees+10));
 				temp3.setDirection(MathUtils.cosDeg(degrees-10), MathUtils.sinDeg(degrees-10));
-				this.cannonSound.play();
+				
+				if (SteveDriver.prefs.getBoolean("sfx", true)) {
+					this.cannonSound.play();
+				}
 				
 				shootCounter = 0;
 	}
@@ -103,7 +109,10 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
-				gausSound.play();
+				
+				if (SteveDriver.prefs.getBoolean("sfx", true)) {
+					gausSound.play();
+				}
 				
 				shootCounter = 0;
 	}
@@ -123,7 +132,10 @@ public class MainCannon extends Weapon{
 				
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
-				this.rocketSound.play();
+				
+				if (SteveDriver.prefs.getBoolean("sfx", true)) {
+					this.rocketSound.play();
+				}
 				
 				if(barrageCounter < 3){
 					barrageCounter++;

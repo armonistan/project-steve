@@ -47,31 +47,7 @@ public class Menu {
 	}
 	
 	public void render() {
-		if (field != SteveDriver.field || field == null) {
-			field = new MenuField();
-			SteveDriver.field = field;
-			
-			SteveDriver.camera.position.x = snake.getHeadPosition().x;
-			SteveDriver.camera.position.y = snake.getHeadPosition().y;
-		}
-		
-		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.01f);
-		SteveDriver.camera.position.x = test.x;
-		SteveDriver.camera.position.y = test.y;
-		SteveDriver.camera.update();
-		
-		SteveDriver.guiCamera.position.x = 0;
-		SteveDriver.guiCamera.position.y = 0;
-		SteveDriver.guiCamera.update();
-		
-		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
-		SteveDriver.batch.begin();
-		field.update();
-		field.drawBelowSnake();
-		snake.update();
-		snake.draw();
-		field.drawAboveSnake();
-		SteveDriver.batch.end();
+		drawMenuField();
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		SteveDriver.batch.begin();
@@ -103,6 +79,34 @@ public class Menu {
 		sfx.update();
 		sfx.render();
 		
+		SteveDriver.batch.end();
+	}
+
+	public void drawMenuField() {
+		if (field != SteveDriver.field || field == null) {
+			field = new MenuField();
+			SteveDriver.field = field;
+			
+			SteveDriver.camera.position.x = snake.getHeadPosition().x;
+			SteveDriver.camera.position.y = snake.getHeadPosition().y;
+		}
+		
+		Vector3 test = SteveDriver.camera.position.lerp(snake.getHeadPosition(), 0.01f);
+		SteveDriver.camera.position.x = test.x;
+		SteveDriver.camera.position.y = test.y;
+		SteveDriver.camera.update();
+		
+		SteveDriver.guiCamera.position.x = 0;
+		SteveDriver.guiCamera.position.y = 0;
+		SteveDriver.guiCamera.update();
+		
+		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
+		SteveDriver.batch.begin();
+		field.update();
+		field.drawBelowSnake();
+		snake.update();
+		snake.draw();
+		field.drawAboveSnake();
 		SteveDriver.batch.end();
 	}
 }
