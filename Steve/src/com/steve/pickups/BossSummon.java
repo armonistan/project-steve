@@ -12,7 +12,7 @@ public class BossSummon extends Pickup {
 	int type;
 	
 	public BossSummon(float x, float y, int type) {
-		super(x, y, 8 * SteveDriver.TEXTURE_SIZE, 4*SteveDriver.TEXTURE_SIZE, 0);
+		super(x, y, 8 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 0);
 		int soundDecider = SteveDriver.random.nextInt(3)+1;
 		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/eatApple" + soundDecider + ".ogg"));
 		this.type = type;

@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
@@ -50,6 +52,16 @@ public class StoreField extends Field {
 		spawnTimer = 0;
 		
 		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
+		
+		glues = new Cell[6];
+		glueTiles = new StaticTiledMapTile[6];
+		
+		for (int i = 0; i < 6; i++) {
+			glues[i] = new Cell();
+			glueTiles[i] = new StaticTiledMapTile(this.splitTiles[9][11 + i]); 
+			glueTiles[i].setId(100);
+			glues[i].setTile(glueTiles[i]);
+		}
 	}
 	
 	@Override

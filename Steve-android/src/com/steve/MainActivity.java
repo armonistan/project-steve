@@ -41,7 +41,7 @@ public class MainActivity extends AndroidApplication implements IActivityRequest
         
         ads = new AdView(this); // Put in your secret key here
         ads.setAdUnitId("ca-app-pub-4539283306007418/2063573887");
-        ads.setAdSize(AdSize.MEDIUM_RECTANGLE);
+        ads.setAdSize(AdSize.SMART_BANNER);
         ads.setVisibility(View.GONE);
         
         RelativeLayout.LayoutParams adParams = 
