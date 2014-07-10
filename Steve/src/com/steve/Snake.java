@@ -291,6 +291,14 @@ public class Snake {
 		SteveDriver.prefs.flush();
 	}
 	
+	public void setMoney(int amount) {
+		money = amount;
+		
+		//TODO: Make this only save when needed.
+		SteveDriver.prefs.putInteger("money", money);
+		SteveDriver.prefs.flush();
+	}
+	
 	public boolean spendMoney(int amount) {
 		if (money >= amount) {
 			money -= amount;

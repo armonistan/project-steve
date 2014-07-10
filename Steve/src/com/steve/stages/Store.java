@@ -119,7 +119,7 @@ public class Store {
 		}
 
 		SteveDriver.snake.addTreasure(initTreasure - SteveDriver.snake.getTreasure());
-		SteveDriver.snake.addMoney(initMoney - SteveDriver.snake.getMoney());
+		SteveDriver.snake.setMoney(initMoney);
 	}
 
 	public void render() {
@@ -831,7 +831,7 @@ public class Store {
 		}
 
 		public void update() {
-			available = ((currentTier[category] == tier) || activated) && (tier < currentTier[0] || category == 0);
+			available = (SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0)) || activated;
 
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}
