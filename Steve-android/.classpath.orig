@@ -7,6 +7,9 @@
 	<classpathentry exported="true" kind="lib" path="/Steve/libs/gdx.jar" sourcepath="/Steve/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+<<<<<<< HEAD
+=======
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+>>>>>>> 9dcfae27e1e6994f69756ee058074b610db65bee
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

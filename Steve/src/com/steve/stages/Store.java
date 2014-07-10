@@ -27,6 +27,7 @@ public class Store {
 	private TextButton returnToGame;
 	private TextButton buyUpgrade;
 	private TextButton resetChoices;
+	private TextButton returnToMenu;
 
 	private StoreField field;
 	public StoreSnake snake;
@@ -72,8 +73,12 @@ public class Store {
 
 		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8)  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
 
+		returnToMenu = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8)  - (screenHeight / 64),
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Menu");
+		
 		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((6 * screenWidth) / 8),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ConfirmUpgrade(this), "Buy!");
@@ -124,7 +129,7 @@ public class Store {
 		}
 
 		SteveDriver.snake.addTreasure(initTreasure - SteveDriver.snake.getTreasure());
-		SteveDriver.snake.addMoney(initMoney - SteveDriver.snake.getMoney());
+		SteveDriver.snake.setMoney(initMoney);
 	}
 
 	public void render() {
@@ -236,8 +241,10 @@ public class Store {
 
 	public void renderButtons() {
 		infoBox.setText(description);
+		SteveDriver.guiHelper.setActiveFont32();
 		infoBox.update();
 		infoBox.render();
+		SteveDriver.guiHelper.setActiveFont48();
 		buyUpgrade.update();
 		buyUpgrade.render();
 		returnToGame.update();
@@ -256,6 +263,8 @@ public class Store {
 		cashTier.render();
 		specialTier.update();
 		specialTier.render();
+		returnToMenu.update();
+		returnToMenu.render();
 
 		for (SpriteButton b : this.upgradeButtons.get(tabIndex)) {
 			b.update();
@@ -838,7 +847,7 @@ public class Store {
 		}
 
 		public void update() {
-			available = ((currentTier[category] == tier) || activated) && (tier < currentTier[0] || category == 0);
+			available = (SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0)) || activated;
 
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}

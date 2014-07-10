@@ -14,7 +14,7 @@ public class Button {
 	int pxHeight;
 	ICommand buttonAction;
 	
-	boolean clicked;
+	static boolean clicked;
 	int status;
 	
 	public Button(float posX, float posY, int width, int height, ICommand action) {
