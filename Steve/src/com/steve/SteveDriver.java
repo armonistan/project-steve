@@ -180,9 +180,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		switch (stage) {
 		case CREDITS:
-			batch.begin();
 			credits.render();
-			batch.end();
 			break;
 		case MENU:
 			SteveDriver.prefs.putBoolean("astroSteve", false);
