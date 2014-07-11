@@ -910,17 +910,6 @@ public class Store {
 
 		public void resetChoice() {
 			SteveDriver.storePrefs.putBoolean(key, initActivated);
-			
-			if (constantName == "cyborg") {
-				SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
-				SteveDriver.prefs.putBoolean("carrierDefeated", false);
-				SteveDriver.prefs.flush();
-			}
-			else if(constantName == "robot"){
-				SteveDriver.prefs.putBoolean("robotBossActivate", false);
-				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
-				SteveDriver.prefs.flush();
-			}
 
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;
