@@ -34,10 +34,7 @@ public class Snake {
 	protected Vector3 headPosition;
 	
 	protected float timeBetweenTurn = 0.4f;
-	private float timeTillStarve;
-	private float hungerPerSecond = 5f;
 	protected float timer = 0;
-	private float hungerTimer = 0;
 	
 	protected float bombsAwayTimer = 5f;
 	protected float bombsAwayTime = 0f;
@@ -77,6 +74,13 @@ public class Snake {
 	Texture nukeExplosion;
 	Sprite nukeExplosionSprite;
 	private float nukeOpacity;
+	
+	//health related stuff
+	private float currentHealth = 100f; //what is modified in damage units
+	private float maxHealth = 100f; //starts out here in damage units
+	private float hungerTime = .1f; //time till next hunger damage in secs
+	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
+	private float hungerDamage = .5f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -251,10 +255,17 @@ public class Snake {
 			this.mountUpgrade(3);
 		}
 		//tier modifier
-		timeTillStarve = 20f + (snakeTier*5f);
 		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
-		timeTillStarve *= SteveDriver.constants.get("hitpoints");
+		//tier modifier hp
+		maxHealth = maxHealth+(snakeTier * (5f));
+		//upgrade modifier hp
+		maxHealth *= SteveDriver.constants.get("hitpoints");
+		//set hp
+		currentHealth = maxHealth;
+		//tier modifier speed
+		timeBetweenTurn = .4f - (snakeTier*.05f);
+		
 		
 		if (jet) {
 			timeBetweenTurn = 0.1f;
@@ -328,8 +339,12 @@ public class Snake {
 		return this.hungerTimer;
 	}
 	
-	public float GetStarveTime() {
-		return this.timeTillStarve;
+	public float getCurrentHealth(){
+		return this.currentHealth;
+	}
+	
+	public float getMaxHealth(){
+		return this.maxHealth;
 	}
 
 	public void update(){
@@ -367,12 +382,30 @@ public class Snake {
 			timer = 0;
 		}
 		
-		if (!endGame && updateStarvation()) {
+		if (!endGame && updateHealth()) {
 			return;
+		}
+		if (!endGame && updateHunger()){
+			;
 		}
 		if(!endGame)
 			updateWeapons();
 		updateTimers(Gdx.graphics.getRawDeltaTime());
+	}
+	
+	private boolean updateHunger(){
+		if(hungerTimer > hungerTime){
+			if(!endGame){
+				currentHealth -= hungerDamage;
+			
+				if (hungerTimer < 0f) {
+					hungerTimer = 0f;
+				}
+			}
+			hungerTimer = 0f;
+		}
+		
+		return true;
 	}
 	
 	public void draw() {
@@ -586,7 +619,7 @@ public class Snake {
 	
 	public void changeHunger(float amount) {
 		if(!endGame){
-			hungerTimer += amount / hungerPerSecond;
+			currentHealth -= amount;
 		
 			if (hungerTimer < 0f) {
 				hungerTimer = 0f;
@@ -767,19 +800,21 @@ public class Snake {
 	}
 
 	
-	private boolean updateStarvation(){
-		if(hungerTimer > timeTillStarve){
+	private boolean updateHealth(){
+		if(currentHealth <= 0){
+			if(SteveDriver.prefs.getBoolean("sfx", true))
+				loseSegment.play();
 			if (segments.size() <= 2) {
 				kill((lastDamageTimer > 0) ? WHY_DIED.enemy : WHY_DIED.starvation); //Either starved, or was clobbered.
 				return true;
 			}
-			if(SteveDriver.prefs.getBoolean("sfx", true))
-				loseSegment.play();
 			segments.remove(segments.size() - 1);
 			if(this.segments.size()-2 < weapons.size()){
 				weapons.remove(weapons.size() - 1);
 			}
-			hungerTimer = 0;
+			
+			currentHealth = maxHealth;
+			hungerTimer = 0f;
 		}
 		
 		return false;
