@@ -232,9 +232,9 @@ public class Store {
 			}
 		}
 		else if (selectedUpgrade != null) {
-			SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name,
+			SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.getName(),
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
-					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)),
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
 					Color.BLACK);
 		}
 		SteveDriver.batch.end();
@@ -323,7 +323,7 @@ public class Store {
 				description = "Not enough cash!";
 			}
 			else if (tryBuy == 2) {
-				description = "Steve must accend to a higher tier first!";
+				description = "Steve must accend to a\nhigher tier first!";
 			}
 			else if (tryBuy == 3) {
 				description = "You already own this.";
@@ -927,9 +927,9 @@ public class Store {
 		}
 
 		public int trySpendCurrency() {
-			if (available) {
+			if ((currentTier[0] > tier) || (category == 0)) {
 				if (!activated) {
-					if ((currentTier[0] > tier) || (category == 0)) {
+					if (available) {
 						if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
 							return 0; //Success
 						}
@@ -938,7 +938,7 @@ public class Store {
 						}
 					}
 					else {
-						return 2; //Insufficient tier
+						return 4; //You can't buy it
 					}
 				}
 				else {
@@ -946,7 +946,7 @@ public class Store {
 				}
 			}
 			else {
-				return 4; //You can't buy it
+				return 2; //Insufficient tier
 			}
 		}
 	}
