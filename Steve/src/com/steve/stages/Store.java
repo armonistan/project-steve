@@ -16,6 +16,7 @@ import com.steve.StoreSnake;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ConfirmUpgrade;
+import com.steve.commands.FromStoreToMenu;
 import com.steve.commands.QueueUpgrade;
 import com.steve.commands.ResetStoreChanges;
 import com.steve.commands.SwitchStoreTab;
@@ -77,7 +78,7 @@ public class Store {
 
 		returnToMenu = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8)  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Menu");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new FromStoreToMenu(), "Menu");
 		
 		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((6 * screenWidth) / 8),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8) - (screenHeight / 64),
@@ -192,7 +193,7 @@ public class Store {
 
 				break;
 				case 1:
-					description = "When the field gets tough, Steve gets \ntougher.";
+					description = "When the field gets tough, Steve \ngets tougher.";
 					SteveDriver.guiHelper.drawTextCentered("Durability Upgrades",
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
@@ -231,9 +232,9 @@ public class Store {
 			}
 		}
 		else if (selectedUpgrade != null) {
-			SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.name,
+			SteveDriver.guiHelper.drawTextCentered(selectedUpgrade.getName(),
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
-					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)),
+					SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
 					Color.BLACK);
 		}
 		SteveDriver.batch.end();
@@ -322,7 +323,7 @@ public class Store {
 				description = "Not enough cash!";
 			}
 			else if (tryBuy == 2) {
-				description = "Steve must accend to a higher tier first!";
+				description = "Steve must accend to a\nhigher tier first!";
 			}
 			else if (tryBuy == 3) {
 				description = "You already own this.";
@@ -480,7 +481,7 @@ public class Store {
 		upgrades.add(new Upgrade("Increase start length",
 				"startLength",
 				"survTier1A",
-				"Give Steve 1 more segments when the round starts",
+				"Give Steve 1 more segments\nwhen the round starts",
 				1f,
 				2500f,
 				0, 2,
@@ -492,7 +493,7 @@ public class Store {
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
 				"survTier1B",
-				"Increase the maximum possible length of Steve by 2.",
+				"Increase the maximum possible\nlength of Steve by 2.",
 				2f,
 				2500f,
 				0, 2,
@@ -504,7 +505,7 @@ public class Store {
 		upgrades.add(new Upgrade("Increase start length",
 				"startLength",
 				"survTier2A",
-				"Give Steve 1 more segments when the round starts",
+				"Give Steve 1 more segments\nwhen the round starts",
 				1f,
 				25000f,
 				1, 2,
@@ -516,7 +517,7 @@ public class Store {
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
 				"survTier2B",
-				"Increase the maximum possible length of Steve by 2.",
+				"Increase the maximum possible\nlength of Steve by 2.",
 				2f,
 				25000f,
 				1, 2,
@@ -528,7 +529,7 @@ public class Store {
 		upgrades.add(new Upgrade("Increase start length",
 				"startLength",
 				"survTier3A",
-				"Give Steve 1 more segments when the round starts",
+				"Give Steve 1 more segments\nwhen the round starts",
 				1f,
 				250000f,
 				2, 2,
@@ -540,7 +541,7 @@ public class Store {
 		upgrades.add(new Upgrade("Max Length Increase",
 				"maxLength",
 				"survTier3B",
-				"Increase the maximum possible length of Steve by 2.",
+				"Increase the maximum possible\nlength of Steve by 2.",
 				2f,
 				250000f,
 				2, 2,
@@ -552,7 +553,7 @@ public class Store {
 		upgrades.add(new Upgrade("Main Gun",
 				"mainGun",
 				"wepTier1",
-				"Steve gains a main cannon on his first segment.",
+				"Steve gains a main cannon\non his first segment.",
 				1f,
 				2500f,
 				0, 3,
@@ -564,7 +565,7 @@ public class Store {
 		upgrades.add(new Upgrade("Fire Rate Increase",
 				"fireRate",
 				"wepTier2A",
-				"Steve gains a 30% fire rate bonus for his main gun,\nand a 15% boost for all other guns.",
+				"Main Gun: 30% fire rate bonus\nOther Guns: 15% fire rate bonus",
 				.15f,
 				25000f,
 				1, 3,
@@ -589,7 +590,7 @@ public class Store {
 		upgrades.add(new Upgrade("Turret Range Increase",
 				"fireRange",
 				"wepTier2B",
-				"Steve gains a 20% range bonus for his main gun,\nand a 10% boost for all other guns.",
+				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
 				.1f,
 				25000f,
 				1, 3,
@@ -613,7 +614,7 @@ public class Store {
 		upgrades.add(new Upgrade("Damage Increase",
 				"fireDamage",
 				"wepTier2C",
-				"Steve gains a 40% damage bonus for his main gun,\nand a 20% boost for all other guns.",
+				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
 				.2f,
 				25000f,
 				1, 3,
@@ -711,7 +712,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
 				"special1",
-				"Steve lays down a trail of glue behind him.",
+				"Steve lays down a trail\nof glue behind him.",
 				1f,
 				1f,
 				(panelX - 32) + ((1 * panelWidth) / 3),
@@ -926,9 +927,9 @@ public class Store {
 		}
 
 		public int trySpendCurrency() {
-			if (available) {
+			if ((currentTier[0] > tier) || (category == 0)) {
 				if (!activated) {
-					if ((currentTier[0] > tier) || (category == 0)) {
+					if (available) {
 						if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
 							return 0; //Success
 						}
@@ -937,7 +938,7 @@ public class Store {
 						}
 					}
 					else {
-						return 2; //Insufficient tier
+						return 4; //You can't buy it
 					}
 				}
 				else {
@@ -945,7 +946,7 @@ public class Store {
 				}
 			}
 			else {
-				return 4; //You can't buy it
+				return 2; //Insufficient tier
 			}
 		}
 	}

@@ -193,7 +193,12 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case MENU:
 			SteveDriver.prefs.putBoolean("astroSteve", false);
+<<<<<<< HEAD
+			SteveDriver.switchTheme();
 			summary.resetSummary();
+			store.saveStoreProgress();
+=======
+>>>>>>> 95b4fa71a60f1cd725cb33e53a617cc48d1491b9
 			menu.render();
 			break;
 		case RESPAWNING:
