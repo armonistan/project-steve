@@ -302,9 +302,9 @@ public class Store {
 
 		if (selectedUpgrade.activated) {
 			description += "\nPurchased!";
-		} else if (!selectedUpgrade.available){
+		} /*else if (!selectedUpgrade.available){
 			description += "\nLocked!";
-		} else {
+		}*/ else {
 			description += "\n$" + (selectedUpgrade.getPrice() * SteveDriver.constants.get("priceModifier"));
 		}
 	}
@@ -929,16 +929,11 @@ public class Store {
 		public int trySpendCurrency() {
 			if ((currentTier[0] > tier) || (category == 0)) {
 				if (!activated) {
-					if (available) {
-						if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
-							return 0; //Success
-						}
-						else {
-							return 1; //Insufficient funds
-						}
+					if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
+						return 0; //Success
 					}
 					else {
-						return 4; //You can't buy it
+						return 1; //Insufficient funds
 					}
 				}
 				else {
@@ -1000,7 +995,12 @@ public class Store {
 		@Override
 		public void resetChoice() {
 			available = initAvailable;
-			super.resetChoice();
+
+			SteveDriver.storePrefs.putBoolean(key + "ACT", initActivated);
+			SteveDriver.storePrefs.putBoolean(key, initAvailable);
+
+			SteveDriver.constants.addToConstants(constantName, initConstantValue);
+			activated = initActivated;
 		}
 
 		@Override
