@@ -6,8 +6,8 @@ import com.steve.SteveDriver.STAGE_TYPE;
 
 public class WrapUpLoading extends ChangeStage implements ICommand {
 
-	public WrapUpLoading() {
-		super(STAGE_TYPE.GAME);
+	public WrapUpLoading(STAGE_TYPE type) {
+		super(type);
 		// TODO Auto-generated constructor stub
 	}
 
