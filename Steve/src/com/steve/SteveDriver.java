@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.steve.helpers.ConstantHelper;
 import com.steve.helpers.GUIHelper;
 import com.steve.stages.Credits;
+import com.steve.stages.EndGame;
 import com.steve.stages.Field;
 import com.steve.stages.Game;
 import com.steve.stages.Loading;
@@ -77,6 +78,7 @@ public class SteveDriver implements ApplicationListener {
 	public static Credits credits;
 	public static Logo logo;
 	public static Loading loading;
+	public static EndGame endGame;
 	
 	public static int mainThemeIndex = 0;
 	public static int spaceThemeIndex = 1;
@@ -99,6 +101,7 @@ public class SteveDriver implements ApplicationListener {
 		CREDITS,
 		GAME,
 		ENDGAME,
+		RESPAWNINGENDGAME,
 		STORE,
 		RESPAWNING,
 		SUMMARY,
@@ -160,7 +163,8 @@ public class SteveDriver implements ApplicationListener {
 		store = new Store();
 		credits = new Credits();
 		logo = new Logo();
-		loading = new Loading();
+		loading = new Loading(STAGE_TYPE.GAME);
+		endGame = new EndGame();
 		
 		summary = new Summary();
 		
@@ -195,9 +199,8 @@ public class SteveDriver implements ApplicationListener {
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
-		case ENDGAME:
+		case RESPAWNINGENDGAME:
 			resetFieldForSpace();
-			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
@@ -217,6 +220,9 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case LOADING:
 			loading.render();
+			break;
+		case ENDGAME:
+			endGame.render();
 			break;
 		}
 
@@ -265,7 +271,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		snake = new Snake(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
-		loading = new Loading();
+		loading = new Loading(STAGE_TYPE.GAME);
 	}
 	
 	public static void resetFieldForSpace(){
@@ -273,7 +279,7 @@ public class SteveDriver implements ApplicationListener {
 		
 		snake = new AstroSteve(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
-		loading = new Loading();		
+		loading = new Loading(STAGE_TYPE.ENDGAME);		
 	}
 	
 	public static void switchTheme(){

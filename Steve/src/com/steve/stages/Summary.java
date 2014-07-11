@@ -80,7 +80,7 @@ public class Summary {
 	
 		spaceButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.guiCamera.position.y + 12 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
-					new ChangeStage(SteveDriver.STAGE_TYPE.ENDGAME), "Fufill your destiny");
+					new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNINGENDGAME), "Fufill your destiny");
 		
 		showingAds = false;
 		SteveDriver.prefs.putBoolean("astroSteve", false);

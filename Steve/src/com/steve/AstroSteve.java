@@ -3,6 +3,8 @@ package com.steve;
 import com.badlogic.gdx.Gdx;
 
 public class AstroSteve extends Snake {
+	private float timeInSpace;
+	
 	public AstroSteve(float x, float y) {
 		super(x,y);
 		xOffSet = 27;
@@ -19,11 +21,22 @@ public class AstroSteve extends Snake {
 		SteveDriver.prefs.putBoolean("astroSteve", true);
 		SteveDriver.prefs.putInteger("themeIndex", 0);
 		SteveDriver.switchTheme();
+		
+		timeInSpace = 5;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
+		if (timeInSpace > 0) {
+			if (inSpace) {
+				timeInSpace -= Gdx.graphics.getRawDeltaTime();
+			}
+		}
+
 		super.update();
+	}
+	
+	public float getTimeInSpace() {
+		return timeInSpace;
 	}
 }
