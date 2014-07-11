@@ -611,6 +611,10 @@ public class Field {
 		if(this.generatorEnabled)
 			this.generator.update();
 		
+		for (Pickup p : pickups) {
+			p.update();
+		}
+		
 		for (Enemy e : enemies) {
 			e.update();
 		}
@@ -666,7 +670,6 @@ public class Field {
 
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
-				p.update();
 				p.draw(SteveDriver.batch, p.getAlpha());
 			}
 			else {
