@@ -492,14 +492,14 @@ public class Generator {
 			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
 		
 		if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
-			System.out.print("Trying: ");
+			//System.out.print("Trying: ");
 			Apple a = new Apple(xPos, yPos);
 			if(isOccupied(a.getRectangle())) {
 				Field.pickups.add(a);
-				System.out.println("success");
+				//System.out.println("success");
 			}
 			else{
-				System.out.println("failed");
+				//System.out.println("failed");
 				return false;
 			}
 		}
