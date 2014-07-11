@@ -1,5 +1,7 @@
 package com.steve.helpers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +18,8 @@ public class GUIHelper {
 	private BoxSet blackBox;
 	private BoxSet goldBox;
 	private BoxSet redBox;
+	
+	private ArrayList<String> tempLines;
 	
 	public enum BoxColors {
 		BLACK, GOLD, RED;
@@ -62,6 +66,8 @@ public class GUIHelper {
 		redBox = new BoxSet(18, 23);
 		
 		setActiveFont48();
+		
+		tempLines = new ArrayList<String>();
 	}
 	
 	private BoxSet getBox(BoxColors whichBox) {
@@ -100,17 +106,23 @@ public class GUIHelper {
 	
 	public void drawTextCentered(String message, float x, float y, Color c) {
 		activeFont.setColor(c);
-		int lineNumber = 0;
 		
 		for (int i = 0; i < message.length() - 1; ) {
 			int tempEndIndex = message.indexOf("\n", i);
 			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
-			activeFont.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (activeFont.getBounds(message.substring(i, tempEndIndex)).width/2), 
-					(y - lineNumber * activeFont.getLineHeight()));
 			
+			tempLines.add(message.substring(i, tempEndIndex));
+
 			i = tempEndIndex + 1;
-			lineNumber++;
 		}
+		
+		for (int l = 0; l < tempLines.size(); l++) {
+			activeFont.draw(SteveDriver.batch, tempLines.get(l),
+					x - (activeFont.getBounds(tempLines.get(l)).width / 2f),
+					y - l * activeFont.getLineHeight() + tempLines.size() * (activeFont.getCapHeight() + activeFont.getLineHeight()) / 4f);
+		}
+		
+		tempLines.clear();
 	}
 	
 	public void drawBox(float x, float y, int width, int height, BoxColors whichBox) {

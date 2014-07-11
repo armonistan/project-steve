@@ -14,11 +14,13 @@ public class Summary {
 	Texture diedEnemy;
 	Texture diedStarvation;
 	Texture diedBlocker;
+	Texture diedSpace;
 	Texture background;
 	
 	Sprite diedEnemySprite;
 	Sprite diedStarvationSprite;
 	Sprite diedBlockerSprite;
+	Sprite diedSpaceSprite;
 	Sprite backgroundSprite;
 	
 	Sprite savingSprite;
@@ -51,6 +53,7 @@ public class Summary {
 		diedEnemy = new Texture(Gdx.files.internal("data/diedEnemy.png"));
 		diedStarvation = new Texture(Gdx.files.internal("data/diedStarvation.png"));
 		diedBlocker = new Texture(Gdx.files.internal("data/diedBlocker.png"));
+		diedSpace = new Texture(Gdx.files.internal("data/diedSpace.png"));
 		background = new Texture(Gdx.files.internal("data/diedBackground.png"));
 		
 		diedEnemySprite = new Sprite(new TextureRegion(diedEnemy, 0f, 0f, 1f, 1f));
@@ -62,6 +65,9 @@ public class Summary {
 		diedBlockerSprite = new Sprite(new TextureRegion(diedBlocker, 0f, 0f, 1f, 1f));
 		diedBlockerSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
 		diedBlockerSprite.setPosition(diedBlockerSprite.getWidth() / 2 * -1, diedBlockerSprite.getHeight() / 2 * -1);
+		diedSpaceSprite = new Sprite(new TextureRegion(diedSpace, 0f, 0f, 1f, 1f));
+		diedSpaceSprite.scale(SteveDriver.guiCamera.viewportWidth / diedSpaceSprite.getWidth() - 1f);
+		diedSpaceSprite.setPosition(diedSpaceSprite.getWidth() / 2 * -1, diedSpaceSprite.getHeight() / 2 * -1);
 		backgroundSprite = new Sprite(new TextureRegion(background, 0f, 0f, 1f, 1f));
 		backgroundSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
 		
@@ -135,6 +141,7 @@ public class Summary {
 		case player:
 			break;
 		case space:
+			diedSpaceSprite.draw(SteveDriver.batch);
 			break;
 		case starvation:
 			diedStarvationSprite.draw(SteveDriver.batch);

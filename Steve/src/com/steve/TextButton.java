@@ -14,7 +14,7 @@ public class TextButton extends Button {
 	@Override
 	public void render() {
 		super.render();
-		SteveDriver.guiHelper.drawTextCentered(text, positionX + width * SteveDriver.TEXTURE_SIZE / 2, positionY - height * SteveDriver.TEXTURE_SIZE / 2 + SteveDriver.guiHelper.activeFont.getCapHeight() / 2, Color.BLACK);
+		SteveDriver.guiHelper.drawTextCentered(text, positionX + width * SteveDriver.TEXTURE_SIZE / 2, positionY - height * SteveDriver.TEXTURE_SIZE / 2, Color.BLACK);
 	}
 	
 	public void setText(String t) {
