@@ -16,6 +16,7 @@ import com.steve.StoreSnake;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.ConfirmUpgrade;
+import com.steve.commands.FromStoreToMenu;
 import com.steve.commands.QueueUpgrade;
 import com.steve.commands.ResetStoreChanges;
 import com.steve.commands.SwitchStoreTab;
@@ -77,7 +78,7 @@ public class Store {
 
 		returnToMenu = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8)  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Menu");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new FromStoreToMenu(), "Menu");
 		
 		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((6 * screenWidth) / 8),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8) - (screenHeight / 64),

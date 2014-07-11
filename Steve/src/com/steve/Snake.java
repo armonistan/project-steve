@@ -316,7 +316,6 @@ public class Snake {
 		if (money >= amount) {
 			money -= amount;
 			SteveDriver.prefs.putInteger("money", money);
-			SteveDriver.prefs.flush();
 			return true;
 		}
 		else {
