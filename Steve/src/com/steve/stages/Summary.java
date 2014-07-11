@@ -21,11 +21,16 @@ public class Summary {
 	Sprite diedBlockerSprite;
 	Sprite backgroundSprite;
 	
+	Sprite savingSprite;
+	
 	public float appleScore;
 	public float enemyScore;
 	
 	private float applePercent;
 	private float enemyPercent;
+	
+	private float savingOpacity;
+	private boolean fading;
 	
 	private TextButton continueButton;
 	private TextButton spaceButton;
@@ -59,6 +64,12 @@ public class Summary {
 		diedBlockerSprite.setPosition(diedBlockerSprite.getWidth() / 2 * -1, diedBlockerSprite.getHeight() / 2 * -1);
 		backgroundSprite = new Sprite(new TextureRegion(background, 0f, 0f, 1f, 1f));
 		backgroundSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
+		
+		savingSprite = new Sprite(new TextureRegion(SteveDriver.atlas, 18 * SteveDriver.TEXTURE_SIZE, 26 * SteveDriver.TEXTURE_SIZE,
+				3 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE));
+
+		savingOpacity = 1f;
+		fading = true;
 		
 		appleScore = 0;
 		enemyScore = 0;
@@ -98,6 +109,22 @@ public class Summary {
 			backgroundSprite.draw(SteveDriver.batch);
 		}
 		
+		if (savingOpacity >= 1f) {
+			fading = true;
+		} else if (savingOpacity <= 0f) {
+			fading = false;
+		}
+		
+		if (fading) {
+			savingOpacity -= Gdx.app.getGraphics().getDeltaTime();
+			if (savingOpacity < 0f) 
+				savingOpacity = 0f;
+		} else {
+			savingOpacity += Gdx.app.getGraphics().getDeltaTime();
+			if (savingOpacity > 1f) 
+				savingOpacity = 1f;
+		}
+		
 		switch (why) {
 		case blocker:
 			diedBlockerSprite.draw(SteveDriver.batch);
@@ -125,16 +152,25 @@ public class Summary {
 			spaceButton.render();
 		}
 		
+		SteveDriver.guiHelper.drawTextCentered("Saving...", 
+				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 6 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
+				Color.BLACK);
+		
+		savingSprite.setPosition(SteveDriver.guiCamera.position.x - 16 * SteveDriver.TEXTURE_SIZE, 
+				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2);
+		
+		savingSprite.draw(SteveDriver.batch, savingOpacity);
 		
 		SteveDriver.guiHelper.drawTextCentered("Apples: $" + Math.round(appleScore * applePercent), 
-				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_SIZE, 
-				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
-				Color.BLACK);
+				SteveDriver.guiCamera.position.x, 
+				SteveDriver.guiCamera.position.y,
+				Color.YELLOW);
 		
 		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyScore * enemyPercent), 
-				SteveDriver.guiCamera.position.x + 14 * SteveDriver.TEXTURE_SIZE, 
-				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
-				Color.BLACK);
+				SteveDriver.guiCamera.position.x, 
+				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE,
+				Color.YELLOW);
 
 		SteveDriver.batch.end();
 		
