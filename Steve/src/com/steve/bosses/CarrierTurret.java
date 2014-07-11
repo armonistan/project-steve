@@ -1,5 +1,6 @@
 package com.steve.bosses;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
@@ -8,8 +9,8 @@ import com.steve.projectiles.Acorn;
 
 public class CarrierTurret extends Enemy{
 	
-	int shootSpeed = 100;
-	int shootCounter = 0;
+	float shootSpeed = .5f;
+	float shootCounter = 0;
 	float range;
 	float damage;//TODO use it?
 	int atlasX;
@@ -68,7 +69,7 @@ public class CarrierTurret extends Enemy{
 		}
 		else
 			this.avatar.setRotation(((this.avatar.getRotation() +359)%360));
-		shootCounter += 1;
+		shootCounter += Gdx.graphics.getRawDeltaTime();
 	}
 	
 	protected boolean isInRange(){
