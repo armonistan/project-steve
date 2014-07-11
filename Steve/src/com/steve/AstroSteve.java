@@ -19,8 +19,7 @@ public class AstroSteve extends Snake {
 		timeBetweenTurn = 0.05f;
 		super.weapons.clear();
 		SteveDriver.prefs.putBoolean("astroSteve", true);
-		SteveDriver.prefs.putInteger("themeIndex", 0);
-		SteveDriver.switchTheme();
+		SteveDriver.setSpaceTheme();
 		
 		timeInSpace = 5;
 	}

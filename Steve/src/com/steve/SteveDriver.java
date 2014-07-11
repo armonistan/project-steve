@@ -93,6 +93,9 @@ public class SteveDriver implements ApplicationListener {
 	public static int numBosses = 2;
 	
 	private static Music music;
+	private static Music mainMusic;
+	private static Music spaceMusic;
+	
 	public static boolean musicPlaying;
 	public static IActivityRequestHandler handler;
 	
@@ -168,7 +171,9 @@ public class SteveDriver implements ApplicationListener {
 		
 		summary = new Summary();
 		
-		music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
+		spaceMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/MainSpace.ogg"));
+		music = mainMusic;
 	}
 
 	@Override
@@ -188,24 +193,25 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case MENU:
 			SteveDriver.prefs.putBoolean("astroSteve", false);
-			SteveDriver.switchTheme();
 			summary.resetSummary();
 			store.saveStoreProgress();
 			menu.render();
 			break;
 		case RESPAWNING:
 			SteveDriver.prefs.putBoolean("astroSteve", false);
-			SteveDriver.switchTheme();
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case RESPAWNINGENDGAME:
+			store.saveStoreProgress();
 			resetFieldForSpace();
+			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
+			resetTheme();
 			summary.render();
 			break;
 		case STORE:
@@ -238,7 +244,7 @@ public class SteveDriver implements ApplicationListener {
 		}
 		else if (prefs.getBoolean("music") && !musicPlaying) {
 			music.setLooping(true);
-			music.setVolume(.4f);
+			music.setVolume(.6f);
 			music.play();
 			musicPlaying = true;
 		}
@@ -284,30 +290,25 @@ public class SteveDriver implements ApplicationListener {
 		loading = new Loading(STAGE_TYPE.ENDGAME);		
 	}
 	
-	public static void switchTheme(){
-		if(prefs.getBoolean("music") && prefs.getInteger("themeIndex", 0) != mainThemeIndex && !prefs.getBoolean("astroSteve", false)){
-			if(music != null)
-				music.stop();
-			music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
-			music.setLooping(true);
-			music.setVolume(.4f);
-			music.play();
-			musicPlaying = true;
-			prefs.putInteger("themeIndex", mainThemeIndex);
-		}
-		else if(prefs.getBoolean("music") && prefs.getInteger("themeIndex", 1) != spaceThemeIndex && prefs.getBoolean("astroSteve", false)){
-			if(music != null)
-				music.stop();
-			music = Gdx.audio.newMusic(Gdx.files.internal("audio/MainSpace.ogg"));
-			music.setLooping(true);
-			music.setVolume(.4f);
-			music.play();
-			musicPlaying = true;
-			prefs.putInteger("themeIndex", spaceThemeIndex);
-		}
-		else if(music != null && !prefs.getBoolean("music")){
+	public static void setSpaceTheme() {
+		if (music != spaceMusic) {
 			music.stop();
-			musicPlaying = false;
+			music = spaceMusic;
+			
+			if (musicPlaying) {
+				music.play();
+			}
+		}
+	}
+	
+	public static void resetTheme() {
+		if (music != mainMusic) {
+			music.stop();
+			music = mainMusic;
+			
+			if (musicPlaying) {
+				music.play();
+			}
 		}
 	}
 }

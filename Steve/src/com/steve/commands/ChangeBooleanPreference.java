@@ -17,8 +17,6 @@ public class ChangeBooleanPreference implements ICommand{
 	@Override
 	public void execute() {
 		SteveDriver.prefs.putBoolean(variable, !SteveDriver.prefs.getBoolean(variable, false));
-		if(variable == "music")
-			SteveDriver.switchTheme();
 		SteveDriver.prefs.flush();
 	}
 	

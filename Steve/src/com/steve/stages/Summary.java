@@ -90,7 +90,7 @@ public class Summary {
 		
 		showingAds = false;
 		SteveDriver.prefs.putBoolean("astroSteve", false);
-		SteveDriver.switchTheme();
+		SteveDriver.resetTheme();
 	}
 	
 	public void resetSummary() {
