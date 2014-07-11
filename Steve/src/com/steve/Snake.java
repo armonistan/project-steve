@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Gdx;
@@ -38,7 +39,7 @@ public class Snake {
 	protected float timer = 0;
 	private float hungerTimer = 0;
 	
-	protected float bombsAwayTimer = 60f;
+	protected float bombsAwayTimer = 5f;
 	protected float bombsAwayTime = 0f;
 	
 	private float lastDamageTimer;
@@ -71,6 +72,10 @@ public class Snake {
 	Sprite helmet;
 	Rectangle tempCollider;
 	
+	Texture nukeExplosion;
+	Sprite nukeExplosionSprite;
+	private float nukeOpacity;
+	
 	public Snake(float x, float y){
 		//create the structure to hold the body
 		segments = new ArrayList<Sprite>();
@@ -80,7 +85,12 @@ public class Snake {
 		nextDirection = SteveDriver.VRIGHT;
 		nextRotation = SteveDriver.RIGHT;
 
+		nukeExplosion = new Texture(Gdx.files.internal("data/nuke.png"));
+		nukeExplosion.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
+		nukeExplosionSprite = new Sprite(new TextureRegion(nukeExplosion, 0f, 0f, 1f, 1f));
+		
+		nukeOpacity = 0f;
 		
 		blockerCollide = Gdx.audio.newSound(Gdx.files.internal("audio/blockerCollide" + ".ogg"));
 		
@@ -363,7 +373,6 @@ public class Snake {
 	}
 	
 	public void draw() {
-		
 		//Draw everything.
 		for (Sprite s : segments) {
 			s.draw(SteveDriver.batch);
@@ -372,6 +381,12 @@ public class Snake {
 			w.draw(SteveDriver.batch);
 		}
 		drawUpgradeImages();
+		
+		if (nukeOpacity > 0f) {
+			nukeExplosionSprite.setPosition(segments.get(0).getX() - 1000, segments.get(0).getY() - 1000);
+			nukeExplosionSprite.setColor(1, 1, 1, nukeOpacity);
+			nukeExplosionSprite.draw(SteveDriver.batch);
+		}
 	}
 
 	private boolean checkCollisions() {
@@ -795,6 +810,10 @@ public class Snake {
 			bombsAwayTime += deltaTime;
 		}
 		
+		if (nukeOpacity > 0f) {
+			nukeOpacity -= deltaTime;
+		}
+		
 		if (lastDamageTimer > 0 && !endGame) {
 			lastDamageTimer -= deltaTime;
 		}
@@ -913,6 +932,8 @@ public class Snake {
 		int explodeDistance = 300 * 300;
 		int x = (int) this.segments.get(0).getX();
 		int y = (int) this.segments.get(0).getY();
+		
+		nukeOpacity = 1f;
 		
 		for (Enemy e : SteveDriver.field.enemies) {
 			if (CollisionHelper.distanceSquared(x, y, e.getXPosition(), e.getYPosition()) < explodeDistance) {
