@@ -33,6 +33,8 @@ public class Summary {
 	
 	private float savingOpacity;
 	private boolean fading;
+	private float savingTime = 2.0f;
+	private float savingTimer = 0f;
 	
 	private TextButton continueButton;
 	private TextButton spaceButton;
@@ -115,9 +117,11 @@ public class Summary {
 			backgroundSprite.draw(SteveDriver.batch);
 		}
 		
-		if (savingOpacity >= 1f) {
+		savingTimer += Gdx.app.getGraphics().getDeltaTime();
+		
+		if (savingOpacity >= 1f && savingTimer < savingTime) {
 			fading = true;
-		} else if (savingOpacity <= 0f) {
+		} else if (savingOpacity <= 0f || savingTimer > savingTime) {
 			fading = false;
 		}
 		
@@ -129,6 +133,11 @@ public class Summary {
 			savingOpacity += Gdx.app.getGraphics().getDeltaTime();
 			if (savingOpacity > 1f) 
 				savingOpacity = 1f;
+		}
+		
+		if (savingTimer > savingTime) {
+			savingOpacity = 1f;
+			SteveDriver.store.saveStoreProgress();
 		}
 		
 		switch (why) {
@@ -159,10 +168,17 @@ public class Summary {
 			spaceButton.render();
 		}
 		
-		SteveDriver.guiHelper.drawTextCentered("Saving...", 
-				SteveDriver.guiCamera.position.x - 14 * SteveDriver.TEXTURE_SIZE, 
+		if (savingTimer < savingTime) {
+			SteveDriver.guiHelper.drawTextCentered("Saving...", 
+				SteveDriver.guiCamera.position.x - 15 * SteveDriver.TEXTURE_SIZE, 
 				SteveDriver.guiCamera.position.y + 6 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
 				Color.BLACK);
+		} else {
+			SteveDriver.guiHelper.drawTextCentered("Saved!", 
+					SteveDriver.guiCamera.position.x - 15 * SteveDriver.TEXTURE_SIZE, 
+					SteveDriver.guiCamera.position.y + 6 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2,
+					Color.BLACK);
+		}
 		
 		savingSprite.setPosition(SteveDriver.guiCamera.position.x - 16 * SteveDriver.TEXTURE_SIZE, 
 				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2);

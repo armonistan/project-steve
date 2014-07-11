@@ -2,6 +2,7 @@ package com.steve.base;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.steve.Snake;
@@ -11,6 +12,8 @@ public class Pickup extends Sprite {
 	private boolean active;
 	protected int points;
 	protected Sound pickupSound;
+	
+	protected float alphaMod = 1.0f;
 	
 	public Pickup(float x, float y, int atlasX, int atlasY, int points) {
 		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
@@ -30,5 +33,18 @@ public class Pickup extends Sprite {
 	
 	public Rectangle getRectangle() {
 		return this.getBoundingRectangle();
+	}
+	
+	public void update() {
+		
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float alpha) {
+		super.draw(batch, alpha);
+	}
+	
+	public float getAlpha() {
+		return this.alphaMod;
 	}
 }

@@ -38,7 +38,7 @@ public class Generator {
 	final float enemyGenerationTime = 2; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 2; 
+	final float appleGenerationTime = 3; 
 	float appleGenerationCounter; 
 	
 	final float pickUpGenerationTime = 2; 
