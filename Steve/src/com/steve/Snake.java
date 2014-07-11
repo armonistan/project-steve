@@ -80,7 +80,7 @@ public class Snake {
 	private float maxHealth = 100f; //starts out here in damage units
 	private float hungerTime = .1f; //time till next hunger damage in secs
 	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
-	private float hungerDamage = .5f; //amount of damage hunger hits per tick
+	private float hungerDamage = 1f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -544,6 +544,7 @@ public class Snake {
 	
 	public void addBody() {
 		hungerTimer = 0;
+		currentHealth = maxHealth;
 		int atlasX = 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet;
 		int atlasY = SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet;
 		//System.out.println("add body: " + atlasX/SteveDriver.TEXTURE_SIZE + ", " + atlasY/SteveDriver.TEXTURE_SIZE);
