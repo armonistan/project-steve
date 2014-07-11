@@ -297,7 +297,7 @@ public class Snake {
 	}
 	
 	public void addMoney(int amount) {
-		money += amount * SteveDriver.constants.get("goldModifier");
+		money += amount * SteveDriver.constants.get("goldModifier") * 1000; //TODO: CHANGE BACK
 		
 		//TODO: Make this only save when needed.
 		SteveDriver.prefs.putInteger("money", money);

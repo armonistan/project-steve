@@ -105,7 +105,8 @@ public class GUIHelper {
 		for (int i = 0; i < message.length() - 1; ) {
 			int tempEndIndex = message.indexOf("\n", i);
 			tempEndIndex = (tempEndIndex < 0) ? message.length() : tempEndIndex;
-			activeFont.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (activeFont.getBounds(message.substring(i, tempEndIndex)).width/2), y - lineNumber * activeFont.getLineHeight());
+			activeFont.draw(SteveDriver.batch, message.substring(i, tempEndIndex), x - (activeFont.getBounds(message.substring(i, tempEndIndex)).width/2), 
+					(y - lineNumber * activeFont.getLineHeight()));
 			
 			i = tempEndIndex + 1;
 			lineNumber++;
