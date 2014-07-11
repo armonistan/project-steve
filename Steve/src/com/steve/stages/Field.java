@@ -666,7 +666,8 @@ public class Field {
 
 		for (Pickup p : pickups) {
 			if (p.getActive()) {
-				p.draw(SteveDriver.batch);
+				p.update();
+				p.draw(SteveDriver.batch, p.getAlpha());
 			}
 			else {
 				pickupsToRemove.add(p);
