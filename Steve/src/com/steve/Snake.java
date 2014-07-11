@@ -28,7 +28,7 @@ public class Snake {
 	protected ArrayList<Sprite> segments;
 	protected ArrayList<Weapon> weapons;
 
-	private final int beltImageOffset = 0;//4 * SteveDriver.TEXTURE_SIZE;
+	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
 	private final int TILE_WIDTH = SteveDriver.TEXTURE_SIZE;
 	
 	protected Vector3 headPosition;
@@ -64,7 +64,9 @@ public class Snake {
 	protected boolean jet;
 	protected boolean matrix;
 	protected boolean candy;
+	
 	private Sound blockerCollide;
+	private Sound loseSegment;
 	
 	protected boolean endGame = false;
 	protected boolean inSpace = false;
@@ -93,6 +95,7 @@ public class Snake {
 		nukeOpacity = 0f;
 		
 		blockerCollide = Gdx.audio.newSound(Gdx.files.internal("audio/blockerCollide" + ".ogg"));
+		loseSegment = Gdx.audio.newSound(Gdx.files.internal("audio/segmentLoss2" + ".ogg"));
 		
 		refreshSnakeLoadout(x, y);
 
@@ -665,7 +668,7 @@ public class Snake {
 		//System.out.println(deltaX + "," + deltaY);
 
 		
-		if(false && weapons.size() > 0){
+		if(weapons.size() > 0){
 			atlasX += this.beltImageOffset;
 		}
 		
@@ -770,7 +773,8 @@ public class Snake {
 				kill((lastDamageTimer > 0) ? WHY_DIED.enemy : WHY_DIED.starvation); //Either starved, or was clobbered.
 				return true;
 			}
-			
+			if(SteveDriver.prefs.getBoolean("sfx", true))
+				loseSegment.play();
 			segments.remove(segments.size() - 1);
 			if(this.segments.size()-2 < weapons.size()){
 				weapons.remove(weapons.size() - 1);
