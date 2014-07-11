@@ -137,7 +137,7 @@ public class Generator {
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
 		
 		if (locationID < 3) {
-			if(SteveDriver.random.nextInt(100) <= locationID){
+			if(SteveDriver.random.nextInt(100)+1 <= locationID){
 				return this.generateRing(xPos, yPos);
 			}
 	
