@@ -40,7 +40,7 @@ public class GUI {
 	
 	public void render() {
 		if(!SteveDriver.prefs.getBoolean("astroSteve", false)){
-			currentHealthPercent = 1 - (SteveDriver.snake.GetHungerTimer() / SteveDriver.snake.GetStarveTime());
+			currentHealthPercent = (SteveDriver.snake.getCurrentHealth() / SteveDriver.snake.getMaxHealth());
 		
 			for (Sprite s : guiTextures) {
 				s.setRegion(s.getRegionX(), (23 + (SteveDriver.snake.getLastDamageTimer() > 0 ? 3 : 0)) * SteveDriver.TEXTURE_SIZE,
