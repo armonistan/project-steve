@@ -439,6 +439,7 @@ public class Generator {
 	}
 	
 	public boolean generateApple(){
+		System.out.println("Okay");
 		//our center would like to fix
 		Vector3 cameraPosition = SteveDriver.camera.position;
 		
@@ -486,17 +487,21 @@ public class Generator {
 		}
 		
 		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
-			(choiceX < 0) ? xPosLeft/16 : xPosRight/SteveDriver.TEXTURE_SIZE);
+			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
 		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
-			(choiceY < 0) ? yPosBot/16 : yPosTop/SteveDriver.TEXTURE_SIZE);
+			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
 		
 		if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
+			System.out.print("Trying: ");
 			Apple a = new Apple(xPos, yPos);
 			if(isOccupied(a.getRectangle())) {
-				Field.pickups.add(a);	
+				Field.pickups.add(a);
+				System.out.println("success");
 			}
-			else
+			else{
+				System.out.println("failed");
 				return false;
+			}
 		}
 		return true;
 	}
