@@ -10,6 +10,9 @@ public class MenuSnake extends Snake {
 			this.mountUpgrade(SteveDriver.random.nextInt(3));
 			animate();
 		}
+		
+		nextDirection = SteveDriver.VRIGHT;
+		nextRotation = SteveDriver.RIGHT;
 	}
 
 	@Override

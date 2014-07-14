@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx;
 public class StoreSnake extends Snake {
 	public StoreSnake() {
 		super(100, SteveDriver.TEXTURE_SIZE / 2);
+		
+		nextDirection = SteveDriver.VRIGHT;
+		nextRotation = SteveDriver.RIGHT;
 	}
 
 	@Override
