@@ -11,7 +11,7 @@ public class Tank extends Enemy {
 	private Sprite face;
 
 	public Tank(float x, float y) {
-		super(x, y, 15, 1, 2, 2, 0.5f, 0.5f, 3, 0, 75);
+		super(x, y, 15, 1, 2, 2, 0.5f, 0.5f, 3, 60, 75);
 		shootTime = 0.5f;
 		sightDistance = 600;
 		
@@ -21,7 +21,7 @@ public class Tank extends Enemy {
 		shotCap = 10;
 		hasShotCounter = 11;
 		
-		moneyAmount = 10;
+		moneyAmount = 150;
 	}
 	
 	@Override
