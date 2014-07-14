@@ -8,8 +8,8 @@ import com.steve.base.Pickup;
 
 public class Apple extends Pickup {
 	
-	private float lifeTime = 10.0f;
-	private float lifeTimer = 10.0f;
+	private float lifeTime = 7.0f;
+	private float lifeTimer = 7.0f;
 	
 	public Apple(float x, float y) {
 		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 175);
