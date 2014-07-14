@@ -723,7 +723,7 @@ public class Snake {
 		}
 		
 		for (int i = 1; i < segments.size(); i++) {
-			segments.get(i).update(i <= weapons.size());
+			segments.get(i).update(i <= weapons.size(), xOffSet, yOffSet);
 		}
 	}
 
@@ -1001,24 +1001,18 @@ public class Snake {
 		private int baseAtlasX;
 		private int baseAtlasY;
 		
-		private int tierXOffset;
-		private int tierYOffset;
-		
 		public Segment(int baseX, int baseY, int xOff, int yOff) {
 			super(new TextureRegion(SteveDriver.atlas, 0, 0, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 			
 			baseAtlasX = baseX;
 			baseAtlasY = baseY;
 			
-			tierXOffset = xOff;
-			tierYOffset = yOff;
-			
-			update(false);
+			update(false, xOff, yOff);
 		}
 		
-		public void update(boolean weaponized) {			
-			this.setRegion(baseAtlasX * SteveDriver.TEXTURE_SIZE + tierXOffset * SteveDriver.TEXTURE_SIZE + ((weaponized) ? 4 * SteveDriver.TEXTURE_SIZE : 0),
-					baseAtlasY * SteveDriver.TEXTURE_SIZE + tierYOffset * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+		public void update(boolean weaponized, int xOff, int yOff) {			
+			this.setRegion(baseAtlasX * SteveDriver.TEXTURE_SIZE + xOff * SteveDriver.TEXTURE_SIZE + ((weaponized) ? 4 * SteveDriver.TEXTURE_SIZE : 0),
+					baseAtlasY * SteveDriver.TEXTURE_SIZE + yOff * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		}
 		
 		public int getBaseAtlasX() {
