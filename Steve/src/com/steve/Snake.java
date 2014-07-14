@@ -88,8 +88,8 @@ public class Snake {
 		//pick up where we left off
 		gatherTier();
 		
-		nextDirection = SteveDriver.VRIGHT;
-		nextRotation = SteveDriver.RIGHT;
+		nextDirection = SteveDriver.VUP;
+		nextRotation = SteveDriver.UP;
 
 		nukeExplosion = new Texture(Gdx.files.internal("data/nuke.png"));
 		nukeExplosion.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
