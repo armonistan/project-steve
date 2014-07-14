@@ -19,7 +19,7 @@ public class Flyer extends Enemy{
 	private int propellerAtlasBoundsY;
 
 	public Flyer(float x, float y) {
-		super(x, y, 11, 5, 2, 2, 1f, 0.5f, 2, 0, 75);
+		super(x, y, 11, 5, 2, 2, 1f, 0.5f, 2, 50, 150);
 		shootTime = 1f;
 		
 		propellerAtlasPositionX = 15;
@@ -30,7 +30,7 @@ public class Flyer extends Enemy{
 				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE, propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;
-		super.moneyAmount = 150;			
+		super.moneyAmount = 450;			
 	}
 	
 	@Override
