@@ -15,7 +15,7 @@ public class Spring extends Enemy{
 		super(x, y, 15, 3, 2, 2, 10f, 0.4f, 3, 75, 50);
 		sightDistance = 500;//to be refined
 		
-		moneyAmount = 30;
+		moneyAmount = 150;
 		fastMoveTime = 0.05f;
 		slowMoveTime = super.moveTime;
 		slowChangeTime = 3;

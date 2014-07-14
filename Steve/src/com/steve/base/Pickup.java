@@ -1,5 +1,6 @@
 package com.steve.base;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,8 @@ public class Pickup extends Sprite {
 	protected Sound pickupSound;
 	
 	protected float alphaMod = 1.0f;
+	private float lifeTime = 10.0f;
+	private float lifeTimer = 10.0f;
 	
 	public Pickup(float x, float y, int atlasX, int atlasY, int points) {
 		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
@@ -35,16 +38,24 @@ public class Pickup extends Sprite {
 		return this.getBoundingRectangle();
 	}
 	
+	public float getAlpha() {
+		return this.alphaMod;
+	}
+	
+	
 	public void update() {
-		
+		lifeTimer -= Gdx.app.getGraphics().getDeltaTime();
+		if (lifeTimer <= 0) {
+			SteveDriver.field.pickupsToRemove.add(this);
+		} else {
+			this.alphaMod = lifeTimer / lifeTime;
+		}
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float alpha) {
-		super.draw(batch, alpha);
-	}
-	
-	public float getAlpha() {
-		return this.alphaMod;
+		if (lifeTimer != 0) {
+			super.draw(batch, alphaMod);
+		}
 	}
 }

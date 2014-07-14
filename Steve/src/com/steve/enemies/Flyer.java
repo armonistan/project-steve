@@ -30,6 +30,7 @@ public class Flyer extends Enemy{
 				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE, propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;
+		super.moneyAmount = 150;			
 	}
 	
 	@Override

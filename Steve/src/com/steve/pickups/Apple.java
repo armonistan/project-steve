@@ -8,9 +8,6 @@ import com.steve.base.Pickup;
 
 public class Apple extends Pickup {
 	
-	private float lifeTime = 7.0f;
-	private float lifeTimer = 7.0f;
-	
 	public Apple(float x, float y) {
 		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 175);
 		int soundDecider = SteveDriver.random.nextInt(3)+1;
@@ -26,20 +23,5 @@ public class Apple extends Pickup {
 		SteveDriver.summary.appleScore += points;
 	}
 	
-	@Override
-	public void update() {
-		lifeTimer -= Gdx.app.getGraphics().getDeltaTime();
-		if (lifeTimer <= 0) {
-			SteveDriver.field.pickupsToRemove.add(this);
-		} else {
-			this.alphaMod = lifeTimer / lifeTime;
-		}
-	}
-	
-	@Override
-	public void draw(SpriteBatch batch, float alpha) {
-		if (lifeTimer != 0) {
-			super.draw(batch, alphaMod);
-		}
-	}
+
 }
