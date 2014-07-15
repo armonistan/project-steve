@@ -1,6 +1,7 @@
 package com.steve.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.steve.SteveDriver;
@@ -13,6 +14,7 @@ public class Logo {
 	
 	public Logo() {
 		emberware = new Sprite(new TextureRegion(SteveDriver.emberware, 0f, 0f, 1f, 1f));
+		emberware.scale(SteveDriver.guiCamera.viewportWidth / emberware.getWidth() - 1f);
 		emberware.setPosition(emberware.getWidth() / 2 * -1, emberware.getHeight() / 2 * -1);
 		
 		showTimer = 0f;
@@ -20,6 +22,9 @@ public class Logo {
 	}
 	
 	public void render() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
 		SteveDriver.guiCamera.position.x = 0;
 		SteveDriver.guiCamera.position.y = 0;
 		SteveDriver.guiCamera.update();
