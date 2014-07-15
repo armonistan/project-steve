@@ -105,6 +105,7 @@ public class SteveDriver implements ApplicationListener {
 		GAME,
 		ENDGAME,
 		RESPAWNINGENDGAME,
+		PAUSEDENDGAME,
 		STORE,
 		RESPAWNING,
 		SUMMARY,
@@ -139,7 +140,7 @@ public class SteveDriver implements ApplicationListener {
 		constants.addToConstants("screenHeight", SteveDriver.guiCamera.viewportHeight);
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlasDouble.png"));
-		atlas.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		atlas.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		background = new Texture(Gdx.files.internal("data/teset-1.png"));
 		background.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
@@ -184,7 +185,7 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		switch (stage) {
@@ -192,25 +193,24 @@ public class SteveDriver implements ApplicationListener {
 			credits.render();
 			break;
 		case MENU:
-			SteveDriver.prefs.putBoolean("astroSteve", false);
 			summary.resetSummary();
 			menu.render();
 			break;
 		case RESPAWNING:
-			SteveDriver.prefs.putBoolean("astroSteve", false);
+			resetTheme();
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case RESPAWNINGENDGAME:
+			setSpaceTheme();
 			store.saveStoreProgress();
 			resetFieldForSpace();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
-			resetTheme();
 			summary.render();
 			break;
 		case STORE:
@@ -221,6 +221,9 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case PAUSED:
 			game.renderPaused();
+			break;
+		case PAUSEDENDGAME:
+			endGame.renderPaused();
 			break;
 		case LOGO:
 			logo.render();

@@ -8,7 +8,7 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Steve";
 		cfg.useGL20 = false;
-		cfg.width = 680;
+		cfg.width = 1000;
 		cfg.height = 520;
 		new LwjglApplication(new SteveDriver(null), cfg);
 	}

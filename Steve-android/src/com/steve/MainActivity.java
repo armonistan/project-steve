@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +28,12 @@ public class MainActivity extends AndroidApplication implements IActivityRequest
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+        .detectAll()
+        .penaltyLog()
+        .build();
+        StrictMode.setThreadPolicy(policy);
+        
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
         
@@ -38,6 +45,8 @@ public class MainActivity extends AndroidApplication implements IActivityRequest
         View gameView = initializeForView(new SteveDriver(this), cfg);
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView);
+        
+        
         
         ads = new AdView(this); // Put in your secret key here
         ads.setAdUnitId("ca-app-pub-4539283306007418/2063573887");

@@ -7,6 +7,7 @@ import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 import com.steve.commands.ChangeBooleanPreference;
 import com.steve.commands.ChangeStage;
+import com.steve.commands.FromGameToMenu;
 import com.steve.commands.KillSnake;
 import com.steve.commands.PauseButton;
 import com.steve.TextButton;
@@ -14,15 +15,15 @@ import com.steve.TextButton;
 public class Game {
 	private boolean pPressed = false;
 
-	private TextButton pause = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 7 * SteveDriver.TEXTURE_SIZE,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 7, 4, new PauseButton(), "Pause");
+	protected TextButton pause = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 7 * SteveDriver.TEXTURE_SIZE,
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 7, 4, new PauseButton(STAGE_TYPE.GAME, STAGE_TYPE.PAUSED), "Pause");
 	private TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1,
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("music"), "Music");
 	private TextButton menu = new TextButton(4 * SteveDriver.TEXTURE_SIZE * -1,
-			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 8, 4, new ChangeStage(STAGE_TYPE.MENU), "Menu");
+			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 8, 4, new FromGameToMenu(), "Menu");
 	private TextButton store = new TextButton(4 * SteveDriver.TEXTURE_SIZE * -1,
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 8 * SteveDriver.TEXTURE_SIZE, 8, 4, new KillSnake(), "Store");
-	private TextButton sfx = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1+200,
+	private TextButton sfx = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1 + 200,
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("sfx"), "SFX");
 
 	

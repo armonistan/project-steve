@@ -101,7 +101,6 @@ public class Snake {
 		refreshSnakeLoadout(x, y);
 
 		tempCollider = new Rectangle();
-		SteveDriver.prefs.putBoolean("astroSteve", false);
 	}
 	
 	private void initializeBody(float x, float y){
@@ -958,7 +957,7 @@ public class Snake {
 	}
 	
 	private void drawUpgradeImages(){
-		if(drill){
+		if(drill && helmet != null){
 			helmet.setPosition(segments.get(0).getX(), segments.get(0).getY());
 			helmet.setRotation(segments.get(0).getRotation());
 			helmet.draw(SteveDriver.batch);

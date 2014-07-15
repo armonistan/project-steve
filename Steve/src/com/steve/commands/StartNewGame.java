@@ -25,7 +25,6 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.prefs.putInteger("bossesDefeated", 0);
 		SteveDriver.prefs.putBoolean("canGoToSpace",false);
 		SteveDriver.prefs.putBoolean("bossDefeatedTutorial", false);
-		SteveDriver.prefs.putBoolean("astroSteve", false);
 		
 		//reset specials
 		SteveDriver.storePrefs.putBoolean("special1", false);
