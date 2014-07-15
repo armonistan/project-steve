@@ -1,19 +1,21 @@
 package com.steve.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
 import com.steve.base.Enemy;
+import com.steve.helpers.CollisionHelper;
 
 public class Narwhal extends Enemy{
 	
 	public Narwhal(float x, float y) {
-		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 50, 100);
+		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 50, 1200);
 		knowledgeDistance = 500;//to be refined
 		
 		destroysBlockers = true;
 		ignoresBlockers = true;
-		moneyAmount = 30;
+		moneyAmount = 1600;
 	}
 	
 	@Override
@@ -38,5 +40,16 @@ public class Narwhal extends Enemy{
 			(moveTime < .4f) ? .4f : moveTime;
 		
 		//System.out.println("move speed: " + moveTime);
+	}
+	
+	@Override
+	protected void checkCollideWithSnake(){
+		for (Sprite s : SteveDriver.snake.getSegments()) {
+			if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), s.getBoundingRectangle())) {
+				SteveDriver.snake.changeHunger(deathDamage);
+				//System.out.println("collide front");
+				return;
+			}
+		}
 	}
 }

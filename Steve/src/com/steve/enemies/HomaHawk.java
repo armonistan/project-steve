@@ -10,11 +10,11 @@ import com.steve.projectiles.Tree;
 
 public class HomaHawk extends Enemy{
 	public HomaHawk(float x, float y) {
-		super(x, y, 11, 10, 3, 3, .2f, 0.4f, 4, 75, 200);
+		super(x, y, 11, 10, 3, 3, .2f, 0.4f, 4, 75, 1100);
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		ignoresBlockers = true;
-		moneyAmount = 30;
+		moneyAmount = 1600;
 		shootTime = 1.6f;
 	}
 	
