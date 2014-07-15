@@ -9,7 +9,7 @@ import com.steve.base.Pickup;
 public class Apple extends Pickup {
 	
 	public Apple(float x, float y) {
-		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 175);
+		super(x, y, 4 * SteveDriver.TEXTURE_SIZE, 0, 17500000);
 		int soundDecider = SteveDriver.random.nextInt(3)+1;
 		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/eatApple" + soundDecider + ".ogg"));
 	}
