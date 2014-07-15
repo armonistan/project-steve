@@ -212,7 +212,7 @@ public class Enemy {
 			SteveDriver.snake.addTreasure(treasureAmount);
 		} else {
 			SteveDriver.snake.addMoney(moneyAmount);
-			SteveDriver.summary.enemyScore += moneyAmount;
+			SteveDriver.summary.enemyScore += moneyAmount * SteveDriver.constants.get("goldModifier");
 		}
 	}
 	

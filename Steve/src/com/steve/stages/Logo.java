@@ -16,7 +16,7 @@ public class Logo {
 		emberware.setPosition(emberware.getWidth() / 2 * -1, emberware.getHeight() / 2 * -1);
 		
 		showTimer = 0f;
-		showTime = 1f;
+		showTime = 3f;
 	}
 	
 	public void render() {

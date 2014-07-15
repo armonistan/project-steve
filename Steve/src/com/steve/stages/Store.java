@@ -304,7 +304,7 @@ public class Store {
 			description += "\nPurchased!";
 		} /*else if (!selectedUpgrade.available){
 			description += "\nLocked!";
-		}*/ else {
+		}*/ else if (selectedUpgrade.getClass() != ToggleUpgrade.class){
 			description += "\n$" + (selectedUpgrade.getPrice() * SteveDriver.constants.get("priceModifier"));
 		}
 	}
