@@ -30,6 +30,7 @@ public class Flyer extends Enemy{
 				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE, propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;
+		super.knowledgeDistance = 500;
 		super.moneyAmount = 450;			
 	}
 	
@@ -73,6 +74,49 @@ public class Flyer extends Enemy{
 	
 	@Override
 	protected Vector2 decideMove() {		
-		return super.pursuitMoveWithSight();
+		int sightID = -1;
+		
+		for(Sprite s: SteveDriver.snake.getSegments()){
+			float deltaY = this.avatar.getY() - s.getY();
+			float deltaX = this.avatar.getX() - s.getX();
+			sightID = super.doesSee(deltaX, deltaY);
+			
+			if(sightID != -1)
+				break;
+		}
+		
+		for(Sprite s: SteveDriver.snake.getSegments()){
+			float deltaY = this.avatar.getY() - s.getY();
+			float deltaX = this.avatar.getX() - s.getX();
+			sightID = super.doesSee(deltaX, deltaY);
+			
+			if(sightID != -1)
+				break;
+		}
+		
+		//if i dont see the fucker find him
+		if(sightID == -1)
+			return super.pursuitMoveWithKnowledge();
+		//i aint moving
+		else{
+			switch(sightID){
+			case SteveDriver.RIGHT_ID:
+				this.avatar.setRotation(SteveDriver.RIGHT);
+				return SteveDriver.VRIGHT;	
+			
+			case SteveDriver.UP_ID:
+				this.avatar.setRotation(SteveDriver.UP);
+				return SteveDriver.VUP;
+			
+			case SteveDriver.LEFT_ID:
+				this.avatar.setRotation(SteveDriver.LEFT);
+				return SteveDriver.VLEFT;
+			
+			case SteveDriver.DOWN_ID:
+				this.avatar.setRotation(SteveDriver.DOWN);
+				return SteveDriver.VDOWN;
+			}
+			return null;
+		}
 	}
 }
