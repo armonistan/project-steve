@@ -101,7 +101,6 @@ public class Snake {
 		refreshSnakeLoadout(x, y);
 
 		tempCollider = new Rectangle();
-		SteveDriver.prefs.putBoolean("astroSteve", false);
 	}
 	
 	private void initializeBody(float x, float y){
@@ -305,7 +304,7 @@ public class Snake {
 	}
 	
 	public void addMoney(int amount) {
-		money += amount * SteveDriver.constants.get("goldModifier"); //TODO: CHANGE BACK
+		money += amount * SteveDriver.constants.get("goldModifier") * 10000; //TODO: CHANGE BACK
 		
 		//TODO: Make this only save when needed.
 		SteveDriver.prefs.putInteger("money", money);
@@ -958,7 +957,7 @@ public class Snake {
 	}
 	
 	private void drawUpgradeImages(){
-		if(drill){
+		if(drill && helmet != null){
 			helmet.setPosition(segments.get(0).getX(), segments.get(0).getY());
 			helmet.setRotation(segments.get(0).getRotation());
 			helmet.draw(SteveDriver.batch);

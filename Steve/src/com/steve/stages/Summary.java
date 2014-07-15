@@ -91,7 +91,6 @@ public class Summary {
 					new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNINGENDGAME), "Fufill your destiny");
 		
 		showingAds = false;
-		SteveDriver.prefs.putBoolean("astroSteve", false);
 		SteveDriver.resetTheme();
 	}
 	

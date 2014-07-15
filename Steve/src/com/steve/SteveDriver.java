@@ -105,6 +105,7 @@ public class SteveDriver implements ApplicationListener {
 		GAME,
 		ENDGAME,
 		RESPAWNINGENDGAME,
+		PAUSEDENDGAME,
 		STORE,
 		RESPAWNING,
 		SUMMARY,
@@ -192,12 +193,10 @@ public class SteveDriver implements ApplicationListener {
 			credits.render();
 			break;
 		case MENU:
-			SteveDriver.prefs.putBoolean("astroSteve", false);
 			summary.resetSummary();
 			menu.render();
 			break;
 		case RESPAWNING:
-			SteveDriver.prefs.putBoolean("astroSteve", false);
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
@@ -221,6 +220,9 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case PAUSED:
 			game.renderPaused();
+			break;
+		case PAUSEDENDGAME:
+			endGame.renderPaused();
 			break;
 		case LOGO:
 			logo.render();

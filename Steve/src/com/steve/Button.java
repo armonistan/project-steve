@@ -72,4 +72,8 @@ public class Button {
 	public ICommand getCommand() {
 		return buttonAction;
 	}
+	
+	public void setCommand(ICommand com) {
+		buttonAction = com;
+	}
 }
