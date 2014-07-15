@@ -74,7 +74,7 @@ public class Summary {
 		diedSpaceSprite.scale(SteveDriver.guiCamera.viewportWidth / diedSpaceSprite.getWidth() - 1f);
 		diedSpaceSprite.setPosition(diedSpaceSprite.getWidth() / 2 * -1, diedSpaceSprite.getHeight() / 2 * -1);
 		diedPlayerSprite = new Sprite(new TextureRegion(diedPlayer, 0f, 0f, 1f, 1f));
-		diedPlayerSprite.scale(SteveDriver.guiCamera.viewportWidth / diedPlayerSprite.getWidth() - 1f);
+		diedPlayerSprite.scale(SteveDriver.guiCamera.viewportHeight / diedPlayerSprite.getHeight() - 1f);
 		diedPlayerSprite.setPosition(diedPlayerSprite.getWidth() / 2 * -1, diedPlayerSprite.getHeight() / 2 * -1);
 		backgroundSprite = new Sprite(new TextureRegion(background, 0f, 0f, 1f, 1f));
 		backgroundSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);

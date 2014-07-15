@@ -354,6 +354,7 @@ public class Store {
 
 	public void saveStoreProgress() {
 		SteveDriver.storePrefs.flush();
+		SteveDriver.prefs.flush();
 	}
 
 	public void initializeUpgrades() {
@@ -877,12 +878,10 @@ public class Store {
 				if (constantName == "cyborg") {
 					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
 					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));
-					SteveDriver.prefs.flush();
 				}
 				else if(constantName == "robot"){
 					SteveDriver.prefs.putBoolean("robotBossActivate", (!SteveDriver.prefs.getBoolean("razorbullDefeated", true)));
 					SteveDriver.prefs.putBoolean("razorbullDefeated", (SteveDriver.prefs.getBoolean("razorbullDefeated", false)));
-					SteveDriver.prefs.flush();
 				}
 
 				SteveDriver.constants.modifyConstant(constantName, value);
@@ -913,6 +912,15 @@ public class Store {
 
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;
+			
+			if (constantName == "cyborg" && !initActivated) {
+				SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+				SteveDriver.prefs.putBoolean("carrierDefeated", false);
+			}
+			else if(constantName == "robot" && !initActivated){
+				SteveDriver.prefs.putBoolean("robotBossActivate", false);
+				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
+			}
 		}
 
 		public int trySpendCurrency() {
