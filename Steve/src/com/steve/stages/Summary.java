@@ -99,6 +99,8 @@ public class Summary {
 		
 		applePercent = 0.0f;
 		enemyPercent = 0.0f;
+		
+		savingTimer = 0f;
 	}
 	
 	public void setWhyDied(WHY_DIED died) {

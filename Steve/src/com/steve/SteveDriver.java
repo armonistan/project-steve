@@ -140,7 +140,7 @@ public class SteveDriver implements ApplicationListener {
 		constants.addToConstants("screenHeight", SteveDriver.guiCamera.viewportHeight);
 		
 		atlas = new Texture(Gdx.files.internal("data/SpriteAtlasDouble.png"));
-		atlas.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		atlas.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		background = new Texture(Gdx.files.internal("data/teset-1.png"));
 		background.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
