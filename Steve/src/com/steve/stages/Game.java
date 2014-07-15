@@ -35,7 +35,7 @@ public class Game {
 		sfx.setStatus((SteveDriver.prefs.getBoolean("sfx")) ? 1 : 0);
 	}
 	
-	public void render() {		
+	public void render() {
 		Vector3 test = new Vector3();
 		test = SteveDriver.camera.position.lerp((SteveDriver.tutorial.isActive()) ? SteveDriver.tutorial.getFocus() :
 			SteveDriver.snake.getHeadPosition(), (SteveDriver.tutorial.isActive()) ? 0.1f : 0.05f);

@@ -35,4 +35,9 @@ public class BossSummon extends Pickup {
 		if(SteveDriver.prefs.getBoolean("sfx", true))
 			pickupSound.play();
 	}
+	
+	@Override
+	public void update() {
+		//Nothing
+	}
 }

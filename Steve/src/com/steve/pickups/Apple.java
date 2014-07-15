@@ -20,7 +20,7 @@ public class Apple extends Pickup {
 		snake.addBody();
 		if(SteveDriver.prefs.getBoolean("sfx", true))
 			pickupSound.play();
-		SteveDriver.summary.appleScore += points;
+		SteveDriver.summary.appleScore += points * SteveDriver.constants.get("goldModifier");
 	}
 	
 

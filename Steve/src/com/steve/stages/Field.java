@@ -704,7 +704,7 @@ public class Field {
 			}
 		}
 		
-		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
+		for(Sprite s : SteveDriver.snake.getSegments()){
 			if(CollisionHelper.isCollide(newObject, s.getBoundingRectangle())){
 				return false;
 			}
@@ -729,7 +729,7 @@ public class Field {
 		float deltaX = 0;
 		float deltaY = 0;
 		
-		for(Sprite s : SteveDriver.snake.getSnakeSprites()){
+		for(Sprite s : SteveDriver.snake.getSegments()){
 				deltaX = s.getX() - x;
 				deltaY = s.getY() - y;
 				
