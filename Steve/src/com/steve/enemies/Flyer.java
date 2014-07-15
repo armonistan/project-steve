@@ -19,7 +19,7 @@ public class Flyer extends Enemy{
 	private int propellerAtlasBoundsY;
 
 	public Flyer(float x, float y) {
-		super(x, y, 11, 5, 2, 2, .25f, 0.5f, 2, 50, 150);
+		super(x, y, 11, 5, 2, 2, .25f, 0.5f, 2, 50, 300);
 		shootTime = 1f;
 		
 		propellerAtlasPositionX = 15;

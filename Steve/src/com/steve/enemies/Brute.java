@@ -5,7 +5,7 @@ import com.steve.base.Enemy;
 
 public class Brute extends Enemy{
 	public Brute(float x, float y) {
-		super(x, y, 11, 3, 2, 2, 0.1f, 0.2f, 2, 75, 250);
+		super(x, y, 11, 3, 2, 2, 0.1f, 0.2f, 2, 75, 500);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 450;

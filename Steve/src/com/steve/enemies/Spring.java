@@ -12,7 +12,7 @@ public class Spring extends Enemy{
 	private float changeTimer;
 	
 	public Spring(float x, float y) {
-		super(x, y, 15, 3, 2, 2, 10f, 0.4f, 3, 90, 175);
+		super(x, y, 15, 3, 2, 2, 10f, 0.4f, 3, 90, 350);
 		sightDistance = 500;//to be refined
 		
 		moneyAmount = 450;
