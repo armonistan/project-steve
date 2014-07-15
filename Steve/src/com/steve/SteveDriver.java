@@ -197,19 +197,20 @@ public class SteveDriver implements ApplicationListener {
 			menu.render();
 			break;
 		case RESPAWNING:
+			resetTheme();
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case RESPAWNINGENDGAME:
+			setSpaceTheme();
 			store.saveStoreProgress();
 			resetFieldForSpace();
 			summary.resetSummary();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
-			resetTheme();
 			summary.render();
 			break;
 		case STORE:
