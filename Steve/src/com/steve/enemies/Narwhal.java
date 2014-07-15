@@ -9,8 +9,11 @@ import com.steve.helpers.CollisionHelper;
 
 public class Narwhal extends Enemy{
 	
+	int numberOfHits;
+	int maxHits;
+	
 	public Narwhal(float x, float y) {
-		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 50, 1200);
+		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 1, 1200);
 		knowledgeDistance = 500;//to be refined
 		
 		destroysBlockers = true;
