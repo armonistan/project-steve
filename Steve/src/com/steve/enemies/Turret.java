@@ -20,10 +20,11 @@ public class Turret extends Enemy{
 	//sprivate Sprite base;
 
 	public Turret(float x, float y) {
-		super(x, y, 11, 16, 3, 3, 0.5f, 0.5f, 1, 0, 125);
+		super(x, y, 11, 16, 3, 3, 0.5f, 0.5f, 1, 75, 1000);
 		range = 300;//override range if need be
 		isAimed = false;
-		isUpgraded = false;}
+		isUpgraded = false;
+		super.moneyAmount = 1600;}
 	
 	@Override
 	protected void move(){
