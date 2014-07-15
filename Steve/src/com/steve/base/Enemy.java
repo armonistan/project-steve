@@ -153,6 +153,11 @@ public class Enemy {
 	protected void move() {
 		if (moveTimer >= moveTime){
 			Vector2 direction = decideMove();
+			
+			//if doesnt want to move
+			if(direction == null)
+				return;
+			
 			avatar.setPosition(avatar.getX() + direction.x * SteveDriver.TEXTURE_SIZE, avatar.getY() + direction.y * SteveDriver.TEXTURE_SIZE);		
 
 			if(this.passedBarrierCheck() || ignoresBlockers){
