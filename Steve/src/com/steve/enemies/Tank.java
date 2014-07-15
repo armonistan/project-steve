@@ -22,7 +22,7 @@ public class Tank extends Enemy {
 		shotCap = 10;
 		hasShotCounter = 11;
 		
-		moneyAmount = 450;
+		moneyAmount = 650;
 	}
 	
 	@Override
