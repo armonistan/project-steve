@@ -533,49 +533,49 @@ public class Snake {
 		//System.out.println("in body" + "\n");
 		if (segments.size() < (SteveDriver.constants.get("maxLength"))) {
 			Segment newSegment = new Segment(3, 1, xOffSet, yOffSet);
-			Sprite secondToLast = segments.get(segments.size() - 2);
-			Sprite tail = segments.get(segments.size()-1);
+			Segment secondToLast = segments.get(segments.size() - 2);
+			Segment tail = segments.get(segments.size()-1);
 			
 			Vector2 delta = SteveDriver.VRIGHT;
 			float rotation = SteveDriver.LEFT;
 			
-			if(secondToLast.getRegionX() == SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			if(secondToLast.getBaseAtlasX() == 1 && 
+				secondToLast.getBaseAtlasY() == 3){
 				delta = SteveDriver.VLEFT;
 				rotation = SteveDriver.RIGHT;
 			}
-			else if(secondToLast.getRegionX() == 0*this.xOffSet && 
-					secondToLast.getRegionY() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 0 && 
+					secondToLast.getBaseAtlasY() == 2){
 				delta = SteveDriver.VRIGHT;
 				rotation = SteveDriver.LEFT;
 			}
-			else if(secondToLast.getRegionX() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 3 && 
+					secondToLast.getBaseAtlasY() == 2){
 				delta = SteveDriver.VLEFT;
 				rotation = SteveDriver.RIGHT;
 			}
-			else if(secondToLast.getRegionX() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 2 && 
+					secondToLast.getBaseAtlasY() == 3){
 				delta = SteveDriver.VRIGHT;
 				rotation = SteveDriver.LEFT;
 			}
-			else if(secondToLast.getRegionX() == 0*this.xOffSet && 
-					secondToLast.getRegionY() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 0 && 
+					secondToLast.getBaseAtlasY() == 3){
 				delta = SteveDriver.VDOWN;
 				rotation = SteveDriver.UP;
 			}
-			else if(secondToLast.getRegionX() == SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 1 && 
+					secondToLast.getBaseAtlasY() == 2){
 				delta = SteveDriver.VDOWN;	
 				rotation = SteveDriver.UP;
 			}
-			else if(secondToLast.getRegionX() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 2 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 2 && 
+					secondToLast.getBaseAtlasY() == 2){
 				delta = SteveDriver.VRIGHT;
 				rotation = SteveDriver.LEFT;
 			}
-			else if(secondToLast.getRegionX() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet && 
-					secondToLast.getRegionY() == 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet){
+			else if(secondToLast.getBaseAtlasX() == 3 && 
+					secondToLast.getBaseAtlasY() == 3){
 				delta = SteveDriver.VUP;
 				rotation = SteveDriver.DOWN;
 			}
@@ -886,7 +886,6 @@ public class Snake {
 		}
 	}
 
-	
 	public boolean hasWeaponSpace(){
 		return this.weapons.size() < this.segments.size()-1;
 	}
