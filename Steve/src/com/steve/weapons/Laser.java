@@ -9,7 +9,7 @@ import com.steve.projectiles.SnakeLaser;
 public class Laser extends Weapon{
 	public Laser(float x, float y){
 		super(x,y, SteveDriver.TEXTURE_SIZE*9, SteveDriver.TEXTURE_SIZE);
-		shootSpeed = .7f - .7f * (int)(SteveDriver.constants.get("fireRate"));
+		shootSpeed = .7f / (int)(SteveDriver.constants.get("fireRate"));
 		range = 650*SteveDriver.constants.get("fireRange");
 		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/pulseLaser1.ogg"));
 		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/pulseLaser2.ogg"));
@@ -55,7 +55,7 @@ public class Laser extends Weapon{
 	@Override
 	public void upgrade(){
 		super.upgrade();
-		this.shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
+		this.shootSpeed *= .75;
 		this.setRegion(atlasX, atlasY + SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		//TODO more stuff to upgrade
 	}
