@@ -9,7 +9,7 @@ import com.steve.projectiles.SnakeBullet;
 public class GatlingGun extends Weapon{
 	public GatlingGun(float x, float y){
 		super(x,y, SteveDriver.TEXTURE_SIZE*8, SteveDriver.TEXTURE_SIZE);
-		shootSpeed = .5f - .5f * (int)(SteveDriver.constants.get("fireRate")-1f);
+		shootSpeed = .5f - .5f * (int)(SteveDriver.constants.get("fireRate"));
 		range = 400f * SteveDriver.constants.get("fireRange");
 		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/gatlingGun1.ogg"));
 		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/gatlingGun2.ogg"));
