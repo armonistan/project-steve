@@ -14,7 +14,7 @@ import com.steve.stages.Field;
 public class Razorbull extends Enemy{
 	
 	public Razorbull(float x, float y) {
-		super(x, y, 21, 23, 9, 3, .2f, 0.3f, 1, 75, 200);
+		super(x, y, 21, 23, 9, 3, .2f, 0.3f, 1, 75, 4000);
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		super.destroysBlockers = true;
