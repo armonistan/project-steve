@@ -27,12 +27,12 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.prefs.putBoolean("bossDefeatedTutorial", false);
 		
 		//reset specials
-		SteveDriver.storePrefs.putBoolean("special1", false);
-		SteveDriver.storePrefs.putBoolean("special2", false);
-		SteveDriver.storePrefs.putBoolean("special3", false);
-		SteveDriver.storePrefs.putBoolean("special4", false);
-		SteveDriver.storePrefs.putBoolean("specail5", false);
-		SteveDriver.storePrefs.putBoolean("special6", false);
+		SteveDriver.storePrefs.putFloat("special1", 0f);
+		SteveDriver.storePrefs.putFloat("special2", 0f);
+		SteveDriver.storePrefs.putFloat("special3", 0f);
+		SteveDriver.storePrefs.putFloat("special4", 0f);
+		SteveDriver.storePrefs.putFloat("specail5", 0f);
+		SteveDriver.storePrefs.putFloat("special6", 0f);
 		
 		SteveDriver.storePrefs.clear();
 		

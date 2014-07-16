@@ -6,6 +6,7 @@ import com.steve.SteveDriver;
 import com.steve.base.Enemy;
 import com.steve.helpers.CollisionHelper;
 import com.steve.projectiles.Acorn;
+import com.steve.projectiles.Pinecone;
 
 public class Turret extends Enemy{
 	
@@ -21,10 +22,10 @@ public class Turret extends Enemy{
 
 	public Turret(float x, float y) {
 		super(x, y, 11, 16, 3, 3, 0.5f, 0.5f, 1, 75, 1000);
-		range = 300;//override range if need be
+		range = 550;//override range if need be
 		isAimed = false;
 		isUpgraded = false;
-		super.moneyAmount = 1600;}
+		super.moneyAmount = 1750;}
 	
 	@Override
 	protected void move(){
@@ -86,7 +87,7 @@ public class Turret extends Enemy{
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 		degrees += 180;
 		
-		Acorn temp = new Acorn(this.avatar.getX() + avatar.getOriginX(), this.avatar.getY() + avatar.getOriginY());
+		Pinecone temp = new Pinecone (this.avatar.getX() + avatar.getOriginX(), this.avatar.getY() + avatar.getOriginY());
 		
 		SteveDriver.field.addProjectile(temp);
 		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));

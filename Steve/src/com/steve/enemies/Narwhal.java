@@ -18,7 +18,7 @@ public class Narwhal extends Enemy{
 		
 		destroysBlockers = true;
 		ignoresBlockers = true;
-		moneyAmount = 1600;
+		moneyAmount = 2000;
 	}
 	
 	@Override

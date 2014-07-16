@@ -24,7 +24,8 @@ public class Carrier extends Enemy {
 	int threshHold;
 	float startX;
 	float startY;
-	static int startHealth = 500;
+	static int startHealth = 6000;
+	float numTurrets = 12;
 	
 	public Carrier(float x, float y) {
 		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, startHealth);
@@ -41,10 +42,20 @@ public class Carrier extends Enemy {
 		float x = startX;
 		float y = startY;
 		
-		turrets.add(new CarrierTurret(x+8,y+6));
-		turrets.add(new CarrierTurret(x+8,y));
-		turrets.add(new CarrierTurret(x+16,y+6));
-		turrets.add(new CarrierTurret(x+16,y));
+		for(int counter = 0; counter < numTurrets/2; counter++){
+			float xOffset = 4+4*counter;
+			float yOffset = 1;
+			
+			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
+		}
+		
+		for(int counter = 0; counter < numTurrets/2; counter++){
+			float xOffset = 4+4*counter;
+			float yOffset = 6;
+			
+			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
+		}
+		
 		swiggins = new Admiral(x+20,y+3);
 		SteveDriver.field.enemies.add(swiggins);
 		
