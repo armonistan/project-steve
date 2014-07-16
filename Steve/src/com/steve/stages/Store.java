@@ -368,6 +368,8 @@ public class Store {
 
 		initMoney = SteveDriver.snake.getMoney();
 		initTreasure = SteveDriver.snake.getTreasure();
+		
+		setStoreTab(0);
 
 		Upgrade steve = new Upgrade("Regular Steve",
 				"steve",

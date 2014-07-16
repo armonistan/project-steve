@@ -14,9 +14,10 @@ public class Rhino extends Enemy {
 	
 	public Rhino(float x, float y) {
 		super(x, y, 17, 13, 3, 3,
-				1.5f, 100, 1, 50, 1350);
+				.3f, 100, 1, 5, 1350);
 		// TODO Auto-generated constructor stub
 		moneyAmount = 1600;
+		super.knowledgeDistance = 500;
 	}
 
 	@Override
@@ -30,7 +31,7 @@ public class Rhino extends Enemy {
 	
 	@Override
 	protected Vector2 decideMove() {
-		return super.pursuitMoveWithSight();
+		return super.pursuitMoveWithKnowledge();
 	}
 	
 	@Override

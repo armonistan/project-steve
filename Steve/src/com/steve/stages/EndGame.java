@@ -43,10 +43,8 @@ public class EndGame extends Game {
 			SteveDriver.guiCamera.update();
 			
 			SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
-			if (!SteveDriver.tutorial.isActive()) {
-				SteveDriver.field.update();
-				SteveDriver.snake.update();
-			}
+			SteveDriver.field.update();
+			SteveDriver.snake.update();
 			
 			SteveDriver.batch.begin();
 			SteveDriver.field.drawBelowSnake();
@@ -71,9 +69,10 @@ public class EndGame extends Game {
 			
 			SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 			SteveDriver.batch.begin();
-			SteveDriver.field.space.draw(SteveDriver.batch);
+			SteveDriver.field.drawBelowSnake();
 			SteveDriver.snake.update();
 			SteveDriver.snake.draw();
+			SteveDriver.field.drawAboveSnake();
 			SteveDriver.batch.end();
 			
 			SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
