@@ -852,10 +852,6 @@ public class Store {
 
 		public void update() {
 			available = ((SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0))) || activated;
-
-			if (constantName == "priceModifier") {
-				System.out.println("Shit");
-			}
 			
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}
@@ -881,10 +877,6 @@ public class Store {
 				activated = true;
 				currentTier[category] = tier + 1;
 				
-				if (constantName == "goldModifier") {
-					System.out.println("Shit");
-				}
-
 				if (constantName == "cyborg") {
 					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
 					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));

@@ -36,10 +36,6 @@ public class AstroSteve extends Snake {
 			}
 		}
 		
-		if (!inSpace) {
-			getTouch();
-		}
-		
 		//update all the segments.
 		if (timer >= timeBetweenTurn) {
 			move();

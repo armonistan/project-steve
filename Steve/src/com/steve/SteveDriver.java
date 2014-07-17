@@ -169,6 +169,9 @@ public class SteveDriver implements ApplicationListener {
 		assets.load("data/diedSpace.png", Texture.class);      
 		assets.load("data/diedPlayer.png", Texture.class);     
 		assets.load("data/diedBackground.png", Texture.class); 
+		assets.load("data/stars.png", Texture.class);
+		assets.load("data/victoryStars.png", Texture.class);
+		assets.load("data/victoryWords.png", Texture.class);
 		
 		assets.load("audio/MainV1.ogg", Music.class);
 		assets.load("audio/MainSpace.ogg", Music.class);
@@ -356,7 +359,8 @@ public class SteveDriver implements ApplicationListener {
 		
 		snake = new AstroSteve(30 * scale, 30 * scale);
 		field = new Field(camera, scale);
-		loading = new Loading(STAGE_TYPE.ENDGAME);		
+		loading = new Loading(STAGE_TYPE.ENDGAME);	
+		endGame.reset();
 	}
 	
 	public static void setSpaceTheme() {
