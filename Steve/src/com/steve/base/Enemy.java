@@ -224,11 +224,7 @@ public class Enemy {
 			SteveDriver.summary.enemyScore += moneyAmount * SteveDriver.constants.get("goldModifier");
 		}
 	}
-	
-	public void setHealth(float hp){
-		health = hp;
-	}
-	
+		
 	public float getXPosition(){
 		return this.avatar.getX();
 	}
