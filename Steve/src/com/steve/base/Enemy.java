@@ -548,4 +548,8 @@ public class Enemy {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}
 	}
+	
+	public void setHealth(float hp) {
+		this.health = hp;
+	}
 }
