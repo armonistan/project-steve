@@ -18,7 +18,8 @@ public class Loading {
 	TextButton startButton;
 	
 	public Loading(STAGE_TYPE type) {
-		loading = new Texture(Gdx.files.internal("data/loading.png"));
+		loading = SteveDriver.assets.get("data/loading.png", Texture.class);
+		
 		loadingSprite = new Sprite(new TextureRegion(loading, 0f, 0f, 1f, 1f));
 		loadingSprite.scale(-0.2f);
 		loadingSprite.setPosition(loadingSprite.getWidth() / 2 * -1, loadingSprite.getHeight() / 2 * -1);

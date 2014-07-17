@@ -86,7 +86,7 @@ public class Enemy {
 		}
 		
 		tempCollider = new Rectangle();
-		enemyDeath = Gdx.audio.newSound(Gdx.files.internal("audio/enemyDeath" + ".ogg"));
+		enemyDeath = SteveDriver.assets.get("audio/enemyDeath.ogg", Sound.class);
 	}
 	
 	public void draw() {
@@ -111,7 +111,7 @@ public class Enemy {
 		checkCollideWithSnake();
 		checkProjectiles();
 		checkIsDead();
-		if (!SteveDriver.field.checkGlueTile((int)avatar.getX()/SteveDriver.TEXTURE_SIZE, (int)avatar.getY()/SteveDriver.TEXTURE_SIZE)) {
+		if (!SteveDriver.field.checkGlueTile((int)avatar.getX() / SteveDriver.TEXTURE_SIZE, (int)avatar.getY() / SteveDriver.TEXTURE_SIZE)) {
 			move();
 		}
 		animate();

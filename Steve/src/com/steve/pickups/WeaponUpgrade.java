@@ -1,6 +1,7 @@
 package com.steve.pickups;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.steve.Snake;
 import com.steve.SteveDriver;
 import com.steve.base.Pickup;
@@ -8,7 +9,7 @@ import com.steve.base.Pickup;
 public class WeaponUpgrade extends Pickup {
 	public WeaponUpgrade(float xPos, float yPos){
 		super(xPos, yPos, 9 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 0);
-		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/weaponUpgrade" + ".ogg"));
+		pickupSound = SteveDriver.assets.get("audio/weaponUpgrade.ogg", Sound.class);
 	}
 	
 	@Override

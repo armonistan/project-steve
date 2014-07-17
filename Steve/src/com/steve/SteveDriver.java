@@ -6,6 +6,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.audio.Sound;
@@ -14,7 +16,10 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.helpers.ConstantHelper;
@@ -35,6 +40,9 @@ public class SteveDriver implements ApplicationListener {
 	public static Texture steveLogo;
 	public static Texture space;
 	public static Texture emberware;
+	public static AssetManager assets;
+	
+	public static TiledMap demoMap;
 	
 	public static Snake snake;
 	public static Field field;
@@ -138,21 +146,76 @@ public class SteveDriver implements ApplicationListener {
 		constants = new ConstantHelper();
 		constants.addToConstants("screenWidth", SteveDriver.guiCamera.viewportWidth);
 		constants.addToConstants("screenHeight", SteveDriver.guiCamera.viewportHeight);
+
+		stage = STAGE_TYPE.LOGO;
 		
-		atlas = new Texture(Gdx.files.internal("data/SpriteAtlasDouble.png"));
-		atlas.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		assets = new AssetManager();
 		
-		background = new Texture(Gdx.files.internal("data/teset-1.png"));
-		background.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		TextureParameter params = new TextureParameter();
+		params.magFilter = TextureFilter.MipMapLinearNearest;
+		params.minFilter = TextureFilter.Nearest;
 		
-		steveLogo = new Texture(Gdx.files.internal("data/Steve-title.png"));
-		steveLogo.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		//Asset load calls
+		assets.load("data/emberware.png", Texture.class, params);
+		assets.load("data/SpriteAtlasDouble.png", Texture.class, params);
+		assets.load("data/teset-1.png", Texture.class, params);
+		assets.load("data/Steve-title.png", Texture.class, params);
+		assets.load("data/Space Background.png", Texture.class, params);
+		assets.load("data/loading.png", Texture.class, params);
+		assets.load("data/nuke.png", Texture.class, params);
+		assets.load("data/diedEnemy.png", Texture.class);      
+		assets.load("data/diedStarvation.png", Texture.class); 
+		assets.load("data/diedBlocker.png", Texture.class);    
+		assets.load("data/diedSpace.png", Texture.class);      
+		assets.load("data/diedPlayer.png", Texture.class);     
+		assets.load("data/diedBackground.png", Texture.class); 
 		
-		space = new Texture(Gdx.files.internal("data/Space Background.png"));
-		space.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		assets.load("audio/MainV1.ogg", Music.class);
+		assets.load("audio/MainSpace.ogg", Music.class);
 		
-		emberware = new Texture(Gdx.files.internal("data/emberware.png"));
-		emberware.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
+		assets.load("audio/eatApple1.ogg", Sound.class);
+		assets.load("audio/eatApple2.ogg", Sound.class);
+		assets.load("audio/eatApple3.ogg", Sound.class);
+		assets.load("audio/bossSummon.ogg", Sound.class);
+		assets.load("audio/enemyDeath.ogg", Sound.class);
+		assets.load("audio/gatlingGun1.ogg", Sound.class);
+		assets.load("audio/gatlingGun2.ogg", Sound.class);
+		assets.load("audio/gatlingGun3.ogg", Sound.class);
+		assets.load("audio/pickupGatlingGun1.ogg", Sound.class);
+		assets.load("audio/pulseLaser1.ogg", Sound.class);
+		assets.load("audio/pulseLaser2.ogg", Sound.class);
+		assets.load("audio/pulseLaser3.ogg", Sound.class);
+		assets.load("audio/pickupLaser1.ogg", Sound.class);
+		assets.load("audio/mainCannon1.ogg", Sound.class);
+		assets.load("audio/mainCannon2.ogg", Sound.class);
+		assets.load("audio/mainCannon3.ogg", Sound.class);
+		assets.load("audio/blockerCollide.ogg", Sound.class);
+		assets.load("audio/segmentLoss2.ogg", Sound.class);
+		assets.load("audio/specialist1.ogg", Sound.class);
+		assets.load("audio/specialist2.ogg", Sound.class);
+		assets.load("audio/specialist3.ogg", Sound.class);
+		assets.load("audio/specialistPickup.ogg", Sound.class);
+		assets.load("audio/storePurchase.ogg", Sound.class);
+		assets.load("audio/treasurePickup.ogg", Sound.class);
+		assets.load("audio/weaponUpgrade.ogg", Sound.class);
+		
+		assets.load("fonts/fixedsys48.fnt", BitmapFont.class);
+		assets.load("fonts/fixedsys32.fnt", BitmapFont.class);
+		
+		demoMap = new TmxMapLoader().load("menu.tmx");
+		
+		logo = new Logo();
+	}
+
+	protected void finishLoading() {
+		atlas = assets.get("data/SpriteAtlasDouble.png", Texture.class);
+		background = assets.get("data/teset-1.png", Texture.class);
+		steveLogo = assets.get("data/Steve-title.png", Texture.class);
+		space = assets.get("data/Space Background.png", Texture.class);
+		
+		mainMusic = assets.get("audio/MainV1.ogg", Music.class);
+		spaceMusic = assets.get("audio/MainSpace.ogg", Music.class);
+		music = mainMusic;
 		
 		guiHelper = new GUIHelper();
 		
@@ -160,21 +223,15 @@ public class SteveDriver implements ApplicationListener {
 		gui = new GUI();
 		snake = new Snake(30, 30);
 		
-		stage = STAGE_TYPE.LOGO;
 		menu = new Menu();
 		game = new Game();
 		tutorial = new Tutorial();
 		store = new Store();
 		credits = new Credits();
-		logo = new Logo();
 		loading = new Loading(STAGE_TYPE.GAME);
 		endGame = new EndGame();
 		
 		summary = new Summary();
-		
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/MainV1.ogg"));
-		spaceMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/MainSpace.ogg"));
-		music = mainMusic;
 	}
 
 	@Override
@@ -185,6 +242,27 @@ public class SteveDriver implements ApplicationListener {
 
 	@Override
 	public void render() {
+		if (emberware == null && assets.isLoaded("data/emberware.png")) {
+			emberware = assets.get("data/emberware.png", Texture.class);
+		}
+		else if (menu == null) {
+			if (assets.update()) {
+				finishLoading();
+			}
+		}
+		else {
+			if (!prefs.getBoolean("music")) {
+				music.stop();
+				musicPlaying = false;
+			}
+			else if (prefs.getBoolean("music") && !musicPlaying) {
+				music.setLooping(true);
+				music.setVolume(.6f);
+				music.play();
+				musicPlaying = true;
+			}
+		}
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
@@ -236,19 +314,8 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		}
 
-		if (tutorial.isActive()) {
+		if (tutorial != null && tutorial.isActive()) {
 			tutorial.render();
-		}
-		
-		if (!prefs.getBoolean("music")) {
-			music.stop();
-			musicPlaying = false;
-		}
-		else if (prefs.getBoolean("music") && !musicPlaying) {
-			music.setLooping(true);
-			music.setVolume(.6f);
-			music.play();
-			musicPlaying = true;
 		}
 		
 		if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
