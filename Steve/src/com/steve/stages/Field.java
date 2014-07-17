@@ -419,12 +419,59 @@ public class Field {
 					blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
 					blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
 				}
+				
+				boolean candy = SteveDriver.constants.get("candyZone") == 0f;
+				
 				//This is the Background generation	
 				//Barren tiles generated
 				for (int x = 0; x < totalRadius; x++) {
 					for (int y = 0; y < totalRadius; y++) {
-						int ty = barren.GetRandomY();
-						int tx = barren.GetRandomX();
+						int ty;
+						int tx;
+						
+						if (x == 0) {
+							if (y == totalRadius - 1) {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 20;
+							}
+						}
+						else if (x == totalRadius - 1) {
+							if (y == totalRadius - 1) {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 20;
+							}
+						}
+						else {
+							if (y == totalRadius - 1) {
+								tx = 15 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 15 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								ty = barren.GetRandomY();
+								tx = barren.GetRandomX();
+							}
+						}
+						
 						Cell cell = new Cell();
 						cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
 						layer.setCell(x, y, cell);
