@@ -57,6 +57,7 @@ public class Weapon extends Sprite{
 	
 	protected void targetEnemy(){
 		float minDistance = Float.POSITIVE_INFINITY;
+		target = null;
 		
 		for(Enemy e : SteveDriver.field.enemies){
 			float enemyX = e.getXPosition();

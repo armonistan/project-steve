@@ -16,7 +16,7 @@ public class Rhino extends Enemy {
 		super(x, y, 17, 13, 3, 3,
 				.3f, 100, 1, 5, 1350);
 		// TODO Auto-generated constructor stub
-		moneyAmount = 1600;
+		moneyAmount = 2100;
 		super.knowledgeDistance = 500;
 	}
 

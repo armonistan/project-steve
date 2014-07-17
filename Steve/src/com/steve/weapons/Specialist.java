@@ -10,8 +10,8 @@ import com.steve.projectiles.SnakeRocket;
 public class Specialist extends Weapon{
 	public Specialist(float x, float y){
 		super(x,y, SteveDriver.TEXTURE_SIZE*10, SteveDriver.TEXTURE_SIZE);
-		shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
-		range = 700*SteveDriver.constants.get("fireRange");
+		shootSpeed = 1f / (int)(SteveDriver.constants.get("fireRate"));
+		range = 500*SteveDriver.constants.get("fireRange");
 		shootSound1 = SteveDriver.assets.get("audio/specialist1.ogg", Sound.class);
 		shootSound2 = SteveDriver.assets.get("audio/specialist2.ogg", Sound.class);
 		shootSound3 = SteveDriver.assets.get("audio/specialist3.ogg", Sound.class);
