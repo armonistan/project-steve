@@ -27,9 +27,6 @@ import java.util.*;
 public class Snake {
 	protected ArrayList<Segment> segments;
 	protected ArrayList<Weapon> weapons;
-
-	private final int beltImageOffset = 4 * SteveDriver.TEXTURE_SIZE;
-	private final int TILE_WIDTH = SteveDriver.TEXTURE_SIZE;
 	
 	protected Vector3 headPosition;
 	
@@ -88,15 +85,15 @@ public class Snake {
 		nextDirection = SteveDriver.VUP;
 		nextRotation = SteveDriver.UP;
 
-		nukeExplosion = new Texture(Gdx.files.internal("data/nuke.png"));
+		nukeExplosion = SteveDriver.assets.get("data/nuke.png", Texture.class);
 		nukeExplosion.setFilter(TextureFilter.Nearest, TextureFilter.MipMapLinearNearest);
 		
 		nukeExplosionSprite = new Sprite(new TextureRegion(nukeExplosion, 0f, 0f, 1f, 1f));
 		
 		nukeOpacity = 0f;
 		
-		blockerCollide = Gdx.audio.newSound(Gdx.files.internal("audio/blockerCollide" + ".ogg"));
-		loseSegment = Gdx.audio.newSound(Gdx.files.internal("audio/segmentLoss2" + ".ogg"));
+		blockerCollide = SteveDriver.assets.get("audio/blockerCollide.ogg", Sound.class);
+		loseSegment = SteveDriver.assets.get("audio/segmentLoss2.ogg", Sound.class);
 		
 		refreshSnakeLoadout(x, y);
 

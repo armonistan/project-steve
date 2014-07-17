@@ -30,7 +30,7 @@ public class StoreField extends Field {
 		super(SteveDriver.camera, 1);
 		
 		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
-		map = new TmxMapLoader().load("menu.tmx");
+		map = SteveDriver.demoMap;
 		
 		System.gc();
 		

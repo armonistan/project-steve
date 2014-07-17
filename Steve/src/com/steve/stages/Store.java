@@ -112,7 +112,7 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 
-		purchaseSound = Gdx.audio.newSound(Gdx.files.internal("audio/storePurchase" + ".ogg"));
+		purchaseSound = SteveDriver.assets.get("audio/storePurchase.ogg", Sound.class);
 		
 		initializeUpgrades();
 
@@ -651,31 +651,7 @@ public class Store {
 				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
-
-		upgrades.add(new Upgrade("Plentiful Money",
-				"goldModifier",
-				"goldTier2A",
-				"Sources of gold are worth 15% more.",
-				.15f,
-				25000f,
-				1, 4,
-				(panelX - 32) + ((1 * panelWidth) / 3),
-				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
-						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
-
-		upgrades.add(new Upgrade("Plentiful Money",
-				"goldModifier",
-				"goldTier3A",
-				"Sources of gold are worth 15% more.",
-				.15f,
-				250000f,
-				2, 4,
-				(panelX - 32) + ((1 * panelWidth) / 3),
-				panelY + 32 + ((1 * panelHeight) / 4),
-				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
-						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
-
+		
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
 				"goldTier1B",
@@ -688,6 +664,18 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
+		upgrades.add(new Upgrade("Plentiful Money",
+				"goldModifier",
+				"goldTier2A",
+				"Sources of gold are worth 15% more.",
+				.15f,
+				25000f,
+				1, 4,
+				(panelX - 32) + ((1 * panelWidth) / 3),
+				panelY + 32 + ((2 * panelHeight) / 4),
+				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
+		
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
 				"goldTier2B",
@@ -699,6 +687,18 @@ public class Store {
 				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
+
+		upgrades.add(new Upgrade("Plentiful Money",
+				"goldModifier",
+				"goldTier3A",
+				"Sources of gold are worth 15% more.",
+				.15f,
+				250000f,
+				2, 4,
+				(panelX - 32) + ((1 * panelWidth) / 3),
+				panelY + 32 + ((1 * panelHeight) / 4),
+				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
+						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
 		upgrades.add(new Upgrade("Cheapskate",
 				"priceModifier",
@@ -851,8 +851,12 @@ public class Store {
 		}
 
 		public void update() {
-			available = (SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0)) || activated;
+			available = ((SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0))) || activated;
 
+			if (constantName == "priceModifier") {
+				System.out.println("Shit");
+			}
+			
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}
 
@@ -876,6 +880,10 @@ public class Store {
 			if (available) {
 				activated = true;
 				currentTier[category] = tier + 1;
+				
+				if (constantName == "goldModifier") {
+					System.out.println("Shit");
+				}
 
 				if (constantName == "cyborg") {
 					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));

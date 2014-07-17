@@ -1,6 +1,7 @@
 package com.steve.weapons;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.base.Weapon;
@@ -11,9 +12,9 @@ public class Specialist extends Weapon{
 		super(x,y, SteveDriver.TEXTURE_SIZE*10, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = 1f - 1f * (int)(SteveDriver.constants.get("fireRate") - 1f);
 		range = 700*SteveDriver.constants.get("fireRange");
-		shootSound1 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist1.ogg"));
-		shootSound2 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist2.ogg"));
-		shootSound3 = Gdx.audio.newSound(Gdx.files.internal("audio/specialist3.ogg"));
+		shootSound1 = SteveDriver.assets.get("audio/specialist1.ogg", Sound.class);
+		shootSound2 = SteveDriver.assets.get("audio/specialist2.ogg", Sound.class);
+		shootSound3 = SteveDriver.assets.get("audio/specialist3.ogg", Sound.class);
 	}
 	
 	@Override

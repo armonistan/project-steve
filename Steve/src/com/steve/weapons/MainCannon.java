@@ -22,9 +22,10 @@ public class MainCannon extends Weapon{
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
-		this.cannonSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon1" + ".ogg"));
-		this.gausSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon2" + ".ogg"));
-		this.rocketSound = Gdx.audio.newSound(Gdx.files.internal("audio/mainCannon3" + ".ogg"));
+		
+		this.cannonSound = SteveDriver.assets.get("audio/mainCannon1.ogg", Sound.class);
+		this.gausSound = SteveDriver.assets.get("audio/mainCannon2.ogg", Sound.class);
+		this.rocketSound = SteveDriver.assets.get("audio/mainCannon3.ogg", Sound.class);
 	}
 	
 	@Override

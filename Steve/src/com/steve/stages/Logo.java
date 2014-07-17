@@ -12,11 +12,7 @@ public class Logo {
 	private float showTimer;
 	private float showTime;
 	
-	public Logo() {
-		emberware = new Sprite(new TextureRegion(SteveDriver.emberware, 0f, 0f, 1f, 1f));
-		emberware.scale(SteveDriver.guiCamera.viewportWidth / emberware.getWidth() - 1f);
-		emberware.setPosition(emberware.getWidth() / 2 * -1, emberware.getHeight() / 2 * -1);
-		
+	public Logo() {		
 		showTimer = 0f;
 		showTime = 3f;
 	}
@@ -31,11 +27,20 @@ public class Logo {
 		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		
-		SteveDriver.batch.begin();		
-		emberware.draw(SteveDriver.batch);
-		SteveDriver.batch.end();
+		if (SteveDriver.emberware != null) {
+			if (emberware == null) {
+				emberware = new Sprite(new TextureRegion(SteveDriver.emberware, 0f, 0f, 1f, 1f));
+				emberware.scale(SteveDriver.guiCamera.viewportWidth / emberware.getWidth() - 1f);
+				emberware.setPosition(emberware.getWidth() / 2 * -1, emberware.getHeight() / 2 * -1);
+			}
+			
+			SteveDriver.batch.begin();		
+			emberware.draw(SteveDriver.batch);
+			SteveDriver.batch.end();
+		}
 		
 		if (showTimer >= showTime) {
+			SteveDriver.assets.finishLoading();
 			SteveDriver.stage = STAGE_TYPE.MENU;
 		}
 		else {

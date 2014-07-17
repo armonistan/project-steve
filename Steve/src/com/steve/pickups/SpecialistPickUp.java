@@ -1,6 +1,7 @@
 package com.steve.pickups;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.steve.Snake;
 import com.steve.SteveDriver;
 import com.steve.base.Pickup;
@@ -8,7 +9,7 @@ import com.steve.base.Pickup;
 public class SpecialistPickUp extends Pickup {
 	public SpecialistPickUp(float xPos, float yPos){
 		super(xPos, yPos, 10 * SteveDriver.TEXTURE_SIZE, 0, 0);
-		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/specialistPickup" + ".ogg"));
+		pickupSound = SteveDriver.assets.get("audio/specialistPickup.ogg", Sound.class);
 	}
 	
 	@Override
