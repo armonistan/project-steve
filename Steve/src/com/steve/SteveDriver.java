@@ -380,4 +380,9 @@ public class SteveDriver implements ApplicationListener {
 			}
 		}
 	}
+	
+	public static void playSound(Sound uh) {
+		if(SteveDriver.prefs.getBoolean("sfx", false))
+			uh.play();
+	}
 }
