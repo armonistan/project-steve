@@ -57,6 +57,7 @@ public class Field {
 	public Thread generatingField;
 	
 	protected Sprite space;
+	protected Sprite candySpace;
 	protected Sprite stars;
 	
 	private boolean generatorEnabled;
@@ -266,6 +267,7 @@ public class Field {
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
 		
 		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
+		candySpace = new Sprite(new TextureRegion(SteveDriver.assets.get("data/space.png", Texture.class)));
 		stars = new Sprite(new TextureRegion(SteveDriver.assets.get("data/stars.png", Texture.class)));
 	}
 	
@@ -689,6 +691,10 @@ public class Field {
 				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
 				SteveDriver.camera.position.y - stars.getHeight() / 2f +
 				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
+		candySpace.setPosition(SteveDriver.camera.position.x - candySpace.getWidth() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
+				SteveDriver.camera.position.y - candySpace.getHeight() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
 	}
 	
 	public void drawBelowSnake() {
@@ -742,7 +748,12 @@ public class Field {
 	}
 
 	protected void drawSpace() {
-		space.draw(SteveDriver.batch);
+		if (candySpace != null && SteveDriver.constants.get("candyZone") != 0f) {
+			candySpace.draw(SteveDriver.batch);
+		}
+		else {
+			space.draw(SteveDriver.batch);
+		}
 		if (stars != null) {
 			stars.draw(SteveDriver.batch);
 		}
