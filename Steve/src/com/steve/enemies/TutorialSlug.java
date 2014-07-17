@@ -6,7 +6,7 @@ import com.steve.base.Enemy;
 public class TutorialSlug extends Enemy {
 
 	public TutorialSlug(float x, float y) {
-		super(x, y, 11, 1, 2, 2, 0.5f, 0.5f, 2, 50, 50);
+		super(x, y, 11, 1, 2, 2, 0.5f, 0.5f, 2, 50, 100);
 		
 		moneyAmount = 0;
 	}

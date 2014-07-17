@@ -40,7 +40,7 @@ public class Narwhal extends Enemy{
 		
 		moveTime = distance / knowledgeDistance;
 		moveTime = (moveTime > .8f) ? .8f : 
-			(moveTime < .4f) ? .4f : moveTime;
+			(moveTime < .3f) ? .3f : moveTime;
 		
 		//System.out.println("move speed: " + moveTime);
 	}
