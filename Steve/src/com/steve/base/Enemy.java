@@ -95,6 +95,10 @@ public class Enemy {
 		}
 	}
 	
+	public void setMoneyAmount (int money){
+		moneyAmount = money;
+	}
+	
 	//TODO: Make more robust.
 	protected void checkProjectiles() {
 		for (Projectile p : SteveDriver.field.getProjectiles()) {
@@ -219,6 +223,10 @@ public class Enemy {
 			SteveDriver.snake.addMoney(moneyAmount);
 			SteveDriver.summary.enemyScore += moneyAmount * SteveDriver.constants.get("goldModifier");
 		}
+	}
+	
+	public void setHealth(float hp){
+		health = hp;
 	}
 	
 	public float getXPosition(){
@@ -547,5 +555,9 @@ public class Enemy {
 		else {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}
+	}
+	
+	public void setHealth(float hp) {
+		this.health = hp;
 	}
 }

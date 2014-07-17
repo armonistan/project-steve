@@ -14,7 +14,7 @@ import com.steve.stages.Field;
 public class Razorbull extends Enemy{
 	
 	public Razorbull(float x, float y) {
-		super(x, y, 21, 23, 9, 3, .2f, 0.3f, 1, 75, 4000);
+		super(x, y, 22, 23, 8, 3, .2f, 0.3f, 1, 5, 4000);
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		super.destroysBlockers = true;
@@ -27,6 +27,7 @@ public class Razorbull extends Enemy{
 	@Override
 	public void update(){
 		this.checkInField();
+		this.checkCollideEnemy();
 		super.update();	
 		if(this.shootTimer > this.shootTime)
 			shoot();
@@ -53,8 +54,8 @@ public class Razorbull extends Enemy{
 			y+=1;
 			x+=10;
 		}
-		if(x > 0 && y > 0 && x*SteveDriver.TEXTURE_SIZE < SteveDriver.field.totalRadius && y*SteveDriver.TEXTURE_SIZE < SteveDriver.field.totalRadius)
-		SteveDriver.field.createBlockerFormation(x, y);
+		if(x > 0 && y > 0 && x < SteveDriver.field.totalRadius && y < SteveDriver.field.totalRadius)
+			SteveDriver.field.createBlockerFormation(x, y);
 		shootTimer = 0;
 	}
 
@@ -76,6 +77,17 @@ public class Razorbull extends Enemy{
 		for (Sprite s : SteveDriver.snake.getSegments()) {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
 				SteveDriver.snake.changeHunger(deathDamage);
+				break;
+			}
+		}
+	}
+	
+	private void checkCollideEnemy(){
+		for (Enemy e : SteveDriver.field.enemies) {
+			Sprite s = e.avatar;
+			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle()) && e != this) {
+				e.setMoneyAmount(0);
+				e.setHealth(0);
 				break;
 			}
 		}
@@ -193,6 +205,14 @@ public class Razorbull extends Enemy{
 			}
 		}
 		
-		avatar.setPosition((int)xPos, (int)yPos);
+		//set onto grid
+		xPos /= SteveDriver.TEXTURE_SIZE;
+		yPos /= SteveDriver.TEXTURE_SIZE;
+		
+		//return to pixel
+		xPos *= SteveDriver.TEXTURE_SIZE;
+		yPos *= SteveDriver.TEXTURE_SIZE;
+		
+		avatar.setPosition(xPos, yPos);
 	}
 }

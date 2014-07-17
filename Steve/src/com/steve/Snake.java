@@ -939,7 +939,7 @@ public class Snake {
 		
 		for (Enemy e : SteveDriver.field.enemies) {
 			if (CollisionHelper.distanceSquared(x, y, e.getXPosition(), e.getYPosition()) < explodeDistance) {
-				e.kill();
+				e.setHealth(0f);
 			}
 		}
 		SteveDriver.field.destroyBlockersRadius(15, x/SteveDriver.TEXTURE_SIZE, y/SteveDriver.TEXTURE_SIZE);
