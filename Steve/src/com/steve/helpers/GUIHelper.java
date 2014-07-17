@@ -15,6 +15,7 @@ public class GUIHelper {
 	private BitmapFont font48;
 	private BitmapFont font32;
 	public BitmapFont activeFont;
+	
 	private BoxSet blackBox;
 	private BoxSet goldBox;
 	private BoxSet redBox;
@@ -59,8 +60,9 @@ public class GUIHelper {
 	}
 	
 	public GUIHelper() {
-		font48 = new BitmapFont(Gdx.files.internal("fonts/fixedsys48.fnt"));
-		font32 = new BitmapFont(Gdx.files.internal("fonts/fixedsys32.fnt"));
+		font48 = SteveDriver.assets.get("fonts/fixedsys48.fnt", BitmapFont.class);
+		font32 = SteveDriver.assets.get("fonts/fixedsys32.fnt", BitmapFont.class);
+		
 		blackBox = new BoxSet(18, 17);
 		goldBox = new BoxSet(18, 20);
 		redBox = new BoxSet(18, 23);

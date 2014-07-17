@@ -31,7 +31,7 @@ public class MenuField extends Field {
 		this.maxBlockerLength = 10;
 		
 		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
-		map = new TmxMapLoader().load("menu.tmx");
+		map = SteveDriver.demoMap;
 		
 		System.gc();
 		

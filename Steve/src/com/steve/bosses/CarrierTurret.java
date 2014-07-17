@@ -23,7 +23,8 @@ public class CarrierTurret extends Enemy{
 		super(x, y, 9, 5, 1, 1, 0.5f, 0.5f, 1, 0, 125);
 		range = 300;//override range if need be
 		isAimed = false;
-		isUpgraded = false;}
+		isUpgraded = false;
+		moneyAmount = 0;}
 	
 	@Override
 	protected void move(){

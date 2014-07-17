@@ -1,6 +1,7 @@
 package com.steve.pickups;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.steve.Snake;
 import com.steve.SteveDriver;
 import com.steve.base.Pickup;
@@ -13,7 +14,7 @@ public class BossSummon extends Pickup {
 	
 	public BossSummon(float x, float y, int type) {
 		super(x, y, 8 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 0);
-		pickupSound = Gdx.audio.newSound(Gdx.files.internal("audio/bossSummon"  + ".ogg"));
+		pickupSound = SteveDriver.assets.get("audio/bossSummon.ogg", Sound.class);
 		this.type = type;
 	}
 	

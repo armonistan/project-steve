@@ -54,12 +54,12 @@ public class Summary {
 	}
 	
 	public Summary() {
-		diedEnemy = new Texture(Gdx.files.internal("data/diedEnemy.png"));
-		diedStarvation = new Texture(Gdx.files.internal("data/diedStarvation.png"));
-		diedBlocker = new Texture(Gdx.files.internal("data/diedBlocker.png"));
-		diedSpace = new Texture(Gdx.files.internal("data/diedSpace.png"));
-		diedPlayer = new Texture(Gdx.files.internal("data/diedPlayer.png"));
-		background = new Texture(Gdx.files.internal("data/diedBackground.png"));
+		diedEnemy = SteveDriver.assets.get("data/diedEnemy.png");
+		diedStarvation = SteveDriver.assets.get("data/diedStarvation.png");
+		diedBlocker = SteveDriver.assets.get("data/diedBlocker.png");
+		diedSpace = SteveDriver.assets.get("data/diedSpace.png");
+		diedPlayer = SteveDriver.assets.get("data/diedPlayer.png");
+		background = SteveDriver.assets.get("data/diedBackground.png");
 		
 		diedEnemySprite = new Sprite(new TextureRegion(diedEnemy, 0f, 0f, 1f, 1f));
 		diedEnemySprite.scale(SteveDriver.guiCamera.viewportHeight / diedEnemySprite.getHeight() - 1f);

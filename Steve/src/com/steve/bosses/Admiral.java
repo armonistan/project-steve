@@ -21,7 +21,7 @@ public class Admiral extends Enemy {
 		shotCap = 10;
 		hasShotCounter = 11;
 		
-		moneyAmount = 10;
+		moneyAmount = 0;
 		this.avatar.setRotation(SteveDriver.RIGHT);
 	}
 	
