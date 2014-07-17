@@ -245,7 +245,7 @@ public class SteveDriver implements ApplicationListener {
 		if (emberware == null && assets.isLoaded("data/emberware.png")) {
 			emberware = assets.get("data/emberware.png", Texture.class);
 		}
-		else if (menu == null) {
+		else if (menu == null || summary == null) {
 			if (assets.update()) {
 				finishLoading();
 			}
@@ -318,13 +318,15 @@ public class SteveDriver implements ApplicationListener {
 			tutorial.render();
 		}
 		
-		if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
-			summary.showingAds = false;
-			handler.showAds(false);
-		}
-		else if (handler != null && !summary.showingAds && stage == STAGE_TYPE.SUMMARY) {
-			summary.showingAds = true;
-			handler.showAds(true);
+		if (summary != null) {
+			if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
+				summary.showingAds = false;
+				handler.showAds(false);
+			}
+			else if (handler != null && !summary.showingAds && stage == STAGE_TYPE.SUMMARY) {
+				summary.showingAds = true;
+				handler.showAds(true);
+			}
 		}
 	}
 
