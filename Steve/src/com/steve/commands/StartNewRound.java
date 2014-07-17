@@ -16,7 +16,6 @@ public class StartNewRound extends ChangeStage {
 			SteveDriver.resetField();
 		}
 		else {
-			SteveDriver.constants.initConstants();
 			SteveDriver.store.initializeUpgrades();
 			
 			stage = STAGE_TYPE.STORE;

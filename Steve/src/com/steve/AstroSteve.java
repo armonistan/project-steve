@@ -1,6 +1,7 @@
 package com.steve;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.steve.helpers.CollisionHelper;
@@ -54,6 +55,17 @@ public class AstroSteve extends Snake {
 		updateWeapons();
 		
 		updateTimers(Gdx.graphics.getRawDeltaTime());
+	}
+	
+	@Override
+	public void draw() {
+		//Draw everything.
+		for (Sprite s : segments) {
+			s.draw(SteveDriver.batch);
+		}
+		for (Sprite w : weapons){
+			w.draw(SteveDriver.batch);
+		}
 	}
 	
 	@Override

@@ -821,7 +821,7 @@ public class Field {
 		bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 		
 		
-		blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
+		blockers.setCell(x, y, blockerTiles.get(Math.min(tileRad, blockerTiles.size())).middle);
 		//set the actual tile image
 		if (left) {
 			if (top) {
