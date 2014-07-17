@@ -48,7 +48,7 @@ public class Credits {
 		backButton.update();
 		backButton.render();
 		
-		SteveDriver.guiHelper.drawBox(-1 * 18 * SteveDriver.TEXTURE_SIZE / 2, 7 * SteveDriver.TEXTURE_SIZE, 18, 18, BoxColors.GOLD);
+		SteveDriver.guiHelper.drawBox(-1 * 18 * SteveDriver.TEXTURE_SIZE / 2, 7 * SteveDriver.TEXTURE_SIZE, 18, 18, BoxColors.GOLD, Color.WHITE);
 		
 		for (int i = 0; i < lines.length; i++) {
 			SteveDriver.guiHelper.drawTextCentered(lines[i], 

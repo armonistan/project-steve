@@ -127,7 +127,7 @@ public class GUIHelper {
 		tempLines.clear();
 	}
 	
-	public void drawBox(float x, float y, int width, int height, BoxColors whichBox) {
+	public void drawBox(float x, float y, int width, int height, BoxColors whichBox, Color tint) {
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 				Sprite temp;
@@ -166,6 +166,7 @@ public class GUIHelper {
 					}
 				}
 				
+				temp.setColor(tint);
 				temp.setPosition(x + col * SteveDriver.TEXTURE_SIZE, y - row * SteveDriver.TEXTURE_SIZE);
 				temp.draw(SteveDriver.batch);
 			}

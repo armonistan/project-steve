@@ -76,7 +76,7 @@ public class Tutorial {
 		SteveDriver.guiHelper.drawBox(SteveDriver.guiCamera.viewportWidth / 2f * -1f,
 				SteveDriver.guiCamera.viewportHeight / 2f / 2f * -1f - SteveDriver.TEXTURE_SIZE,
 				(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE,
-				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, GUIHelper.BoxColors.BLACK);
+				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, GUIHelper.BoxColors.BLACK, Color.WHITE);
 		
 		exitButton.update();
 		exitButton.render();

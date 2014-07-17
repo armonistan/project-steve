@@ -36,6 +36,7 @@ public class Store {
 	private boolean isUpgradeSelected;
 	private Upgrade selectedUpgrade;
 
+	private TextButton[] buttons;
 	private TextButton snakeTier;
 	private TextButton effTier;
 	private TextButton lengthTier;
@@ -88,6 +89,7 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Reset");
 
+		buttons = new TextButton[6];
 		snakeTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 0), "Snake");
@@ -112,6 +114,13 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 
+		buttons[0] = snakeTier;
+		buttons[1] = effTier;
+		buttons[2] = lengthTier;
+		buttons[3] = weaponsTier;
+		buttons[4] = cashTier;
+		buttons[5] = specialTier;
+		
 		purchaseSound = SteveDriver.assets.get("audio/storePurchase.ogg", Sound.class);
 		
 		initializeUpgrades();
@@ -140,6 +149,16 @@ public class Store {
 
 		for (Upgrade u : upgrades) {
 			u.update();
+		}
+		
+		//Update the upgrade category buttons
+		for (int i = 0; i < buttons.length; i++) {
+			if (tabIndex == i) {
+				buttons[i].setStatus(1);
+			}
+			else {
+				buttons[i].setStatus(0);
+			}
 		}
 
 		if ((field != SteveDriver.field) || (field == null)) {
