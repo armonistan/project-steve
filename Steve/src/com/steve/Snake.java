@@ -63,6 +63,7 @@ public class Snake {
 	private Sound loseSegment;
 	
 	Sprite helmet;
+	Sprite glueStick;
 	Rectangle tempCollider;
 	
 	Texture nukeExplosion;
@@ -71,10 +72,10 @@ public class Snake {
 	
 	//health related stuff
 	private float currentHealth = 100f; //what is modified in damage units
-	private float maxHealth = 100f; //starts out here in damage units
+	private float maxHealth = 60f; //starts out here in damage units
 	private float hungerTime = .1f; //time till next hunger damage in secs
 	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
-	private float hungerDamage = 1f; //amount of damage hunger hits per tick
+	private float hungerDamage = 1.5f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -204,8 +205,12 @@ public class Snake {
 		
 		if (SteveDriver.constants.get("glueTrail") != 0f) {
 			glue = true;
+			glueStick = new Sprite(new TextureRegion(SteveDriver.atlas,
+					2 * SteveDriver.TEXTURE_SIZE, 0 * SteveDriver.TEXTURE_SIZE,
+					1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE));
 		} else {
 			glue = false;
+			glueStick = null;
 		}
 		if (SteveDriver.constants.get("nuke") != 0f){
 			nuke = true;
@@ -250,14 +255,23 @@ public class Snake {
 		//tier modifier
 		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
+		//tier modifier hunger
+		hungerDamage /= snakeTier;
+		
 		//tier modifier hp
-		maxHealth = maxHealth+(snakeTier * (5f));
+		maxHealth = maxHealth+(snakeTier * (40f));
+		
 		//upgrade modifier hp
 		maxHealth *= SteveDriver.constants.get("hitpoints");
+		
 		//set hp
 		currentHealth = maxHealth;
+		
 		//tier modifier speed
 		timeBetweenTurn = .4f - (snakeTier*.05f);
+		
+		//modify hunger
+		//hungerTime /= SteveDriver.constants.get("hungerRate"); 
 		
 		
 		if (jet) {
@@ -523,9 +537,9 @@ public class Snake {
 	
 	public void addBody() {
 		hungerTimer = 0;
-		currentHealth = maxHealth;
-		int atlasX = 3 * SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.xOffSet;
-		int atlasY = SteveDriver.TEXTURE_SIZE+SteveDriver.TEXTURE_SIZE*this.yOffSet;
+		currentHealth += SteveDriver.constants.get("hungerRate");
+		if(currentHealth > maxHealth)
+			currentHealth = maxHealth;
 		//System.out.println("add body: " + atlasX/SteveDriver.TEXTURE_SIZE + ", " + atlasY/SteveDriver.TEXTURE_SIZE);
 		//System.out.println("in body" + "\n");
 		if (segments.size() < (SteveDriver.constants.get("maxLength"))) {
@@ -961,8 +975,10 @@ public class Snake {
 		if(nuke){
 			
 		}
-		if(glue){
-			
+		if(glue && glueStick != null){
+			glueStick.setPosition(segments.get(segments.size()-1).getX(), segments.get(segments.size()-1).getY());
+			glueStick.setRotation(segments.get(segments.size()-1).getRotation());
+			glueStick.draw(SteveDriver.batch);
 		}
 		if(jet){
 			
