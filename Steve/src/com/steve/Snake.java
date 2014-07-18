@@ -487,7 +487,7 @@ public class Snake {
 	}
 	
 	protected void getTouch() {
-		if (Gdx.input.isTouched()) {			
+		if (Gdx.input.isTouched() && !Button.clicked) {			
 			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
 			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
 			
