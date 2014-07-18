@@ -3,6 +3,7 @@ package com.steve.bosses;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.SteveDriver;
@@ -84,8 +85,8 @@ public class Razorbull extends Enemy{
 	
 	private void checkCollideEnemy(){
 		for (Enemy e : SteveDriver.field.enemies) {
-			Sprite s = e.avatar;
-			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle()) && e != this) {
+			Rectangle r = e.getRectangle();
+			if (CollisionHelper.isCollide(r, avatar.getBoundingRectangle()) && e != this) {
 				e.setMoneyAmount(0);
 				e.setHealth(0);
 				break;
