@@ -598,6 +598,29 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
+		upgrades.add(new Upgrade("Turret Range Increase",
+				"fireRange",
+				"wepTier2B",
+				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
+				.1f,
+				25000f,
+				1, 3,
+				(panelX - 32) + ((1 * panelWidth) / 4),
+				panelY + 32 + ((2 * panelHeight) / 4),
+				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
+		
+		upgrades.add(new Upgrade("Damage Increase",
+				"fireDamage",
+				"wepTier2C",
+				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
+				.2f,
+				25000f,
+				1, 3,
+				(panelX - 32) + ((3 * panelWidth) / 4),
+				panelY + 32 + ((2 * panelHeight) / 4),
+				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Fire Rate Increase",
 				"mainCannonType",
@@ -612,18 +635,6 @@ public class Store {
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Turret Range Increase",
-				"fireRange",
-				"wepTier2B",
-				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
-				.1f,
-				25000f,
-				1, 3,
-				(panelX - 32) + ((1 * panelWidth) / 4),
-				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
-						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
-		upgrades.add(new Upgrade("Turret Range Increase",
 				"mainCannonType",
 				"wepTier3B",
 				"Turn the main cannon into a \npowerful Gauss Cannon.",
@@ -634,19 +645,6 @@ public class Store {
 				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 61 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
-		upgrades.add(new Upgrade("Damage Increase",
-				"fireDamage",
-				"wepTier2C",
-				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
-				.2f,
-				25000f,
-				1, 3,
-				(panelX - 32) + ((3 * panelWidth) / 4),
-				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
-						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
 
 		//firedamage .2f
 		upgrades.add(new Upgrade("Damage Increase",
