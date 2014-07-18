@@ -25,7 +25,8 @@ public class Turret extends Enemy{
 		range = 550;//override range if need be
 		isAimed = false;
 		isUpgraded = false;
-		super.moneyAmount = 1750;}
+		super.moneyAmount = 1750;
+	}
 	
 	@Override
 	protected void move(){
@@ -87,7 +88,8 @@ public class Turret extends Enemy{
 		float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 		degrees += 180;
 		
-		Acorn temp = new Acorn (this.avatar.getX() + avatar.getOriginX(), this.avatar.getY() + avatar.getOriginY());
+		Acorn temp = new Acorn (this.avatar.getX() + avatar.getOriginX() - SteveDriver.TEXTURE_SIZE / 2,
+				this.avatar.getY() + avatar.getOriginY() - SteveDriver.TEXTURE_SIZE / 2);
 		
 		SteveDriver.field.addProjectile(temp);
 		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));

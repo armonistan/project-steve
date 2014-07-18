@@ -36,6 +36,7 @@ public class Store {
 	private boolean isUpgradeSelected;
 	private Upgrade selectedUpgrade;
 
+	private TextButton[] buttons;
 	private TextButton snakeTier;
 	private TextButton effTier;
 	private TextButton lengthTier;
@@ -69,7 +70,7 @@ public class Store {
 		panelHeight = (3 * Gdx.graphics.getHeight()) / 4;
 
 		infoBox = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth/4),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY((3 * screenHeight) / 4) - (SteveDriver.TEXTURE_SIZE / 2),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY((3 * screenHeight) / 4) - (SteveDriver.TEXTURE_SIZE / 2) + (screenHeight / 64),
 				(2 * (int)SteveDriver.guiCamera.viewportWidth) / SteveDriver.TEXTURE_SIZE / 4, (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, null, description);
 
 		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
@@ -88,13 +89,14 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Reset");
 
+		buttons = new TextButton[6];
 		snakeTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(0 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 0), "Snake");
 
 		effTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(1 * ((3 * screenHeight) / (4 * 6)))  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Efficency");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Efficiency");
 
 		lengthTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
@@ -112,6 +114,13 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 
+		buttons[0] = snakeTier;
+		buttons[1] = effTier;
+		buttons[2] = lengthTier;
+		buttons[3] = weaponsTier;
+		buttons[4] = cashTier;
+		buttons[5] = specialTier;
+		
 		purchaseSound = SteveDriver.assets.get("audio/storePurchase.ogg", Sound.class);
 		
 		initializeUpgrades();
@@ -140,6 +149,16 @@ public class Store {
 
 		for (Upgrade u : upgrades) {
 			u.update();
+		}
+		
+		//Update the upgrade category buttons
+		for (int i = 0; i < buttons.length; i++) {
+			if (tabIndex == i) {
+				buttons[i].setStatus(1);
+			}
+			else {
+				buttons[i].setStatus(0);
+			}
 		}
 
 		if ((field != SteveDriver.field) || (field == null)) {
@@ -370,6 +389,8 @@ public class Store {
 		initTreasure = SteveDriver.snake.getTreasure();
 		
 		setStoreTab(0);
+		
+		SteveDriver.constants.initConstants();
 
 		Upgrade steve = new Upgrade("Regular Steve",
 				"steve",
@@ -577,6 +598,29 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
+		upgrades.add(new Upgrade("Turret Range Increase",
+				"fireRange",
+				"wepTier2B",
+				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
+				.1f,
+				25000f,
+				1, 3,
+				(panelX - 32) + ((1 * panelWidth) / 4),
+				panelY + 32 + ((2 * panelHeight) / 4),
+				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
+		
+		upgrades.add(new Upgrade("Damage Increase",
+				"fireDamage",
+				"wepTier2C",
+				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
+				.2f,
+				25000f,
+				1, 3,
+				(panelX - 32) + ((3 * panelWidth) / 4),
+				panelY + 32 + ((2 * panelHeight) / 4),
+				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
+						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Fire Rate Increase",
 				"mainCannonType",
@@ -591,18 +635,6 @@ public class Store {
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		upgrades.add(new Upgrade("Turret Range Increase",
-				"fireRange",
-				"wepTier2B",
-				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
-				.1f,
-				25000f,
-				1, 3,
-				(panelX - 32) + ((1 * panelWidth) / 4),
-				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
-						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
-		upgrades.add(new Upgrade("Turret Range Increase",
 				"mainCannonType",
 				"wepTier3B",
 				"Turn the main cannon into a \npowerful Gauss Cannon.",
@@ -613,19 +645,6 @@ public class Store {
 				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 61 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
-		upgrades.add(new Upgrade("Damage Increase",
-				"fireDamage",
-				"wepTier2C",
-				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
-				.2f,
-				25000f,
-				1, 3,
-				(panelX - 32) + ((3 * panelWidth) / 4),
-				panelY + 32 + ((2 * panelHeight) / 4),
-				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
-						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
 
 		//firedamage .2f
 		upgrades.add(new Upgrade("Damage Increase",
@@ -852,10 +871,6 @@ public class Store {
 
 		public void update() {
 			available = ((SteveDriver.snake.getMoney() >= (int)(price * SteveDriver.constants.get("priceModifier")) && (currentTier[category] == tier) && (tier < currentTier[0] || category == 0))) || activated;
-
-			if (constantName == "priceModifier") {
-				System.out.println("Shit");
-			}
 			
 			b.setStatus(available ? (activated ? 1 : 0) : 2);
 		}
@@ -881,10 +896,6 @@ public class Store {
 				activated = true;
 				currentTier[category] = tier + 1;
 				
-				if (constantName == "goldModifier") {
-					System.out.println("Shit");
-				}
-
 				if (constantName == "cyborg") {
 					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
 					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));

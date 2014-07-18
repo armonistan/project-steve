@@ -76,7 +76,7 @@ public class Tutorial {
 		SteveDriver.guiHelper.drawBox(SteveDriver.guiCamera.viewportWidth / 2f * -1f,
 				SteveDriver.guiCamera.viewportHeight / 2f / 2f * -1f - SteveDriver.TEXTURE_SIZE,
 				(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE,
-				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, GUIHelper.BoxColors.BLACK);
+				(int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, GUIHelper.BoxColors.BLACK, Color.WHITE);
 		
 		exitButton.update();
 		exitButton.render();
@@ -171,13 +171,13 @@ public class Tutorial {
 			
 				for (Enemy e : SteveDriver.field.enemies) {
 					if (e.getClass() == Slug.class) {
-						float tempDist = CollisionHelper.distanceSquared(e.avatar.getX(), e.avatar.getY(),
+						float tempDist = CollisionHelper.distanceSquared(e.getXPosition(), e.getYPosition(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
 						if (tempDist < closestEnemyDistance) {
 							closestEnemyDistance = tempDist;
-							tempEnemy.x = e.avatar.getX();
-							tempEnemy.y = e.avatar.getY();
+							tempEnemy.x = e.getXPosition();
+							tempEnemy.y = e.getYPosition();
 						}
 					}
 				}

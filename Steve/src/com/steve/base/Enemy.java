@@ -13,7 +13,7 @@ import com.steve.helpers.CollisionHelper;
 import com.steve.stages.Field;
 
 public class Enemy {
-	public Sprite avatar;
+	protected Sprite avatar;
 	protected float mapPositionX;
 	protected float mapPositionY;
 	private int atlasPositionX;
@@ -226,11 +226,11 @@ public class Enemy {
 	}
 		
 	public float getXPosition(){
-		return this.avatar.getX();
+		return this.avatar.getX() + avatar.getOriginX();
 	}
 	
 	public float getYPosition(){
-		return this.avatar.getY();
+		return this.avatar.getY() + avatar.getOriginY();
 	}
 	
 	public Rectangle getRectangle(){
@@ -551,9 +551,5 @@ public class Enemy {
 		else {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}
-	}
-	
-	public void setHealth(float hp) {
-		this.health = hp;
 	}
 }

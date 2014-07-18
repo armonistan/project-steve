@@ -14,7 +14,6 @@ public class OpenStore extends ChangeStage implements ICommand {
 	@Override
 	public void execute() {
 		SteveDriver.resetTheme();
-		SteveDriver.constants.initConstants();
 		SteveDriver.store.initializeUpgrades();
 		
 		SteveDriver.camera.position.x = SteveDriver.store.snake.getHeadPosition().x;
