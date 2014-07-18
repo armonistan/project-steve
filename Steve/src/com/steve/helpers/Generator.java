@@ -511,7 +511,6 @@ public class Generator {
 	}
 	
 	public boolean generateApple(){
-		System.out.println("Okay");
 		//our center would like to fix
 		Vector3 cameraPosition = SteveDriver.camera.position;
 		
@@ -520,17 +519,17 @@ public class Generator {
 		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .5f +
 				r.nextFloat() * SteveDriver.constants.get("screenHeight");
 		//for the x axis right
-		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .25f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .15f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
 		//for the x axis left
-		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .25f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .15f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
 		//for the y axis top
-		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .25f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .25f;
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .15f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
 		//for the y axis bot
-		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.25f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.25f;
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.15f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.15f;
 		//for the y axis right and left
 		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f +
 				r.nextFloat() * SteveDriver.constants.get("screenHeight");

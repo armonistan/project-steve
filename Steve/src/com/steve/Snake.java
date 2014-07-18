@@ -821,7 +821,7 @@ public class Snake {
 	protected void updateTimers(float deltaTime){
 		timer += deltaTime;
 		
-		hungerTimer += deltaTime / SteveDriver.constants.get("hungerRate");
+		hungerTimer += deltaTime;
 		
 		headPosition.x = segments.get(0).getX() + segments.get(0).getOriginX();
 		headPosition.y = segments.get(0).getY() + segments.get(0).getOriginY();
