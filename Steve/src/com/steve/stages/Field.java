@@ -137,7 +137,7 @@ public class Field {
 			
 			topRight = new Cell();
 			topRight.setTile(new StaticTiledMapTile(this.tileMap[y][x + 2]));
-			
+	
 			bottomLeft = new Cell();
 			bottomLeft.setTile(new StaticTiledMapTile(this.tileMap[y + 2][x]));
 			
@@ -586,8 +586,7 @@ public class Field {
 		
 	
 		if(SteveDriver.cyborgBossActivate){
-			BossSummon bs = new BossSummon((int)(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE), (int)(SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE)+8, 0);
-			pickups.add(bs);
+			while(!generator.generateBossSummon(0));
 			SteveDriver.cyborgBossActivate = false;
 			if (!SteveDriver.prefs.getBoolean("cyborgBossTutorial", false)){
 				SteveDriver.prefs.putBoolean("cyborgBossTutorial", true);
@@ -596,9 +595,9 @@ public class Field {
 				SteveDriver.tutorial.startCyborgBossTutorial();
 			}
 		}
-		else if(SteveDriver.robotBossActivate){
-			BossSummon bs = new BossSummon((int)(SteveDriver.snake.getHeadPosition().x/SteveDriver.TEXTURE_SIZE), (int)(SteveDriver.snake.getHeadPosition().y/SteveDriver.TEXTURE_SIZE)+4, 1);
-			pickups.add(bs);
+		
+		else if(SteveDriver.robotBossActivate || true){
+			while(!generator.generateBossSummon(1));
 			if (!SteveDriver.prefs.getBoolean("robotBossTutorial", false)){
 				SteveDriver.prefs.putBoolean("robotBossTutorial", true);
 				SteveDriver.prefs.flush();

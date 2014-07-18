@@ -24,8 +24,8 @@ public class Carrier extends Enemy {
 	int threshHold;
 	float startX;
 	float startY;
-	static int startHealth = 6000;
-	float numTurrets = 12;
+	static int startHealth = 5000;
+	float numTurrets = 10;
 	
 	public Carrier(float x, float y) {
 		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, startHealth);
@@ -43,14 +43,14 @@ public class Carrier extends Enemy {
 		float y = startY;
 		
 		for(int counter = 0; counter < numTurrets/2; counter++){
-			float xOffset = 4+4*counter;
+			float xOffset = 8+4*counter;
 			float yOffset = 1;
 			
 			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
 		}
 		
 		for(int counter = 0; counter < numTurrets/2; counter++){
-			float xOffset = 4+4*counter;
+			float xOffset = 8+4*counter;
 			float yOffset = 6;
 			
 			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
