@@ -175,6 +175,7 @@ public class SteveDriver implements ApplicationListener {
 		assets.load("data/space.png", Texture.class);
 		assets.load("data/facebook_logo.png", Texture.class);
 		assets.load("data/twitter_logo.png", Texture.class);
+		assets.load("data/spaceLoading.png", Texture.class);
 		
 		assets.load("audio/MainV1.ogg", Music.class);
 		assets.load("audio/MainSpace.ogg", Music.class);
