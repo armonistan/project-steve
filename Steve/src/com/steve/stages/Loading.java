@@ -18,10 +18,10 @@ public class Loading {
 	TextButton startButton;
 	
 	public Loading(STAGE_TYPE type) {
-		loading = SteveDriver.assets.get("data/loading.png", Texture.class);
+		loading = SteveDriver.assets.get("data/" + ((type == STAGE_TYPE.ENDGAME) ? "spaceL" : "l") + "oading.png", Texture.class);
 		
 		loadingSprite = new Sprite(new TextureRegion(loading, 0f, 0f, 1f, 1f));
-		loadingSprite.scale(-0.2f);
+		loadingSprite.scale(SteveDriver.guiCamera.viewportHeight / loadingSprite.getHeight() - 1f);
 		loadingSprite.setPosition(loadingSprite.getWidth() / 2 * -1, loadingSprite.getHeight() / 2 * -1);
 		
 		threadFinished = false;

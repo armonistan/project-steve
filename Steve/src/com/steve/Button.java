@@ -52,22 +52,27 @@ public class Button {
 	
 	public void update() {
 		if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if (!clicked && SteveDriver.guiHelper.isTouchInRectangle(
+			if (SteveDriver.guiHelper.isTouchInRectangle(
 					SteveDriver.guiHelper.screenToCoordinateSpaceX(Gdx.input.getX()), 
 					SteveDriver.guiHelper.screenToCoordinateSpaceY(Gdx.input.getY()) + pxHeight, 
 					positionX, positionY, pxWidth, pxHeight)) {
 				if (buttonAction != null) {
-					buttonAction.execute();
+					//buttonAction.execute();
 					clicked = true;
 					personalClicked = true;
 				}
 			}
-			
-			if (personalClicked) {
-				
+			else {
+				personalClicked = false;
 			}
 		}
 		else {
+			if (personalClicked) {
+				if (buttonAction != null) {
+					buttonAction.execute();
+				}
+			}
+			
 			clicked = false;
 			personalClicked = false;
 		}

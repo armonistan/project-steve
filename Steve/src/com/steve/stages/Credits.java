@@ -1,22 +1,20 @@
 package com.steve.stages;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.steve.SpriteButton;
 import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
+import com.steve.commands.OpenWebsite;
 import com.steve.helpers.GUIHelper.BoxColors;
 
 public class Credits {
 	
-	public float appleScore;
-	public float enemyScore;
-	
-	private float applePercent;
-	private float enemyPercent;
-	
 	private TextButton backButton;
-	
-	public boolean showingAds;
+	private SpriteButton facebookButton;
+	private SpriteButton twitterButton;
 	
 	private String[] lines = {"Emberware Team:",
 			"Armon Nayeraini",
@@ -28,14 +26,17 @@ public class Credits {
 			"Tyler Ferguson"};
 	
 	public Credits() {
-		appleScore = 0;
-		enemyScore = 0;
-		
 		backButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Back to Menu");
 		
-		showingAds = false;
+		facebookButton = new SpriteButton(SteveDriver.guiCamera.position.x + SteveDriver.guiCamera.viewportWidth / 2 - 4 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 4, 4,
+				new OpenWebsite("https://www.facebook.com/pages/Steve-Snake-Evolved/532055363584445"), new Sprite(SteveDriver.assets.get("data/facebook_logo.png", Texture.class)));
+		
+		twitterButton = new SpriteButton(SteveDriver.guiCamera.position.x + SteveDriver.guiCamera.viewportWidth / 2 - 8 * SteveDriver.TEXTURE_SIZE,
+				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 4, 4,
+				new OpenWebsite("http://www.twitter.com/emberwareDev"), new Sprite(SteveDriver.assets.get("data/twitter_logo.png", Texture.class)));
 	}
 	
 	public void render() {
@@ -47,6 +48,12 @@ public class Credits {
 		
 		backButton.update();
 		backButton.render();
+		
+		facebookButton.update();
+		facebookButton.render();
+		
+		twitterButton.update();
+		twitterButton.render();
 		
 		SteveDriver.guiHelper.drawBox(-1 * 18 * SteveDriver.TEXTURE_SIZE / 2, 7 * SteveDriver.TEXTURE_SIZE, 18, 18, BoxColors.GOLD, Color.WHITE);
 		
