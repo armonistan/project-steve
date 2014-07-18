@@ -417,13 +417,8 @@ public class Snake {
 		for (Sprite w : weapons){
 			w.draw(SteveDriver.batch);
 		}
-		drawUpgradeImages();
 		
-		if (nukeOpacity > 0f) {
-			nukeExplosionSprite.setPosition(segments.get(0).getX() - 1000, segments.get(0).getY() - 1000);
-			nukeExplosionSprite.setColor(1, 1, 1, nukeOpacity);
-			nukeExplosionSprite.draw(SteveDriver.batch);
-		}
+		drawUpgradeImages();
 	}
 
 	protected boolean checkCollisions() {
@@ -830,7 +825,10 @@ public class Snake {
 			bombsAwayTime += deltaTime;
 		}
 		
-		if (nukeOpacity > 0f) {
+		if (bombsAwayTimer - bombsAwayTime < 0.25f) {
+			nukeOpacity = 1f - (bombsAwayTimer - bombsAwayTime) * 4f;
+		}
+		else if (nukeOpacity > 0f) {
 			nukeOpacity -= deltaTime;
 		}
 		
@@ -973,7 +971,11 @@ public class Snake {
 			helmet.draw(SteveDriver.batch);
 		}
 		if(nuke){
-			
+			if (nukeOpacity > 0f) {
+				nukeExplosionSprite.setPosition(segments.get(0).getX() - 1000, segments.get(0).getY() - 1000);
+				nukeExplosionSprite.setColor(1, 1, 1, nukeOpacity);
+				nukeExplosionSprite.draw(SteveDriver.batch);
+			}
 		}
 		if(glue && glueStick != null){
 			glueStick.setPosition(segments.get(segments.size()-1).getX(), segments.get(segments.size()-1).getY());
