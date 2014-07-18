@@ -596,7 +596,7 @@ public class Field {
 			}
 		}
 		
-		else if(SteveDriver.robotBossActivate || true){
+		else if(SteveDriver.robotBossActivate){
 			while(!generator.generateBossSummon(1));
 			if (!SteveDriver.prefs.getBoolean("robotBossTutorial", false)){
 				SteveDriver.prefs.putBoolean("robotBossTutorial", true);

@@ -393,12 +393,13 @@ public class Generator {
 		
 		if(summonType == 1){
 		//using node
-			xPosTopBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
+			xPosTopBot = SteveDriver.field.totalRadius; //SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
 		
 			xPosRight = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius)
-					+ SteveDriver.field.desertRadius + SteveDriver.field.grassRadius;
+					+ SteveDriver.field.desertRadius  + SteveDriver.field.totalRadius;
+			
 		
-			xPosLeft = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
+			xPosLeft = SteveDriver.field.desertRadius;//SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
 		
 			yPosTop = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius) 
 					+ SteveDriver.field.desertRadius + SteveDriver.field.grassRadius;
@@ -416,7 +417,7 @@ public class Generator {
 		//y
 		//right/left: 0 top = 1 bot = -1
 		int choiceY = 0;
-		int spawnChoice = SteveDriver.random.nextInt(4);
+		int spawnChoice =0;//= SteveDriver.random.nextInt(4);
 		if(spawnChoice == SteveDriver.RIGHT_ID){
 			choiceX = 1;
 			choiceY = 0;
