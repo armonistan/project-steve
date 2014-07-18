@@ -144,6 +144,7 @@ public class Enemy {
 			if (CollisionHelper.isCollide(s.getBoundingRectangle(), avatar.getBoundingRectangle())) {
 				SteveDriver.snake.changeHunger(deathDamage);
 				//TODO: Replace with something better.
+				this.setMoneyAmount(0);
 				kill();
 				break;
 			}
@@ -224,11 +225,7 @@ public class Enemy {
 			SteveDriver.summary.enemyScore += moneyAmount * SteveDriver.constants.get("goldModifier");
 		}
 	}
-	
-	public void setHealth(float hp){
-		health = hp;
-	}
-	
+		
 	public float getXPosition(){
 		return this.avatar.getX() + avatar.getOriginX();
 	}
@@ -555,5 +552,9 @@ public class Enemy {
 		else {
 			shootTimer += Gdx.graphics.getRawDeltaTime();
 		}
+	}
+	
+	public void setHealth(float hp){
+		health = hp;
 	}
 }

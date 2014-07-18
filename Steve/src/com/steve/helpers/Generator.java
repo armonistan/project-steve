@@ -18,6 +18,7 @@ import com.steve.enemies.Narwhal;
 import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
+import com.steve.pickups.BossSummon;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
@@ -372,6 +373,77 @@ public class Generator {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	public boolean generateBossSummon(int summonType){
+		int offset = SteveDriver.field.desertRadius;
+		
+		float xPosTopBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - offset - offset) + offset;
+		
+		float xPosRight = SteveDriver.random.nextInt(offset) + SteveDriver.field.totalRadius - (2*offset);
+	
+		float xPosLeft = SteveDriver.random.nextInt(offset) + offset;
+	
+		float yPosTop = SteveDriver.random.nextInt(offset) + SteveDriver.field.totalRadius - (2*offset);
+	
+		float yPosBot = SteveDriver.random.nextInt(offset) + offset;
+	
+		float yPosRightLeft = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - offset - offset) + offset;
+		
+		if(summonType == 1){
+		//using node
+			xPosTopBot = SteveDriver.field.totalRadius; //SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
+		
+			xPosRight = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius)
+					+ SteveDriver.field.desertRadius  + SteveDriver.field.totalRadius;
+			
+		
+			xPosLeft = SteveDriver.field.desertRadius;//SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
+		
+			yPosTop = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius) 
+					+ SteveDriver.field.desertRadius + SteveDriver.field.grassRadius;
+		
+			yPosBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
+		
+			yPosRightLeft = SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
+		}
+		
+		//System.out.println(xPosTopBot + ", " + yPosTop); //y < 500 y > 100  x < 500 x > 100
+		
+		//x
+		//top/bot: 0 left: -1 right: 1
+		int choiceX = 0;
+		//y
+		//right/left: 0 top = 1 bot = -1
+		int choiceY = 0;
+		int spawnChoice =0;//= SteveDriver.random.nextInt(4);
+		if(spawnChoice == SteveDriver.RIGHT_ID){
+			choiceX = 1;
+			choiceY = 0;
+		}
+		else if(spawnChoice == SteveDriver.UP_ID){
+			choiceX = 0;
+			choiceY = 1;
+		}
+		else if(spawnChoice == SteveDriver.LEFT_ID){
+			choiceX = -1;
+			choiceY = 0;
+		}
+		else if(spawnChoice == SteveDriver.DOWN_ID){
+			choiceX = 0;
+			choiceY = -1;
+		}
+		
+		float xPos = ((choiceX == 0) ? xPosTopBot : 
+			(choiceX < 0) ? xPosLeft : xPosRight);
+		float yPos = ((choiceY == 0) ? yPosRightLeft : 
+			(choiceY < 0) ? yPosBot : yPosTop);	
+		BossSummon bs = new BossSummon(xPos, yPos, summonType);
+		if(SteveDriver.field.isOccupied(bs.getBoundingRectangle())){
+			SteveDriver.field.pickups.add(bs);
+			return true;
+		}
 		return false;
 	}
 	

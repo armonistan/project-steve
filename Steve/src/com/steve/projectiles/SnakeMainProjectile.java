@@ -19,7 +19,7 @@ public class SnakeMainProjectile extends Projectile {
 		super(x, y, atlasX, atlasY, 1, 1, 40 * SteveDriver.constants.get("fireDamage"), true,
 				100 * SteveDriver.constants.get("fireRange"));
 		isRocket = false;
-		speed = 600;
+		speed = 900;
 		ignoreCollisions = true;
 	}
 	

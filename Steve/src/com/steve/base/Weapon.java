@@ -95,7 +95,7 @@ public class Weapon extends Sprite{
 				this.isAimed = true;
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +363)%360));
+				this.setRotation(((this.getRotation() +365)%360));
 			}
 		}
 		else{
@@ -104,7 +104,7 @@ public class Weapon extends Sprite{
 			}
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +357)%360));
+				this.setRotation(((this.getRotation() +355)%360));
 			}
 		}
 	}

@@ -88,7 +88,7 @@ public class Razorbull extends Enemy{
 			Rectangle r = e.getRectangle();
 			if (CollisionHelper.isCollide(r, avatar.getBoundingRectangle()) && e != this) {
 				e.setMoneyAmount(0);
-				e.setHealth(0);
+				e.setHealth(0f);
 				break;
 			}
 		}
