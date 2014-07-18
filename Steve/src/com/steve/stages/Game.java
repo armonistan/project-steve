@@ -51,6 +51,7 @@ public class Game {
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.camera.combined);
 		if (!SteveDriver.tutorial.isActive()) {
 			SteveDriver.field.update();
+			pause.update();
 			SteveDriver.snake.update();
 		}
 		
@@ -66,7 +67,6 @@ public class Game {
 		if (!SteveDriver.tutorialOn) {
 			SteveDriver.batch.begin();
 			pause.setStatus(0);
-			pause.update();
 			pause.render();
 			SteveDriver.batch.end();
 		}
