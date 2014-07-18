@@ -33,7 +33,7 @@ public class Snake {
 	protected float timeBetweenTurn = 0.4f;
 	protected float timer = 0;
 	
-	protected float bombsAwayTimer = 5f;
+	protected float bombsAwayTimer = 60f;
 	protected float bombsAwayTime = 0f;
 	
 	private float lastDamageTimer;
