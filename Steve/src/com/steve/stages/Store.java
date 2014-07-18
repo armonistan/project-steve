@@ -70,7 +70,7 @@ public class Store {
 		panelHeight = (3 * Gdx.graphics.getHeight()) / 4;
 
 		infoBox = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(screenWidth/4),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY((3 * screenHeight) / 4) - (SteveDriver.TEXTURE_SIZE / 2),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY((3 * screenHeight) / 4) - (SteveDriver.TEXTURE_SIZE / 2) + (screenHeight / 64),
 				(2 * (int)SteveDriver.guiCamera.viewportWidth) / SteveDriver.TEXTURE_SIZE / 4, (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, null, description);
 
 		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
@@ -96,7 +96,7 @@ public class Store {
 
 		effTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(1 * ((3 * screenHeight) / (4 * 6)))  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Efficency");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Efficiency");
 
 		lengthTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
