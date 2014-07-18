@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.steve.helpers.GUIHelper;
 
 public class Button {
@@ -15,6 +16,7 @@ public class Button {
 	ICommand buttonAction;
 	
 	static boolean clicked;
+	private boolean personalClicked;
 	int status;
 	
 	public Button(float posX, float posY, int width, int height, ICommand action) {
@@ -27,19 +29,23 @@ public class Button {
 		buttonAction = action;
 		
 		clicked = false;
+		personalClicked = false;
 		status = 0;
 	}
 	
 	public void render() {
 		switch(status) {
 			case 1:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.GOLD);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.GOLD,
+					personalClicked ? Color.GRAY : Color.WHITE);
 				break;
 			case 2:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.RED);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.RED,
+						personalClicked ? Color.GRAY : Color.WHITE);
 				break;
 			default:
-				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.BLACK);
+				SteveDriver.guiHelper.drawBox(positionX, positionY - SteveDriver.TEXTURE_SIZE, width, height, GUIHelper.BoxColors.BLACK,
+						personalClicked ? Color.GRAY : Color.WHITE);
 				break;
 		}
 	}
@@ -53,11 +59,17 @@ public class Button {
 				if (buttonAction != null) {
 					buttonAction.execute();
 					clicked = true;
+					personalClicked = true;
 				}
+			}
+			
+			if (personalClicked) {
+				
 			}
 		}
 		else {
 			clicked = false;
+			personalClicked = false;
 		}
 		
 		if (buttonAction != null) {

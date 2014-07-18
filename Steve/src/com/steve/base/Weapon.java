@@ -87,7 +87,6 @@ public class Weapon extends Sprite{
 		//image offset
 		degrees += 90;
 
-		
 		float deltaPositiveDegrees = Math.abs(degrees - this.getRotation() + 360)%360;
 		float deltaNegativeDegrees = Math.abs(this.getRotation() - degrees + 360)%360;
 	

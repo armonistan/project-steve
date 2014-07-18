@@ -57,6 +57,8 @@ public class Field {
 	public Thread generatingField;
 	
 	protected Sprite space;
+	protected Sprite candySpace;
+	protected Sprite stars;
 	
 	private boolean generatorEnabled;
 	
@@ -264,8 +266,9 @@ public class Field {
 		SteveDriver.camera.position.x = SteveDriver.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.snake.getHeadPosition().y;
 		
-		
 		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
+		candySpace = new Sprite(new TextureRegion(SteveDriver.assets.get("data/space.png", Texture.class)));
+		stars = new Sprite(new TextureRegion(SteveDriver.assets.get("data/stars.png", Texture.class)));
 	}
 	
 	public void destroyBlocker(int xPos, int yPos){
@@ -418,12 +421,59 @@ public class Field {
 					blockerTiles.add(new CellContainer(0, 16, splitTiles, SteveDriver.random));
 					blockerTiles.add(new CellContainer(0, 19, splitTiles, SteveDriver.random));
 				}
+				
+				boolean candy = SteveDriver.constants.get("candyZone") == 0f;
+				
 				//This is the Background generation	
 				//Barren tiles generated
 				for (int x = 0; x < totalRadius; x++) {
 					for (int y = 0; y < totalRadius; y++) {
-						int ty = barren.GetRandomY();
-						int tx = barren.GetRandomX();
+						int ty;
+						int tx;
+						
+						if (x == 0) {
+							if (y == totalRadius - 1) {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								tx = 14 - (candy ? 0 : 3);
+								ty = 20;
+							}
+						}
+						else if (x == totalRadius - 1) {
+							if (y == totalRadius - 1) {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								tx = 16 - (candy ? 0 : 3);
+								ty = 20;
+							}
+						}
+						else {
+							if (y == totalRadius - 1) {
+								tx = 15 - (candy ? 0 : 3);
+								ty = 19;
+							}
+							else if (y == 0) {
+								tx = 15 - (candy ? 0 : 3);
+								ty = 21;
+							}
+							else {
+								ty = barren.GetRandomY();
+								tx = barren.GetRandomX();
+							}
+						}
+						
 						Cell cell = new Cell();
 						cell.setTile(new StaticTiledMapTile(splitTiles[ty][tx]));
 						layer.setCell(x, y, cell);
@@ -637,11 +687,23 @@ public class Field {
 				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
 				SteveDriver.camera.position.y - space.getHeight() / 2f +
 				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
+		stars.setPosition(SteveDriver.camera.position.x - stars.getWidth() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
+				SteveDriver.camera.position.y - stars.getHeight() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
+		candySpace.setPosition(SteveDriver.camera.position.x - candySpace.getWidth() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().x) / (totalRadius / 10f),
+				SteveDriver.camera.position.y - candySpace.getHeight() / 2f +
+				(totalRadius * SteveDriver.TEXTURE_SIZE / 2 - SteveDriver.snake.getHeadPosition().y) / (totalRadius / 10f));
 	}
 	
 	public void drawBelowSnake() {
-		space.draw(SteveDriver.batch);
+		drawSpace();
 		
+		drawEverythingElse();
+	}
+
+	protected void drawEverythingElse() {
 		int startX = (int)(SteveDriver.camera.position.x - SteveDriver.camera.viewportWidth / 2f) / SteveDriver.TEXTURE_SIZE;
 		int endX = (int)(SteveDriver.camera.position.x + SteveDriver.camera.viewportWidth / 2f) / SteveDriver.TEXTURE_SIZE;
 		int startY = (int)(SteveDriver.camera.position.y - SteveDriver.camera.viewportHeight / 2f) / SteveDriver.TEXTURE_SIZE;
@@ -682,6 +744,18 @@ public class Field {
 		
 		for (Enemy e : enemies) {
 			e.draw();
+		}
+	}
+
+	protected void drawSpace() {
+		if (candySpace != null && SteveDriver.constants.get("candyZone") != 0f) {
+			candySpace.draw(SteveDriver.batch);
+		}
+		else {
+			space.draw(SteveDriver.batch);
+		}
+		if (stars != null) {
+			stars.draw(SteveDriver.batch);
 		}
 	}
 	
@@ -805,7 +879,7 @@ public class Field {
 		bottom = (blockers.getCell(x, y - 1) == null) || (tileRad != this.checkRing(x, y - 1));
 		
 		
-		blockers.setCell(x, y, blockerTiles.get(tileRad).middle);
+		blockers.setCell(x, y, blockerTiles.get(Math.min(tileRad, blockerTiles.size())).middle);
 		//set the actual tile image
 		if (left) {
 			if (top) {
