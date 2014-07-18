@@ -12,17 +12,9 @@ import com.steve.helpers.GUIHelper.BoxColors;
 
 public class Credits {
 	
-	public float appleScore;
-	public float enemyScore;
-	
-	private float applePercent;
-	private float enemyPercent;
-	
 	private TextButton backButton;
 	private SpriteButton facebookButton;
 	private SpriteButton twitterButton;
-	
-	public boolean showingAds;
 	
 	private String[] lines = {"Emberware Team:",
 			"Armon Nayeraini",
@@ -34,9 +26,6 @@ public class Credits {
 			"Tyler Ferguson"};
 	
 	public Credits() {
-		appleScore = 0;
-		enemyScore = 0;
-		
 		backButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
 				new ChangeStage(SteveDriver.STAGE_TYPE.MENU), "Back to Menu");
@@ -48,8 +37,6 @@ public class Credits {
 		twitterButton = new SpriteButton(SteveDriver.guiCamera.position.x + SteveDriver.guiCamera.viewportWidth / 2 - 8 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 4, 4,
 				new OpenWebsite("http://www.twitter.com/emberwareDev"), new Sprite(SteveDriver.assets.get("data/twitter_logo.png", Texture.class)));
-		
-		showingAds = false;
 	}
 	
 	public void render() {
