@@ -13,7 +13,5 @@ public class ExitGame implements ICommand {
 	@Override
 	public void keepExecute() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }
