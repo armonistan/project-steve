@@ -23,6 +23,8 @@ public class GUI {
 	
 	private Sprite endHP;
 	
+	private Sprite[] arrows;
+	
 	public GUI() {
 		guiTextures = new ArrayList<Sprite>();
 		for (int i = 0; i < 6; i++) {
@@ -36,6 +38,25 @@ public class GUI {
 		guiTextures.get(0).setPosition(rightEndPosition.x, rightEndPosition.y);
 		
 		endHP = new Sprite(new TextureRegion(SteveDriver.atlas, 0, 23 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE));
+	
+		arrows = new Sprite[4];
+		arrows[0] = new Sprite(new TextureRegion(SteveDriver.atlas, 3 * SteveDriver.TEXTURE_SIZE, 30 * SteveDriver.TEXTURE_SIZE,
+			3 * SteveDriver.TEXTURE_SIZE, 5 * SteveDriver.TEXTURE_SIZE));
+		arrows[1] = new Sprite(new TextureRegion(SteveDriver.atlas, 6 * SteveDriver.TEXTURE_SIZE, 30 * SteveDriver.TEXTURE_SIZE,
+				3 * SteveDriver.TEXTURE_SIZE, 5 * SteveDriver.TEXTURE_SIZE));
+		arrows[2] = new Sprite(new TextureRegion(SteveDriver.atlas, 9 * SteveDriver.TEXTURE_SIZE, 30 * SteveDriver.TEXTURE_SIZE,
+				5 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE));
+		arrows[3] = new Sprite(new TextureRegion(SteveDriver.atlas, 14 * SteveDriver.TEXTURE_SIZE, 32 * SteveDriver.TEXTURE_SIZE,
+				5 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE));
+		
+		arrows[0].setPosition(SteveDriver.guiCamera.viewportWidth / 4 - arrows[0].getWidth() / 2, -1 * arrows[0].getHeight() / 2);
+		arrows[1].setPosition(-1 * SteveDriver.guiCamera.viewportWidth / 4 - arrows[1].getWidth() / 2, -1 * arrows[1].getHeight() / 2);
+		arrows[2].setPosition(-1 * arrows[2].getWidth() / 2, -1 * arrows[2].getHeight() / 2 + SteveDriver.guiCamera.viewportHeight / 4);
+		arrows[3].setPosition(-1 * arrows[3].getWidth() / 2, -1 * arrows[3].getHeight() / 2 - SteveDriver.guiCamera.viewportHeight / 4);
+		
+		for (Sprite s : arrows) {
+			s.setColor(1f, 1f, 1f, 0.25f);
+		}
 	}
 	
 	public void render() {
@@ -89,6 +110,10 @@ public class GUI {
 				guiTextures.get(healthColor).setPosition(3f * SteveDriver.TEXTURE_SIZE * (i - 2), height/2 - 150);
 				guiTextures.get(healthColor).draw(SteveDriver.batch);
 			}
+		}
+		
+		for (Sprite s : arrows) {
+			s.draw(SteveDriver.batch);
 		}
 		
 		SteveDriver.batch.end();

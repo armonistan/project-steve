@@ -19,7 +19,7 @@ import com.steve.TextButton;
 public class Menu {
 	Sprite logo;
 	
-	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 6 * SteveDriver.TEXTURE_SIZE, 10, 4, new StartNewGame(), "New Game");
+	TextButton newGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 6 * SteveDriver.TEXTURE_SIZE, 10, 4, new ChangeStage(STAGE_TYPE.AREYOUFUCKINGSURE), "New Game");
 	TextButton continueGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, 2 * SteveDriver.TEXTURE_SIZE, 10, 4, new StartNewRound(), "Continue");
 	TextButton credits = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, -2 * SteveDriver.TEXTURE_SIZE, 10, 4, new ChangeStage(STAGE_TYPE.CREDITS), "Credits");
 	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_SIZE,
