@@ -24,6 +24,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.helpers.ConstantHelper;
 import com.steve.helpers.GUIHelper;
+import com.steve.stages.ConfirmNewGame;
 import com.steve.stages.Credits;
 import com.steve.stages.EndGame;
 import com.steve.stages.Field;
@@ -87,6 +88,7 @@ public class SteveDriver implements ApplicationListener {
 	public static Logo logo;
 	public static Loading loading;
 	public static EndGame endGame;
+	public static ConfirmNewGame newGame;
 	
 	public static int mainThemeIndex = 0;
 	public static int spaceThemeIndex = 1;
@@ -119,7 +121,8 @@ public class SteveDriver implements ApplicationListener {
 		SUMMARY,
 		PAUSED,
 		LOGO,
-		LOADING
+		LOADING,
+		AREYOUFUCKINGSURE		
 	}
 	
 	public SteveDriver(IActivityRequestHandler handler) {
@@ -237,6 +240,7 @@ public class SteveDriver implements ApplicationListener {
 		credits = new Credits();
 		loading = new Loading(STAGE_TYPE.GAME);
 		endGame = new EndGame();
+		newGame = new ConfirmNewGame();
 		
 		summary = new Summary();
 	}
@@ -318,6 +322,9 @@ public class SteveDriver implements ApplicationListener {
 			break;
 		case ENDGAME:
 			endGame.render();
+			break;
+		case AREYOUFUCKINGSURE:
+			newGame.render();
 			break;
 		}
 
