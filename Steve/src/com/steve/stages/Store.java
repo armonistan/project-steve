@@ -73,19 +73,19 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((3 * screenHeight) / 4) - (SteveDriver.TEXTURE_SIZE / 2) + (screenHeight / 64),
 				(2 * (int)SteveDriver.guiCamera.viewportWidth) / SteveDriver.TEXTURE_SIZE / 4, (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4, null, description);
 
-		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
+		returnToGame = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((3 * screenWidth) / 4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8)  - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNING), "Play!");
 
-		returnToMenu = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
+		returnToMenu = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((3 * screenWidth) / 4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8)  - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new FromStoreToMenu(), "Menu");
 		
-		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((6 * screenWidth) / 8),
+		buyUpgrade = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((0 * screenWidth) / 4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((6 * screenHeight) / 8) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ConfirmUpgrade(this), "Buy!");
 
-		resetChoices = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((6 * screenWidth) / 8),
+		resetChoices = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX((0 * screenWidth) / 4),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY((7 * screenHeight) / 8) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (int)SteveDriver.guiCamera.viewportHeight / SteveDriver.TEXTURE_SIZE / 4 / 2, new ResetStoreChanges(), "Reset");
 
@@ -106,19 +106,19 @@ public class Store {
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(3 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 3), "Weapons");
 
-		cashTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
+/*		cashTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(4 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 4), "Cash");
-
+*/
 		specialTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
-				SteveDriver.guiHelper.screenToCoordinateSpaceY(5 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
+				SteveDriver.guiHelper.screenToCoordinateSpaceY(4 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
 				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 5), "Special");
 
 		buttons[0] = snakeTier;
 		buttons[1] = effTier;
 		buttons[2] = lengthTier;
 		buttons[3] = weaponsTier;
-		buttons[4] = cashTier;
+		//buttons[4] = cashTier;
 		buttons[5] = specialTier;
 		
 		purchaseSound = SteveDriver.assets.get("audio/storePurchase.ogg", Sound.class);
@@ -154,10 +154,12 @@ public class Store {
 		//Update the upgrade category buttons
 		for (int i = 0; i < buttons.length; i++) {
 			if (tabIndex == i) {
-				buttons[i].setStatus(1);
+				if(buttons[i] != null)
+					buttons[i].setStatus(1);
 			}
-			else {
-				buttons[i].setStatus(0);
+			else{
+				if(buttons[i] != null)
+					buttons[i].setStatus(0);
 			}
 		}
 
@@ -231,7 +233,7 @@ public class Store {
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
 							Color.BLACK);
-				break;
+				break;/*
 				case 4:
 					description = "Mo' money mo' prolems";
 					SteveDriver.guiHelper.drawTextCentered("Cash Upgrades",
@@ -239,6 +241,7 @@ public class Store {
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
 							Color.BLACK);
 				break;
+				*/
 				case 5:
 					description = "These are secrets. SECRET.";
 					SteveDriver.guiHelper.drawTextCentered("Special Upgrades",
@@ -279,8 +282,9 @@ public class Store {
 		lengthTier.render();
 		weaponsTier.update();
 		weaponsTier.render();
-		cashTier.update();
+		/*cashTier.update();
 		cashTier.render();
+		*/
 		specialTier.update();
 		specialTier.render();
 		returnToMenu.update();
@@ -658,7 +662,7 @@ public class Store {
 				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
 						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
-
+		/*
 		upgrades.add(new Upgrade("Plentiful Money I",
 				"goldModifier",
 				"goldTier1A",
@@ -730,7 +734,7 @@ public class Store {
 				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
-
+		 */
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
 				"special1",
