@@ -27,7 +27,7 @@ public class Loading {
 		threadFinished = false;
 		
 		startButton = new TextButton(-5f * SteveDriver.TEXTURE_SIZE,
-				SteveDriver.guiCamera.viewportHeight / 2f * -1f + 4f * SteveDriver.TEXTURE_SIZE, 10, 4,
+				SteveDriver.guiCamera.viewportHeight / 2f * -1f + 5f * SteveDriver.TEXTURE_SIZE, 11, 4,
 				new WrapUpLoading(type), "Generating...");
 	
 	}
@@ -36,7 +36,10 @@ public class Loading {
 		if (threadFinished) {
 			startButton.setText("Start!");
 			startButton.update();
+			startButton.setStatus(0);
 		}
+		else
+			startButton.setStatus(2);
 		
 		SteveDriver.guiCamera.position.x = 0;
 		SteveDriver.guiCamera.position.y = 0;
