@@ -99,6 +99,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean robotBossActivate = false;
 
 	public static int numBosses = 2;
+	public static int numApples = 0;
 	
 	private static Music music;
 	private static Music mainMusic;

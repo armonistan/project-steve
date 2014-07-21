@@ -96,7 +96,7 @@ public class Store {
 
 		effTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(1 * ((3 * screenHeight) / (4 * 6)))  - (screenHeight / 64),
-				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Efficiency");
+				(int)SteveDriver.guiCamera.viewportWidth / (4 * SteveDriver.TEXTURE_SIZE), (3 * (int)SteveDriver.guiCamera.viewportHeight) / (4 * SteveDriver.TEXTURE_SIZE * 6), new SwitchStoreTab(this, 1), "Durability");
 
 		lengthTier = new TextButton(SteveDriver.guiHelper.screenToCoordinateSpaceX(0),
 				SteveDriver.guiHelper.screenToCoordinateSpaceY(2 * ((3 * screenHeight) / (4 * 6))) - (screenHeight / 64),
@@ -204,7 +204,7 @@ public class Store {
 		if (!isUpgradeSelected) {
 			switch (tabIndex) {
 				case 0:
-					description = "Ascend to a higher existence.";
+					description = "Ascend to a higher existence. Your \n destiny awaits.";
 					SteveDriver.guiHelper.drawTextCentered("Snake Upgrades",
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10)) - 15,
@@ -348,7 +348,7 @@ public class Store {
 				description = "You already own this.";
 			}
 			else if (tryBuy == 4) {
-				description = "Upgrade not available!";
+				description = "You may only choose one\nupgrade per a tier! ";
 			}
 
 			selectedUpgrade = null;
@@ -409,7 +409,7 @@ public class Store {
 		upgrades.add(new Upgrade("Cyborg Steve",
 				"cyborg",
 				"snakeTier1",
-				"Turn Steve into a Cyborg",
+				"Stronger, faster, better, and still adorable.",
 				1.0f,
 				25000f,
 				1, 0,
@@ -421,7 +421,7 @@ public class Store {
 		upgrades.add(new Upgrade("Robo Steve",
 				"robot",
 				"snakeTier2",
-				"Turn Steve into a Robot",
+				"His body may be solid steel, but his heart\n is still solid gold.",
 				1.0f,
 				100000f,
 				2, 0,
@@ -430,7 +430,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 41 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Increase HP",
+		upgrades.add(new Upgrade("Increase HP I",
 				"hitpoints",
 				"effTier1A",
 				"Give Steve 25% more hitpoints",
@@ -442,7 +442,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 31 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Magic Apples",
+		upgrades.add(new Upgrade("Magic Apples I",
 				"hungerRate",
 				"effTier1B",
 				"Apples heal you for an additional 20 hp",
@@ -454,7 +454,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 31 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Increase HP",
+		upgrades.add(new Upgrade("Increase HP II",
 				"hitpoints",
 				"effTier2A",
 				"Give Steve 25% more hitpoints",
@@ -466,7 +466,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 33 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Magic Apple",
+		upgrades.add(new Upgrade("Magic Apple II",
 				"hungerRate",
 				"effTier2B",
 				"Apples heal you for an additional 20 hp",
@@ -478,7 +478,7 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 33 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Increase HP",
+		upgrades.add(new Upgrade("Increase HP III",
 				"hitpoints",
 				"effTier3A",
 				"Give Steve 25% more hitpoints",
@@ -490,7 +490,7 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 35 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Magic Apple",
+		upgrades.add(new Upgrade("Magic Apple III",
 				"hungerRate",
 				"effTier3B",
 				"Apples heal you for an additional 20 hp",
@@ -502,10 +502,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 35 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Increase start length",
+		upgrades.add(new Upgrade("Start Length Increase I",
 				"startLength",
 				"survTier1A",
-				"Give Steve 1 more segments\nwhen the round starts",
+				"Give Steve 1 more segment\nwhen the round starts",
 				1f,
 				2500f,
 				0, 2,
@@ -514,7 +514,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 45 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Max Length Increase",
+		upgrades.add(new Upgrade("Max Length Increase I",
 				"maxLength",
 				"survTier1B",
 				"Increase the maximum possible\nlength of Steve by 2.",
@@ -526,10 +526,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 45 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Increase start length",
+		upgrades.add(new Upgrade("Start Length Increase II",
 				"startLength",
 				"survTier2A",
-				"Give Steve 1 more segments\nwhen the round starts",
+				"Give Steve 1 more segment\nwhen the round starts",
 				1f,
 				25000f,
 				1, 2,
@@ -538,7 +538,7 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 47 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Max Length Increase",
+		upgrades.add(new Upgrade("Max Length Increase II",
 				"maxLength",
 				"survTier2B",
 				"Increase the maximum possible\nlength of Steve by 2.",
@@ -550,10 +550,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 47 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Increase start length",
+		upgrades.add(new Upgrade("Start Length Increase III",
 				"startLength",
 				"survTier3A",
-				"Give Steve 1 more segments\nwhen the round starts",
+				"Give Steve 1 more segment\nwhen the round starts",
 				1f,
 				125000f,
 				2, 2,
@@ -562,7 +562,7 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 49 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Max Length Increase",
+		upgrades.add(new Upgrade("Max Length Increase III",
 				"maxLength",
 				"survTier3B",
 				"Increase the maximum possible\nlength of Steve by 2.",
@@ -574,10 +574,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 49 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Main Gun",
+		upgrades.add(new Upgrade("The Slug Slayer",
 				"mainGun",
 				"wepTier1",
-				"Steve gains a main cannon\non his first segment.",
+				"Mount the Slug Slayer on Steve.\n The splats of slug will be music to your ears.",
 				1f,
 				7500f,
 				0, 3,
@@ -586,10 +586,10 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Fire Rate Increase",
+		upgrades.add(new Upgrade("Tommy the Gun",
 				"fireRate",
 				"wepTier2A",
-				"Main Gun: 30% fire rate bonus\nOther Guns: 15% fire rate bonus",
+				"Replace the Slug Slayer with Tommy the Gun.\nTommy likes bullets. Expect to see a lot of them",
 				.15f,
 				75000f,
 				1, 3,
@@ -598,10 +598,10 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Turret Range Increase",
+		upgrades.add(new Upgrade("The Sentinel",
 				"fireRange",
 				"wepTier2B",
-				"Main Gun: 20% range bonus\nOther Guns: 10% range bonus",
+				"Replace the Slug Slayer with the Sentinel.\n From a distance it watches.\nFrom a distance it kills.",
 				.1f,
 				75000f,
 				1, 3,
@@ -610,10 +610,10 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 59 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 		
-		upgrades.add(new Upgrade("Damage Increase",
+		upgrades.add(new Upgrade("The Overkill",
 				"fireDamage",
 				"wepTier2C",
-				"Main Gun: 40% damage bonus\nOther Guns: 20% damage bonus",
+				"Replace the Slug Slayer with the Overkill.\nExpect to hear a lot more splats.",
 				.2f,
 				75000f,
 				1, 3,
@@ -622,10 +622,10 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Fire Rate Increase",
+		upgrades.add(new Upgrade("Tommy the Gun III",
 				"mainCannonType",
 				"wepTier3A",
-				"Triple firepower!",
+				"Tommy the Gun's grandchild.\nThree times the fun Tommy was.",
 				1f,
 				275000f,
 				2, 3,
@@ -634,10 +634,10 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 61 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Turret Range Increase",
+		upgrades.add(new Upgrade("The Beholder",
 				"mainCannonType",
 				"wepTier3B",
-				"Turn the main cannon into a \npowerful Gauss Cannon.",
+				"No one can hide from the Beholder.\nNo distance is far enough.\nNo cover is strong enough.",
 				2f,
 				275000f,
 				2, 3,
@@ -647,10 +647,10 @@ public class Store {
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
 		//firedamage .2f
-		upgrades.add(new Upgrade("Damage Increase",
+		upgrades.add(new Upgrade("The Barrage",
 				"mainCannonType",
 				"wepTier3C",
-				"All missles fire!",
+				"With such firepower comes responsiblity...\nAnd a lot of destruction!",
 				3f,
 				275000f,
 				2, 3,
@@ -659,7 +659,7 @@ public class Store {
 				new Sprite(new TextureRegion(SteveDriver.atlas, 57 * SteveDriver.TEXTURE_SIZE,
 						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE))));
 
-		upgrades.add(new Upgrade("Plentiful Money",
+		upgrades.add(new Upgrade("Plentiful Money I",
 				"goldModifier",
 				"goldTier1A",
 				"Sources of gold are worth 15% more.",
@@ -671,43 +671,43 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 		
-		upgrades.add(new Upgrade("Cheapskate",
+		upgrades.add(new Upgrade("Cheapskate I",
 				"priceModifier",
 				"goldTier1B",
 				"Upgrades are 10% cheaper.",
 				-.1f,
-				1000f,
+				10000f,
 				0, 4,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 51 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Plentiful Money",
+		upgrades.add(new Upgrade("Plentiful Money II",
 				"goldModifier",
 				"goldTier2A",
 				"Sources of gold are worth 15% more.",
 				.15f,
-				10000f,
+				100000f,
 				1, 4,
 				(panelX - 32) + ((1 * panelWidth) / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 		
-		upgrades.add(new Upgrade("Cheapskate",
+		upgrades.add(new Upgrade("Cheapskate II",
 				"priceModifier",
 				"goldTier2B",
 				"Upgrades are 10% cheaper.",
 				-.1f,
-				10000f,
+				100000f,
 				1, 4,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 53 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Plentiful Money",
+		upgrades.add(new Upgrade("Plentiful Money III",
 				"goldModifier",
 				"goldTier3A",
 				"Sources of gold are worth 15% more.",
@@ -719,7 +719,7 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 55 * SteveDriver.TEXTURE_SIZE,
 						17 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("Cheapskate",
+		upgrades.add(new Upgrade("Cheapskate III",
 				"priceModifier",
 				"goldTier3B",
 				"Upgrades are 10% cheaper.",
@@ -734,7 +734,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
 				"special1",
-				"Steve lays down a trail\nof glue behind him.",
+				"Attach a glue stick to Steve's tail\nResults guranteed to stick to you.",
 				1f,
 				8f,
 				(panelX - 32) + ((1 * panelWidth) / 3),
@@ -745,7 +745,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Candy Zone",
 				"candyZone",
 				"special6",
-				"???",
+				"Welcome to the Candy Zone",
 				1f,
 				20f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
@@ -756,7 +756,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Nuke",
 				"nuke",
 				"special2",
-				"Steve sets off a detonation every\n60 seconds.",
+				"What's better than a gun wielding snake?\nA gun wielding snake with a nuke, duh.",
 				1f,
 				15f,
 				(panelX - 32) + ((1 * panelWidth) / 3),

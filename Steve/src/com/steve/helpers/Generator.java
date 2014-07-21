@@ -3,6 +3,7 @@ package com.steve.helpers;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -36,23 +37,25 @@ public class Generator {
 	
 	private Random r;
 	
-	final float enemyGenerationTime = 2; 
+	float enemyGenerationTime = 2; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 3; 
+	final float appleGenerationTime = 5; 
 	float appleGenerationCounter; 
 	
-	final float pickUpGenerationTime = 2; 
+	final float pickUpGenerationTime = 4f; 
 	float pickUpGenerationCounter; 
 	
-	final float upgradeGenerationTime = 2; 
+	final float upgradeGenerationTime = 6; 
 	float upgradeGenerationCounter; 
 	
 	public Generator(){
 		enemyGenerationCounter = 0; 
-		appleGenerationCounter = 0; 
+		appleGenerationCounter = this.appleGenerationTime; 
 		pickUpGenerationCounter = 0; 
 		upgradeGenerationCounter = 0; 
+		SteveDriver.numApples = 0;
+		
 		
 		r = new Random();
 	}
@@ -72,13 +75,14 @@ public class Generator {
 		else
 			pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
-		if(this.appleGenerationCounter > this.appleGenerationTime){
+		if(SteveDriver.numApples < 1){
 			if(generateApple())
 				this.appleGenerationCounter = 0;
 		}
 		else
 			appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
 
+		this.enemyGenerationTime = 2 - SteveDriver.snake.getWeapons().size()/(SteveDriver.constants.get("maxLength"));
 	}
 	
 	private boolean generateEnemy(){
@@ -272,8 +276,24 @@ public class Generator {
 
 		//review code. pick up generation may not be satisfactory. aka grass is nothing, chance for weapon in desert...
 		int pickUpType = (locationID == GRASS_ID) ?  0 :
-			(locationID == DESERT_ID) ?  r.nextInt(2) : r.nextInt(2)+1;
-
+			(locationID == DESERT_ID) ?  1 : r.nextInt(2)+1;
+			
+		float deltaX = Math.abs(xPos - SteveDriver.field.totalRadius/2);
+		float deltaY = Math.abs(yPos - SteveDriver.field.totalRadius/2);
+		float angle = MathUtils.radiansToDegrees*MathUtils.atan2(deltaX, deltaY);
+		float deltaWhole = Math.abs(angle-45);
+		float deltaFraction = 1-deltaWhole/45;
+		
+		if(pickUpType == 1 &&
+				Math.sqrt(CollisionHelper.distanceSquared(xPos, yPos, SteveDriver.field.totalRadius/2, SteveDriver.field.totalRadius/2)) < (SteveDriver.field.grassRadius/2+(12+12*deltaFraction))){
+			pickUpType = 0;
+		}
+		else if(pickUpType == 2 &&
+				Math.sqrt(CollisionHelper.distanceSquared(xPos, yPos, SteveDriver.field.totalRadius/2, SteveDriver.field.totalRadius/2)) < (SteveDriver.field.desertRadius/2+(12+12*deltaFraction)))
+			pickUpType = 0;
+		else
+			;
+			
 		if (locationID < 3) {
 			switch(pickUpType){
 				case 1:
@@ -393,19 +413,18 @@ public class Generator {
 		
 		if(summonType == 1){
 		//using node
-			xPosTopBot = SteveDriver.field.totalRadius; //SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
+			xPosTopBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
 		
-			xPosRight = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius)
-					+ SteveDriver.field.desertRadius  + SteveDriver.field.totalRadius;
-			
-		
-			xPosLeft = SteveDriver.field.desertRadius;//SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
-		
-			yPosTop = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius - SteveDriver.field.grassRadius) 
-					+ SteveDriver.field.desertRadius + SteveDriver.field.grassRadius;
-		
-			yPosBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - SteveDriver.field.desertRadius);
-		
+			xPosRight = SteveDriver.random.nextInt(SteveDriver.field.desertRadius)
+					- SteveDriver.field.desertRadius  + SteveDriver.field.totalRadius;
+				
+			xPosLeft = SteveDriver.random.nextInt(SteveDriver.field.desertRadius);
+				
+			yPosTop = SteveDriver.random.nextInt(SteveDriver.field.desertRadius)
+					- SteveDriver.field.desertRadius  + SteveDriver.field.totalRadius;
+				
+			yPosBot = SteveDriver.random.nextInt(SteveDriver.field.desertRadius);
+
 			yPosRightLeft = SteveDriver.random.nextInt(SteveDriver.field.totalRadius);
 		}
 		
@@ -516,23 +535,23 @@ public class Generator {
 		
 		//using pixel
 		//for the x axis top and bottom
-		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .5f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight");
+		float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .2f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight")*.4f;
 		//for the x axis right
-		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .15f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
+		float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .4f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the x axis left
-		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .15f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
+		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .4f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis top
-		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .15f
-				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .15f;
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .4f
+				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis bot
-		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.15f
-				- r.nextFloat() * SteveDriver.constants.get("screenHeight") *.15f;
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.4f
+				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis right and left
-		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .5f +
-				r.nextFloat() * SteveDriver.constants.get("screenHeight");
+		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .2f +
+				r.nextFloat() * SteveDriver.constants.get("screenHeight")*.4f;
 		
 		//x
 		//top/bot: 0 left: -1 right: 1
@@ -570,6 +589,7 @@ public class Generator {
 				//System.out.println("success");
 			}
 			else{
+				SteveDriver.numApples--;
 				//System.out.println("failed");
 				return false;
 			}
@@ -589,24 +609,71 @@ public class Generator {
 	}
 	
 	public boolean generateAppleTutorial (){
-		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
-		int xPos = 0;
-		int yPos = 0;
-		
-		xPos = (int)(snakePosition.x / SteveDriver.TEXTURE_SIZE) +
-					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE) - 
-					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 2;
-		yPos = (int)(snakePosition.y / SteveDriver.TEXTURE_SIZE) +
-					r.nextInt((int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE) -
-					(int)SteveDriver.guiCamera.viewportWidth / SteveDriver.TEXTURE_SIZE / 2;
-		
-		Apple a = new Apple(xPos, yPos);
-		
-		if(isOccupied(a.getRectangle())){
-			Field.pickups.add(a);
-			return true;
-		}
-		return false;
+		//our center would like to fix
+				Vector3 cameraPosition = SteveDriver.camera.position;
+				
+				//using pixel
+				//for the x axis top and bottom
+				float xPosTopBot = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .2f +
+						r.nextFloat() * SteveDriver.constants.get("screenHeight")*.4f;
+				//for the x axis right
+				float xPosRight = cameraPosition.x + SteveDriver.constants.get("screenHeight") * .4f
+						+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
+				//for the x axis left
+				float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .4f
+						- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
+				//for the y axis top
+				float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .4f
+						+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
+				//for the y axis bot
+				float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.4f
+						- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
+				//for the y axis right and left
+				float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .2f +
+						r.nextFloat() * SteveDriver.constants.get("screenHeight")*.4f;
+				
+				//x
+				//top/bot: 0 left: -1 right: 1
+				int choiceX = 0;
+				//y
+				//right/left: 0 top = 1 bot = -1
+				int choiceY = 0;
+				if(SteveDriver.snake.getRotationIndex() == SteveDriver.RIGHT_ID){
+					choiceX = 1;
+					choiceY = 0;
+				}
+				else if(SteveDriver.snake.getRotationIndex() == SteveDriver.UP_ID){
+					choiceX = 0;
+					choiceY = 1;
+				}
+				else if(SteveDriver.snake.getRotationIndex() == SteveDriver.LEFT_ID){
+					choiceX = -1;
+					choiceY = 0;
+				}
+				else if(SteveDriver.snake.getRotationIndex() == SteveDriver.DOWN_ID){
+					choiceX = 0;
+					choiceY = -1;
+				}
+				
+				int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+					(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
+				int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+					(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
+				
+				if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
+					//System.out.print("Trying: ");
+					Apple a = new Apple(xPos, yPos);
+					if(isOccupied(a.getRectangle())) {
+						Field.pickups.add(a);
+						//System.out.println("success");
+					}
+					else{
+						SteveDriver.numApples--;
+						//System.out.println("failed");
+						return false;
+					}
+				}
+				return true;
 	}
 	
 	public boolean generateUpgrade(float xPos, float yPos, int upgradeType){

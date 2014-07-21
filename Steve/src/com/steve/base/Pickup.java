@@ -16,8 +16,8 @@ public class Pickup extends Sprite {
 	protected Sound pickupSound;
 	
 	protected float alphaMod = 1.0f;
-	private float lifeTime = 10.0f;
-	private float lifeTimer = 10.0f;
+	protected float lifeTime = 10.0f;
+	protected float lifeTimer = 10.0f;
 	
 	public Pickup(float x, float y, int atlasX, int atlasY, int points) {
 		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
@@ -46,10 +46,10 @@ public class Pickup extends Sprite {
 	
 	public void update() {
 		lifeTimer -= Gdx.app.getGraphics().getDeltaTime();
-		if (lifeTimer <= 0) {
+		if (lifeTimer <= 1) {
 			SteveDriver.field.pickupsToRemove.add(this);
 		} else {
-			this.alphaMod = lifeTimer / lifeTime;
+			this.alphaMod = (lifeTimer / lifeTime > .5f) ? 1 : lifeTimer / lifeTime;
 		}
 	}
 	
