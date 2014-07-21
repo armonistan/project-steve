@@ -71,11 +71,11 @@ public class Snake {
 	private float nukeOpacity;
 	
 	//health related stuff
-	private float currentHealth = 100f; //what is modified in damage units
+	private float currentHealth = 60f; //what is modified in damage units
 	private float maxHealth = 60f; //starts out here in damage units
-	private float hungerTime = .1f; //time till next hunger damage in secs
+	private float hungerTime = .05f; //time till next hunger damage in secs
 	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
-	private float hungerDamage = 1.5f; //amount of damage hunger hits per tick
+	private float hungerDamage = .67f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -483,8 +483,8 @@ public class Snake {
 	
 	protected void getTouch() {
 		if (Gdx.input.isTouched() && !Button.clicked) {			
-			float deltaX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
-			float deltaY = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
+			float deltaX = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
+			float deltaY = (Gdx.input.getY() - Gdx.graphics.getHeight() / 2);
 			
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
 				if(deltaX > 0 && segments.get(0).getRotation() != SteveDriver.LEFT) {
