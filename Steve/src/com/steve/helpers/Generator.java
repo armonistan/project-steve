@@ -20,6 +20,7 @@ import com.steve.enemies.Tank;
 import com.steve.enemies.Turret;
 import com.steve.pickups.Apple;
 import com.steve.pickups.BossSummon;
+import com.steve.pickups.ClassicApple;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
@@ -37,21 +38,21 @@ public class Generator {
 	
 	private Random r;
 	
-	float enemyGenerationTime = 2; 
+	float enemyGenerationTime = 2f; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 5; 
+	final float appleGenerationTime = 12f; 
 	float appleGenerationCounter; 
 	
 	final float pickUpGenerationTime = 4f; 
 	float pickUpGenerationCounter; 
 	
-	final float upgradeGenerationTime = 6; 
+	final float upgradeGenerationTime = 6f; 
 	float upgradeGenerationCounter; 
 	
 	public Generator(){
 		enemyGenerationCounter = 0; 
-		appleGenerationCounter = this.appleGenerationTime; 
+		appleGenerationCounter = 0;//this.appleGenerationTime; 
 		pickUpGenerationCounter = 0; 
 		upgradeGenerationCounter = 0; 
 		SteveDriver.numApples = 0;
@@ -75,14 +76,18 @@ public class Generator {
 		else
 			pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
-		if(SteveDriver.numApples < 1){
+		if(SteveDriver.numApples < SteveDriver.maxApples){
+			if(generateApple())
+				;
+		}
+		if(this.appleGenerationCounter > this.appleGenerationTime){
 			if(generateApple())
 				this.appleGenerationCounter = 0;
 		}
 		else
 			appleGenerationCounter += Gdx.graphics.getRawDeltaTime();
 
-		this.enemyGenerationTime = 2 - SteveDriver.snake.getWeapons().size()/(SteveDriver.constants.get("maxLength"));
+		this.enemyGenerationTime = 2 - SteveDriver.snake.getWeapons().size()/(SteveDriver.constants.get("maxLength")-2);//2 is there for tail and 
 	}
 	
 	private boolean generateEnemy(){
@@ -544,10 +549,10 @@ public class Generator {
 		float xPosLeft = cameraPosition.x - SteveDriver.constants.get("screenHeight") * .4f
 				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis top
-		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .4f
+		float yPosTop = cameraPosition.y + SteveDriver.constants.get("screenHeight") * .37f
 				+ r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis bot
-		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.4f
+		float yPosBot = cameraPosition.y - SteveDriver.constants.get("screenHeight") *.37f
 				- r.nextFloat() * SteveDriver.constants.get("screenHeight") * .05f;
 		//for the y axis right and left
 		float yPosRightLeft = cameraPosition.y - r.nextFloat() * SteveDriver.constants.get("screenHeight") * .2f +
@@ -559,19 +564,22 @@ public class Generator {
 		//y
 		//right/left: 0 top = 1 bot = -1
 		int choiceY = 0;
-		if(SteveDriver.snake.getRotationIndex() == SteveDriver.RIGHT_ID){
+		
+		int decider = (SteveDriver.numApples < SteveDriver.maxApples) ? SteveDriver.snake.getRotationIndex() : SteveDriver.random.nextInt(4); 
+		
+		if(decider == SteveDriver.RIGHT_ID){
 			choiceX = 1;
 			choiceY = 0;
 		}
-		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.UP_ID){
+		else if(decider == SteveDriver.UP_ID){
 			choiceX = 0;
 			choiceY = 1;
 		}
-		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.LEFT_ID){
+		else if(decider == SteveDriver.LEFT_ID){
 			choiceX = -1;
 			choiceY = 0;
 		}
-		else if(SteveDriver.snake.getRotationIndex() == SteveDriver.DOWN_ID){
+		else if(decider == SteveDriver.DOWN_ID){
 			choiceX = 0;
 			choiceY = -1;
 		}
@@ -583,13 +591,20 @@ public class Generator {
 		
 		if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
 			//System.out.print("Trying: ");
-			Apple a = new Apple(xPos, yPos);
+			Apple a;
+			if(SteveDriver.numApples < SteveDriver.maxApples)
+				a = new ClassicApple(xPos, yPos);
+			else
+				a = new Apple(xPos, yPos);
+			
 			if(isOccupied(a.getRectangle())) {
 				Field.pickups.add(a);
 				//System.out.println("success");
 			}
 			else{
-				SteveDriver.numApples--;
+				if(a.getClass() == ClassicApple.class){
+					SteveDriver.numApples--;
+				}
 				//System.out.println("failed");
 				return false;
 			}
@@ -662,7 +677,7 @@ public class Generator {
 				
 				if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
 					//System.out.print("Trying: ");
-					Apple a = new Apple(xPos, yPos);
+					Apple a = new ClassicApple(xPos, yPos);
 					if(isOccupied(a.getRectangle())) {
 						Field.pickups.add(a);
 						//System.out.println("success");

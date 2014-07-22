@@ -75,7 +75,7 @@ public class Snake {
 	private float maxHealth = 60f; //starts out here in damage units
 	private float hungerTime = .05f; //time till next hunger damage in secs
 	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
-	private float hungerDamage = .67f; //amount of damage hunger hits per tick
+	private float hungerDamage = .73f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -940,6 +940,17 @@ public class Snake {
 			return SteveDriver.LEFT_ID;
 		else
 			return SteveDriver.DOWN_ID;
+	}
+	
+	public int getOppositeRotationIndex(){
+		if(this.segments.get(0).getRotation() == SteveDriver.RIGHT)
+			return SteveDriver.LEFT_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.UP)
+			return SteveDriver.DOWN_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.LEFT)
+			return SteveDriver.RIGHT_ID;
+		else
+			return SteveDriver.UP_ID;
 	}
 	
 	public void killThemAll() {
