@@ -343,7 +343,7 @@ public class Store {
 				description = "Upgrade activated!";
 			}
 			else if (tryBuy == 1) {
-				description = "Not enough cash!";
+				description = "Not enough money!";
 			}
 			else if (tryBuy == 2) {
 				description = "Steve must accend to a\nhigher tier first!";
@@ -353,6 +353,9 @@ public class Store {
 			}
 			else if (tryBuy == 4) {
 				description = "You may only choose one\nupgrade per a tier! ";
+			}
+			else if (tryBuy == 5) {
+				description = "Not enough treasure!";
 			}
 
 			selectedUpgrade = null;
@@ -1036,7 +1039,7 @@ public class Store {
 					return 0;
 				}
 				else {
-					return 1;
+					return 5; //Not enough treasure.
 				}
 			}
 			else {
