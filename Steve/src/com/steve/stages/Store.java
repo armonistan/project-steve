@@ -327,8 +327,8 @@ public class Store {
 			description += "\nPurchased!";
 		} /*else if (!selectedUpgrade.available){
 			description += "\nLocked!";
-		}*/ else if (selectedUpgrade.getClass() != ToggleUpgrade.class){
-			description += "\n$" + (selectedUpgrade.getPrice() * SteveDriver.constants.get("priceModifier"));
+		}*/ else {
+			description += selectedUpgrade.getPriceString();
 		}
 	}
 
@@ -890,6 +890,10 @@ public class Store {
 		public float getPrice() {
 			return price;
 		}
+		
+		public String getPriceString() {
+			return "\n$" + String.format("%10.2f", getPrice() * SteveDriver.constants.get("priceModifier"));
+		}
 
 		public boolean isActivated() {
 			return activated;
@@ -1038,6 +1042,11 @@ public class Store {
 			else {
 				return 3;
 			}
+		}
+		
+		@Override
+		public String getPriceString() {
+			return "\nTreasure: " + (int)getPrice();
 		}
 	}
 }
