@@ -482,8 +482,38 @@ public class Snake {
 	}
 	
 	protected void getTouch() {
-		if (Gdx.input.isTouched() && !Button.clicked) {			
-			float deltaX = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
+		if (Gdx.input.isTouched() && !Button.clicked) {
+			float x = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
+			float y = Gdx.input.getY() * -1 + Gdx.graphics.getHeight() / 2;
+			float m = (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+			
+			boolean xGtY1 = y < m * x;
+			boolean xGtY2 = y < -1 * m * x;
+			
+			if (xGtY1) {
+				if (xGtY2 && segments.get(0).getRotation() != SteveDriver.UP) {
+					nextRotation = SteveDriver.DOWN;
+					nextDirection = SteveDriver.VDOWN;
+				}
+				else if (segments.get(0).getRotation() != SteveDriver.LEFT){
+					nextRotation = SteveDriver.RIGHT;
+					nextDirection = SteveDriver.VRIGHT;
+				}
+			}
+			else {
+				if (xGtY2 && segments.get(0).getRotation() != SteveDriver.RIGHT) {
+					nextRotation = SteveDriver.LEFT;
+					nextDirection = SteveDriver.VLEFT;
+				}
+				else if (segments.get(0).getRotation() != SteveDriver.DOWN){
+					nextRotation = SteveDriver.UP;
+					nextDirection = SteveDriver.VUP;
+				}
+			}
+			
+			
+			
+			/*float deltaX = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
 			float deltaY = (Gdx.input.getY() - Gdx.graphics.getHeight() / 2);
 			
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
@@ -505,7 +535,7 @@ public class Snake {
 					nextRotation = SteveDriver.UP;
 					nextDirection = SteveDriver.VUP;
 				}
-			}
+			}*/
 		} else {
 			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != SteveDriver.UP) {
 				nextRotation = SteveDriver.DOWN;
