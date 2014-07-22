@@ -75,7 +75,7 @@ public class Snake {
 	private float maxHealth = 60f; //starts out here in damage units
 	private float hungerTime = .05f; //time till next hunger damage in secs
 	private float hungerTimer = 0f; //counter that tell when to hit with hunger damage
-	private float hungerDamage = .67f; //amount of damage hunger hits per tick
+	private float hungerDamage = .73f; //amount of damage hunger hits per tick
 	
 	public Snake(float x, float y){
 		//create the structure to hold the body
@@ -482,8 +482,38 @@ public class Snake {
 	}
 	
 	protected void getTouch() {
-		if (Gdx.input.isTouched() && !Button.clicked) {			
-			float deltaX = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
+		if (Gdx.input.isTouched() && !Button.clicked) {
+			float x = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
+			float y = Gdx.input.getY() * -1 + Gdx.graphics.getHeight() / 2;
+			float m = (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+			
+			boolean xGtY1 = y < m * x;
+			boolean xGtY2 = y < -1 * m * x;
+			
+			if (xGtY1) {
+				if (xGtY2 && segments.get(0).getRotation() != SteveDriver.UP) {
+					nextRotation = SteveDriver.DOWN;
+					nextDirection = SteveDriver.VDOWN;
+				}
+				else if (segments.get(0).getRotation() != SteveDriver.LEFT){
+					nextRotation = SteveDriver.RIGHT;
+					nextDirection = SteveDriver.VRIGHT;
+				}
+			}
+			else {
+				if (xGtY2 && segments.get(0).getRotation() != SteveDriver.RIGHT) {
+					nextRotation = SteveDriver.LEFT;
+					nextDirection = SteveDriver.VLEFT;
+				}
+				else if (segments.get(0).getRotation() != SteveDriver.DOWN){
+					nextRotation = SteveDriver.UP;
+					nextDirection = SteveDriver.VUP;
+				}
+			}
+			
+			
+			
+			/*float deltaX = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
 			float deltaY = (Gdx.input.getY() - Gdx.graphics.getHeight() / 2);
 			
 			if(Math.abs(deltaX) > Math.abs(deltaY)) {
@@ -505,7 +535,7 @@ public class Snake {
 					nextRotation = SteveDriver.UP;
 					nextDirection = SteveDriver.VUP;
 				}
-			}
+			}*/
 		} else {
 			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && segments.get(0).getRotation() != SteveDriver.UP) {
 				nextRotation = SteveDriver.DOWN;
@@ -940,6 +970,17 @@ public class Snake {
 			return SteveDriver.LEFT_ID;
 		else
 			return SteveDriver.DOWN_ID;
+	}
+	
+	public int getOppositeRotationIndex(){
+		if(this.segments.get(0).getRotation() == SteveDriver.RIGHT)
+			return SteveDriver.LEFT_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.UP)
+			return SteveDriver.DOWN_ID;
+		else if(this.segments.get(0).getRotation() == SteveDriver.LEFT)
+			return SteveDriver.RIGHT_ID;
+		else
+			return SteveDriver.UP_ID;
 	}
 	
 	public void killThemAll() {

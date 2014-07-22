@@ -102,6 +102,8 @@ public class SteveDriver implements ApplicationListener {
 
 	public static int numBosses = 2;
 	public static int numApples = 0;
+	public final static int maxApples = 1;
+	public static boolean resetApple = false;
 	
 	private static Music music;
 	private static Music mainMusic;
