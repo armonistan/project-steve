@@ -11,7 +11,7 @@ public class Laser extends Weapon{
 	public Laser(float x, float y){
 		super(x,y, SteveDriver.TEXTURE_SIZE*9, SteveDriver.TEXTURE_SIZE);
 		shootSpeed = .7f / (int)(SteveDriver.constants.get("fireRate"));
-		range = 650*SteveDriver.constants.get("fireRange");
+		range = 475*SteveDriver.constants.get("fireRange");
 		shootSound1 = SteveDriver.assets.get("audio/pulseLaser1.ogg", Sound.class);
 		shootSound2 = SteveDriver.assets.get("audio/pulseLaser2.ogg", Sound.class);
 		shootSound3 = SteveDriver.assets.get("audio/pulseLaser3.ogg", Sound.class);
