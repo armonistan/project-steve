@@ -562,7 +562,7 @@ public class Snake {
 	
 	public void addBody() {
 		hungerTimer = 0;
-		currentHealth += SteveDriver.constants.get("hungerRate");
+		currentHealth += SteveDriver.constants.get("hungerRate")/100 * maxHealth;
 		if(currentHealth > maxHealth)
 			currentHealth = maxHealth;
 		//System.out.println("add body: " + atlasX/SteveDriver.TEXTURE_SIZE + ", " + atlasY/SteveDriver.TEXTURE_SIZE);
