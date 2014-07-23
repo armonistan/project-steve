@@ -41,7 +41,7 @@ public class Generator {
 	float enemyGenerationTime = 2f; 
 	float enemyGenerationCounter; 
 	
-	final float appleGenerationTime = 12f; 
+	final float appleGenerationTime = 4f; 
 	float appleGenerationCounter; 
 	
 	final float pickUpGenerationTime = 4f; 
@@ -76,10 +76,10 @@ public class Generator {
 		else
 			pickUpGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
-		if(SteveDriver.numApples < SteveDriver.maxApples){
+		/*if(SteveDriver.numApples < SteveDriver.maxApples){
 			if(generateApple())
 				;
-		}
+		}*/
 		if(this.appleGenerationCounter > this.appleGenerationTime){
 			if(generateApple())
 				this.appleGenerationCounter = 0;
@@ -565,7 +565,7 @@ public class Generator {
 		//right/left: 0 top = 1 bot = -1
 		int choiceY = 0;
 		
-		int decider = (SteveDriver.numApples < SteveDriver.maxApples) ? SteveDriver.snake.getRotationIndex() : SteveDriver.random.nextInt(4); 
+		int decider = SteveDriver.random.nextInt(4); //(SteveDriver.numApples < SteveDriver.maxApples) ? SteveDriver.snake.getRotationIndex() : SteveDriver.random.nextInt(4); 
 		
 		if(decider == SteveDriver.RIGHT_ID){
 			choiceX = 1;
@@ -592,9 +592,9 @@ public class Generator {
 		if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
 			//System.out.print("Trying: ");
 			Apple a;
-			if(SteveDriver.numApples < SteveDriver.maxApples)
-				a = new ClassicApple(xPos, yPos);
-			else
+			//if(SteveDriver.numApples < SteveDriver.maxApples)
+			//	a = new ClassicApple(xPos, yPos);
+			//else
 				a = new Apple(xPos, yPos);
 			
 			if(isOccupied(a.getRectangle())) {
