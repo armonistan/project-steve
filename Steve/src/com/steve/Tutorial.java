@@ -17,6 +17,7 @@ import com.steve.helpers.CollisionHelper;
 import com.steve.helpers.GUIHelper;
 import com.steve.pickups.Apple;
 import com.steve.pickups.BossSummon;
+import com.steve.pickups.ClassicApple;
 import com.steve.pickups.GatlingGunPickUp;
 import com.steve.pickups.LaserPickUp;
 import com.steve.pickups.SpecialistPickUp;
@@ -114,7 +115,7 @@ public class Tutorial {
 				float closestAppleDistance = Float.POSITIVE_INFINITY;
 			
 				for (Pickup p : Field.pickups) {
-					if (p.getClass() == Apple.class) {
+					if (p.getClass() == Apple.class || p.getClass() == ClassicApple.class) {
 						float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
