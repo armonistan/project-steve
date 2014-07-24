@@ -631,8 +631,8 @@ public class Snake {
 			}
 			else if(secondToLast.getBaseAtlasX() == 2 && 
 					secondToLast.getBaseAtlasY() == 2){
-				delta = SteveDriver.VRIGHT;
-				rotation = SteveDriver.LEFT;
+				delta = SteveDriver.VUP;
+				rotation = SteveDriver.DOWN;
 			}
 			else if(secondToLast.getBaseAtlasX() == 3 && 
 					secondToLast.getBaseAtlasY() == 3){
@@ -855,6 +855,7 @@ public class Snake {
 		//TODO: Make this better.
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
+		SteveDriver.showingAds = true;
 		SteveDriver.summary.setWhyDied(why);
 		SteveDriver.store.initializeUpgrades();
 	}

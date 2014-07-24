@@ -14,5 +14,6 @@ public class FromGameToMenu extends ChangeStage {
 	public void execute() {
 		super.execute();
 		SteveDriver.resetTheme();
+		SteveDriver.showingAds = false;
 	}
 }

@@ -64,8 +64,10 @@ public class Menu {
 		exitGame.update();
 		exitGame.render();
 		
-		buyGame.update();
-		buyGame.render();
+		if (SteveDriver.FREE) {
+			buyGame.update();
+			buyGame.render();
+		}
 		
 		if (SteveDriver.prefs.contains("money")) {
 			continueGame.update();

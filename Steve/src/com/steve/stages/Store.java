@@ -357,6 +357,9 @@ public class Store {
 			else if (tryBuy == 5) {
 				description = "Not enough treasure!";
 			}
+			else if (tryBuy == 6) {
+				description = "Buy the full game to be able to unlock!";
+			}
 
 			selectedUpgrade = null;
 		}
@@ -402,7 +405,7 @@ public class Store {
 		Upgrade steve = new Upgrade("Regular Steve",
 				"steve",
 				"snakeTier0",
-				"Steve the cute, normal snake.",
+				"Steve the cute, normal snake.\nMakes tier 1 upgrades available.",
 				1.0f,
 				0f,
 				0, 0,
@@ -416,7 +419,7 @@ public class Store {
 		upgrades.add(new Upgrade("Cyborg Steve",
 				"cyborg",
 				"snakeTier1",
-				"Stronger, faster, better, and still adorable.",
+				"Stronger, faster, better, and still adorable.\nMakes tier 2 upgrades available.",
 				1.0f,
 				8000f,
 				1, 0,
@@ -428,7 +431,7 @@ public class Store {
 		upgrades.add(new Upgrade("Robo Steve",
 				"robot",
 				"snakeTier2",
-				"His body may be solid steel, but his heart\n is still solid gold.",
+				"His body may be solid steel,\nbut his heart is solid gold.\nMakes tier 3 upgrades available.",
 				1.0f,
 				100000f,
 				2, 0,
@@ -771,10 +774,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 37 * SteveDriver.TEXTURE_SIZE,
 						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new ToggleUpgrade("Drill Helmet",
+		upgrades.add(new ToggleUpgrade("Hard Hat",
 				"drill",
 				"special3",
-				"You are the snake that will pierce\nthe heavens.",
+				"Rocks? Cacti? Lava? No problem.\nSteve will plow through it all.",
 				1f,
 				5f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
@@ -796,7 +799,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Bullet Time",
 				"bulletTime",
 				"special5",
-				"There is no snake.",
+				"There is no snake.\nTime slows around you, defying physics.",
 				1f,
 				10f,
 				(panelX - 32) + ((1 * panelWidth) / 5),
@@ -1034,16 +1037,21 @@ public class Store {
 
 		@Override
 		public int trySpendCurrency() {
-			if (!available) {
-				if (SteveDriver.snake.spendTreasure((int) price)) {
-					return 0;
+			if (!SteveDriver.FREE || this.price <= 5f) {
+				if (!available) {
+					if (SteveDriver.snake.spendTreasure((int) price)) {
+						return 0;
+					}
+					else {
+						return 5; //Not enough treasure.
+					}
 				}
 				else {
-					return 5; //Not enough treasure.
+					return 3;
 				}
 			}
 			else {
-				return 3;
+				return 6; //Need to buy full game.
 			}
 		}
 		
