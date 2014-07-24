@@ -30,6 +30,7 @@ public class Loading {
 				SteveDriver.guiCamera.viewportHeight / 2f * -1f + 5f * SteveDriver.TEXTURE_SIZE, 11, 4,
 				new WrapUpLoading(type), "Generating...");
 	
+		SteveDriver.handler.showAds(true);
 	}
 	
 	public void render() {
