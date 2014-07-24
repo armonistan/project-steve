@@ -15,14 +15,15 @@ import com.steve.stages.Field;
 public class Razorbull extends Enemy{
 	
 	public Razorbull(float x, float y) {
-		super(x, y, 22, 23, 8, 3, .2f, 0.3f, 1, 5, 4000);
+		super(x, y, 22, 23, 8, 3, .2f, 0.3f, 1, 7, 4000);
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		super.destroysBlockers = true;
 		super.ignoresBlockers = true;
 		moneyAmount = 30;
 		shootTime = .5f;
-		super.moveTime = .1f;
+		super.moveTime = .085f;
+		SteveDriver.disableSpawnsCyborg = true;
 	}
 	
 	@Override
@@ -67,10 +68,12 @@ public class Razorbull extends Enemy{
 	
 	@Override
 	public void kill(){
+		SteveDriver.disableSpawnsCyborg = false;
 		SteveDriver.prefs.putBoolean("razorbullDefeated", true);
-		SteveDriver.prefs.putBoolean("robotBossActivate", false);
+		SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
 		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
+		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate");
 		super.kill();
 	}
 	
@@ -137,8 +140,8 @@ public class Razorbull extends Enemy{
 	private void moveToNextBombingRun(){
 		Vector3 snakePosition = SteveDriver.snake.getHeadPosition();
 		
-		float xPosTopBot = snakePosition.x - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/9f +
-				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/9f;
+		float xPosTopBot = snakePosition.x - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/12f +
+				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/12f;
 		float xPosLeft = snakePosition.x + SteveDriver.constants.get("screenWidth")/2f
 				+ SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenWidth")/4f;
 		float xPosRight = snakePosition.x - SteveDriver.constants.get("screenWidth")/2f
@@ -147,8 +150,8 @@ public class Razorbull extends Enemy{
 				+ SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/4f;
 		float yPosBot = snakePosition.y - SteveDriver.constants.get("screenHeight")/2f
 				- SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/4f;
-		float yPosRightLeft = snakePosition.y - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/9f +
-				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/9f;
+		float yPosRightLeft = snakePosition.y - SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/12f +
+				SteveDriver.random.nextFloat() * SteveDriver.constants.get("screenHeight")/12f;
 		
 		int choiceX = 0; 
 		

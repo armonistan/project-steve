@@ -562,7 +562,7 @@ public class Store {
 				"survTier3A",
 				"Give Steve 1 more segment\nwhen the round starts",
 				1f,
-				125000f,
+				75000f,
 				2, 2,
 				(panelX - 32) + (panelWidth / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
@@ -574,7 +574,7 @@ public class Store {
 				"survTier3B",
 				"Increase the maximum possible\nlength of Steve by 2.",
 				2f,
-				125000f,
+				75000f,
 				2, 2,
 				(panelX - 32) + ((2 * panelWidth) / 3),
 				panelY + 32 + ((1 * panelHeight) / 4),
@@ -597,7 +597,7 @@ public class Store {
 				"fireRate",
 				"wepTier2A",
 				"Replace the Slug Slayer with Tommy the Gun.\nTommy likes bullets. Expect to see a lot of them",
-				.15f,
+				.75f,
 				75000f,
 				1, 3,
 				(panelX - 32) + (panelWidth / 2),
@@ -609,7 +609,7 @@ public class Store {
 				"fireRange",
 				"wepTier2B",
 				"Replace the Slug Slayer with the Sentinel.\n From a distance it watches.\nFrom a distance it kills.",
-				.1f,
+				.8f,
 				75000f,
 				1, 3,
 				(panelX - 32) + ((1 * panelWidth) / 4),
@@ -621,7 +621,7 @@ public class Store {
 				"fireDamage",
 				"wepTier2C",
 				"Replace the Slug Slayer with the Overkill.\nExpect to hear a lot more splats.",
-				.2f,
+				.6f,
 				75000f,
 				1, 3,
 				(panelX - 32) + ((3 * panelWidth) / 4),
@@ -634,7 +634,7 @@ public class Store {
 				"wepTier3A",
 				"Tommy the Gun's grandchild.\nThree times the fun Tommy was.",
 				1f,
-				275000f,
+				150000f,
 				2, 3,
 				(panelX - 32) + (panelWidth / 2),
 				panelY + 32 + ((1 * panelHeight) / 4),
@@ -646,7 +646,7 @@ public class Store {
 				"wepTier3B",
 				"No one can hide from the Beholder.\nNo distance is far enough.\nNo cover is strong enough.",
 				2f,
-				275000f,
+				150000f,
 				2, 3,
 				(panelX - 32) + ((1 * panelWidth) / 4),
 				panelY + 32 + ((1 * panelHeight) / 4),
@@ -659,7 +659,7 @@ public class Store {
 				"wepTier3C",
 				"With such firepower comes responsiblity...\nAnd a lot of destruction!",
 				3f,
-				275000f,
+				150000f,
 				2, 3,
 				(panelX - 32) + ((3 * panelWidth) / 4),
 				panelY + 32 + ((1 * panelHeight) / 4),
@@ -908,12 +908,12 @@ public class Store {
 				currentTier[category] = tier + 1;
 				
 				if (constantName == "cyborg") {
-					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
-					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));
+					SteveDriver.prefs.putBoolean("cyborgBossActivate", (!SteveDriver.prefs.getBoolean("razorbullDefeated", true)));
+					SteveDriver.prefs.putBoolean("razorbullDefeated", (SteveDriver.prefs.getBoolean("razorbullDefeated", false)));
 				}
 				else if(constantName == "robot"){
-					SteveDriver.prefs.putBoolean("robotBossActivate", (!SteveDriver.prefs.getBoolean("razorbullDefeated", true)));
-					SteveDriver.prefs.putBoolean("razorbullDefeated", (SteveDriver.prefs.getBoolean("razorbullDefeated", false)));
+					SteveDriver.prefs.putBoolean("robotBossActivate", (!SteveDriver.prefs.getBoolean("carrierDefeated", true)));
+					SteveDriver.prefs.putBoolean("carrierDefeated", (SteveDriver.prefs.getBoolean("carrierDefeated", false)));
 				}
 
 				SteveDriver.constants.modifyConstant(constantName, value);

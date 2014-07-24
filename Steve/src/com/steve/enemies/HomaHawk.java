@@ -14,7 +14,7 @@ public class HomaHawk extends Enemy{
 		sightDistance = 500;//to be refined
 		knowledgeDistance = 600;
 		ignoresBlockers = true;
-		moneyAmount = 1600;
+		moneyAmount = 2000;
 		shootTime = 1.6f;
 	}
 	

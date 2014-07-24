@@ -204,6 +204,9 @@ public class Field {
 	}
 	
 	public Field(OrthographicCamera camera, int scale) {
+		SteveDriver.disableSpawnsRobot = false;
+		SteveDriver.disableSpawnsCyborg = false;
+		
 		this.grassRadius = 20 * scale;
 		this.desertRadius = 10 * scale;
 		this.barrenRadius = 60 * scale;
@@ -216,6 +219,14 @@ public class Field {
 		SteveDriver.robotBossActivate = SteveDriver.prefs.getBoolean("robotBossActivate", false);
 		SteveDriver.carrierDefeated = SteveDriver.prefs.getBoolean("carrierDefeated", SteveDriver.carrierDefeated);
 		SteveDriver.razorbullDefeated = SteveDriver.prefs.getBoolean("razorbullDefeated", SteveDriver.razorbullDefeated);
+		
+		SteveDriver.resetCyborgBossTutorial = (SteveDriver.cyborgBossActivate && !SteveDriver.razorbullDefeated);
+		SteveDriver.resetRobotBossTutorial = (SteveDriver.robotBossActivate && !SteveDriver.carrierDefeated);				
+		
+		if(SteveDriver.resetCyborgBossTutorial)
+			SteveDriver.prefs.putBoolean("cyborgBossTutorial", false);
+		if(SteveDriver.resetRobotBossTutorial)
+			SteveDriver.prefs.putBoolean("robotBossTutorial", false);
 		
 		
 		if (SteveDriver.constants.get("candyZone") == 0f) {
@@ -806,7 +817,7 @@ public class Field {
 				deltaX = s.getX() - x;
 				deltaY = s.getY() - y;
 				
-				if(Math.abs(deltaX) < 100 && Math.abs(deltaY) < 100){
+				if(Math.abs(deltaX) < 300 && Math.abs(deltaY) < 300){
 					return false;
 				}
 		}

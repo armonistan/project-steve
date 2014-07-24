@@ -66,7 +66,7 @@ public class Generator {
 			if(generateEnemy())
 				this.enemyGenerationCounter = 0;
 		}
-		else
+		else 
 			enemyGenerationCounter += Gdx.graphics.getRawDeltaTime();
 		
 		if(this.pickUpGenerationCounter > this.pickUpGenerationTime){
@@ -147,10 +147,15 @@ public class Generator {
 			(locationID == DESERT_ID) ?  r.nextInt(4) + 1 : r.nextInt(4) + 5;
 		
 		if (locationID < 3) {
-			if(SteveDriver.random.nextInt(100)+1 <= locationID){
+			if(SteveDriver.disableSpawnsCyborg || SteveDriver.disableSpawnsRobot);
+			else if(SteveDriver.random.nextInt(100)+1 <= locationID){
 				return this.generateRing(xPos, yPos);
 			}
 	
+			if((SteveDriver.disableSpawnsCyborg && enemyType < 4) || (SteveDriver.disableSpawnsRobot))
+				return true;
+			
+			
 			switch(enemyType){
 			case 0:
 				return this.generateSlug(xPos, yPos);
@@ -666,6 +671,7 @@ public class Generator {
 					choiceY = 0;
 				}
 				else if(SteveDriver.snake.getRotationIndex() == SteveDriver.DOWN_ID){
+					
 					choiceX = 0;
 					choiceY = -1;
 				}
@@ -677,7 +683,7 @@ public class Generator {
 				
 				if (SteveDriver.field.checkRing(xPos, yPos) < 3) {
 					//System.out.print("Trying: ");
-					Apple a = new ClassicApple(xPos, yPos);
+					Apple a = new Apple(xPos, yPos);
 					if(isOccupied(a.getRectangle())) {
 						Field.pickups.add(a);
 						//System.out.println("success");

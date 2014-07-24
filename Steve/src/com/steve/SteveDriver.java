@@ -60,6 +60,10 @@ public class SteveDriver implements ApplicationListener {
 	public static final int TEXTURE_SIZE = 32;
 	public static int snakeTierWeaponDamageModifier = 10;
 	
+	public static float tierTwoWeaponShootSpeedBuff = 0;
+	public static float tierTwoWeaponDamageBuff = 0;
+	public static float tierTwoWeaponRangeBuff = 0;
+	
 	public static final float RIGHT = MathUtils.PI * 3f / 2f * MathUtils.radiansToDegrees;
 	public static final float UP = 0;
 	public static final float LEFT = MathUtils.PI / 2f * MathUtils.radiansToDegrees;
@@ -99,6 +103,12 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean razorbullDefeated = false;
 	public static boolean cyborgBossActivate = false;
 	public static boolean robotBossActivate = false;
+	
+	public static boolean disableSpawnsCyborg = false;
+	public static boolean disableSpawnsRobot = false;
+	
+	public static boolean resetCyborgBossTutorial = false;
+	public static boolean resetRobotBossTutorial = false;
 
 	public static int numBosses = 2;
 	public static int numApples = 0;

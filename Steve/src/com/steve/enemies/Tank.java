@@ -12,14 +12,14 @@ public class Tank extends Enemy {
 
 	public Tank(float x, float y) {
 		super(x, y, 15, 1, 2, 2, 0.4f, 0.5f, 3, 50, 250);
-		shootTime = 0.5f;
-		sightDistance = 600;
-		knowledgeDistance = 500;
+		shootTime = 0.7f;
+		sightDistance = 500;
+		knowledgeDistance = 600;
 		
 		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE,
 				2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE);
 		
-		shotCap = 10;
+		shotCap = 9;
 		hasShotCounter = 11;
 		
 		moneyAmount = 650;

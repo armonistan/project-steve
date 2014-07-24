@@ -8,10 +8,22 @@ import com.steve.base.Weapon;
 import com.steve.projectiles.SnakeRocket;
 
 public class Specialist extends Weapon{
+	private float baseDamage = 40f;
+	private float baseShootSpeed = 1f;
+	
 	public Specialist(float x, float y){
 		super(x,y, SteveDriver.TEXTURE_SIZE*10, SteveDriver.TEXTURE_SIZE);
-		shootSpeed = 1f / (int)(SteveDriver.constants.get("fireRate"));
-		range = 400*SteveDriver.constants.get("fireRange");
+		//shoot speed
+		float modifier = (SteveDriver.constants.get("fireRate") - 1)/2 + 1;
+		shootSpeed = (baseShootSpeed / (modifier));
+		//range
+		modifier = (SteveDriver.constants.get("fireRange") - 1)/2 + 1;
+		range = 350f * modifier;
+		//damage
+		bulletDamage = baseDamage+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier;
+		modifier = (SteveDriver.constants.get("fireDamage") - 1)/2 + 1;
+		bulletDamage *= modifier;
+		
 		shootSound1 = SteveDriver.assets.get("audio/specialist1.ogg", Sound.class);
 		shootSound2 = SteveDriver.assets.get("audio/specialist2.ogg", Sound.class);
 		shootSound3 = SteveDriver.assets.get("audio/specialist3.ogg", Sound.class);
@@ -26,7 +38,7 @@ public class Specialist extends Weapon{
 				float degrees = MathUtils.radiansToDegrees * MathUtils.atan2(deltaX, deltaY);
 				degrees += 180;
 				
-				SnakeRocket temp = new SnakeRocket(this.getX(), this.getY(), (isUpgraded) ? 1 : 0);
+				SnakeRocket temp = new SnakeRocket(this.getX(), this.getY(), (isUpgraded) ? 1 : 0, bulletDamage);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 				SteveDriver.field.addProjectile(temp);
@@ -50,7 +62,9 @@ public class Specialist extends Weapon{
 	@Override
 	public void upgrade(){
 		super.upgrade();
-		this.shootSpeed = 3f - 3f * (int)(SteveDriver.constants.get("fireRate") - 1f);
+		this.shootSpeed -= .1f;
+		this.range += 50;
+		this.bulletDamage += 10;
 		this.setRegion(atlasX, atlasY + SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		//TODO more stuff to upgrade
 	}

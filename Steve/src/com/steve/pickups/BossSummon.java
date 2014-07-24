@@ -23,13 +23,13 @@ public class BossSummon extends Pickup {
 		super.consume(snake);
 		
 		switch(type){
-			case 0:
+			case 1:
 				Carrier c = new Carrier(this.getX()/SteveDriver.TEXTURE_SIZE, this.getY()/SteveDriver.TEXTURE_SIZE+3);
 				SteveDriver.field.enemies.add(c);
 				c.intialize();
 			break;
 			
-			case 1:
+			case 0:
 				SteveDriver.field.enemies.add(new Razorbull(this.getX()/SteveDriver.TEXTURE_SIZE, this.getY()/SteveDriver.TEXTURE_SIZE+3));
 			break;
 		}

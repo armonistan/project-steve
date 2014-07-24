@@ -288,25 +288,64 @@ public class Enemy {
 	}
 	
 	protected int doesKnow(float deltaX, float deltaY){
-		if((deltaX < 0)){
-			//System.out.println("right");
-			return SteveDriver.RIGHT_ID;
+		int random = SteveDriver.random.nextInt(4);
+		
+		if(random == 0){
+			if((deltaY == 0 && deltaX < 0))
+				return SteveDriver.RIGHT_ID;
+			else if((deltaY < 0 && deltaX == 0)){
+				return SteveDriver.UP_ID;
+			}
+			else if((deltaY == 0 && deltaX > 0)){
+				return SteveDriver.LEFT_ID;
+			}
+			else if((deltaY > 0 && deltaX == 0))
+				return SteveDriver.DOWN_ID;
+			else 
+				return -1;//invalid id. means dont see a thing
 		}
-		else if((deltaY < 0)){
-			//System.out.println("up");
-			return SteveDriver.UP_ID;
+		else if(random == 1){
+			if((deltaY < 0 && deltaX == 0)){
+				return SteveDriver.UP_ID;
+			}
+			else if((deltaY == 0 && deltaX > 0)){
+				return SteveDriver.LEFT_ID;
+			}
+			else if((deltaY == 0 && deltaX < 0))
+				return SteveDriver.RIGHT_ID;
+			else if((deltaY > 0 && deltaX == 0))
+				return SteveDriver.DOWN_ID;
+			else 
+				return -1;//invalid id. means dont see a thing
 		}
-		else if((deltaX > 0)){
-			//System.out.println("left");
-			return SteveDriver.LEFT_ID;
+		else if(random == 2){
+			if((deltaY == 0 && deltaX > 0)){
+				return SteveDriver.LEFT_ID;
+			}
+			else if((deltaY > 0 && deltaX == 0))
+				return SteveDriver.DOWN_ID;
+			else if((deltaY == 0 && deltaX < 0))
+				return SteveDriver.RIGHT_ID;
+			else if((deltaY < 0 && deltaX == 0)){
+				return SteveDriver.UP_ID;
+			}
+			else 
+				return -1;//invalid id. means dont see a thing
 		}
-		else if((deltaY > 0)){
-			//System.out.println("down");
-			return SteveDriver.DOWN_ID;
-		}
-		else 
-			return -1;//invalid id. means dont see a thing
-	}
+		else{
+			if((deltaY > 0 && deltaX == 0))
+				return SteveDriver.DOWN_ID;
+			else if((deltaY < 0 && deltaX == 0)){
+				return SteveDriver.UP_ID;
+			}
+			else if((deltaY == 0 && deltaX > 0)){
+				return SteveDriver.LEFT_ID;
+			}
+			else if((deltaY == 0 && deltaX < 0))
+				return SteveDriver.RIGHT_ID;
+			else 
+				return -1;//invalid id. means dont see a thing
+		}	}
 	
 	protected Vector2 pursuitMoveWithSight(){
 		float deltaX;
