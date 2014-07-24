@@ -112,6 +112,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean musicPlaying;
 	private static IActivityRequestHandler handler;
 	public static boolean showingAds;
+	public static final boolean FREE = true;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -336,11 +337,13 @@ public class SteveDriver implements ApplicationListener {
 			tutorial.render();
 		}
 		
-		if (handler != null && showingAds) {
-			handler.showAds(true);
-		}
-		else if (handler != null && !showingAds) {
-			handler.showAds(false);
+		if (FREE && handler != null) {
+			if (showingAds) {
+				handler.showAds(true);
+			}
+			else {
+				handler.showAds(false);
+			}
 		}
 	}
 

@@ -357,6 +357,9 @@ public class Store {
 			else if (tryBuy == 5) {
 				description = "Not enough treasure!";
 			}
+			else if (tryBuy == 6) {
+				description = "Buy the full game to be able to unlock!";
+			}
 
 			selectedUpgrade = null;
 		}
@@ -1034,16 +1037,21 @@ public class Store {
 
 		@Override
 		public int trySpendCurrency() {
-			if (!available) {
-				if (SteveDriver.snake.spendTreasure((int) price)) {
-					return 0;
+			if (!SteveDriver.FREE || this.price <= 5f) {
+				if (!available) {
+					if (SteveDriver.snake.spendTreasure((int) price)) {
+						return 0;
+					}
+					else {
+						return 5; //Not enough treasure.
+					}
 				}
 				else {
-					return 5; //Not enough treasure.
+					return 3;
 				}
 			}
 			else {
-				return 3;
+				return 6; //Need to buy full game.
 			}
 		}
 		

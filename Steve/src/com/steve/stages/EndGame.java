@@ -107,8 +107,19 @@ public class EndGame extends Game {
 			
 			SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 			SteveDriver.batch.begin();
-			//SteveDriver.guiHelper.drawBox(-1 * 15 * SteveDriver.TEXTURE_SIZE, 10 * SteveDriver.TEXTURE_SIZE, 30, 4, BoxColors.GOLD);
-			//SteveDriver.guiHelper.drawTextCentered("Thanks For Playing!", 0, 10 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiHelper.activeFont.getLineHeight() / 2, Color.BLACK);
+			SteveDriver.guiHelper.drawBox(-1 * 20 * SteveDriver.TEXTURE_SIZE, -1f * 7 * SteveDriver.TEXTURE_SIZE, 40, (SteveDriver.FREE) ? 6 : 4, BoxColors.GOLD, Color.WHITE);
+			
+			String message;
+			if (SteveDriver.FREE) {
+				message = "Thanks For Playing! Buy the full game if you\n" +
+						"would like to support our future endeavours! Buy the\n" +
+						"full game to receive any future content updates.";
+			}
+			else {
+				message = "Thanks For Playing, and thanks for your support!\nWe hope to bring you more content in the future!";
+			}
+			
+			SteveDriver.guiHelper.drawTextCentered(message, 0, -1f * 6 * SteveDriver.TEXTURE_SIZE - (SteveDriver.FREE ? 6 : 4) * SteveDriver.TEXTURE_SIZE / 2, Color.BLACK);
 			
 			returnToStore.update();
 			returnToStore.render();
