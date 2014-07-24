@@ -62,20 +62,22 @@ public class Weapon extends Sprite{
 		float minDistance = Float.POSITIVE_INFINITY;
 		target = null;
 		
-		for(Enemy e : SteveDriver.field.enemies){
-			if (e.getClass() == Carrier.class || e.getClass() == Razorbull.class) {
-				target = e;
-				break;
-			}
-			
+		for(Enemy e : SteveDriver.field.enemies){		
 			float enemyX = e.getXPosition();
 			float enemyY = e.getYPosition();
 			
 			float distance = (CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY));
 			
-			if(minDistance > distance && distance < range * range){
-				minDistance = distance;
-				target = e;
+			if (distance < range * range) {
+				if (e.getClass() == Carrier.class || e.getClass() == Razorbull.class) {
+					target = e;
+					break;
+				}
+				
+				if(minDistance > distance && distance < range * range){
+					minDistance = distance;
+					target = e;
+				}
 			}
 		}
 	}
