@@ -7,9 +7,9 @@ import com.steve.base.Enemy;
 public class Slug extends Enemy {
 
 	public Slug(float x, float y) {
-		super(x, y, 11, 1, 2, 2, 0.5f, 0.5f, 2, 80, 50);
+		super(x, y, 11, 1, 2, 2, 0.5f, 0.5f, 2, 80, 60);
 		this.knowledgeDistance = 500;
-		moneyAmount = 150;
+		moneyAmount = 85;
 	}
 	
 	@Override

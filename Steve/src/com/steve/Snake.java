@@ -255,8 +255,11 @@ public class Snake {
 		//tier modifier
 		timeBetweenTurn = .4f - (snakeTier*.05f);
 		
+		
 		//tier modifier hunger
-		hungerDamage /= snakeTier;
+		float modifiedHungerDamage = (snakeTier == 1)? hungerDamage : 
+			(snakeTier == 2) ? .4f : .33f;
+		hungerDamage = modifiedHungerDamage;
 		
 		//tier modifier hp
 		maxHealth = maxHealth+(snakeTier * (40f));
