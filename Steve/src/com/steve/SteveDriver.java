@@ -119,6 +119,8 @@ public class SteveDriver implements ApplicationListener {
 	private static Music mainMusic;
 	private static Music spaceMusic;
 	
+	private static float maxMusicVolume = .6f;
+	
 	public static boolean musicPlaying;
 	private static IActivityRequestHandler handler;
 	public static boolean showingAds;
@@ -283,7 +285,7 @@ public class SteveDriver implements ApplicationListener {
 			}
 			else if (prefs.getBoolean("music") && !musicPlaying) {
 				music.setLooping(true);
-				music.setVolume(.6f);
+				music.setVolume(maxMusicVolume);
 				music.play();
 				musicPlaying = true;
 			}
