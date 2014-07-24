@@ -446,7 +446,7 @@ public class Generator {
 		//y
 		//right/left: 0 top = 1 bot = -1
 		int choiceY = 0;
-		int spawnChoice =0;//= SteveDriver.random.nextInt(4);
+		int spawnChoice = SteveDriver.random.nextInt(4);
 		if(spawnChoice == SteveDriver.RIGHT_ID){
 			choiceX = 1;
 			choiceY = 0;

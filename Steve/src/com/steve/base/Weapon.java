@@ -73,7 +73,6 @@ public class Weapon extends Sprite{
 					target = e;
 					break;
 				}
-				
 				if(minDistance > distance && distance < range * range){
 					minDistance = distance;
 					target = e;
@@ -83,8 +82,8 @@ public class Weapon extends Sprite{
 	}
 	
 	protected void turn(){
-		float deltaX = target.getXPosition() - this.getX();
-		float deltaY = target.getYPosition() - this.getY();
+		float deltaX = this.getX() - target.getXPosition();
+		float deltaY = this.getY() - target.getYPosition();
 		
 		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(3, 4));
 		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(-3, 4));
@@ -95,7 +94,7 @@ public class Weapon extends Sprite{
 		//System.out.println("degrees: " + degrees);
 		
 		//image offset
-		degrees += 270;
+		degrees += 90;
 
 		float deltaPositiveDegrees = Math.abs(degrees - this.getRotation() + 360)%360;
 		float deltaNegativeDegrees = Math.abs(this.getRotation() - degrees + 360)%360;

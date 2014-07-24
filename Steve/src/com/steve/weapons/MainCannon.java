@@ -22,7 +22,7 @@ public class MainCannon extends Weapon{
 				/ (int)(SteveDriver.constants.get("fireRate")) 
 				- ((SteveDriver.constants.get("mainCannonType") == 2) ?  .2f : 0);
 		range = (250+SteveDriver.tierTwoWeaponRangeBuff) * SteveDriver.constants.get("fireRange");
-		range = 1000f;
+		//range = 1000f;
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
@@ -115,12 +115,19 @@ public class MainCannon extends Weapon{
 				SteveDriver.field.addProjectile(temp);
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
-				if (SteveDriver.prefs.getBoolean("sfx", true)) {
+				if (SteveDriver.prefs.getBoolean("sfx", true) && barrageCounter == 0) {
 					gausSound.play();
 				}
 				
-				shootCounter = 0;
-	}
+				if(barrageCounter < 1){
+					barrageCounter++;
+					shootCounter-=0.1f;
+				}
+				else{
+					barrageCounter = 0;
+					shootCounter = 0;
+				}
+			}
 	
 	protected void fireDamageShoot(){
 		//different angle
