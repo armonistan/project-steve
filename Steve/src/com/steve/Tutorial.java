@@ -83,8 +83,11 @@ public class Tutorial {
 		exitButton.render();
 		
 		if (type == TUTORIAL_TYPE.main) {
-			continueButton.update();
-			continueButton.render();
+			
+			if (stage != TUTORIAL_STAGE_TYPE.goodFuckingLuck) {
+				continueButton.update();
+				continueButton.render();
+			}
 		
 			switch (stage) {
 			case intro:
@@ -96,7 +99,7 @@ public class Tutorial {
 				focus = SteveDriver.snake.getHeadPosition();
 				break;
 			case movement:
-				description = "You move by touching the screen.";
+				description = "Move by touching the arrows on the screen.";
 				noGray.y = -32;
 				noGray.x = -32;
 				noGray.width = 32;
@@ -161,7 +164,7 @@ public class Tutorial {
 				focus = tempBlocker;
 				break;
 			case enemies:
-				description = "Various enemies roam your world.\nAttack them with your face.";
+				description = "Various enemies roam your world.\nBe wary of them at all times.";
 				noGray.y = -32;
 				noGray.x = -32;
 				noGray.width = 48;
@@ -186,7 +189,7 @@ public class Tutorial {
 				focus = tempEnemy;
 				break;
 			case weapons:
-				description = "Actually, don't use your face.\nTry eating these first.";
+				description = "Arm yourself in order to fight back.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 20 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -32;
 				noGray.x = -32;
@@ -273,7 +276,7 @@ public class Tutorial {
 		
 
 		else if (type == TUTORIAL_TYPE.cyborgBoss) {
-			description = "There is a disturbance. Investigate by eating this.";
+			description = "There is a disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
 			noGray.y = -32;
 			noGray.x = -32;
 			noGray.width = 32;
@@ -288,7 +291,7 @@ public class Tutorial {
 		}
 		
 		else if (type == TUTORIAL_TYPE.robotBoss) {
-			description = "Another disturbance. Investigate by eating this.";
+			description = "Another disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
 			noGray.y = -32;
 			noGray.x = -32;
 			noGray.width = 32;
@@ -303,7 +306,7 @@ public class Tutorial {
 		}
 		
 		else if(type == TUTORIAL_TYPE.endGame){
-			description = "This is it. You have defeated every boss.\nWhen you are ready, space awaits.";
+			description = "This is it. You have defeated every boss.\nGo now, and fulfill your destiny.";
 			noGray.y = -32;
 			noGray.x = -32;
 			noGray.width = 32;
