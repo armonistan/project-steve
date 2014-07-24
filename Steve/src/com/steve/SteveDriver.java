@@ -122,7 +122,7 @@ public class SteveDriver implements ApplicationListener {
 	public static boolean musicPlaying;
 	private static IActivityRequestHandler handler;
 	public static boolean showingAds;
-	public static final boolean FREE = true;
+	public static final boolean FREE = false; //TODO: SET TO CORRECT VALUE.
 	
 	public static enum STAGE_TYPE {
 		MENU,
