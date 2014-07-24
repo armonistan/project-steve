@@ -19,6 +19,7 @@ public class Laser extends Weapon{
 		//range
 		modifier = (SteveDriver.constants.get("fireRange") - 1)/2 + 1;
 		range = 450f * modifier;
+		range = 1000f;
 		//damage
 		bulletDamage = baseDamage+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier;
 		modifier = (SteveDriver.constants.get("fireDamage") - 1)/2 + 1;

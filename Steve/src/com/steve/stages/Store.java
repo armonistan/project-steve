@@ -612,7 +612,7 @@ public class Store {
 				"fireRange",
 				"wepTier2B",
 				"Replace the Slug Slayer with the Sentinel.\n From a distance it watches.\nFrom a distance it kills.",
-				.8f,
+				.6f,
 				75000f,
 				1, 3,
 				(panelX - 32) + ((1 * panelWidth) / 4),

@@ -24,16 +24,21 @@ public class Carrier extends Enemy {
 	int threshHold;
 	float startX;
 	float startY;
-	static int startHealth = 5000;
+	static int startHealth = 20000;
 	float numTurrets = 10;
+	int beginNumEnemies = 0;
+	int numActiveHomahawks = 5;
+	int stopSpawnNum = 0;
+	int numSpawnedHawks = 0;
 	
 	public Carrier(float x, float y) {
 		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, startHealth);
 		front = new Rectangle(this.avatar.getX(), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*5,SteveDriver.TEXTURE_SIZE*2);
 		middle = new Rectangle(this.avatar.getX()+this.avatar.getBoundingRectangle().width/4, this.avatar.getY(), SteveDriver.TEXTURE_SIZE*19,SteveDriver.TEXTURE_SIZE*8);
 		back = new Rectangle(this.avatar.getX()+(.85f*this.avatar.getBoundingRectangle().width), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*3,SteveDriver.TEXTURE_SIZE*4);
-		moneyAmount = 50000;
-		shootTime = 2f;
+		moneyAmount = 0;
+		shootTime = 10f;
+		shootTimer = 7f;
 		startX = x;
 		startY = y;
 		SteveDriver.disableSpawnsRobot = true;
@@ -65,6 +70,9 @@ public class Carrier extends Enemy {
 		}
 		
 		threshHold = startHealth/turrets.size();
+		
+		this.beginNumEnemies = SteveDriver.field.enemies.size();
+		this.stopSpawnNum = this.beginNumEnemies + this.numActiveHomahawks;
 	}
 	
 	@Override
@@ -123,8 +131,15 @@ public class Carrier extends Enemy {
 	
 	protected void decideShoot(){
 		if(shootTimer> shootTime){
-			shoot();
-			shootTimer = 0;
+			if(this.numSpawnedHawks < this.numActiveHomahawks){
+				shoot();
+				shootTimer -= .5f;
+				numSpawnedHawks++;
+			}
+			else{
+				shootTimer = 0;
+				numSpawnedHawks = 0;
+			}
 		}
 		
 		else {
@@ -141,6 +156,7 @@ public class Carrier extends Enemy {
 		
 		SteveDriver.field.enemiesToRemove.add(turrets.get(index));
 		turrets.remove(index);
+		this.stopSpawnNum--;
 	}
 	
 

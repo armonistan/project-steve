@@ -10,7 +10,7 @@ public class SnakeBullet extends Projectile {
 		super(x, y, level == 0 ? 11 : 13, 0, 1, 1,
 				bulletDamage, 
 				true,
-				100 * SteveDriver.constants.get("fireRange"));
+				40 * ((SteveDriver.constants.get("fireRange") - 1)/2 + 1));
 		speed = SPEED;
 	}
 }

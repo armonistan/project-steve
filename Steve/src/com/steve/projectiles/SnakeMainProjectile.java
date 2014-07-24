@@ -10,14 +10,14 @@ public class SnakeMainProjectile extends Projectile {
 	
 	public SnakeMainProjectile(float x, float y, int level, int atlasX, int atlasY) {
 		super(x, y, atlasX, atlasY, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier+SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
-				100 * SteveDriver.constants.get("fireRange"));
+				30 * SteveDriver.constants.get("fireRange"));
 		speed = 450;
 		isRocket = false;
 	}
 	
 	public SnakeMainProjectile(float x, float y, int atlasX, int atlasY) {
 		super(x, y, atlasX, atlasY, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier+SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
-				100 * SteveDriver.constants.get("fireRange"));
+				35);
 		isRocket = false;
 		speed = 900;
 		ignoreCollisions = true;
@@ -25,7 +25,7 @@ public class SnakeMainProjectile extends Projectile {
 	
 	public SnakeMainProjectile(float x, float y, boolean isRocket){
 		super(x, y, 16, 0, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier+SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
-				100 * SteveDriver.constants.get("fireRange"));
+				30 * SteveDriver.constants.get("fireRange"));
 		
 		speed = 250;
 		this.isRocket = isRocket;

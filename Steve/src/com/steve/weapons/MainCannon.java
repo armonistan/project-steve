@@ -22,6 +22,7 @@ public class MainCannon extends Weapon{
 				/ (int)(SteveDriver.constants.get("fireRate")) 
 				- ((SteveDriver.constants.get("mainCannonType") == 2) ?  .2f : 0);
 		range = (250+SteveDriver.tierTwoWeaponRangeBuff) * SteveDriver.constants.get("fireRange");
+		range = 1000f;
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
