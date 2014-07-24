@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.bosses.Carrier;
+import com.steve.bosses.Razorbull;
 import com.steve.helpers.CollisionHelper;
 
 public class Weapon extends Sprite{
@@ -61,12 +63,17 @@ public class Weapon extends Sprite{
 		target = null;
 		
 		for(Enemy e : SteveDriver.field.enemies){
+			if (e.getClass() == Carrier.class || e.getClass() == Razorbull.class) {
+				target = e;
+				break;
+			}
+			
 			float enemyX = e.getXPosition();
 			float enemyY = e.getYPosition();
 			
 			float distance = (CollisionHelper.distanceSquared(this.getX(), this.getY(), enemyX, enemyY));
 			
-			if(minDistance > distance && distance < (range*range)){
+			if(minDistance > distance && distance < range * range){
 				minDistance = distance;
 				target = e;
 			}
@@ -74,8 +81,8 @@ public class Weapon extends Sprite{
 	}
 	
 	protected void turn(){
-		float deltaX = this.getX() - target.getXPosition();
-		float deltaY = this.getY() - target.getYPosition();
+		float deltaX = target.getXPosition() - this.getX();
+		float deltaY = target.getYPosition() - this.getY();
 		
 		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(3, 4));
 		//System.out.println(MathUtils.radiansToDegrees * MathUtils.atan2(-3, 4));
@@ -86,26 +93,26 @@ public class Weapon extends Sprite{
 		//System.out.println("degrees: " + degrees);
 		
 		//image offset
-		degrees += 90;
+		degrees += 270;
 
 		float deltaPositiveDegrees = Math.abs(degrees - this.getRotation() + 360)%360;
 		float deltaNegativeDegrees = Math.abs(this.getRotation() - degrees + 360)%360;
 	
 		if(deltaPositiveDegrees < deltaNegativeDegrees){
-			if((deltaPositiveDegrees) < 3)
+			if(deltaPositiveDegrees < 3f)
 				this.isAimed = true;
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +365)%360));
+				this.setRotation((this.getRotation() +365)%360);
 			}
 		}
 		else{
-			if((deltaNegativeDegrees) < 3){
+			if(deltaNegativeDegrees < 3f){
 				this.isAimed = true;
 			}
 			else{
 				this.isAimed = false;
-				this.setRotation(((this.getRotation() +355)%360));
+				this.setRotation((this.getRotation() +355)%360);
 			}
 		}
 	}

@@ -744,7 +744,7 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
 				"special1",
-				"Attach a glue stick to Steve's tail\nResults guranteed to stick to you.",
+				"Attach a glue stick to Steve's tail\nResults guaranteed to stick to you.",
 				1f,
 				8f,
 				(panelX - 32) + ((1 * panelWidth) / 5),
