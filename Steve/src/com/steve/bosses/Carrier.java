@@ -42,6 +42,7 @@ public class Carrier extends Enemy {
 		startX = x;
 		startY = y;
 		SteveDriver.disableSpawnsRobot = true;
+		SteveDriver.gui.carrierAlive(this);
 	}
 	
 	public void intialize(){
@@ -126,6 +127,7 @@ public class Carrier extends Enemy {
 		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
 		SteveDriver.robotBossActivate = SteveDriver.prefs.getBoolean("robotBossActivate", false);
+		SteveDriver.gui.carrierDead();
 		super.kill();
 	}
 	

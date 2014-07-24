@@ -243,7 +243,7 @@ public class Store {
 				break;
 				*/
 				case 5:
-					description = "These are secrets. SECRET.";
+					description = "These are secrets. SECRET.\nYou retain these across new games.";
 					SteveDriver.guiHelper.drawTextCentered("Special Upgrades",
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10))  - 15,
@@ -744,11 +744,11 @@ public class Store {
 		upgrades.add(new ToggleUpgrade("Glue Trail",
 				"glueTrail",
 				"special1",
-				"Attach a glue stick to Steve's tail\nResults guranteed to stick to you.",
+				"Attach a glue stick to Steve's tail\nResults guaranteed to stick to you.",
 				1f,
 				8f,
-				(panelX - 32) + ((1 * panelWidth) / 3),
-				panelY + 32 + ((3 * panelHeight) / 4),
+				(panelX - 32) + ((1 * panelWidth) / 5),
+				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 41 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -759,7 +759,7 @@ public class Store {
 				1f,
 				20f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
-				panelY + 32 + ((3 * panelHeight) / 4),
+				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 37 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -781,7 +781,7 @@ public class Store {
 				1f,
 				5f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
-				panelY + 32 + ((1 * panelHeight) / 4),
+				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -791,8 +791,8 @@ public class Store {
 				"Steve gains the ability to go fast.",
 				1f,
 				2f,
-				(panelX - 32) + ((4 * panelWidth) / 5),
-				panelY + 32 + ((2 * panelHeight) / 4),
+				(panelX - 32) + ((1 * panelWidth) / 3),
+				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 43 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -802,7 +802,7 @@ public class Store {
 				"There is no snake.\nTime slows around you, defying physics.",
 				1f,
 				10f,
-				(panelX - 32) + ((1 * panelWidth) / 5),
+				(panelX - 32) + ((4 * panelWidth) / 5),
 				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
 						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
@@ -987,8 +987,8 @@ public class Store {
 				Sprite buttonIcon) {
 			initMetaData(displayName, constantName, prefsKey, upgradeDescription, value, price, 0, 5, xPos, yPos, buttonIcon);
 
-			available = SteveDriver.storePrefs.getBoolean(key, false);
-			activated = SteveDriver.storePrefs.getBoolean(key + "ACT", false);
+			available = (!SteveDriver.FREE || this.price <= 5f) ? SteveDriver.storePrefs.getBoolean(key, false) : false;
+			activated = (!SteveDriver.FREE || this.price <= 5f) ? SteveDriver.storePrefs.getBoolean(key + "ACT", false) : false;
 			initAvailable = available;
 			
 			if (activated) {
@@ -1033,6 +1033,11 @@ public class Store {
 
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;
+		}
+		
+		@Override
+		public void reset() {
+			//Do fucking nothing
 		}
 
 		@Override

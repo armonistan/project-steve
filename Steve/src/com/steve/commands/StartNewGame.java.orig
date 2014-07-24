@@ -27,6 +27,7 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.prefs.putBoolean("bossDefeatedTutorial", false);
 		
 		//reset specials
+		
 		boolean sp1 = SteveDriver.storePrefs.getBoolean("special1");
 		boolean sp2 = SteveDriver.storePrefs.getBoolean("special2");
 		boolean sp3 = SteveDriver.storePrefs.getBoolean("special3");
@@ -43,13 +44,18 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.storePrefs.putBoolean("special5", sp5);
 		SteveDriver.storePrefs.putBoolean("special6", sp6);
 		
-		SteveDriver.store.saveStoreProgress();
 		
 		SteveDriver.prefs.flush();
 		SteveDriver.snake.setMoney(0);
+<<<<<<< HEAD
 		//SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
+		//SteveDriver.snake.addTreasure(5);
+		//SteveDriver.snake.addMoney(13500);
+=======
+		SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
 		//SteveDriver.snake.addTreasure(10);
-		SteveDriver.snake.addMoney(498500);
+		SteveDriver.snake.addMoney(225000);
+>>>>>>> e1c0a1ce897fad81e98c728cb459aba03587db9a
 		SteveDriver.constants.initConstants();
 		SteveDriver.store = new Store();
 		SteveDriver.tutorialOn = true;

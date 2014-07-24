@@ -24,6 +24,7 @@ public class Razorbull extends Enemy{
 		shootTime = .5f;
 		super.moveTime = .085f;
 		SteveDriver.disableSpawnsCyborg = true;
+		SteveDriver.gui.razorbullAlive(this);
 	}
 	
 	@Override
@@ -56,7 +57,7 @@ public class Razorbull extends Enemy{
 			y+=1;
 			x+=10;
 		}
-		if(x > 0 && y > 0 && x < SteveDriver.field.totalRadius && y < SteveDriver.field.totalRadius)
+		if(x > 10 && y > 10 && x < SteveDriver.field.totalRadius - 10 && y < SteveDriver.field.totalRadius - 10)
 			SteveDriver.field.createBlockerFormation(x, y);
 		shootTimer = 0;
 	}
@@ -74,6 +75,7 @@ public class Razorbull extends Enemy{
 		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
 		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate");
+		SteveDriver.gui.razorbullDead();
 		super.kill();
 	}
 	
@@ -90,8 +92,10 @@ public class Razorbull extends Enemy{
 		for (Enemy e : SteveDriver.field.enemies) {
 			Rectangle r = e.getRectangle();
 			if (CollisionHelper.isCollide(r, avatar.getBoundingRectangle()) && e != this) {
-				e.setMoneyAmount(0);
-				e.setHealth(0f);
+				if (!(e instanceof Carrier)) {
+					e.setMoneyAmount(0);
+					e.setHealth(0f);
+				}
 				break;
 			}
 		}
