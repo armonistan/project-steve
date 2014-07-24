@@ -23,22 +23,31 @@ public class StartNewGame extends StartNewRound {
 		
 		//reset progress in game
 		SteveDriver.prefs.putInteger("bossesDefeated", 0);
-		SteveDriver.prefs.putBoolean("canGoToSpace",false);
+		SteveDriver.prefs.putBoolean("canGoToSpace", false);
 		SteveDriver.prefs.putBoolean("bossDefeatedTutorial", false);
 		
 		//reset specials
-		SteveDriver.storePrefs.putBoolean("special1", false);
-		SteveDriver.storePrefs.putBoolean("special2", false);
-		SteveDriver.storePrefs.putBoolean("special3", false);
-		SteveDriver.storePrefs.putBoolean("special4", false);
-		SteveDriver.storePrefs.putBoolean("specail5", false);
-		SteveDriver.storePrefs.putBoolean("special6", false);
+		
+		boolean sp1 = SteveDriver.storePrefs.getBoolean("special1");
+		boolean sp2 = SteveDriver.storePrefs.getBoolean("special2");
+		boolean sp3 = SteveDriver.storePrefs.getBoolean("special3");
+		boolean sp4 = SteveDriver.storePrefs.getBoolean("special4");
+		boolean sp5 = SteveDriver.storePrefs.getBoolean("special5");
+		boolean sp6 = SteveDriver.storePrefs.getBoolean("special6");
 		
 		SteveDriver.storePrefs.clear();
 		
+		SteveDriver.storePrefs.putBoolean("special1", sp1);
+		SteveDriver.storePrefs.putBoolean("special2", sp2);
+		SteveDriver.storePrefs.putBoolean("special3", sp3);
+		SteveDriver.storePrefs.putBoolean("special4", sp4);
+		SteveDriver.storePrefs.putBoolean("special5", sp5);
+		SteveDriver.storePrefs.putBoolean("special6", sp6);
+		
+		
 		SteveDriver.prefs.flush();
 		SteveDriver.snake.setMoney(0);
-		SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
+		//SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
 		//SteveDriver.snake.addTreasure(5);
 		//SteveDriver.snake.addMoney(13500);
 		SteveDriver.constants.initConstants();

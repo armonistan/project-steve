@@ -243,7 +243,7 @@ public class Store {
 				break;
 				*/
 				case 5:
-					description = "These are secrets. SECRET.";
+					description = "These are secrets. SECRET.\nYou retain these across new games.";
 					SteveDriver.guiHelper.drawTextCentered("Special Upgrades",
 							SteveDriver.guiHelper.screenToCoordinateSpaceX(panelX + (panelWidth/2)),
 						SteveDriver.guiHelper.screenToCoordinateSpaceY(panelY + (panelHeight/10))  - 15,
