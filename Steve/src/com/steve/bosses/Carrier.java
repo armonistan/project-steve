@@ -36,6 +36,7 @@ public class Carrier extends Enemy {
 		shootTime = 2f;
 		startX = x;
 		startY = y;
+		SteveDriver.disableSpawnsRobot = true;
 	}
 	
 	public void intialize(){
@@ -108,14 +109,15 @@ public class Carrier extends Enemy {
 	
 	@Override
 	public void kill(){
+		SteveDriver.disableSpawnsRobot = false;
 		swiggins.kill();
 		for(CarrierTurret c : this.turrets)
 			c.kill();
 		SteveDriver.prefs.putBoolean("carrierDefeated", true);
-		SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
+		SteveDriver.prefs.putBoolean("robotBossActivate", false);
 		SteveDriver.prefs.putInteger("bossesDefeated", SteveDriver.prefs.getInteger("bossesDefeated")+1);
 		SteveDriver.prefs.flush();
-		SteveDriver.cyborgBossActivate = SteveDriver.prefs.getBoolean("cyborgBossActivate", false);
+		SteveDriver.robotBossActivate = SteveDriver.prefs.getBoolean("robotBossActivate", false);
 		super.kill();
 	}
 	

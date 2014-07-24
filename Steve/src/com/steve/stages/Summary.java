@@ -41,8 +41,6 @@ public class Summary {
 	private TextButton continueButton;
 	private TextButton spaceButton;
 	
-	public boolean showingAds;
-	
 	private WHY_DIED why;
 	
 	public enum WHY_DIED {
@@ -96,7 +94,7 @@ public class Summary {
 					SteveDriver.guiCamera.position.y + 8 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 16, 4,
 					new ChangeStage(SteveDriver.STAGE_TYPE.RESPAWNINGENDGAME), "Fufill your destiny");
 		
-		showingAds = false;
+		SteveDriver.showingAds = true;
 	}
 	
 	public void resetSummary() {

@@ -13,12 +13,12 @@ public class Narwhal extends Enemy{
 	int maxHits;
 	
 	public Narwhal(float x, float y) {
-		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 1, 1200);
+		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 3, 1200);
 		knowledgeDistance = 500;//to be refined
 		
 		destroysBlockers = true;
 		ignoresBlockers = true;
-		moneyAmount = 2000;
+		moneyAmount = 3000;
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class Narwhal extends Enemy{
 		float distance = (float)Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		
 		moveTime = distance / knowledgeDistance;
-		moveTime = (moveTime > .8f) ? .8f : 
+		moveTime = (moveTime > .4f) ? .4f : 
 			(moveTime < .3f) ? .3f : moveTime;
 		
 		//System.out.println("move speed: " + moveTime);

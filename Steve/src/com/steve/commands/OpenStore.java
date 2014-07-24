@@ -19,6 +19,8 @@ public class OpenStore extends ChangeStage implements ICommand {
 		SteveDriver.camera.position.x = SteveDriver.store.snake.getHeadPosition().x;
 		SteveDriver.camera.position.y = SteveDriver.store.snake.getHeadPosition().y;
 		
+		SteveDriver.showingAds = false;
+		
 		super.execute();
 	}
 }

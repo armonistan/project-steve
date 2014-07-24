@@ -10,7 +10,7 @@ import com.steve.projectiles.Pinecone;
 
 public class Turret extends Enemy{
 	
-	float shootSpeed = .5f;
+	float shootSpeed = .75f;
 	float shootCounter = 0;
 	float range;
 	float damage;//TODO use it?
@@ -22,10 +22,10 @@ public class Turret extends Enemy{
 
 	public Turret(float x, float y) {
 		super(x, y, 11, 16, 3, 3, 0.5f, 0.5f, 1, 75, 1000);
-		range = 550;//override range if need be
+		range = 450;//override range if need be
 		isAimed = false;
 		isUpgraded = false;
-		super.moneyAmount = 1750;
+		super.moneyAmount = 2000;
 	}
 	
 	@Override

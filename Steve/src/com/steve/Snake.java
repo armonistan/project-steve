@@ -262,7 +262,7 @@ public class Snake {
 		hungerDamage = modifiedHungerDamage;
 		
 		//tier modifier hp
-		maxHealth = maxHealth+(snakeTier * (40f));
+		maxHealth = maxHealth+(snakeTier * (40f)) + ((snakeTier == 3) ? 25f : 0);
 		
 		//upgrade modifier hp
 		maxHealth *= SteveDriver.constants.get("hitpoints");
@@ -275,6 +275,27 @@ public class Snake {
 		
 		//modify hunger
 		//hungerTime /= SteveDriver.constants.get("hungerRate"); 
+		
+		if(SteveDriver.constants.get("fireDamage") > 1){
+			SteveDriver.tierTwoWeaponDamageBuff = 40f;
+			SteveDriver.tierTwoWeaponRangeBuff = 150f;
+			SteveDriver.tierTwoWeaponShootSpeedBuff = .1f;
+		}
+		else if(SteveDriver.constants.get("fireRate") > 1){
+			SteveDriver.tierTwoWeaponDamageBuff = 20f;
+			SteveDriver.tierTwoWeaponRangeBuff = 150f;
+			SteveDriver.tierTwoWeaponShootSpeedBuff = .3f;
+		}
+		else if(SteveDriver.constants.get("fireRange") > 1){
+			SteveDriver.tierTwoWeaponDamageBuff = 20f;
+			SteveDriver.tierTwoWeaponRangeBuff = 200f;
+			SteveDriver.tierTwoWeaponShootSpeedBuff = .1f;
+		}
+		else{
+			SteveDriver.tierTwoWeaponDamageBuff = 0f;
+			SteveDriver.tierTwoWeaponRangeBuff = 0f;
+			SteveDriver.tierTwoWeaponShootSpeedBuff = 0f;		
+		}
 		
 		
 		if (jet) {
@@ -610,8 +631,8 @@ public class Snake {
 			}
 			else if(secondToLast.getBaseAtlasX() == 2 && 
 					secondToLast.getBaseAtlasY() == 2){
-				delta = SteveDriver.VRIGHT;
-				rotation = SteveDriver.LEFT;
+				delta = SteveDriver.VUP;
+				rotation = SteveDriver.DOWN;
 			}
 			else if(secondToLast.getBaseAtlasX() == 3 && 
 					secondToLast.getBaseAtlasY() == 3){
@@ -834,6 +855,7 @@ public class Snake {
 		//TODO: Make this better.
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
+		SteveDriver.showingAds = true;
 		SteveDriver.summary.setWhyDied(why);
 		SteveDriver.store.initializeUpgrades();
 	}

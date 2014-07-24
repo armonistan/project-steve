@@ -18,6 +18,8 @@ public class WrapUpLoading extends ChangeStage implements ICommand {
 			SteveDriver.tutorial.startTutorial();
 		}
 		
+		SteveDriver.showingAds = false;
+		
 		super.execute();
 	}
 }

@@ -15,6 +15,7 @@ public class Weapon extends Sprite{
 	protected Enemy target;
 	protected float shootSpeed = 2;
 	protected float shootCounter = 0;
+	protected float bulletDamage = 0;
 	protected float range;
 	float damage;//TODO use it?
 	protected int atlasX;

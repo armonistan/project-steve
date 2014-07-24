@@ -14,11 +14,14 @@ public class MainCannon extends Weapon{
 	private Sound cannonSound;
 	private Sound gausSound;
 	private Sound rocketSound;
+	private float baseShootSpeed = .9f;
 	
 	public MainCannon(float x, float y, int atlasX, int atlasY){
 		super(x,y, atlasX, atlasY);
-		shootSpeed = (.9f - SteveDriver.snake.snakeTier/10) / (int)(SteveDriver.constants.get("fireRate")) - ((SteveDriver.constants.get("mainCannonType") == 2) ?  .2f : 0);
-		range = 250 * SteveDriver.constants.get("fireRange")*SteveDriver.constants.get("fireRange");
+		shootSpeed = (baseShootSpeed - SteveDriver.snake.snakeTier/10 - SteveDriver.tierTwoWeaponShootSpeedBuff)
+				/ (int)(SteveDriver.constants.get("fireRate")) 
+				- ((SteveDriver.constants.get("mainCannonType") == 2) ?  .2f : 0);
+		range = (250+SteveDriver.tierTwoWeaponRangeBuff) * SteveDriver.constants.get("fireRange");
 		this.isUpgraded = true;
 		alternate = true;
 		barrageCounter = 0;
