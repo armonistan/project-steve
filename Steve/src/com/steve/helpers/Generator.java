@@ -137,10 +137,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		int xPos = (int)((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
-			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
-		int yPos = (int)((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
-			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
+		int xPos = (choiceX == 0) ? (int)xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? (int)xPosLeft/SteveDriver.TEXTURE_SIZE : (int)xPosRight/SteveDriver.TEXTURE_SIZE;
+		int yPos = (choiceY == 0) ? (int)yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? (int)yPosBot/SteveDriver.TEXTURE_SIZE : (int)yPosTop/SteveDriver.TEXTURE_SIZE;
 	
 		int locationID = SteveDriver.field.checkRing(xPos, yPos);
 		int enemyType = (locationID == GRASS_ID) ?  r.nextInt(1) :
@@ -222,10 +222,10 @@ public class Generator {
 			choiceY = -1;
 		}
 		
-		float xPos = ((choiceX == 0) ? xPosTopBot/SteveDriver.TEXTURE_SIZE : 
-			(choiceX < 0) ? xPosLeft/SteveDriver.TEXTURE_SIZE : xPosRight/SteveDriver.TEXTURE_SIZE);
-		float yPos = ((choiceY == 0) ? yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
-			(choiceY < 0) ? yPosBot/SteveDriver.TEXTURE_SIZE : yPosTop/SteveDriver.TEXTURE_SIZE);
+		float xPos = ((choiceX == 0) ? (int)xPosTopBot/SteveDriver.TEXTURE_SIZE : 
+			(choiceX < 0) ? (int)xPosLeft/SteveDriver.TEXTURE_SIZE : (int)xPosRight/SteveDriver.TEXTURE_SIZE);
+		float yPos = ((choiceY == 0) ? (int)yPosRightLeft/SteveDriver.TEXTURE_SIZE : 
+			(choiceY < 0) ? (int)yPosBot/SteveDriver.TEXTURE_SIZE : (int)yPosTop/SteveDriver.TEXTURE_SIZE);
 	
 		return generateSlugTutorial(xPos, yPos);
 	}
