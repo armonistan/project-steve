@@ -747,8 +747,8 @@ public class Store {
 				"Attach a glue stick to Steve's tail\nResults guranteed to stick to you.",
 				1f,
 				8f,
-				(panelX - 32) + ((1 * panelWidth) / 3),
-				panelY + 32 + ((3 * panelHeight) / 4),
+				(panelX - 32) + ((1 * panelWidth) / 5),
+				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 41 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -759,7 +759,7 @@ public class Store {
 				1f,
 				20f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
-				panelY + 32 + ((3 * panelHeight) / 4),
+				panelY + 32 + ((1 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 37 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -781,7 +781,7 @@ public class Store {
 				1f,
 				5f,
 				(panelX - 32) + ((2 * panelWidth) / 3),
-				panelY + 32 + ((1 * panelHeight) / 4),
+				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -791,8 +791,8 @@ public class Store {
 				"Steve gains the ability to go fast.",
 				1f,
 				2f,
-				(panelX - 32) + ((4 * panelWidth) / 5),
-				panelY + 32 + ((2 * panelHeight) / 4),
+				(panelX - 32) + ((1 * panelWidth) / 3),
+				panelY + 32 + ((3 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 43 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
@@ -802,7 +802,7 @@ public class Store {
 				"There is no snake.\nTime slows around you, defying physics.",
 				1f,
 				10f,
-				(panelX - 32) + ((1 * panelWidth) / 5),
+				(panelX - 32) + ((4 * panelWidth) / 5),
 				panelY + 32 + ((2 * panelHeight) / 4),
 				new Sprite(SteveDriver.atlas, 39 * SteveDriver.TEXTURE_SIZE,
 						21 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));

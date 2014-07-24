@@ -92,34 +92,34 @@ public class Tutorial {
 			switch (stage) {
 			case intro:
 				description = "This is you. You are a snake named Steve.\nYou want to get to Space.";
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 32;
-				noGray.height = 32;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 				focus = SteveDriver.snake.getHeadPosition();
 				break;
 			case movement:
 				description = "Move by touching the arrows on the screen.";
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 32;
-				noGray.height = 32;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 				focus = SteveDriver.snake.getHeadPosition();
 				break;
 			case hunger:
 				description = "Eat apples to grow your snake.\nEat them to prevent your own destruction.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 32;
-				noGray.height = 32;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			
 				Vector3 tempApple = new Vector3();
 				float closestAppleDistance = Float.POSITIVE_INFINITY;
 			
 				for (Pickup p : Field.pickups) {
 					if (p.getClass() == Apple.class || p.getClass() == ClassicApple.class) {
-						float tempDist = CollisionHelper.distanceSquared(p.getX(), p.getY(),
+						float tempDist = CollisionHelper.distanceSquared(p.getX() + p.getOriginX(), p.getY() + p.getOriginY(),
 							SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE, SteveDriver.field.totalRadius / 2 * SteveDriver.TEXTURE_SIZE);
 						
 						if (tempDist < closestAppleDistance) {
@@ -135,10 +135,10 @@ public class Tutorial {
 				break;
 			case blockers:
 				description = "Don't run into these rocks!";
-				noGray.y = -48;
-				noGray.x = -48;
-				noGray.width = 48;
-				noGray.height = 48;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			
 				TiledMapTileLayer blockerLayer = Field.blockers;
 			
@@ -165,10 +165,10 @@ public class Tutorial {
 				break;
 			case enemies:
 				description = "Various enemies roam your world.\nBe wary of them at all times.";
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 48;
-				noGray.height = 48;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			
 				Vector3 tempEnemy = new Vector3();
 				float closestEnemyDistance = Float.POSITIVE_INFINITY;
@@ -180,8 +180,8 @@ public class Tutorial {
 						
 						if (tempDist < closestEnemyDistance) {
 							closestEnemyDistance = tempDist;
-							tempEnemy.x = e.getXPosition();
-							tempEnemy.y = e.getYPosition();
+							tempEnemy.x = e.getXPosition() - SteveDriver.TEXTURE_SIZE / 2;
+							tempEnemy.y = e.getYPosition() - SteveDriver.TEXTURE_SIZE / 2;
 						}
 					}
 				}
@@ -191,10 +191,10 @@ public class Tutorial {
 			case weapons:
 				description = "Arm yourself in order to fight back.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 20 * SteveDriver.TEXTURE_SIZE, 0);
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 32;
-				noGray.height = 32;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			
 				Vector3 tempWeapon = new Vector3();
 				float closestWeaponDistance = Float.POSITIVE_INFINITY;
@@ -217,18 +217,18 @@ public class Tutorial {
 				break;
 			case goodFuckingLuck:
 				description = "Kill all the stuff!\nKeep moving away from the middle.";
-				noGray.y = -32;
-				noGray.x = -32;
-				noGray.width = 32;
-				noGray.height = 32;
+				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 				focus = SteveDriver.snake.getHeadPosition();
 				break;
 			}
 		}
 		else if (type == TUTORIAL_TYPE.edge) {
 			description = "You can't go to space until\nyou have ascended to Astro-Steve.";
-			noGray.width = 32;
-			noGray.height = 32;
+			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			focus = SteveDriver.snake.getHeadPosition();
 			
 			float xModify = 0f;
@@ -277,10 +277,10 @@ public class Tutorial {
 
 		else if (type == TUTORIAL_TYPE.cyborgBoss) {
 			description = "There is a disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
-			noGray.y = -32;
-			noGray.x = -32;
-			noGray.width = 32;
-			noGray.height = 32;
+			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			focus = new Vector3();
 			
 			for (Pickup p : Field.pickups) {
@@ -292,10 +292,10 @@ public class Tutorial {
 		
 		else if (type == TUTORIAL_TYPE.robotBoss) {
 			description = "Another disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
-			noGray.y = -32;
-			noGray.x = -32;
-			noGray.width = 32;
-			noGray.height = 32;
+			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			focus = new Vector3();
 			
 			for (Pickup p : Field.pickups) {
@@ -307,10 +307,10 @@ public class Tutorial {
 		
 		else if(type == TUTORIAL_TYPE.endGame){
 			description = "This is it. You have defeated every boss.\nGo now, and fulfill your destiny.";
-			noGray.y = -32;
-			noGray.x = -32;
-			noGray.width = 32;
-			noGray.height = 32;
+			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
+			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
+			noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 			focus = SteveDriver.snake.getHeadPosition();
 		}
 		
