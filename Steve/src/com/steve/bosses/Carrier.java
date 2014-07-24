@@ -32,7 +32,7 @@ public class Carrier extends Enemy {
 	int numSpawnedHawks = 0;
 	
 	public Carrier(float x, float y) {
-		super(x, y, 36, 0, 28, 8, 0.5f, 0.5f, 1, 50, startHealth);
+		super(x, y, 36, 0, 28, 8, 1f, 0.5f, 1, 50, startHealth);
 		front = new Rectangle(this.avatar.getX(), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*5,SteveDriver.TEXTURE_SIZE*2);
 		middle = new Rectangle(this.avatar.getX()+this.avatar.getBoundingRectangle().width/4, this.avatar.getY(), SteveDriver.TEXTURE_SIZE*19,SteveDriver.TEXTURE_SIZE*8);
 		back = new Rectangle(this.avatar.getX()+(.85f*this.avatar.getBoundingRectangle().width), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*3,SteveDriver.TEXTURE_SIZE*4);
@@ -41,6 +41,8 @@ public class Carrier extends Enemy {
 		shootTimer = 7f;
 		startX = x;
 		startY = y;
+		ignoresBlockers = true;
+		destroysBlockers = true;
 		SteveDriver.disableSpawnsRobot = true;
 		SteveDriver.gui.carrierAlive(this);
 	}
@@ -53,17 +55,17 @@ public class Carrier extends Enemy {
 			float xOffset = 8+4*counter;
 			float yOffset = 1;
 			
-			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
+			turrets.add(new CarrierTurret(x, y, xOffset,yOffset, this));
 		}
 		
 		for(int counter = 0; counter < numTurrets/2; counter++){
 			float xOffset = 8+4*counter;
 			float yOffset = 6;
 			
-			turrets.add(new CarrierTurret(x+xOffset,y+yOffset));
+			turrets.add(new CarrierTurret(x, y, xOffset, yOffset, this));
 		}
 		
-		swiggins = new Admiral(x+20,y+3);
+		swiggins = new Admiral(x, y, 20, 3, this);
 		SteveDriver.field.enemies.add(swiggins);
 		
 		for(CarrierTurret c : turrets){
@@ -150,7 +152,24 @@ public class Carrier extends Enemy {
 	}
 	
 	@Override
-	protected void move() {
+	protected Vector2 decideMove() {
+		if (avatar.getRotation() == SteveDriver.UP) {
+			if (avatar.getX() <= 0f) {
+				avatar.setRotation(SteveDriver.DOWN);
+			}
+		}
+		else {
+			if (avatar.getX() + avatar.getWidth() >= SteveDriver.field.totalRadius * SteveDriver.TEXTURE_SIZE) {
+				avatar.setRotation(SteveDriver.UP);
+			}
+		}
+		
+		if (avatar.getRotation() == SteveDriver.UP) {
+			return SteveDriver.VLEFT;
+		}
+		else {
+			return SteveDriver.VRIGHT;
+		}
 	}
 	
 	protected void loseTurret(){
@@ -164,5 +183,21 @@ public class Carrier extends Enemy {
 
 	public void shoot() {
 		SteveDriver.field.enemiesToAdd.add(new HomaHawk(this.avatar.getX()/16+8, this.avatar.getY()/16+3, this.avatar.getRotation()));
+	}
+	
+	public float getX() {
+		return avatar.getX();
+	}
+	
+	public float getY() {
+		return avatar.getY();
+	}
+	
+	public float getRotation() {
+		return avatar.getRotation();
+	}
+	
+	public float getWidth() {
+		return avatar.getWidth();
 	}
 }
