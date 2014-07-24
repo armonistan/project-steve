@@ -9,6 +9,7 @@ import com.steve.SteveDriver;
 import com.steve.TextButton;
 import com.steve.commands.ChangeStage;
 import com.steve.commands.OpenStore;
+import com.steve.helpers.GUIHelper.BoxColors;
 
 public class Summary {
 	Texture diedEnemy;
@@ -29,9 +30,11 @@ public class Summary {
 	
 	public float appleScore;
 	public float enemyScore;
+	public float totalScore;
 	
 	private float applePercent;
 	private float enemyPercent;
+	private float totalPercent;
 	
 	private float savingOpacity;
 	private boolean fading;
@@ -85,6 +88,7 @@ public class Summary {
 		
 		appleScore = 0;
 		enemyScore = 0;
+		totalScore = 0;
 		
 		continueButton = new TextButton(SteveDriver.guiCamera.position.x - 6 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.guiCamera.position.y + 4 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2, 12, 4,
@@ -100,9 +104,11 @@ public class Summary {
 	public void resetSummary() {
 		appleScore = 0;
 		enemyScore = 0;
+		totalScore = 0;
 		
 		applePercent = 0.0f;
 		enemyPercent = 0.0f;
+		totalPercent = 0.0f;
 		
 		savingTimer = 0f;
 	}
@@ -112,6 +118,10 @@ public class Summary {
 	}
 	
 	public void render() {
+		if (totalScore == 0) {
+			totalScore = enemyScore + appleScore;
+		}
+		
 		SteveDriver.batch.setProjectionMatrix(SteveDriver.guiCamera.combined);
 		
 		SteveDriver.batch.begin();
@@ -188,16 +198,23 @@ public class Summary {
 		savingSprite.setPosition(SteveDriver.guiCamera.position.x - 16 * SteveDriver.TEXTURE_SIZE, 
 				SteveDriver.guiCamera.position.y + 1 * SteveDriver.TEXTURE_SIZE - SteveDriver.guiCamera.viewportHeight / 2);
 		
+		SteveDriver.guiHelper.drawBox(-1 * 8 * SteveDriver.TEXTURE_SIZE, 6 * SteveDriver.TEXTURE_SIZE, 16, 12, BoxColors.BLACK, Color.WHITE);
+		
 		savingSprite.draw(SteveDriver.batch, savingOpacity);
 		
 		SteveDriver.guiHelper.drawTextCentered("Apples: $" + Math.round(appleScore * applePercent), 
 				SteveDriver.guiCamera.position.x, 
-				SteveDriver.guiCamera.position.y,
+				SteveDriver.guiCamera.position.y + 5 * SteveDriver.TEXTURE_SIZE,
 				Color.YELLOW);
 		
 		SteveDriver.guiHelper.drawTextCentered("Enemies: $" + Math.round(enemyScore * enemyPercent), 
 				SteveDriver.guiCamera.position.x, 
 				SteveDriver.guiCamera.position.y + 3 * SteveDriver.TEXTURE_SIZE,
+				Color.YELLOW);
+		
+		SteveDriver.guiHelper.drawTextCentered("Total: $" + Math.round(totalScore * totalPercent), 
+				SteveDriver.guiCamera.position.x, 
+				SteveDriver.guiCamera.position.y - 2 * SteveDriver.TEXTURE_SIZE,
 				Color.YELLOW);
 
 		SteveDriver.batch.end();
@@ -207,17 +224,24 @@ public class Summary {
 	
 	private void updateCounts() {
 		if (applePercent < 1f) {
-			applePercent += 0.01f;
+			applePercent += 0.02f;
 		} 
 		else {
 			applePercent = 1f;
 		}
 
 		if (enemyPercent < 1f) {
-			enemyPercent += 0.01f;
+			enemyPercent += 0.02f;
 		}
 		else {
 			enemyPercent = 1f;
+		}
+		
+		if (totalPercent < 1f) {
+			totalPercent += 0.01f;
+		} 
+		else {
+			totalPercent = 1f;
 		}
 	}
 }
