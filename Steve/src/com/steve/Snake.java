@@ -834,6 +834,7 @@ public class Snake {
 		//TODO: Make this better.
 		SteveDriver.prefs.flush();
 		SteveDriver.stage = SteveDriver.STAGE_TYPE.SUMMARY;
+		SteveDriver.showingAds = true;
 		SteveDriver.summary.setWhyDied(why);
 		SteveDriver.store.initializeUpgrades();
 	}

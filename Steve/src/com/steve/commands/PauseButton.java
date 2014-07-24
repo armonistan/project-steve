@@ -1,5 +1,6 @@
 package com.steve.commands;
 
+import com.steve.SteveDriver;
 import com.steve.SteveDriver.STAGE_TYPE;
 
 public class PauseButton extends ChangeStage{
@@ -19,9 +20,11 @@ public class PauseButton extends ChangeStage{
 		
 		if (stage == gameType) {
 			stage = pausedType;
+			SteveDriver.showingAds = false;
 		}
 		else if (stage == pausedType) {
 			stage = gameType;
+			SteveDriver.showingAds = true;
 		}
 	}
 }

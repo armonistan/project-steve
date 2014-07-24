@@ -110,7 +110,8 @@ public class SteveDriver implements ApplicationListener {
 	private static Music spaceMusic;
 	
 	public static boolean musicPlaying;
-	public static IActivityRequestHandler handler;
+	private static IActivityRequestHandler handler;
+	public static boolean showingAds;
 	
 	public static enum STAGE_TYPE {
 		MENU,
@@ -241,11 +242,11 @@ public class SteveDriver implements ApplicationListener {
 		tutorial = new Tutorial();
 		store = new Store();
 		credits = new Credits();
-		loading = new Loading(STAGE_TYPE.GAME);
 		endGame = new EndGame();
 		newGame = new ConfirmNewGame();
 		
 		summary = new Summary();
+		showingAds = false;
 	}
 
 	@Override
@@ -335,15 +336,11 @@ public class SteveDriver implements ApplicationListener {
 			tutorial.render();
 		}
 		
-		if (summary != null) {
-			if (handler != null && summary.showingAds && stage != STAGE_TYPE.SUMMARY) {
-				summary.showingAds = false;
-				handler.showAds(false);
-			}
-			else if (handler != null && !summary.showingAds && stage == STAGE_TYPE.SUMMARY) {
-				summary.showingAds = true;
-				handler.showAds(true);
-			}
+		if (handler != null && showingAds) {
+			handler.showAds(true);
+		}
+		else if (handler != null && !showingAds) {
+			handler.showAds(false);
 		}
 	}
 
