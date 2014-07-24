@@ -1034,6 +1034,11 @@ public class Store {
 			SteveDriver.constants.addToConstants(constantName, initConstantValue);
 			activated = initActivated;
 		}
+		
+		@Override
+		public void reset() {
+			//Do fucking nothing
+		}
 
 		@Override
 		public int trySpendCurrency() {
