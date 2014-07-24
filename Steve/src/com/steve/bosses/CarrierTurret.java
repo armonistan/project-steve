@@ -18,13 +18,31 @@ public class CarrierTurret extends Enemy{
 	boolean isAimed;
 	boolean isUpgraded;
 	//sprivate Sprite base;
+	
+	Carrier carrier;
+	float xOffSet;
+	float yOffSet;
 
-	public CarrierTurret(float x, float y) {
+	public CarrierTurret(float x, float y, float xOff, float yOff, Carrier c) {
 		super(x, y, 9, 5, 1, 1, 0.5f, 0.5f, 1, 0, 125);
 		range = 300;//override range if need be
 		isAimed = false;
 		isUpgraded = false;
-		moneyAmount = 0;}
+		moneyAmount = 0;
+		
+		carrier = c;
+		xOffSet = xOff;
+		yOffSet = yOff;
+	}
+	
+	@Override
+	public void update() {
+		avatar.setPosition(carrier.getX() + (carrier.getRotation() == SteveDriver.UP ? xOffSet *
+				SteveDriver.TEXTURE_SIZE : carrier.getWidth() - xOffSet * SteveDriver.TEXTURE_SIZE),
+				carrier.getY() + yOffSet * SteveDriver.TEXTURE_SIZE);
+		
+		super.update();
+	}
 	
 	@Override
 	protected void move(){
@@ -92,7 +110,5 @@ public class CarrierTurret extends Enemy{
 		temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 		shootCounter = 0;
 	}
-	
-	
 
 }
