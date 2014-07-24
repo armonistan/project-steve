@@ -987,8 +987,8 @@ public class Store {
 				Sprite buttonIcon) {
 			initMetaData(displayName, constantName, prefsKey, upgradeDescription, value, price, 0, 5, xPos, yPos, buttonIcon);
 
-			available = SteveDriver.storePrefs.getBoolean(key, false);
-			activated = SteveDriver.storePrefs.getBoolean(key + "ACT", false);
+			available = (!SteveDriver.FREE || this.price <= 5f) ? SteveDriver.storePrefs.getBoolean(key, false) : false;
+			activated = (!SteveDriver.FREE || this.price <= 5f) ? SteveDriver.storePrefs.getBoolean(key + "ACT", false) : false;
 			initAvailable = available;
 			
 			if (activated) {
