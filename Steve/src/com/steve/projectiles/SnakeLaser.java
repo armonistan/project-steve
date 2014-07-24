@@ -8,7 +8,7 @@ public class SnakeLaser extends Projectile {
 	
 	public SnakeLaser(float x, float y, int level, float bulletDamage) {
 		super(x, y, level == 0 ? 17 : 18, 0, 1, 1, 
-				bulletDamage, true, 100*SteveDriver.constants.get("fireRange"));
+				bulletDamage, true, 35*((SteveDriver.constants.get("fireRange") - 1)/2 + 1));
 		speed = SPEED;
 	}
 }

@@ -19,6 +19,7 @@ public class GatlingGun extends Weapon{
 		//range
 		modifier = (SteveDriver.constants.get("fireRange") - 1)/2 + 1;
 		range = 300f * modifier;
+		range = 1000f;
 		//damage
 		bulletDamage = baseDamage+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier;
 		modifier = (SteveDriver.constants.get("fireDamage") - 1)/2 + 1;
@@ -42,20 +43,24 @@ public class GatlingGun extends Weapon{
 				temp.setDirection(MathUtils.cosDeg(degrees), MathUtils.sinDeg(degrees));
 				
 				SteveDriver.field.addProjectile(temp);
+				
 				int shootSoundInt = -1;
-				if(SteveDriver.prefs.getBoolean("sfx", true))
+				if(SteveDriver.prefs.getBoolean("sfx", true)) {
 					shootSoundInt = SteveDriver.random.nextInt(2)+1;
-				switch(shootSoundInt){
-					case 1:
-						shootSound1.play(.3f, 1, 0);
-					break;
-					case 2:
-						shootSound2.play(.3f, 1, 0);
-					break;
-					case 3:
-						shootSound3.play();
-					break;
+					
+					switch(shootSoundInt){
+						case 1:
+							shootSound1.play(.3f, 1, 0);
+						break;
+						case 2:
+							shootSound2.play(.3f, 1, 0);
+						break;
+						case 3:
+							shootSound3.play();
+						break;
+					}
 				}
+				
 				shootCounter = 0;
 	}
 	

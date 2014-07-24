@@ -7,11 +7,13 @@ import com.steve.base.Enemy;
 import com.steve.projectiles.Acorn;
 
 public class Admiral extends Enemy {
-	
 	private Sprite face;
+	private Carrier carrier;
+	float xOffSet;
+	float yOffSet;
 
-	public Admiral(float x, float y) {
-		super(x, y, 37, 9, 2, 3, 0.5f, 0.5f, 2, 0, 75);
+	public Admiral(float x, float y, float xOff, float yOff, Carrier c) {
+		super(x + xOff, y + yOff, 37, 9, 2, 3, 0.5f, 0.5f, 2, 0, 75);
 		shootTime = 0.5f;
 		sightDistance = 600;
 		
@@ -23,6 +25,9 @@ public class Admiral extends Enemy {
 		
 		moneyAmount = 0;
 		this.avatar.setRotation(SteveDriver.RIGHT);
+		carrier = c;
+		xOffSet = xOff;
+		yOffSet = yOff;
 	}
 	
 	@Override
@@ -38,7 +43,12 @@ public class Admiral extends Enemy {
 	}
 	
 	@Override
-	public void update(){
+	public void update(){		
+		avatar.setPosition(carrier.getX() + (carrier.getRotation() == SteveDriver.UP ? xOffSet *
+				SteveDriver.TEXTURE_SIZE : carrier.getWidth() - xOffSet * SteveDriver.TEXTURE_SIZE),
+				carrier.getY() + yOffSet * SteveDriver.TEXTURE_SIZE);
+		avatar.setRotation(carrier.getRotation() == SteveDriver.UP ? SteveDriver.RIGHT : SteveDriver.LEFT);
+		
 		super.decideShoot();
 		super.update();
 	}
