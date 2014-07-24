@@ -3,11 +3,15 @@ package com.steve;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver.STAGE_TYPE;
+import com.steve.bosses.Carrier;
+import com.steve.bosses.Razorbull;
 import com.steve.commands.ChangeStage;
+import com.steve.helpers.GUIHelper.BoxColors;
 
 public class GUI {
 	
@@ -20,6 +24,15 @@ public class GUI {
 	private float currentHealthPercent;
 	
 	private float spriteWidth = 3 * SteveDriver.TEXTURE_SIZE;
+	
+	private Razorbull razor;
+	private Carrier carrier;
+	
+	private float razorHP;
+	private float carrierHP;
+	
+	private boolean razorAlive = false;
+	private boolean carrierAlive = false;
 	
 	private Sprite endHP;
 	
@@ -116,6 +129,49 @@ public class GUI {
 			s.draw(SteveDriver.batch);
 		}
 		
+		if (razorAlive && carrierAlive) {
+			drawBossHP(-1 * SteveDriver.constants.get("screenWidth")/4, -2 * SteveDriver.constants.get("screenHeight") / 5, "Razorbull", razor.getHealth(), razorHP);
+			drawBossHP(SteveDriver.constants.get("screenWidth") / 4, -2 * SteveDriver.constants.get("screenHeight") / 5, "Carrier", carrier.getHealth(), carrierHP);
+		} else if (razorAlive) {
+			drawBossHP(0, -2 * SteveDriver.constants.get("screenHeight") / 5, "Razorbull", razor.getHealth(), razorHP);
+		} else if (carrierAlive) {
+			drawBossHP(0, -2 * SteveDriver.constants.get("screenHeight") / 5, "Carrier", carrier.getHealth(), carrierHP);
+		}
+		
 		SteveDriver.batch.end();
+	}
+	
+	public void razorbullAlive(Razorbull r) {
+		razorAlive = true;
+		razor = r;
+		razorHP = razor.getHealth();
+	}
+	
+	public void razorbullDead() {
+		razorAlive = false;
+		razorHP = 0;
+	}
+	
+	public void carrierAlive(Carrier c) {
+		carrierAlive = true;
+		carrier = c;
+		carrierHP = carrier.getHealth();
+	}
+	
+	public void carrierDead() {
+		carrierAlive = false;
+		carrierHP = 0;
+	}
+	
+	public void drawBossHP(float x, float y, String bossname, float hp, float totalHP) {
+		SteveDriver.guiHelper.drawBox(x - (5f * SteveDriver.TEXTURE_SIZE), y + (SteveDriver.TEXTURE_SIZE), 10, 4, BoxColors.BLACK, Color.WHITE);
+		SteveDriver.guiHelper.drawTextCentered(bossname, x, y + SteveDriver.TEXTURE_SIZE / 2, Color.BLACK);
+		if (hp / totalHP > .66) {
+			SteveDriver.guiHelper.drawTextCentered(String.format("%10.0f", hp), x - (2.5f * SteveDriver.TEXTURE_SIZE), y - SteveDriver.TEXTURE_SIZE, Color.GREEN);
+		} else if (hp / totalHP > .33) {
+			SteveDriver.guiHelper.drawTextCentered(String.format("%10.0f", hp), x - (2.5f * SteveDriver.TEXTURE_SIZE), y - SteveDriver.TEXTURE_SIZE, Color.YELLOW);
+		} else {
+			SteveDriver.guiHelper.drawTextCentered(String.format("%10.0f", hp), x - (2.5f * SteveDriver.TEXTURE_SIZE), y - SteveDriver.TEXTURE_SIZE, Color.RED);
+		}
 	}
 }

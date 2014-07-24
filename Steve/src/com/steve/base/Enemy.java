@@ -596,4 +596,8 @@ public class Enemy {
 	public void setHealth(float hp){
 		health = hp;
 	}
+	
+	public float getHealth() {
+		return this.health;
+	}
 }

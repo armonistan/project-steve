@@ -295,16 +295,22 @@ public class SteveDriver implements ApplicationListener {
 		switch (stage) {
 		case CREDITS:
 			credits.render();
+			gui.carrierDead();
+			gui.razorbullDead();
 			break;
 		case MENU:
 			summary.resetSummary();
 			menu.render();
+			gui.carrierDead();
+			gui.razorbullDead();
 			break;
 		case RESPAWNING:
 			resetTheme();
 			store.saveStoreProgress();
 			resetField();
 			summary.resetSummary();
+			gui.carrierDead();
+			gui.razorbullDead();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case RESPAWNINGENDGAME:
@@ -312,13 +318,19 @@ public class SteveDriver implements ApplicationListener {
 			store.saveStoreProgress();
 			resetFieldForSpace();
 			summary.resetSummary();
+			gui.carrierDead();
+			gui.razorbullDead();
 			stage = STAGE_TYPE.LOADING;
 			break;
 		case SUMMARY:
 			summary.render();
+			gui.carrierDead();
+			gui.razorbullDead();
 			break;
 		case STORE:
 			store.render();
+			gui.carrierDead();
+			gui.razorbullDead();
 			break;
 		case GAME:
 			game.render();
