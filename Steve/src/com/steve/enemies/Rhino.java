@@ -17,7 +17,7 @@ public class Rhino extends Enemy {
 				.3f, 100, 1, 3, 1350);
 		// TODO Auto-generated constructor stub
 		moneyAmount = 2500;
-		super.knowledgeDistance = 500;
+		super.knowledgeDistance = 600;
 	}
 
 	@Override

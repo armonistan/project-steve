@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.steve.base.Enemy;
 import com.steve.base.Pickup;
@@ -27,7 +28,9 @@ public class Tutorial {
 	public enum TUTORIAL_STAGE_TYPE {
 		intro,
 		movement,
+		field,
 		hunger,
+		apple,
 		blockers,
 		enemies,
 		weapons,
@@ -106,8 +109,8 @@ public class Tutorial {
 				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
 				focus = SteveDriver.snake.getHeadPosition();
 				break;
-			case hunger:
-				description = "Eat apples to grow your snake.\nEat them to prevent your own destruction.";
+			case apple:
+				description = "Eating apples will add segements to Steve.\nIf Steve gets below 2 segments, he will die!";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
@@ -131,6 +134,17 @@ public class Tutorial {
 				}
 			
 				focus = tempApple;
+			
+				break;
+			case hunger:
+				description = "This is Steve's hunger bar. It will naturally decrease. Additionally, it\nacts as his HP bar. Getting hit by enemies decreases it. If it goes down\nto zero, Steve will lose a segment.";
+				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
+				noGray.y = 1 * 9 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 11 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 20 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 2 * SteveDriver.TEXTURE_SIZE;
+			
+				focus = SteveDriver.snake.getHeadPosition();
 			
 				break;
 			case blockers:
@@ -163,8 +177,19 @@ public class Tutorial {
 			
 				focus = tempBlocker;
 				break;
+			case field:
+				description = "This is the world of Steve. Currently, you are in the grasslands. \nThis is a safer zone. But, be careful, as you venture further out into the \nworld, new threats will arise.";
+				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
+				noGray.y = -1 * 30 * SteveDriver.TEXTURE_SIZE;
+				noGray.x = -1 * 30 * SteveDriver.TEXTURE_SIZE;
+				noGray.width = 70 * SteveDriver.TEXTURE_SIZE;
+				noGray.height = 60 * SteveDriver.TEXTURE_SIZE;
+			
+				focus = SteveDriver.snake.getHeadPosition();
+			
+				break;
 			case enemies:
-				description = "Various enemies roam your world.\nBe wary of them at all times.";
+				description = "This is a slug. It's mostly harmless, but will hurt you if you run \ninto it. Other foes will not be so forgiving. Be careful.";
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
@@ -189,7 +214,7 @@ public class Tutorial {
 				focus = tempEnemy;
 				break;
 			case weapons:
-				description = "Arm yourself in order to fight back.";
+				description = "Once you are ready, arm yourself in order to fight back.\nThis is the desert, powerful creatures reside here. It may be a\nbit before you are ready.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 20 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
@@ -216,7 +241,7 @@ public class Tutorial {
 			
 				break;
 			case goodFuckingLuck:
-				description = "Kill all the stuff!\nKeep moving away from the middle.";
+				description = "Now venture forth Steve!\nFulfill your destiny!";
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
@@ -276,7 +301,7 @@ public class Tutorial {
 		
 
 		else if (type == TUTORIAL_TYPE.cyborgBoss) {
-			description = "There is a disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
+			description = "There is a disturbance. Investigate by eating this. Should you defeat what\ncomes after eating it, you will be a step closer to your destiny.\nPREPARE YOURSELF!";
 			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
@@ -291,7 +316,7 @@ public class Tutorial {
 		}
 		
 		else if (type == TUTORIAL_TYPE.robotBoss) {
-			description = "Another disturbance. Investigate by eating this.\nPREPARE YOURSELF.";
+			description = "Another disturbance. Should you defeat what comes after eating it,\nyou will be a step closer to your destiny. PREPARE YOURSELF!";
 			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
@@ -306,7 +331,7 @@ public class Tutorial {
 		}
 		
 		else if(type == TUTORIAL_TYPE.endGame){
-			description = "This is it. You have defeated every boss.\nGo now, and fulfill your destiny.";
+			description = "This is it. You have defeated every boss.\nAt the summary screen, you may now suit up to go to space.\nWhen you are ready, go and fulfill your destiny.";
 			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
