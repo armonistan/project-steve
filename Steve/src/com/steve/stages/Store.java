@@ -950,11 +950,11 @@ public class Store {
 			
 			if (constantName == "cyborg" && !initActivated) {
 				SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
-				SteveDriver.prefs.putBoolean("carrierDefeated", false);
+				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
 			}
 			else if(constantName == "robot" && !initActivated){
 				SteveDriver.prefs.putBoolean("robotBossActivate", false);
-				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
+				SteveDriver.prefs.putBoolean("carrierDefeated", false);
 			}
 		}
 
