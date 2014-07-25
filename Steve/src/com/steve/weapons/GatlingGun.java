@@ -45,7 +45,7 @@ public class GatlingGun extends Weapon{
 				SteveDriver.field.addProjectile(temp);
 				
 				int shootSoundInt = -1;
-				if(SteveDriver.prefs.getBoolean("sfx", true)) {
+				if(SteveDriver.prefs.getBoolean("sfx", false)) {
 					shootSoundInt = SteveDriver.random.nextInt(2)+1;
 					
 					switch(shootSoundInt){

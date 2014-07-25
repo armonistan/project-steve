@@ -217,7 +217,7 @@ public class Enemy {
 	
 	public void kill() {
 		health = 0f;
-		if(SteveDriver.prefs.getBoolean("sfx", true))
+		if(SteveDriver.prefs.getBoolean("sfx", false))
 			enemyDeath.play();
 		SteveDriver.field.enemiesToRemove.add(this);
 		if (treasureAmount != 0) {

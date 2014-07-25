@@ -137,7 +137,7 @@ public class Tutorial {
 			
 				break;
 			case hunger:
-				description = "This is Steve's hunger bar. As Steve gets hungry, the bar goes down.\n" +
+				description = "This is Steve's hunger bar. As Steve gets hungry, the bar goes \ndown. " +
 							  "Getting hit by enemies also drains the bar.\n" +
 							  "If the bar goes empty, Steve will lose a segment.\n";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
@@ -180,7 +180,7 @@ public class Tutorial {
 				focus = tempBlocker;
 				break;
 			case field:
-				description = "This is the world of Steve. Currently, you are in the grasslands. \nThis zone is fairly peaceful. However, as you venture further out into the \nworld, new threats will arise.";
+				description = "This is the world of Steve. Currently, you are in the grasslands. \nThis zone is fairly peaceful. However, as you venture further out\ninto the world, new threats will arise.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -1 * 30 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 30 * SteveDriver.TEXTURE_SIZE;
@@ -191,7 +191,7 @@ public class Tutorial {
 			
 				break;
 			case enemies:
-				description = "This is a slug. It's usually unaggressive, but will hurt you if you run \ninto it. As you explore outward, you'll encounter scarier foes.\nBe careful!";
+				description = "This is a slug. It's usually unaggressive, but will hurt you \nif you run into it. As you explore outward, you'll encounter\nscarier foes. Be careful!";
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 				noGray.width = 2 * SteveDriver.TEXTURE_SIZE;
@@ -216,7 +216,7 @@ public class Tutorial {
 				focus = tempEnemy;
 				break;
 			case weapons:
-				description = "When you are ready, arm yourself in order to fight back.\nThis is the desert. Powerful creatures reside here. It will take some\ntime before you are ready to face them.";
+				description = "When you are ready, arm yourself in order to fight back.\nThis is the desert. Powerful creatures reside here. It will \ntake some time before you are ready to face them.";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 20 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;

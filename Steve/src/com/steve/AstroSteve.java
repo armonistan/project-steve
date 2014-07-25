@@ -87,7 +87,7 @@ public class AstroSteve extends Snake {
 						return false;
 					}
 					
-					if(SteveDriver.prefs.getBoolean("sfx", true))
+					if(SteveDriver.prefs.getBoolean("sfx", false))
 						blockerCollide.play();
 				}
 			}

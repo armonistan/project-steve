@@ -33,7 +33,7 @@ public class BossSummon extends Pickup {
 				SteveDriver.field.enemies.add(new Razorbull(this.getX()/SteveDriver.TEXTURE_SIZE, this.getY()/SteveDriver.TEXTURE_SIZE+3));
 			break;
 		}
-		if(SteveDriver.prefs.getBoolean("sfx", true))
+		if(SteveDriver.prefs.getBoolean("sfx", false))
 			pickupSound.play();
 	}
 	

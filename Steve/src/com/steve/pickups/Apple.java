@@ -37,7 +37,7 @@ public class Apple extends Pickup {
 	public void consume(Snake snake) {
 		super.consume(snake);
 		snake.addBody();
-		if(SteveDriver.prefs.getBoolean("sfx", true))
+		if(SteveDriver.prefs.getBoolean("sfx", false))
 			pickupSound.play();
 		SteveDriver.summary.appleScore += points * SteveDriver.constants.get("goldModifier");
 	}

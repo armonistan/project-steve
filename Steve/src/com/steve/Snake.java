@@ -462,7 +462,7 @@ public class Snake {
 						SteveDriver.field.destroyBlocker(x, y);
 						return false;
 					}
-					if(SteveDriver.prefs.getBoolean("sfx", true))
+					if(SteveDriver.prefs.getBoolean("sfx", false))
 						blockerCollide.play();
 					kill(WHY_DIED.blocker); //Collide with wall death
 					return true;
@@ -830,7 +830,7 @@ public class Snake {
 
 	private boolean updateHealth(){
 		if(currentHealth <= 0){
-			if(SteveDriver.prefs.getBoolean("sfx", true))
+			if(SteveDriver.prefs.getBoolean("sfx", false))
 				loseSegment.play();
 			
 			if (segments.size() <= 2) {

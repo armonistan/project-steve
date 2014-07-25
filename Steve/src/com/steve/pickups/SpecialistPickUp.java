@@ -15,7 +15,7 @@ public class SpecialistPickUp extends Pickup {
 	@Override
 	public void consume(Snake snake) {
 		super.consume(snake);
-		if(SteveDriver.prefs.getBoolean("sfx", true))
+		if(SteveDriver.prefs.getBoolean("sfx", false))
 			pickupSound.play();
 		snake.mountUpgrade(2);
 	}

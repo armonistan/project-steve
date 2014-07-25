@@ -337,7 +337,7 @@ public class Store {
 			int tryBuy = selectedUpgrade.trySpendCurrency();
 
 			if (tryBuy == 0) {
-				if(SteveDriver.prefs.getBoolean("sfx", true))
+				if(SteveDriver.prefs.getBoolean("sfx", false))
 					purchaseSound.play();
 				selectedUpgrade.activateUpgrade();
 				description = "Upgrade activated!";
