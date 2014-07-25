@@ -20,7 +20,7 @@ public class Razorbull extends Enemy{
 		knowledgeDistance = 600;
 		super.destroysBlockers = true;
 		super.ignoresBlockers = true;
-		moneyAmount = 30;
+		moneyAmount = 50000;
 		shootTime = .5f;
 		super.moveTime = .085f;
 		SteveDriver.disableSpawnsCyborg = true;

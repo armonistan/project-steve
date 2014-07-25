@@ -410,6 +410,7 @@ public class Generator {
 		int offset = SteveDriver.field.desertRadius;
 		
 		float xPosTopBot = SteveDriver.random.nextInt(SteveDriver.field.totalRadius - offset - offset) + offset;
+		// = (xPosTopBot < offset + 10) ? offset + 10 : (xPosTopBot > offset - 10) ? offset - 10 : xPosTopBot;
 		
 		float xPosRight = SteveDriver.random.nextInt(offset) + SteveDriver.field.totalRadius - (2*offset);
 	

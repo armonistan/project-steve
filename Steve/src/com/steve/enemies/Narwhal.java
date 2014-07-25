@@ -14,7 +14,7 @@ public class Narwhal extends Enemy{
 	
 	public Narwhal(float x, float y) {
 		super(x, y, 11, 13, 3, 3, .75f, .2f, 2, 3, 1200);
-		knowledgeDistance = 500;//to be refined
+		knowledgeDistance = 600;//to be refined
 		
 		destroysBlockers = true;
 		ignoresBlockers = true;
