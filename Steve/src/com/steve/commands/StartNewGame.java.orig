@@ -48,12 +48,11 @@ public class StartNewGame extends StartNewRound {
 		SteveDriver.prefs.flush();
 		SteveDriver.snake.setMoney(0);
 		//SteveDriver.snake.spendTreasure(SteveDriver.snake.getTreasure());
-		//SteveDriver.snake.addTreasure(10);
 <<<<<<< HEAD
-		SteveDriver.snake.addMoney(498500);
+		//SteveDriver.snake.addTreasure(10);
+		//SteveDriver.snake.addMoney(498500);
 =======
-		SteveDriver.snake.addMoney(100000);
->>>>>>> f4775c96206d163520d538e474b9c4add873bb7e
+>>>>>>> 6b71c8281fd68cef1ab8eb16407c579dab355906
 		SteveDriver.constants.initConstants();
 		SteveDriver.store = new Store();
 		SteveDriver.tutorialOn = true;

@@ -33,7 +33,7 @@ public class Snake {
 	protected float timeBetweenTurn = 0.4f;
 	protected float timer = 0;
 	
-	protected float bombsAwayTimer = 60f;
+	protected float bombsAwayTimer = 60000f;
 	protected float bombsAwayTime = 0f;
 	
 	private float lastDamageTimer;
@@ -306,7 +306,7 @@ public class Snake {
 	private void gatherTier() {
 		//TODO: Make this better
 		money = ((SteveDriver.prefs.contains("money")) ? SteveDriver.prefs.getInteger("money") : 0);
-		treasure = ((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 10);
+		treasure = ((SteveDriver.prefs.contains("treasure")) ? SteveDriver.prefs.getInteger("treasure") : 0);
 		snakeTier = ((SteveDriver.constants.get("steve") != 0) ? 1 : 1);
 		snakeTier = ((SteveDriver.constants.get("cyborg") != 0) ? 2 : snakeTier);
 		snakeTier = ((SteveDriver.constants.get("robot") != 0) ? 3 : snakeTier);
