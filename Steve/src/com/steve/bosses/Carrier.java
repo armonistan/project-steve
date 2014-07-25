@@ -36,7 +36,7 @@ public class Carrier extends Enemy {
 		front = new Rectangle(this.avatar.getX(), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*5,SteveDriver.TEXTURE_SIZE*2);
 		middle = new Rectangle(this.avatar.getX()+this.avatar.getBoundingRectangle().width/4, this.avatar.getY(), SteveDriver.TEXTURE_SIZE*19,SteveDriver.TEXTURE_SIZE*8);
 		back = new Rectangle(this.avatar.getX()+(.85f*this.avatar.getBoundingRectangle().width), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*3,SteveDriver.TEXTURE_SIZE*4);
-		moneyAmount = 0;
+		moneyAmount = 50000;
 		shootTime = 10f;
 		shootTimer = 7f;
 		startX = x;
