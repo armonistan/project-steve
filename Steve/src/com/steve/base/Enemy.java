@@ -104,7 +104,9 @@ public class Enemy {
 		for (Projectile p : SteveDriver.field.getProjectiles()) {
 			if (p.getFriendly() && p.getAlive()) {
 				if (CollisionHelper.isCollide(avatar.getBoundingRectangle(), p.getAvatar().getBoundingRectangle())) {
+					//System.out.println("hp: " + this.health);
 					this.health -= p.getDamage();
+					//System.out.println(p.getDamage());
 					p.kill();
 				}
 			}
