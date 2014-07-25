@@ -152,7 +152,7 @@ public class Generator {
 				return this.generateRing(xPos, yPos);
 			}
 	
-			if((SteveDriver.disableSpawnsCyborg && enemyType < 4) || (SteveDriver.disableSpawnsRobot))
+			if((SteveDriver.disableSpawnsCyborg && enemyType < 5) || (SteveDriver.disableSpawnsRobot))
 				return true;
 			
 			

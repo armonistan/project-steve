@@ -9,7 +9,7 @@ public class SnakeMainProjectile extends Projectile {
 	private boolean isRocket;
 	
 	public SnakeMainProjectile(float x, float y, int level, int atlasX, int atlasY) {
-		super(x, y, atlasX, atlasY, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier+SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
+		super(x, y, atlasX, atlasY, 1, 1, (40+SteveDriver.snake.getSnakeTier()*SteveDriver.snakeTierWeaponDamageModifier) * SteveDriver.constants.get("fireDamage"), true,
 				30 * SteveDriver.constants.get("fireRange"));
 		speed = 450;
 		isRocket = false;

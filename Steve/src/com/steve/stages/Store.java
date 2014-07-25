@@ -421,7 +421,7 @@ public class Store {
 				"snakeTier1",
 				"Stronger, faster, better, and still adorable.\nMakes tier 2 upgrades available.",
 				1.0f,
-				9000f,
+				8000f,
 				1, 0,
 				(panelX - 32) + (panelWidth / 2),
 				panelY + 32 + ((2 * panelHeight) / 4),
@@ -527,7 +527,7 @@ public class Store {
 		upgrades.add(new Upgrade("Max Length Increase I",
 				"maxLength",
 				"survTier1B",
-				"Increase the maximum possible\nlength of Steve by 2.",
+				"Increase the maximum possible\nlength of Steve by 1.",
 				1f,
 				1500f,
 				0, 2,
@@ -575,7 +575,7 @@ public class Store {
 		upgrades.add(new Upgrade("Max Length Increase III",
 				"maxLength",
 				"survTier3B",
-				"Increase the maximum possible\nlength of Steve by 2.",
+				"Increase the maximum possible\nlength of Steve by 3.",
 				3f,
 				75000f,
 				2, 2,
@@ -950,11 +950,11 @@ public class Store {
 			
 			if (constantName == "cyborg" && !initActivated) {
 				SteveDriver.prefs.putBoolean("cyborgBossActivate", false);
-				SteveDriver.prefs.putBoolean("carrierDefeated", false);
+				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
 			}
 			else if(constantName == "robot" && !initActivated){
 				SteveDriver.prefs.putBoolean("robotBossActivate", false);
-				SteveDriver.prefs.putBoolean("razorbullDefeated", false);
+				SteveDriver.prefs.putBoolean("carrierDefeated", false);
 			}
 		}
 

@@ -137,7 +137,9 @@ public class Tutorial {
 			
 				break;
 			case hunger:
-				description = "This is Steve's hunger bar. It will naturally decrease. Additionally, it\nacts as his HP bar. Getting hit by enemies decreases it. If it goes down\nto zero, Steve will lose a segment.";
+				description = "This is Steve's hunger bar. It decreases over time.\n" +
+							  "Getting hit by enemies also decreases it.\n" +
+							  "If it goes down to zero, Steve will lose a segment.\n";
 				focus = new Vector3(30 * SteveDriver.TEXTURE_SIZE, 40 * SteveDriver.TEXTURE_SIZE, 0);
 				noGray.y = 1 * 9 * SteveDriver.TEXTURE_SIZE;
 				noGray.x = -1 * 11 * SteveDriver.TEXTURE_SIZE;
