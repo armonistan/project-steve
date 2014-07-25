@@ -32,7 +32,7 @@ public class Carrier extends Enemy {
 	int numSpawnedHawks = 0;
 	
 	public Carrier(float x, float y) {
-		super(x, y, 36, 0, 28, 8, 1f, 0.5f, 1, 50, startHealth);
+		super(x, y, 36, 0, 28, 8, .7f, 0.5f, 1, 50, startHealth);
 		front = new Rectangle(this.avatar.getX(), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*5,SteveDriver.TEXTURE_SIZE*2);
 		middle = new Rectangle(this.avatar.getX()+this.avatar.getBoundingRectangle().width/4, this.avatar.getY(), SteveDriver.TEXTURE_SIZE*19,SteveDriver.TEXTURE_SIZE*8);
 		back = new Rectangle(this.avatar.getX()+(.85f*this.avatar.getBoundingRectangle().width), this.avatar.getY()+this.avatar.getBoundingRectangle().height/3, SteveDriver.TEXTURE_SIZE*3,SteveDriver.TEXTURE_SIZE*4);
@@ -80,8 +80,10 @@ public class Carrier extends Enemy {
 	
 	@Override
 	public void update() {
-		if(this.health < (threshHold*turrets.size()-1))
+		if(this.health < (threshHold*turrets.size()-1)){
 			loseTurret();
+			speedUp();
+		}
 		
 		decideShoot();
 		checkCollideWithSnake();
@@ -89,6 +91,10 @@ public class Carrier extends Enemy {
 		checkIsDead();
 		move();
 		animate();
+	}
+	
+	private void speedUp(){
+		this.moveTime-=.025f;
 	}
 	
 	@Override
