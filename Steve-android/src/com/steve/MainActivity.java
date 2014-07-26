@@ -62,7 +62,7 @@ public class MainActivity extends AndroidApplication implements IActivityRequest
         
         setContentView(layout);
 
-        demographics = new AdRequest.Builder().addTestDevice(Settings.Secure.ANDROID_ID).build();
+        demographics = new AdRequest.Builder()/*.addTestDevice(Settings.Secure.ANDROID_ID)*/.build();
         ads.loadAd(demographics);
     }
     
