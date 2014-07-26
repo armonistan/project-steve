@@ -365,7 +365,7 @@ public class Store {
 		}
 	}
 
-	public void resetStore() {		
+	public void resetStore() {
 		for (Upgrade u : upgrades) {
 			u.reset();
 		}
@@ -959,21 +959,26 @@ public class Store {
 		}
 
 		public int trySpendCurrency() {
-			if ((currentTier[0] > tier) || (category == 0)) {
-				if (!activated) {
-					if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
-						return 0; //Success
+			if (currentTier[category] == tier) {
+				if ((currentTier[0] > tier) || (category == 0)) {
+					if (!activated) {
+						if (SteveDriver.snake.spendMoney((int) (price * SteveDriver.constants.get("priceModifier")))) {
+							return 0; //Success
+						}
+						else {
+							return 1; //Insufficient funds
+						}
 					}
 					else {
-						return 1; //Insufficient funds
+						return 3; //You already own it
 					}
 				}
 				else {
-					return 3; //You already own it
+					return 2; //Insufficient tier
 				}
 			}
 			else {
-				return 2; //Insufficient tier
+				return 4;
 			}
 		}
 	}
