@@ -1,6 +1,7 @@
 package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -31,7 +32,7 @@ public class Projectile {
 		this.snakeFriendly = snakeFriendly;
 		dead = false;
 		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas, atlasPositionX * SteveDriver.TEXTURE_SIZE,
+		avatar = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), atlasPositionX * SteveDriver.TEXTURE_SIZE,
 				atlasPositionY * SteveDriver.TEXTURE_SIZE, atlasBoundsX * SteveDriver.TEXTURE_SIZE, atlasBoundsY * SteveDriver.TEXTURE_SIZE));
 		avatar.setPosition(x, y);
 	

@@ -2,6 +2,7 @@ package com.steve;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -61,7 +62,7 @@ public class Tutorial {
 		stage = TUTORIAL_STAGE_TYPE.intro;
 		type = TUTORIAL_TYPE.main;
 		
-		grayBox = new Sprite(new TextureRegion(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_SIZE, 17 * SteveDriver.TEXTURE_SIZE,
+		grayBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), 21 * SteveDriver.TEXTURE_SIZE, 17 * SteveDriver.TEXTURE_SIZE,
 				SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		noGray = new Rectangle();
 		

@@ -3,6 +3,7 @@ package com.steve.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -29,7 +30,7 @@ public class Weapon extends Sprite{
 	protected Sound shootSound3;	
 	
 	public Weapon(float x, float y, int atlasX, int atlasY) {
-	super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+	super(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		this.atlasX = atlasX;
 		this.atlasY = atlasY;
 		range = 300;//override range if need be

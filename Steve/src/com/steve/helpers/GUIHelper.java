@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,23 +39,23 @@ public class GUIHelper {
 		public Sprite bottomRightBox;
 		
 		public BoxSet(int x, int y) {
-			topLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+			topLeftBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			topBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+			topBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 1) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			topRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
+			topRightBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 2) * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			leftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+			leftBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), x * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			centerBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+			centerBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			rightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
+			rightBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 1) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.atlas, x * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+			bottomLeftBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), x * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			bottomBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+			bottomBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 1) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
-			bottomRightBox = new Sprite(new TextureRegion(SteveDriver.atlas, (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
+			bottomRightBox = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), (x + 2) * SteveDriver.TEXTURE_SIZE, (y + 2) * SteveDriver.TEXTURE_SIZE,
 					SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		}
 	}

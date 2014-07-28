@@ -1,6 +1,7 @@
 package com.steve.enemies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
@@ -26,7 +27,7 @@ public class Flyer extends Enemy{
 		propellerAtlasPositionY = 5;
 		propellerAtlasBoundsX = 2;
 		propellerAtlasBoundsY = 2;
-		propeller = new Sprite(SteveDriver.atlas, propellerAtlasPositionX * SteveDriver.TEXTURE_SIZE, propellerAtlasPositionY * SteveDriver.TEXTURE_SIZE,
+		propeller = new Sprite(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), propellerAtlasPositionX * SteveDriver.TEXTURE_SIZE, propellerAtlasPositionY * SteveDriver.TEXTURE_SIZE,
 				propellerAtlasBoundsX * SteveDriver.TEXTURE_SIZE, propellerAtlasBoundsY * SteveDriver.TEXTURE_SIZE);
 		spinTime = 0.01f;
 		numPropellerFrames = 3;

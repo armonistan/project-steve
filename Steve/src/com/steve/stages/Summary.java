@@ -80,7 +80,7 @@ public class Summary {
 		backgroundSprite = new Sprite(new TextureRegion(background, 0f, 0f, 1f, 1f));
 		backgroundSprite.scale(SteveDriver.guiCamera.viewportHeight / diedBlockerSprite.getHeight() - 1f);
 		
-		savingSprite = new Sprite(new TextureRegion(SteveDriver.atlas, 18 * SteveDriver.TEXTURE_SIZE, 26 * SteveDriver.TEXTURE_SIZE,
+		savingSprite = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), 18 * SteveDriver.TEXTURE_SIZE, 26 * SteveDriver.TEXTURE_SIZE,
 				3 * SteveDriver.TEXTURE_SIZE, 3 * SteveDriver.TEXTURE_SIZE));
 
 		savingOpacity = 1f;

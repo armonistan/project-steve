@@ -1,5 +1,6 @@
 package com.steve.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.steve.SteveDriver;
@@ -16,7 +17,7 @@ public class Tank extends Enemy {
 		sightDistance = 500;
 		knowledgeDistance = 600;
 		
-		face = new Sprite(SteveDriver.atlas, 21 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE,
+		face = new Sprite(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), 21 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE,
 				2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE);
 		
 		shotCap = 9;
