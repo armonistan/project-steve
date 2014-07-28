@@ -25,7 +25,7 @@ public class Menu {
 	TextButton exitGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - 6 * SteveDriver.TEXTURE_SIZE,
 			SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ExitGame(), "Exit");
 	TextButton buyGame = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 - (6 + 9) * SteveDriver.TEXTURE_SIZE,
-		SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 9, 4, new OpenWebsite("http://www.emberware.com"), "Buy Game");
+		SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 9, 4, new OpenWebsite("https://play.google.com/store/apps/details?id=com.steve"), "Buy Game");
 	
 	TextButton music = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("music"), "Music");
 	TextButton sfx = new TextButton(SteveDriver.guiCamera.viewportWidth / 2 * -1 + 200, SteveDriver.guiCamera.viewportHeight / 2 * -1 + 4 * SteveDriver.TEXTURE_SIZE, 6, 4, new ChangeBooleanPreference("sfx"), "SFX");

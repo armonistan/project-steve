@@ -303,7 +303,7 @@ public class Tutorial {
 		
 
 		else if (type == TUTORIAL_TYPE.cyborgBoss) {
-			description = "There is a disturbance. Investigate by eating this. Should you overcome \nthis challenge, you will be a step closer to your destiny.\nPREPARE YOURSELF!";
+			description = "There is a disturbance. Investigate by eating this. Should you\novercome this challenge, you will be a step closer\nto your destiny. PREPARE YOURSELF!";
 			noGray.y = -1 * 2 * SteveDriver.TEXTURE_SIZE;
 			noGray.x = -1 * 1 * SteveDriver.TEXTURE_SIZE;
 			noGray.width = 2 * SteveDriver.TEXTURE_SIZE;

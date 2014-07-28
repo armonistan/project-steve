@@ -584,10 +584,10 @@ public class Store {
 				new Sprite(SteveDriver.atlas, 49 * SteveDriver.TEXTURE_SIZE,
 						19 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE, 2 * SteveDriver.TEXTURE_SIZE)));
 
-		upgrades.add(new Upgrade("The Slug Slayer",
+		upgrades.add(new Upgrade("The Peashooter",
 				"mainGun",
 				"wepTier1",
-				"Mount the Slug Slayer on Steve.\n The splats of slug will be music to your ears.",
+				"Mount the Peashooter on Steve.\n The splats of slug will be music to your ears.",
 				1f,
 				3500f,
 				0, 3,
