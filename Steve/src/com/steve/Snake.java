@@ -33,7 +33,7 @@ public class Snake {
 	protected float timeBetweenTurn = 0.4f;
 	protected float timer = 0;
 	
-	protected float bombsAwayTimer = 60000f;
+	protected float bombsAwayTimer = 60f;
 	protected float bombsAwayTime = 0f;
 	
 	private float lastDamageTimer;
@@ -115,7 +115,7 @@ public class Snake {
 			segments.get(1).setPosition(headPosition.x, headPosition.y-SteveDriver.TEXTURE_SIZE);
 		}
 		else{
-			segments.get(0).setRegion(new TextureRegion(SteveDriver.atlas, 0 + xOffSet * SteveDriver.TEXTURE_SIZE, 0 + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));	
+			segments.get(0).setRegion(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), 0 + xOffSet * SteveDriver.TEXTURE_SIZE, 0 + yOffSet * SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));	
 		}
 			
 		//hard code it to be body segments
@@ -205,7 +205,7 @@ public class Snake {
 		
 		if (SteveDriver.constants.get("glueTrail") != 0f) {
 			glue = true;
-			glueStick = new Sprite(new TextureRegion(SteveDriver.atlas,
+			glueStick = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class),
 					2 * SteveDriver.TEXTURE_SIZE, 0 * SteveDriver.TEXTURE_SIZE,
 					1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE));
 		} else {
@@ -237,7 +237,7 @@ public class Snake {
 			candy = false;
 		}
 		if(SteveDriver.constants.get("drill") != 0f){
-			helmet = new Sprite(new TextureRegion(SteveDriver.atlas,
+			helmet = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class),
 					3 * SteveDriver.TEXTURE_SIZE, 0 * SteveDriver.TEXTURE_SIZE,
 					1 * SteveDriver.TEXTURE_SIZE, 1 * SteveDriver.TEXTURE_SIZE));
 		}
@@ -1064,7 +1064,7 @@ public class Snake {
 		private int baseAtlasY;
 		
 		public Segment(int baseX, int baseY, int xOff, int yOff) {
-			super(new TextureRegion(SteveDriver.atlas, 0, 0, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+			super(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), 0, 0, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 			
 			baseAtlasX = baseX;
 			baseAtlasY = baseY;

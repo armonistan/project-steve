@@ -30,7 +30,7 @@ public class MenuField extends Field {
 		
 		this.maxBlockerLength = 10;
 		
-		splitTiles = TextureRegion.split(SteveDriver.atlas, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
+		splitTiles = TextureRegion.split(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE);
 		map = SteveDriver.demoMap;
 		
 		System.gc();
@@ -52,7 +52,7 @@ public class MenuField extends Field {
 		
 		spawnTimer = 0;
 		
-		space = new Sprite(new TextureRegion(SteveDriver.space, 0f, 0f, 1f, 1f));
+		space = new Sprite(new TextureRegion(SteveDriver.assets.get("data/Space Background.png", Texture.class), 0f, 0f, 1f, 1f));
 	}
 	
 	@Override

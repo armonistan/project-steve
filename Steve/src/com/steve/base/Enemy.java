@@ -2,6 +2,7 @@ package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -69,7 +70,7 @@ public class Enemy {
 		mapPositionX = x;
 		mapPositionY = y;
 		
-		avatar = new Sprite(new TextureRegion(SteveDriver.atlas,
+		avatar = new Sprite(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class),
 				atlasPositionX * SteveDriver.TEXTURE_SIZE, atlasPositionY * SteveDriver.TEXTURE_SIZE,
 				atlasBoundsX * SteveDriver.TEXTURE_SIZE, atlasBoundsY * SteveDriver.TEXTURE_SIZE));
 		updateAvatar();

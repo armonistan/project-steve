@@ -2,6 +2,7 @@ package com.steve.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +21,7 @@ public class Pickup extends Sprite {
 	protected float lifeTimer = 10.0f;
 	
 	public Pickup(float x, float y, int atlasX, int atlasY, int points) {
-		super(new TextureRegion(SteveDriver.atlas, atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
+		super(new TextureRegion(SteveDriver.assets.get("data/SpriteAtlasDouble.png", Texture.class), atlasX, atlasY, SteveDriver.TEXTURE_SIZE, SteveDriver.TEXTURE_SIZE));
 		this.setPosition(x * SteveDriver.TEXTURE_SIZE, y * SteveDriver.TEXTURE_SIZE);
 		active = true;
 		this.points = points;

@@ -36,11 +36,6 @@ import com.steve.stages.Store;
 import com.steve.stages.Summary;
 
 public class SteveDriver implements ApplicationListener {
-	public static Texture atlas;
-	public static Texture background;
-	public static Texture steveLogo;
-	public static Texture space;
-	public static Texture emberware;
 	public static AssetManager assets;
 	
 	public static TiledMap demoMap;
@@ -183,19 +178,19 @@ public class SteveDriver implements ApplicationListener {
 		assets.load("data/Space Background.png", Texture.class, params);
 		assets.load("data/loading.png", Texture.class, params);
 		assets.load("data/nuke.png", Texture.class, params);
-		assets.load("data/diedEnemy.png", Texture.class);      
-		assets.load("data/diedStarvation.png", Texture.class); 
-		assets.load("data/diedBlocker.png", Texture.class);    
-		assets.load("data/diedSpace.png", Texture.class);      
-		assets.load("data/diedPlayer.png", Texture.class);     
-		assets.load("data/diedBackground.png", Texture.class); 
-		assets.load("data/stars.png", Texture.class);
-		assets.load("data/victoryStars.png", Texture.class);
-		assets.load("data/victoryWords.png", Texture.class);
-		assets.load("data/space.png", Texture.class);
-		assets.load("data/facebook_logo.png", Texture.class);
-		assets.load("data/twitter_logo.png", Texture.class);
-		assets.load("data/spaceLoading.png", Texture.class);
+		assets.load("data/diedEnemy.png", Texture.class, params);      
+		assets.load("data/diedStarvation.png", Texture.class, params); 
+		assets.load("data/diedBlocker.png", Texture.class, params);    
+		assets.load("data/diedSpace.png", Texture.class, params);      
+		assets.load("data/diedPlayer.png", Texture.class, params);     
+		assets.load("data/diedBackground.png", Texture.class, params); 
+		assets.load("data/stars.png", Texture.class, params);
+		assets.load("data/victoryStars.png", Texture.class, params);
+		assets.load("data/victoryWords.png", Texture.class, params);
+		assets.load("data/space.png", Texture.class, params);
+		assets.load("data/facebook_logo.png", Texture.class, params);
+		assets.load("data/twitter_logo.png", Texture.class, params);
+		assets.load("data/spaceLoading.png", Texture.class, params);
 		
 		assets.load("audio/MainV1.ogg", Music.class);
 		assets.load("audio/MainSpace.ogg", Music.class);
@@ -229,17 +224,16 @@ public class SteveDriver implements ApplicationListener {
 		assets.load("fonts/fixedsys48.fnt", BitmapFont.class);
 		assets.load("fonts/fixedsys32.fnt", BitmapFont.class);
 		
+		menu = null;
+		
+		System.out.println("Added all assets. " + assets.getLoadedAssets() + " " + assets.getQueuedAssets());
+		
 		demoMap = new TmxMapLoader().load("menu.tmx");
 		
 		logo = new Logo();
 	}
 
-	protected void finishLoading() {
-		atlas = assets.get("data/SpriteAtlasDouble.png", Texture.class);
-		background = assets.get("data/teset-1.png", Texture.class);
-		steveLogo = assets.get("data/Steve-title.png", Texture.class);
-		space = assets.get("data/Space Background.png", Texture.class);
-		
+	protected void finishLoading() {		
 		mainMusic = assets.get("audio/MainV1.ogg", Music.class);
 		spaceMusic = assets.get("audio/MainSpace.ogg", Music.class);
 		music = mainMusic;
@@ -265,16 +259,13 @@ public class SteveDriver implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		atlas.dispose();
 	}
 
 	@Override
 	public void render() {
-		if (emberware == null && assets.isLoaded("data/emberware.png")) {
-			emberware = assets.get("data/emberware.png", Texture.class);
-		}
-		else if (menu == null || summary == null) {
+		if (menu == null || summary == null) {
 			if (assets.update()) {
+				System.out.println("Finished loading.");
 				finishLoading();
 			}
 		}
@@ -376,7 +367,7 @@ public class SteveDriver implements ApplicationListener {
 	}
 
 	@Override
-	public void pause() {
+	public void pause() {		
 		if (stage == STAGE_TYPE.GAME && !tutorial.isActive()) {
 			stage = STAGE_TYPE.PAUSED;
 		}
